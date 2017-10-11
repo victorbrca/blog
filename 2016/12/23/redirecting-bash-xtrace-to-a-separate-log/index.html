@@ -5,36 +5,34 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title>Additional Status for Vim With Powerline  &middot; Victor&#39;s Blog</title>
+  <title>Redirecting Bash Xtrace to a Separate Log  &middot; Victor&#39;s Blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="description" content="Displaying additional information on Vim&#39;s status bar using PowerLine." />
+<meta name="description" content="How to redirect stderr to a separate log in a Bash script." />
 
-<meta name="keywords" content="vim, bash, Linux, ">
+<meta name="keywords" content="Linux, Bash, ">
 
 
-<meta property="og:title" content="Additional Status for Vim With Powerline  &middot; Victor&#39;s Blog ">
+<meta property="og:title" content="Redirecting Bash Xtrace to a Separate Log  &middot; Victor&#39;s Blog ">
 <meta property="og:site_name" content="Victor&#39;s Blog"/>
-<meta property="og:url" content="https://victorbrca.github.io/blog/2017/09/20/additional-status-for-vim-with-powerline/" />
+<meta property="og:url" content="https://victorbrca.github.io/blog/2016/12/23/redirecting-bash-xtrace-to-a-separate-log/" />
 <meta property="og:locale" content="en">
 
 
 <meta property="og:type" content="article" />
-<meta property="og:description" content="Displaying additional information on Vim&#39;s status bar using PowerLine."/>
-<meta property="og:article:published_time" content="2017-09-20T13:26:46-04:00" />
-<meta property="og:article:modified_time" content="2017-09-20T13:26:46-04:00" />
+<meta property="og:description" content="How to redirect stderr to a separate log in a Bash script."/>
+<meta property="og:article:published_time" content="2016-12-23T14:58:09-04:00" />
+<meta property="og:article:modified_time" content="2016-12-23T14:58:09-04:00" />
 
   
     
-<meta property="og:article:tag" content="vim">
-    
-<meta property="og:article:tag" content="bash">
-    
 <meta property="og:article:tag" content="Linux">
+    
+<meta property="og:article:tag" content="Bash">
     
   
 
@@ -42,9 +40,9 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@18440926" />
 <meta name="twitter:creator" content="@18440926" />
-<meta name="twitter:title" content="Additional Status for Vim With Powerline" />
-<meta name="twitter:description" content="Displaying additional information on Vim&#39;s status bar using PowerLine." />
-<meta name="twitter:url" content="https://victorbrca.github.io/blog/2017/09/20/additional-status-for-vim-with-powerline/" />
+<meta name="twitter:title" content="Redirecting Bash Xtrace to a Separate Log" />
+<meta name="twitter:description" content="How to redirect stderr to a separate log in a Bash script." />
+<meta name="twitter:url" content="https://victorbrca.github.io/blog/2016/12/23/redirecting-bash-xtrace-to-a-separate-log/" />
 <meta name="twitter:domain" content="https://victorbrca.github.io/blog/">
   
 
@@ -52,7 +50,7 @@
 
 
 
-<link rel="canonical" href="https://victorbrca.github.io/blog/2017/09/20/additional-status-for-vim-with-powerline/" />
+<link rel="canonical" href="https://victorbrca.github.io/blog/2016/12/23/redirecting-bash-xtrace-to-a-separate-log/" />
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://victorbrca.github.io/blog/touch-icon-144-precomposed.png">
 <link rel="icon" href="https://victorbrca.github.io/blog/favicon.png">
 <meta name="generator" content="Hugo 0.29" />
@@ -149,13 +147,13 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
   <div class="text-center">
 
-    <h1>Additional Status for Vim With Powerline
+    <h1>Redirecting Bash Xtrace to a Separate Log
 </h1>
 
     <div class="metas">
 <small>
   <i class="fa fa-calendar"></i>
-  <time datetime="2017-09-20">20 Sep, 2017</time>
+  <time datetime="2016-12-23">23 Dec, 2016</time>
 </small>
 
 
@@ -163,25 +161,25 @@
     &middot; by Victor Mendonça
   
   &middot; Read in about 1 min
-  &middot; (192 words)
+  &middot; (195 words)
   &middot; 
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=Additional%20Status%20for%20Vim%20With%20Powerline&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f&amp;title=Additional%20Status%20for%20Vim%20With%20Powerline" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f&amp;title=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=Additional%20Status%20for%20Vim%20With%20Powerline&amp;body=Check out this site https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log&amp;body=Check out this site https%3a%2f%2fvictorbrca.github.io%2fblog%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   </small>
@@ -189,11 +187,9 @@
 <div class="margin-10">
   <i class="fa fa-tags"></i>
   
-  <a href="https://victorbrca.github.io/blog/tags/vim" class="label label-primary">vim</a>
-  
-  <a href="https://victorbrca.github.io/blog/tags/bash" class="label label-primary">bash</a>
-  
   <a href="https://victorbrca.github.io/blog/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://victorbrca.github.io/blog/tags/bash" class="label label-primary">Bash</a>
   
 
 
@@ -206,63 +202,27 @@
 </div>
 
       <div class="content">
-  
+  <p>So you have a Bash script that you want to troubleshoot, but you want to send stdout to a file, and stderr to another. Here&rsquo;s a solution.</p>
 
-<p>Would you like to have more information displayed while reading files in VIM? <a href="https://powerline.readthedocs.io/en/latest/index.html">Powerline</a> is a great utility for that.</p>
+<p>For example, I like to use Bash&rsquo;s color to display failure or success on checks, and echo&rsquo;s removal of new lines (<code>echo -e &quot;Wait for it...\c &quot;</code>) to wait for checks. For example, the screenshot below shows a script that check each step and report back.</p>
 
-<p><img src="https://i.imgur.com/0vCK9an.png" alt="Imgur" /></p>
+<p><img src="https://i.imgur.com/H3Bm6s7.png" alt="terminal" /></p>
 
-<p>In it&rsquo;s default config, it displays:</p>
+<p>Errors are displayed in red, and success in green, and this same output is sent to the stdout and to a log file as well.</p>
 
-<ul>
-<li>Current mode (normal, insert, visual)</li>
-<li>Git branch</li>
-<li>File name</li>
-<li>File encoding</li>
-<li>Script type</li>
-<li>File view percentage</li>
-<li>Line number</li>
-</ul>
+<p>Now I want to get error messages in a separate log file, so I can go back to my original log and match the time where it failed, with additional verbose from Bash&rsquo;s xtrace.</p>
 
-<h2 id="to-install-it">To install it</h2>
+<p>The solution is very simple&hellip; I can just add the lines below to the top of my script:</p>
 
-<h3 id="arch">Arch:</h3>
-
-<pre><code class="language-bash">sudo pacman -Ss python-powerline powerline
+<pre><code class="language-bash"># Debugging
+debug_log=&quot;${HOME}/bin/log/script.debug&quot;
+exec 2&gt;&gt;${debug_log}
+set -x
 </code></pre>
 
-<p>Add the line below to your <code>~/.vimrc</code></p>
+<p>The first line setups my debug log, the second redirects stderr to my debug log, and the third enables xtrace (same as <code>bash -x [script]</code>).</p>
 
-<pre><code class="language-bash">set laststatus=2
-</code></pre>
-
-<hr />
-
-<p><strong>Note:</strong> If you get the error below</p>
-
-<pre><code>Traceback (most recent call last):
-  File &quot;&lt;string&gt;&quot;, line 9, in &lt;module&gt;
-ImportError: No module named powerline.vim
-An error occurred while importing powerline module.
-This could be caused by invalid sys.path setting,
-or by an incompatible Python version (powerline requires
-Python 2.6, 2.7 or 3.2 and later to work). Please consult
-the troubleshooting section in the documentation for
-possible solutions.
-If powerline on your system is installed for python 3 only you
-should set g:powerline_pycmd to &quot;py3&quot; to make it load correctly.
-Unable to import powerline, is it installed?
-Press ENTER or type command to continue
-</code></pre>
-
-<p>Modify either <code>~/.vimrc</code> (or <code>/etc/vimrc</code> if you want the fix available for multiple users) by adding the line below:</p>
-
-<pre><code class="language-vim">let g:powerline_pycmd = 'py3'
-</code></pre>
-
-<h3 id="ubuntu-16-04">Ubuntu 16.04</h3>
-
-<p>Use Python 3</p>
+<p>Note that doing this will disable any errors from being show in stdout.</p>
 
 </div>
 
@@ -270,22 +230,22 @@ Press ENTER or type command to continue
       <footer>
   
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=Additional%20Status%20for%20Vim%20With%20Powerline&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f&amp;title=Additional%20Status%20for%20Vim%20With%20Powerline" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f&amp;title=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=Additional%20Status%20for%20Vim%20With%20Powerline&amp;body=Check out this site https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log&amp;body=Check out this site https%3a%2f%2fvictorbrca.github.io%2fblog%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -293,16 +253,10 @@ Press ENTER or type command to continue
   
     <nav><ul class="pager">
     
-        <li class="previous">
-          <a href="https://victorbrca.github.io/blog/2017/09/19/bash-parameter-expansion/" title="Bash: Parameter Expansion (Substitution)">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
 
     
       <li class="next">
-        <a href="https://victorbrca.github.io/blog/2017/09/23/gnome-touchpad-settings-missing-in-arch-xps-13/" title="Gnome Touchpad Settings Missing in Arch Xps 13">
+        <a href="https://victorbrca.github.io/blog/2017/01/11/bash-command-substitution-subshell-and-codeblock/" title="Bash - Command Substitution, Subshell and Codeblock">
             Next <span aria-hidden="true">&rarr;</span>
         </a>
       </li>
