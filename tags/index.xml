@@ -31,6 +31,24 @@
     </item>
     
     <item>
+      <title>Git</title>
+      <link>https://victorbrca.github.io/blog/tags/git/</link>
+      <pubDate>Wed, 11 Oct 2017 17:08:34 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/tags/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Gitlab</title>
+      <link>https://victorbrca.github.io/blog/tags/gitlab/</link>
+      <pubDate>Wed, 11 Oct 2017 17:08:34 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/tags/gitlab/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Hardware</title>
       <link>https://victorbrca.github.io/blog/tags/hardware/</link>
       <pubDate>Sat, 23 Sep 2017 22:47:40 -0400</pubDate>
@@ -42,7 +60,7 @@
     <item>
       <title>Linux</title>
       <link>https://victorbrca.github.io/blog/tags/linux/</link>
-      <pubDate>Fri, 06 Oct 2017 18:46:20 -0400</pubDate>
+      <pubDate>Wed, 11 Oct 2017 17:58:37 -0400</pubDate>
       
       <guid>https://victorbrca.github.io/blog/tags/linux/</guid>
       <description></description>
@@ -58,11 +76,47 @@
     </item>
     
     <item>
+      <title>Netcat</title>
+      <link>https://victorbrca.github.io/blog/tags/netcat/</link>
+      <pubDate>Wed, 11 Oct 2017 17:58:37 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/tags/netcat/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Network</title>
       <link>https://victorbrca.github.io/blog/tags/network/</link>
       <pubDate>Fri, 06 Oct 2017 18:46:20 -0400</pubDate>
       
       <guid>https://victorbrca.github.io/blog/tags/network/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Networking</title>
+      <link>https://victorbrca.github.io/blog/tags/networking/</link>
+      <pubDate>Wed, 11 Oct 2017 17:58:37 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/tags/networking/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>https://victorbrca.github.io/blog/tags/python/</link>
+      <pubDate>Wed, 11 Oct 2017 17:58:37 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Shell</title>
+      <link>https://victorbrca.github.io/blog/tags/shell/</link>
+      <pubDate>Wed, 02 Nov 2016 17:52:10 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/tags/shell/</guid>
       <description></description>
     </item>
     

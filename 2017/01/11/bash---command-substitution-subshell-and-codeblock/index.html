@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Bash - Command Substitution, Subshell and Codeblock  &middot; Victor&#39;s Blog</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="Explanation on the difference between `$(..)`, `(..)` and `{..;}`." />
+
+<meta name="keywords" content="Linux, Bash, ">
+
+
+<meta property="og:title" content="Bash - Command Substitution, Subshell and Codeblock  &middot; Victor&#39;s Blog ">
+<meta property="og:site_name" content="Victor&#39;s Blog"/>
+<meta property="og:url" content="https://victorbrca.github.io/blog/2017/01/11/bash---command-substitution-subshell-and-codeblock/" />
+<meta property="og:locale" content="en">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content="Explanation on the difference between `$(..)`, `(..)` and `{..;}`."/>
+<meta property="og:article:published_time" content="2017-01-11T17:41:09-04:00" />
+<meta property="og:article:modified_time" content="2017-01-11T17:41:09-04:00" />
+
+  
+    
+<meta property="og:article:tag" content="Linux">
+    
+<meta property="og:article:tag" content="Bash">
+    
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@18440926" />
+<meta name="twitter:creator" content="@18440926" />
+<meta name="twitter:title" content="Bash - Command Substitution, Subshell and Codeblock" />
+<meta name="twitter:description" content="Explanation on the difference between `$(..)`, `(..)` and `{..;}`." />
+<meta name="twitter:url" content="https://victorbrca.github.io/blog/2017/01/11/bash---command-substitution-subshell-and-codeblock/" />
+<meta name="twitter:domain" content="https://victorbrca.github.io/blog/">
+  
+
+  
+
+
+
+<link rel="canonical" href="https://victorbrca.github.io/blog/2017/01/11/bash---command-substitution-subshell-and-codeblock/" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://victorbrca.github.io/blog/touch-icon-144-precomposed.png">
+<link rel="icon" href="https://victorbrca.github.io/blog/favicon.png">
+<meta name="generator" content="Hugo 0.29" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+
+
+    <link rel="stylesheet" href="https://victorbrca.github.io/blog/css/bootswatch/default/bootstrap.min.css">
+
+
+<link rel="stylesheet" href="https://victorbrca.github.io/blog/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://victorbrca.github.io/blog/css/style.css">
+
+
+<link rel="stylesheet" href="https://victorbrca.github.io/css/style_custom.css">
+
+
+
+  <link rel="stylesheet" href="https://victorbrca.github.io/blog/css/highlight/github.css">
+
+
+</head>
+<body class="map[name:default]" data-ng-app="myapp" data-ng-controller="MyController" data-ng-mouseleave="MouseLeave($event)">
+    <header id="main-header">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        
+        <a class="navbar-brand" href="https://victorbrca.github.io/blog/">
+          Victor&#39;s Blog
+          
+          
+          </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            
+            
+            <li class="">
+
+              <a href="https://victorbrca.github.io/blog/" >
+                
+                Home
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://victorbrca.github.io/blog/about/" >
+                
+                About
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="http://geekit.ca/" >
+                
+                Professional
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://victorbrca.github.io/personal" >
+                
+                Personal
+              </a>
+            </li>
+            
+            
+            
+          </ul>
+        </div>
+        
+      </div>
+    </nav>
+  </header>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <div class="text-center">
+
+    <h1>Bash - Command Substitution, Subshell and Codeblock
+</h1>
+
+    <div class="metas">
+<small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2017-01-11">11 Jan, 2017</time>
+</small>
+
+
+  <small>
+    &middot; by Victor Mendonça
+  
+  &middot; Read in about 2 min
+  &middot; (280 words)
+  &middot; 
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f01%2f11%2fbash---command-substitution-subshell-and-codeblock%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Bash%20-%20Command%20Substitution%2c%20Subshell%20and%20Codeblock&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f01%2f11%2fbash---command-substitution-subshell-and-codeblock%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f01%2f11%2fbash---command-substitution-subshell-and-codeblock%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f01%2f11%2fbash---command-substitution-subshell-and-codeblock%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f01%2f11%2fbash---command-substitution-subshell-and-codeblock%2f&amp;title=Bash%20-%20Command%20Substitution%2c%20Subshell%20and%20Codeblock" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Bash%20-%20Command%20Substitution%2c%20Subshell%20and%20Codeblock&amp;body=Check out this site https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f01%2f11%2fbash---command-substitution-subshell-and-codeblock%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  </small>
+
+<div class="margin-10">
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://victorbrca.github.io/blog/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://victorbrca.github.io/blog/tags/bash" class="label label-primary">Bash</a>
+  
+
+
+</div>
+
+<br>
+</div>
+
+  </div>
+</div>
+
+      <div class="content">
+  <p>Quick and simple differences between using <code>$(..)</code>, <code>(..)</code> and <code>{..;}</code>.</p>
+
+<ul>
+<li><code>$(command)</code> or <code>`command`</code> - Command substitution (the output of a command replaces the command name) and is executed in a subshell. Please give preference to <code>$(..)</code> for better readability</li>
+<li><code>( command )</code> - Command list is executed in a subshell</li>
+<li><code>{ command ;}</code> - Command list is executed in the current shell</li>
+</ul>
+
+<p><strong>Executing code</strong></p>
+
+<pre><code class="language-bash">$ ( echo 123 )
+123
+
+$ $(echo 123) # this executes the output of the command
+123: command not found
+
+$ { echo 123 ;}
+123
+</code></pre>
+
+<p><strong>Fiding subshell level with built-in <code>BASH_SUBSHELL</code> variable</strong></p>
+
+<pre><code class="language-bash">$ ( echo $BASH_SUBSHELL )
+1
+$ ( ( echo $BASH_SUBSHELL ) )
+2
+
+$ $($BASH_SUBSHELL)
+1: command not found
+
+$ { echo $BASH_SUBSHELL ;}
+0
+</code></pre>
+
+<p><strong>Passing variables to subshell</strong></p>
+
+<pre><code class="language-bash">$ var1=1
+
+$ ( echo $var1 )
+1
+
+$ $(echo $var1)
+1: command not found
+
+$ { echo $var1 ;}
+1
+</code></pre>
+
+<p><strong>Changing and getting variables values in subshell</strong></p>
+
+<pre><code class="language-bash">$ var=1
+
+$ ( var=2 ) ; echo $var
+1
+
+$ $(var=2) ; echo $var
+1
+
+# Because we did not create a subshell,
+# variable is available to original shell
+$ { var=2 ;} ; echo $var
+2
+</code></pre>
+
+<p>###<strong>Other usages</strong></p>
+
+<p><strong>Example 1:</strong></p>
+
+<p>Multiple commands and multiple lines. This can be used with <code>(..)</code> and <code>{..}</code>.</p>
+
+<pre><code class="language-bash">$ { echo 1 ; echo 2 ; echo 3; }
+1
+2
+3
+
+$ {
+&gt; echo 1
+&gt; echo 2
+&gt; echo 3;
+&gt; }
+1
+2
+3
+</code></pre>
+
+<p><strong>Example 2:</strong></p>
+
+<p>Changing the environment for subshell with separate environment. Here, <code>set -u</code> is only set in the subshell, so only the first echo will error out.</p>
+
+<pre><code class="language-bash">unset var1 var2
+(
+  set -u
+  echo $var2
+)
+echo $var1
+</code></pre>
+
+</div>
+
+
+      <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f01%2f11%2fbash---command-substitution-subshell-and-codeblock%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Bash%20-%20Command%20Substitution%2c%20Subshell%20and%20Codeblock&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f01%2f11%2fbash---command-substitution-subshell-and-codeblock%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f01%2f11%2fbash---command-substitution-subshell-and-codeblock%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f01%2f11%2fbash---command-substitution-subshell-and-codeblock%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f01%2f11%2fbash---command-substitution-subshell-and-codeblock%2f&amp;title=Bash%20-%20Command%20Substitution%2c%20Subshell%20and%20Codeblock" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Bash%20-%20Command%20Substitution%2c%20Subshell%20and%20Codeblock&amp;body=Check out this site https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f01%2f11%2fbash---command-substitution-subshell-and-codeblock%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://victorbrca.github.io/blog/2017/01/11/bash-command-substitution-subshell-and-codeblock/" title="Bash - Command Substitution, Subshell and Codeblock">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://victorbrca.github.io/blog/2017/08/30/alternatives-to-top/" title="Alternatives to Top">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+    </div>
+    
+      <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+        <div>
+  
+
+   
+    <div class="section">
+      <header><div class="title"></div></header>
+      <div class="content">
+        <img style="float: center; padding-right: 5px;" src="https://victorbrca.github.io/blog/img/avatar.jpg" hspace="20" width="240"></img>
+        <br/>
+      </div>
+    </div>
+
+    <div class="section">
+      <header><div class="title"><b>Latest Posts</b></div></header>
+      <div class="content">
+        <ul>
+        
+          <li>
+          <a href="https://victorbrca.github.io/blog/2017/10/11/how-to-create-a-quick-web-server/">How to Create a Quick Web Server</a>
+          </li>
+        
+          <li>
+          <a href="https://victorbrca.github.io/blog/2017/10/11/how-to-load-gitlab-inside-an-iframe/">How to Load Gitlab Inside an Iframe</a>
+          </li>
+        
+          <li>
+          <a href="https://victorbrca.github.io/blog/2017/10/06/how-to-view-dns-calls-made-by-processes/">How to View DNS Calls Made by Processes</a>
+          </li>
+        
+          <li>
+          <a href="https://victorbrca.github.io/blog/2017/09/26/bash-special-parameters/">Bash Special Parameters</a>
+          </li>
+        
+          <li>
+          <a href="https://victorbrca.github.io/blog/2017/09/24/atom-as-markdown-editor/">Atom as Markdown Editor</a>
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+
+    
+      
+      
+      <div class="section taxonomies">
+        <header><div class="title"><b>Tag</b></div></header>
+
+        <div class="content1">
+          <ul>
+            <li><a href="https://victorbrca.github.io/blog/Tags/linux">linux</a></li><li><a href="https://victorbrca.github.io/blog/Tags/bash">bash</a></li><li><a href="https://victorbrca.github.io/blog/Tags/arch">arch</a></li><li><a href="https://victorbrca.github.io/blog/Tags/git">git</a></li><li><a href="https://victorbrca.github.io/blog/Tags/gitlab">gitlab</a></li><li><a href="https://victorbrca.github.io/blog/Tags/hardware">hardware</a></li><li><a href="https://victorbrca.github.io/blog/Tags/markdown">markdown</a></li><li><a href="https://victorbrca.github.io/blog/Tags/netcat">netcat</a></li><li><a href="https://victorbrca.github.io/blog/Tags/network">network</a></li><li><a href="https://victorbrca.github.io/blog/Tags/networking">networking</a></li>
+          </ul>
+        </div>
+      </div>
+      
+    
+      
+      
+    
+
+    
+    <div class="section">
+      
+      <div class="content" align="right">
+        <a class="twitter-timeline" data-width="260" data-height="450" href="https://twitter.com/victorbrca">Tweets by victorbrca</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+    </div>
+
+</div>
+
+      </div>
+    
+  </div>
+</div>
+    
+<footer class="footer hidden-print">
+  <div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+           <div class="pull-left">
+  <a class="toplink" href="javascript:" id="return-to-top">back to top</a>
+</div>
+<div class="pull-right">
+
+<a href="https://victorbrca.github.io/disclaimer/">Disclaimer</a> <i>&middot;</i>
+
+<a href="https://victorbrca.github.io/terms/">Terms</a> 
+
+</div>
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+              
+    
+<div class="container footline">
+    <small>
+  code with <i class='fa fa-heart'></i>
+
+</small>
+</div>
+
+
+    
+<div class="container copyright">
+    <small>
+  &copy; 2016 Copyright my blog
+
+  </small>
+</div>
+
+
+
+        </div>
+    </div>
+  </div>
+</footer>
+
+    
+
+<script src="https://victorbrca.github.io/blog/js/jquery.min.js"></script>
+<script src="https://victorbrca.github.io/blog/js/bootstrap.min.js"></script>
+
+
+<script src="https://victorbrca.github.io/blog/js/highlight.pack.js"></script>
+<script src="https://victorbrca.github.io/blog/js/site.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script>
+  var _gaq=[['_setAccount','Your Google Analytics tracking code'],['_trackPageview']];
+  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+  g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+  s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+
+<script>
+var ENABLE_POPOVER =  false , 
+EXPIRE_COOKIE =  5 , 
+SHOW_MODAL_TIMEOUT =  10000 , 
+MOUSE_LEAVE =  true , 
+MODAL_SIZE = "", 
+POST_URL = "https://zapier.com/hooks/catch/1227563/", 
+SIGNUP_HEADER = "Join Our Newsletter",
+HEADER_IMAGE = "//placehold.it/1000x600",
+IMG_DESCRIPTION = "Placeholder image for this popover modal optin form",
+SIGNUP_TEXT = "Signup today for free and be the first to get notified on new updates.",
+INPUT_PLACEHOLDER = "Enter your email",
+SUBMIT_BUTTON = "Subscribe",
+SUCCESS_MESSAGE = "Thanks for your subscription!",
+ERROR_MESSAGE = "Submitting form failed!",
+OPTIN =  true ,
+COOKIE_NAME = "mycookie1",
+CONTENTLANGUAGE = ""; 
+</script>
+
+
+
+
+
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/config/TeX-AMS-MML_HTMLorMML.js"></script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    for(var all in MathJax.Hub.getAllJax()) {
+        all.SourceElement().parentNode.className += ' has-jax';
+
+    }
+});
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+

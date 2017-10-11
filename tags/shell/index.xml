@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Shell on Victor&#39;s Blog</title>
+    <link>https://victorbrca.github.io/blog/tags/shell/</link>
+    <description>Recent content in Shell on Victor&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>(c) 2016 Copyright my blog</copyright>
+    <lastBuildDate>Wed, 02 Nov 2016 17:52:10 -0400</lastBuildDate>
+    
+	<atom:link href="https://victorbrca.github.io/blog/tags/shell/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How to Record and Share a Terminal Session</title>
+      <link>https://victorbrca.github.io/blog/2016/11/02/how-to-record-and-share-a-terminal-session/</link>
+      <pubDate>Wed, 02 Nov 2016 17:52:10 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/2016/11/02/how-to-record-and-share-a-terminal-session/</guid>
+      <description>A while ago I had shared instructions on &amp;laquo;How to Share a Terminal Window Online&amp;raquo;. This is great for live support.
+Today I&amp;rsquo;m sharing instructions on how to record your teminal session, and not only share it, but also allow users to copy and paste text from the playback video.
+The installation could not be easier. And to show how great this utility is, I&amp;rsquo;m showing the instructions using a &amp;laquo;video&amp;raquo; recorderd with &amp;laquo;showterm&amp;raquo;.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -64,6 +64,17 @@ vtop vtop takes more of a graphical approach to top, while concentrating more on
     
     <item>
       <title>Bash - Command Substitution, Subshell and Codeblock</title>
+      <link>https://victorbrca.github.io/blog/2017/01/11/bash---command-substitution-subshell-and-codeblock/</link>
+      <pubDate>Wed, 11 Jan 2017 17:41:09 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/2017/01/11/bash---command-substitution-subshell-and-codeblock/</guid>
+      <description>Quick and simple differences between using $(..), (..) and {..;}.
+ $(command) or `command` - Command substitution (the output of a command replaces the command name) and is executed in a subshell. Please give preference to $(..) for better readability ( command ) - Command list is executed in a subshell { command ;} - Command list is executed in the current shell  Executing code
+$ ( echo 123 ) 123 $ $(echo 123) # this executes the output of the command 123: command not found $ { echo 123 ;} 123  Fiding subshell level with built-in BASH_SUBSHELL variable</description>
+    </item>
+    
+    <item>
+      <title>Bash - Command Substitution, Subshell and Codeblock</title>
       <link>https://victorbrca.github.io/blog/2017/01/11/bash-command-substitution-subshell-and-codeblock/</link>
       <pubDate>Wed, 11 Jan 2017 01:38:41 -0400</pubDate>
       
@@ -81,6 +92,29 @@ Quick and simple differences between using $(..), (..) and {..;}.
       <guid>https://victorbrca.github.io/blog/2016/12/23/redirecting-bash-xtrace-to-a-separate-log/</guid>
       <description>So you have a Bash script that you want to troubleshoot, but you want to send stdout to a file, and stderr to another. Here&amp;rsquo;s a solution.
 For example, I like to use Bash&amp;rsquo;s color to display failure or success on checks, and echo&amp;rsquo;s removal of new lines (echo -e &amp;quot;Wait for it...\c &amp;quot;) to wait for checks. For example, the screenshot below shows a script that check each step and report back.</description>
+    </item>
+    
+    <item>
+      <title>How to Create a Prompt With Timeout in Bash</title>
+      <link>https://victorbrca.github.io/blog/2016/10/19/how-to-create-a-prompt-with-timeout-in-bash/</link>
+      <pubDate>Wed, 19 Oct 2016 17:56:37 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/2016/10/19/how-to-create-a-prompt-with-timeout-in-bash/</guid>
+      <description>Here&amp;rsquo;s a quick function that will display a prompt with timeout in a bash script:
+_myCountdownFunction () { echo -e &amp;quot;Hit \&amp;quot;Ctrl+c\&amp;quot; to quit or \&amp;quot;Enter\&amp;quot; to continue... \c&amp;quot; cnt=5 while (( cnt &amp;gt;= 0 )) ; do if (( cnt &amp;lt; 9 )) ; then echo -e &amp;quot;\b\b${cnt}s\c&amp;quot; elif (( cnt == 9 )) ; then echo -e &amp;quot;\b\b\b ${cnt}s\c&amp;quot; elif (( cnt &amp;lt;= 99 )) ; then echo -e &amp;quot;\b\b\b\b ${cnt}s\c&amp;quot; elif (( cnt &amp;lt; 999 )) ; then echo -e &amp;quot;\b\b\b\b${cnt}s\c&amp;quot; fi read -t 1 my_reply (( $?</description>
+    </item>
+    
+    <item>
+      <title>Bash Scripting - Best Practices</title>
+      <link>https://victorbrca.github.io/blog/2015/12/18/bash-scripting---best-practices/</link>
+      <pubDate>Fri, 18 Dec 2015 18:10:57 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/2015/12/18/bash-scripting---best-practices/</guid>
+      <description>Bash Scripting - Best Practices 1 - Readability 1.1 - Indentation There are 3 commonly used indentation practices for Bash (I prefer the first method, however all 3 are &amp;laquo;accepted&amp;raquo;):
+ 2 spaces 4 spaces tabs (usually 8 spaces)
+  All examples will be shown using the first indentation method, however for reference here&amp;rsquo;s a comparison between all 3.
+Example:
+## 2 spaces if ... command else ... command fi ## 4 spaces if .</description>
     </item>
     
   </channel>
