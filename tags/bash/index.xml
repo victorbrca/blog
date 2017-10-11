@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bash on Victor&#39;s Blog</title>
+    <link>https://victorbrca.github.io/blog/tags/bash/</link>
+    <description>Recent content in Bash on Victor&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>(c) 2016 Copyright my blog</copyright>
+    <lastBuildDate>Tue, 26 Sep 2017 22:46:27 -0400</lastBuildDate>
+    
+	<atom:link href="https://victorbrca.github.io/blog/tags/bash/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Bash Special Parameters</title>
+      <link>https://victorbrca.github.io/blog/2017/09/26/bash-special-parameters/</link>
+      <pubDate>Tue, 26 Sep 2017 22:46:27 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/2017/09/26/bash-special-parameters/</guid>
+      <description>Special parameters are set by the shell to store information about aspects of its current state, such as the number of arguments and the exit code of the last command. Special parameters can only be referenced and cannot have it&amp;rsquo;s value assigned.
+Special parameters are: $*, $@, $#, $$, $!, $?, $0, $-, $_
+   Parameter Definition     $* List of arguments (as a string)   $@ List of arguments (as an array)   $# Number of positional parameters   $$ PID of the current shell   $!</description>
+    </item>
+    
+    <item>
+      <title>Additional Status for Vim With Powerline</title>
+      <link>https://victorbrca.github.io/blog/2017/09/20/additional-status-for-vim-with-powerline/</link>
+      <pubDate>Wed, 20 Sep 2017 13:26:46 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/2017/09/20/additional-status-for-vim-with-powerline/</guid>
+      <description>Would you like to have more information displayed while reading files in VIM? Powerline is a great utility for that.
+In it&amp;rsquo;s default config, it displays:
+ Current mode (normal, insert, visual) Git branch File name File encoding Script type File view percentage Line number  To install it Arch: sudo pacman -Ss python-powerline powerline  Add the line below to your ~/.vimrc
+set laststatus=2  Note: If you get the error below</description>
+    </item>
+    
+    <item>
+      <title>Bash: Parameter Expansion (Substitution)</title>
+      <link>https://victorbrca.github.io/blog/2017/09/19/bash-parameter-expansion/</link>
+      <pubDate>Tue, 19 Sep 2017 01:31:32 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/2017/09/19/bash-parameter-expansion/</guid>
+      <description>Default Usage ${PARAMETER}
+Expand parameter value. It can be used for:
+ Separating characters from variable names  cd /home/${user}  Positional parameter higher than 9  echo &amp;quot;Argument 10 is: ${10}&amp;quot;   Indirection ${!PARAMETER}
+Expands to the value of the variable named by the value of parameter.
+var=var1 var1=temp $ echo ${!var} temp  Case Modification ${PARAMETER^}, ${PARAMETER^^} ${PARAMETER,}, ${PARAMETER,,} ${PARAMETER~}, ${PARAMETER~~}
+|Operator|Action| |&amp;ndash;|&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;| |^|Changes first character to upper case| |^^|Changes all characters to upper case| |,|Changes first character to lower case| |,,|Changes all characters to lower case| |~|Inverts case of first character| |~~|Inverts case of all characters|</description>
+    </item>
+    
+    <item>
+      <title>Alternatives to Top</title>
+      <link>https://victorbrca.github.io/blog/2017/08/30/alternatives-to-top/</link>
+      <pubDate>Wed, 30 Aug 2017 01:34:30 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/2017/08/30/alternatives-to-top/</guid>
+      <description>Looking for alternatives to your usual top command? Here are some options.
+htop htop is based on ncurses and is compatible with most Linux (and Unix) systems. It&amp;rsquo;s also in most the official repos for most distros.
+Features: - Mouse clicks (due to ncurses) - Defaults to multi-CPU view - Memory shown in GB
+Website: http://hisham.hm/htop/
+vtop vtop takes more of a graphical approach to top, while concentrating more on simplicity.</description>
+    </item>
+    
+    <item>
+      <title>Bash - Command Substitution, Subshell and Codeblock</title>
+      <link>https://victorbrca.github.io/blog/2017/01/11/bash-command-substitution-subshell-and-codeblock/</link>
+      <pubDate>Wed, 11 Jan 2017 01:38:41 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/2017/01/11/bash-command-substitution-subshell-and-codeblock/</guid>
+      <description>Bash - Command Substitution, Subshell and Codeblock
+Quick and simple differences between using $(..), (..) and {..;}.
+ $(command) or `command` - Command substitution (the output of a command replaces the command name) and is executed in a subshell. Please give preference to $(..) for better readability ( command ) - Command list is executed in a subshell { command ;} - Command list is executed in the current shell  Executing code</description>
+    </item>
+    
+  </channel>
+</rss>

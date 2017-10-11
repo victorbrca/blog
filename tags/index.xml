@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Victor&#39;s Blog</title>
+    <link>https://victorbrca.github.io/blog/tags/</link>
+    <description>Recent content in Tags on Victor&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>(c) 2016 Copyright my blog</copyright>
+    <lastBuildDate>Sat, 23 Sep 2017 22:47:40 -0400</lastBuildDate>
+    
+	<atom:link href="https://victorbrca.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Arch</title>
+      <link>https://victorbrca.github.io/blog/tags/arch/</link>
+      <pubDate>Sat, 23 Sep 2017 22:47:40 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/tags/arch/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Bash</title>
+      <link>https://victorbrca.github.io/blog/tags/bash/</link>
+      <pubDate>Tue, 26 Sep 2017 22:46:27 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/tags/bash/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hardware</title>
+      <link>https://victorbrca.github.io/blog/tags/hardware/</link>
+      <pubDate>Sat, 23 Sep 2017 22:47:40 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/tags/hardware/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://victorbrca.github.io/blog/tags/linux/</link>
+      <pubDate>Fri, 06 Oct 2017 18:46:20 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Markdown</title>
+      <link>https://victorbrca.github.io/blog/tags/markdown/</link>
+      <pubDate>Sun, 24 Sep 2017 22:46:02 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/tags/markdown/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Network</title>
+      <link>https://victorbrca.github.io/blog/tags/network/</link>
+      <pubDate>Fri, 06 Oct 2017 18:46:20 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/tags/network/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Vim</title>
+      <link>https://victorbrca.github.io/blog/tags/vim/</link>
+      <pubDate>Wed, 20 Sep 2017 13:26:46 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/tags/vim/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
