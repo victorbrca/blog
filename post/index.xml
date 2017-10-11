@@ -122,17 +122,6 @@ vtop vtop takes more of a graphical approach to top, while concentrating more on
     
     <item>
       <title>Bash - Command Substitution, Subshell and Codeblock</title>
-      <link>https://victorbrca.github.io/blog/2017/01/11/bash---command-substitution-subshell-and-codeblock/</link>
-      <pubDate>Wed, 11 Jan 2017 17:41:09 -0400</pubDate>
-      
-      <guid>https://victorbrca.github.io/blog/2017/01/11/bash---command-substitution-subshell-and-codeblock/</guid>
-      <description>Quick and simple differences between using $(..), (..) and {..;}.
- $(command) or `command` - Command substitution (the output of a command replaces the command name) and is executed in a subshell. Please give preference to $(..) for better readability ( command ) - Command list is executed in a subshell { command ;} - Command list is executed in the current shell  Executing code
-$ ( echo 123 ) 123 $ $(echo 123) # this executes the output of the command 123: command not found $ { echo 123 ;} 123  Fiding subshell level with built-in BASH_SUBSHELL variable</description>
-    </item>
-    
-    <item>
-      <title>Bash - Command Substitution, Subshell and Codeblock</title>
       <link>https://victorbrca.github.io/blog/2017/01/11/bash-command-substitution-subshell-and-codeblock/</link>
       <pubDate>Wed, 11 Jan 2017 01:38:41 -0400</pubDate>
       
