@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Markdown on Victor&#39;s Blog</title>
-    <link>https://victorbrca.github.io/blog/tags/markdown/</link>
+    <link>/tags/markdown/</link>
     <description>Recent content in Markdown on Victor&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2016 Copyright my blog</copyright>
     <lastBuildDate>Sun, 24 Sep 2017 22:46:02 -0400</lastBuildDate>
     
-	<atom:link href="https://victorbrca.github.io/blog/tags/markdown/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/markdown/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Atom as Markdown Editor</title>
-      <link>https://victorbrca.github.io/blog/2017/09/24/atom-as-markdown-editor/</link>
+      <link>/2017/09/24/atom-as-markdown-editor/</link>
       <pubDate>Sun, 24 Sep 2017 22:46:02 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/2017/09/24/atom-as-markdown-editor/</guid>
+      <guid>/2017/09/24/atom-as-markdown-editor/</guid>
       <description>I have been looking for a good Markdown editor for quite a while, and after a lot of research, I finally I found one.
 Some of the key features that were very important to me on a Markdown editor were:
  Live preview File browser (sidebar) GitHub flavored Fast and non laggy preview  And not surprisingly, Atom from GitHub was my solution.

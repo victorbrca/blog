@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Victor&#39;s Blog </title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="" />
+
+<meta name="keywords" content="">
+
+
+<meta property="og:title" content="Victor&#39;s Blog ">
+<meta property="og:site_name" content="Victor&#39;s Blog"/>
+<meta property="og:url" content="/" />
+<meta property="og:locale" content="en">
+
+
+<meta property="og:type" content="website" />
+
+
+
+<link href="/index.xml" rel="alternate" type="application/rss+xml" title="Victor&#39;s Blog" />
+
+<link rel="canonical" href="/" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/touch-icon-144-precomposed.png">
+<link rel="icon" href="/favicon.png">
+<meta name="generator" content="Hugo 0.29" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+
+
+    <link rel="stylesheet" href="/css/bootswatch/default/bootstrap.min.css">
+
+
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css">
+
+
+<link rel="stylesheet" href="/css/style_custom.css">
+
+
+
+  <link rel="stylesheet" href="/css/highlight/github.css">
+
+
+</head>
+<body class="map[name:default]" data-ng-app="myapp" data-ng-controller="MyController" data-ng-mouseleave="MouseLeave($event)">
+    <header id="main-header">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        
+        <a class="navbar-brand" href="/">
+          Victor&#39;s Blog
+          
+          
+          </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            
+            
+            <li class="">
+
+              <a href="https://victorbrca.github.io/blog/" >
+                
+                Home
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://victorbrca.github.io/blog/about/" >
+                
+                About
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="http://geekit.ca/" >
+                
+                Professional
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://victorbrca.github.io/personal" >
+                
+                Personal
+              </a>
+            </li>
+            
+            
+            
+          </ul>
+        </div>
+        
+      </div>
+    </nav>
+  </header>
+
+
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-sm-9">
+        
+        
+          <div>
+  <h2><a href="/2017/09/26/bash-special-parameters/">Bash Special Parameters</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2017-09-26">26 Sep, 2017</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/bash" class="label label-primary">Bash</a>
+  
+  <a href="/tags/linux" class="label label-primary">Linux</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  <p>Special parameters are set by the shell to store information about aspects of its current state, such as the number of arguments and the exit code of the last command. Special parameters can only be referenced and cannot have it&rsquo;s value assigned.</p>
+
+<p>Special parameters are: <code>$*, $@, $#, $$, $!, $?, $0, $-, $_</code></p>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Definition</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>$*</td>
+<td>List of arguments (as a string)</td>
+</tr>
+
+<tr>
+<td>$@</td>
+<td>List of arguments (as an array)</td>
+</tr>
+
+<tr>
+<td>$#</td>
+<td>Number of positional parameters</td>
+</tr>
+
+<tr>
+<td>$$</td>
+<td>PID of the current shell</td>
+</tr>
+
+<tr>
+<td>$!</td>
+<td>PID of the last command executed in the background</td>
+</tr>
+
+<tr>
+<td>$?</td>
+<td>Exit code of the last-executed command</td>
+</tr>
+
+<tr>
+<td>$0</td>
+<td>Path to the currently running script</td>
+</tr>
+
+<tr>
+<td>$-</td>
+<td>Current shell option flags</td>
+</tr>
+
+<tr>
+<td>$_</td>
+<td>Gives the last argument to the previous command</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=%2f2017%2f09%2f26%2fbash-special-parameters%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Bash%20Special%20Parameters&amp;url=%2f2017%2f09%2f26%2fbash-special-parameters%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=%2f2017%2f09%2f26%2fbash-special-parameters%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=%2f2017%2f09%2f26%2fbash-special-parameters%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2f2017%2f09%2f26%2fbash-special-parameters%2f&amp;title=Bash%20Special%20Parameters" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Bash%20Special%20Parameters&amp;body=Check out this site %2f2017%2f09%2f26%2fbash-special-parameters%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="/2017/09/24/atom-as-markdown-editor/" title="Atom as Markdown Editor">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="/2017/10/06/how-to-view-dns-calls-made-by-processes/" title="How to View DNS Calls Made by Processes">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
+  <h2><a href="/2017/09/24/atom-as-markdown-editor/">Atom as Markdown Editor</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2017-09-24">24 Sep, 2017</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/markdown" class="label label-primary">Markdown</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  <p>I have been looking for a good Markdown editor for quite a while, and after a lot of research, I finally I found one.</p>
+
+<p>Some of the key features that were very important to me on a Markdown editor were:</p>
+
+<ul>
+<li>Live preview</li>
+<li>File browser (sidebar)</li>
+<li>GitHub flavored</li>
+<li>Fast and non laggy preview</li>
+</ul>
+
+<p>And not surprisingly, <a href="https://atom.io/">Atom</a> from GitHub was my solution.</p>
+
+<p><img src="https://i.imgur.com/NNfA8MJ.gif" alt="Imgur" /></p>
+
+<p>You might also want to:</p>
+
+<ul>
+<li>Change the preferences of the already installed package <a href="https://github.com/atom/markdown-preview">markdown-preview</a> to GitHub flavored</li>
+</ul>
+
+<p><img src="https://imgur.com/eyJYliK.gif" alt="" /></p>
+
+<ul>
+<li>And install <a href="https://atom.io/packages/markdown-preview-auto-open">markdown-preview-auto-open</a></li>
+</ul>
+
+<pre><code>apm install markdown-preview-auto-open
+</code></pre>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=%2f2017%2f09%2f24%2fatom-as-markdown-editor%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Atom%20as%20Markdown%20Editor&amp;url=%2f2017%2f09%2f24%2fatom-as-markdown-editor%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=%2f2017%2f09%2f24%2fatom-as-markdown-editor%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=%2f2017%2f09%2f24%2fatom-as-markdown-editor%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2f2017%2f09%2f24%2fatom-as-markdown-editor%2f&amp;title=Atom%20as%20Markdown%20Editor" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Atom%20as%20Markdown%20Editor&amp;body=Check out this site %2f2017%2f09%2f24%2fatom-as-markdown-editor%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="/2017/09/23/gnome-touchpad-settings-missing-in-arch-xps-13/" title="Gnome Touchpad Settings Missing in Arch Xps 13">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="/2017/09/26/bash-special-parameters/" title="Bash Special Parameters">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
+  <h2><a href="/2017/09/23/gnome-touchpad-settings-missing-in-arch-xps-13/">Gnome Touchpad Settings Missing in Arch Xps 13</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2017-09-23">23 Sep, 2017</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="/tags/arch" class="label label-primary">Arch</a>
+  
+  <a href="/tags/hardware" class="label label-primary">Hardware</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  <p>I had an issue where the Gnome extension &lsquo;<a href="https://extensions.gnome.org/extension/131/touchpad-indicator/">Touchpad Indicator</a>&rsquo; stopped working on my xps 13 (Arch). After looking a bit further, it seems that the Gnome Touchpad settings had also stopped working. All I could see was the mouse settings, and the touchpad section was completelly gone.</p>
+
+<hr />
+
+<p><strong>Solution:</strong></p>
+
+<p>With Gnome 3.20, <code>xf86-input-synaptics</code> is not longer supported, and you should use <code>xf86-input-libinput</code> instead.</p>
+
+<p>You can check what is installed on your Arch system with <code>pacman -Q | grep input</code>. In my case, I had both packages installed:</p>
+
+<pre><code>$ pacman -Q | grep input
+inputproto 2.3.2-1
+libinput 1.8.2-1
+xf86-input-libinput 0.26.0-1
+xf86-input-synaptics 1.9.0-1
+xorg-xinput 1.6.2-1
+</code></pre>
+
+<p>Remove <code>xf86-input-synaptics</code> and any configuration file (like <code>/etc/X11/xorg.conf.d/50-synaptics.conf</code>), install <code>xf86-input-libinput</code> and reboot. That should get your configuration working again.</p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=%2f2017%2f09%2f23%2fgnome-touchpad-settings-missing-in-arch-xps-13%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Gnome%20Touchpad%20Settings%20Missing%20in%20Arch%20Xps%2013&amp;url=%2f2017%2f09%2f23%2fgnome-touchpad-settings-missing-in-arch-xps-13%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=%2f2017%2f09%2f23%2fgnome-touchpad-settings-missing-in-arch-xps-13%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=%2f2017%2f09%2f23%2fgnome-touchpad-settings-missing-in-arch-xps-13%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2f2017%2f09%2f23%2fgnome-touchpad-settings-missing-in-arch-xps-13%2f&amp;title=Gnome%20Touchpad%20Settings%20Missing%20in%20Arch%20Xps%2013" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Gnome%20Touchpad%20Settings%20Missing%20in%20Arch%20Xps%2013&amp;body=Check out this site %2f2017%2f09%2f23%2fgnome-touchpad-settings-missing-in-arch-xps-13%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="/2017/09/20/additional-status-for-vim-with-powerline/" title="Additional Status for Vim With Powerline">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="/2017/09/24/atom-as-markdown-editor/" title="Atom as Markdown Editor">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+        
+<nav>
+  <ul class="pagination">
+    
+
+
+<li >
+  <a aria-label="First" href="//">
+    <span aria-hidden="true">&laquo;&laquo;</span>
+  </a>
+</li>
+
+<li >
+  <a aria-label="Previous" href="//">
+    <span aria-hidden="true">&laquo;</span>
+    </a>
+</li>
+
+<li >
+  <a href="//">
+    1
+    </a>
+</li>
+
+<li  class="active" >
+  <a href="//page/2/">
+    2
+    </a>
+</li>
+
+<li >
+  <a href="//page/3/">
+    3
+    </a>
+</li>
+
+<li >
+  <a href="//page/4/">
+    4
+    </a>
+</li>
+
+<li >
+  <a href="//page/5/">
+    5
+    </a>
+</li>
+
+
+<li >
+  <a aria-label="Next" href="//page/3/">
+    <span aria-hidden="true">&raquo;</span>
+    </a>
+</li>
+<li >
+  <a aria-label="Last" href="//page/5/">
+    <span aria-hidden="true">&raquo;&raquo;</span>
+  </a>
+</li>
+
+
+  </ul>
+</nav>
+
+
+      </div>
+      
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+          <div>
+  
+
+   
+    <div class="section">
+      <header><div class="title"></div></header>
+      <div class="content">
+        <img style="float: center; padding-right: 5px;" src="/img/avatar.jpg" hspace="20" width="240"></img>
+        <br/>
+        <div class="social-icons" style="display:inline-block; text-align: center; width:100%;">
+        <a href="https://github.com/victorbrca" target="_blank"><i class="fa fa-github fa-2x" style="padding-right: 5px; padding-left: 5px" aria-hidden="true"></i></a>
+        <a href="https://twitter.com/victorbrca" target="_blank"><i class="fa fa-twitter fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <a href="http://www.linkedin.com/in/victormendonca" target="_blank"><i class="fa fa-linkedin-square fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <a href="https://www.facebook.com/victormendonca" target="_blank"><i class="fa fa-facebook-official fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <div>
+        <br/>
+      </div>
+    </div>
+
+    
+      
+      
+      <div class="section taxonomies">
+        <header><div class="title"><b>Tag</b></div></header>
+
+        <div class="content1">
+          <ul>
+            <li><a href="/Tags/linux">linux</a></li><li><a href="/Tags/bash">bash</a></li><li><a href="/Tags/arch">arch</a></li><li><a href="/Tags/git">git</a></li><li><a href="/Tags/gitlab">gitlab</a></li><li><a href="/Tags/hardware">hardware</a></li><li><a href="/Tags/markdown">markdown</a></li><li><a href="/Tags/netcat">netcat</a></li><li><a href="/Tags/network">network</a></li><li><a href="/Tags/networking">networking</a></li>
+          </ul>
+        </div>
+      </div>
+      
+    
+      
+      
+    
+
+    <br />
+
+    <div class="section">
+      <header><div class="title"><b>Latest Posts</b></div></header>
+      <div class="content">
+        <ul>
+        
+          <li>
+          <a href="/2017/10/11/how-to-create-a-quick-web-server/">How to Create a Quick Web Server</a>
+          </li>
+        
+          <li>
+          <a href="/2017/10/11/how-to-load-gitlab-inside-an-iframe/">How to Load Gitlab Inside an Iframe</a>
+          </li>
+        
+          <li>
+          <a href="/2017/10/06/how-to-view-dns-calls-made-by-processes/">How to View DNS Calls Made by Processes</a>
+          </li>
+        
+          <li>
+          <a href="/2017/09/26/bash-special-parameters/">Bash Special Parameters</a>
+          </li>
+        
+          <li>
+          <a href="/2017/09/24/atom-as-markdown-editor/">Atom as Markdown Editor</a>
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+
+    <br />
+
+    
+    <div class="section">
+    
+      
+      <div class="content" align="center" >
+        <a class="twitter-timeline" data-width="240" data-height="450" href="https://twitter.com/victorbrca">Tweets by victorbrca</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+    </div>
+
+</div>
+
+        </div>
+      
+    </div>
+
+  </div>
+
+    
+<footer class="footer hidden-print">
+  <div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+           <div class="pull-left">
+  <a class="toplink" href="javascript:" id="return-to-top">back to top</a>
+</div>
+<div class="pull-right">
+
+<a href="/disclaimer/">Disclaimer</a> <i>&middot;</i>
+
+<a href="/terms/">Terms</a> 
+
+</div>
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+              
+    
+<div class="container footline">
+    <small>
+  code with <i class='fa fa-heart'></i>
+
+</small>
+</div>
+
+
+    
+<div class="container copyright">
+    <small>
+  &copy; 2016 Copyright my blog
+
+  </small>
+</div>
+
+
+
+        </div>
+    </div>
+  </div>
+</footer>
+
+    
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+
+<script src="/js/highlight.pack.js"></script>
+<script src="/js/site.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script>
+  var _gaq=[['_setAccount','Your Google Analytics tracking code'],['_trackPageview']];
+  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+  g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+  s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+
+<script>
+var ENABLE_POPOVER =  false , 
+EXPIRE_COOKIE =  5 , 
+SHOW_MODAL_TIMEOUT =  10000 , 
+MOUSE_LEAVE =  true , 
+MODAL_SIZE = "", 
+POST_URL = "https://zapier.com/hooks/catch/1227563/", 
+SIGNUP_HEADER = "Join Our Newsletter",
+HEADER_IMAGE = "//placehold.it/1000x600",
+IMG_DESCRIPTION = "Placeholder image for this popover modal optin form",
+SIGNUP_TEXT = "Signup today for free and be the first to get notified on new updates.",
+INPUT_PLACEHOLDER = "Enter your email",
+SUBMIT_BUTTON = "Subscribe",
+SUCCESS_MESSAGE = "Thanks for your subscription!",
+ERROR_MESSAGE = "Submitting form failed!",
+OPTIN =  true ,
+COOKIE_NAME = "mycookie1",
+CONTENTLANGUAGE = ""; 
+</script>
+
+
+
+
+
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/config/TeX-AMS-MML_HTMLorMML.js"></script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    for(var all in MathJax.Hub.getAllJax()) {
+        all.SourceElement().parentNode.className += ' has-jax';
+
+    }
+});
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+
