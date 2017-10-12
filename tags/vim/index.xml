@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Vim on Victor&#39;s Blog</title>
-    <link>/tags/vim/</link>
+    <link>https://victorbrca.github.io/blog/tags/vim/</link>
     <description>Recent content in Vim on Victor&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2016 Copyright my blog</copyright>
     <lastBuildDate>Wed, 20 Sep 2017 13:26:46 -0400</lastBuildDate>
     
-	<atom:link href="/tags/vim/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://victorbrca.github.io/blog/tags/vim/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Additional Status for Vim With Powerline</title>
-      <link>/2017/09/20/additional-status-for-vim-with-powerline/</link>
+      <link>https://victorbrca.github.io/blog/2017/09/20/additional-status-for-vim-with-powerline/</link>
       <pubDate>Wed, 20 Sep 2017 13:26:46 -0400</pubDate>
       
-      <guid>/2017/09/20/additional-status-for-vim-with-powerline/</guid>
+      <guid>https://victorbrca.github.io/blog/2017/09/20/additional-status-for-vim-with-powerline/</guid>
       <description>Would you like to have more information displayed while reading files in VIM? Powerline is a great utility for that.
 In it&amp;rsquo;s default config, it displays:
  Current mode (normal, insert, visual) Git branch File name File encoding Script type File view percentage Line number  To install it Arch: sudo pacman -Ss python-powerline powerline  Add the line below to your ~/.vimrc
