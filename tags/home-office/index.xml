@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Home Office on Victor&#39;s Blog</title>
+    <link>https://victorbrca.github.io/blog/tags/home-office/</link>
+    <description>Recent content in Home Office on Victor&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>(c) 2016 Copyright my blog</copyright>
+    <lastBuildDate>Thu, 25 Jan 2018 11:09:12 -0500</lastBuildDate>
+    
+	<atom:link href="https://victorbrca.github.io/blog/tags/home-office/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Custom Stand-up Desk Build</title>
+      <link>https://victorbrca.github.io/blog/2018/01/25/custom-standup-desk-build/</link>
+      <pubDate>Thu, 25 Jan 2018 11:09:12 -0500</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/2018/01/25/custom-standup-desk-build/</guid>
+      <description>After commuting close to 1000kms a week for 6 years, I have decided to the the leap and move to Toronto. After all, I was here around 4 nights a week, and having to commute back and forward between Mississauga and Toronto had become a hassle. This would also increas my work drive (from 85kms each way to 115kms), but luckily my client agreed for me to work remote 4 days of the week, with made my move even more possible.</description>
+    </item>
+    
+  </channel>
+</rss>
