@@ -5,32 +5,30 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title>Bash: Parameter Expansion (Substitution)  &middot; Victor&#39;s Blog</title>
+  <title>This Is a Test  &middot; Victor&#39;s Blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="description" content="Explanation on manipulating and/or expanding Bash variables" />
+<meta name="description" content="Description" />
 
-<meta name="keywords" content="Bash, Linux, ">
+<meta name="keywords" content="Linux, ">
 
 
-<meta property="og:title" content="Bash: Parameter Expansion (Substitution)  &middot; Victor&#39;s Blog ">
+<meta property="og:title" content="This Is a Test  &middot; Victor&#39;s Blog ">
 <meta property="og:site_name" content="Victor&#39;s Blog"/>
-<meta property="og:url" content="https://victorbrca.github.io/blog/2017/09/19/bash-parameter-expansion/" />
+<meta property="og:url" content="https://victorbrca.github.io/blog/2018/01/26/this-is-a-test/" />
 <meta property="og:locale" content="en">
 
 
 <meta property="og:type" content="article" />
-<meta property="og:description" content="Explanation on manipulating and/or expanding Bash variables"/>
-<meta property="og:article:published_time" content="2017-09-19T01:31:32-04:00" />
-<meta property="og:article:modified_time" content="2017-09-19T01:31:32-04:00" />
+<meta property="og:description" content="Description"/>
+<meta property="og:article:published_time" content="2018-01-26T00:14:30-05:00" />
+<meta property="og:article:modified_time" content="2018-01-26T00:14:30-05:00" />
 
   
-    
-<meta property="og:article:tag" content="Bash">
     
 <meta property="og:article:tag" content="Linux">
     
@@ -40,9 +38,9 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@18440926" />
 <meta name="twitter:creator" content="@18440926" />
-<meta name="twitter:title" content="Bash: Parameter Expansion (Substitution)" />
-<meta name="twitter:description" content="Explanation on manipulating and/or expanding Bash variables" />
-<meta name="twitter:url" content="https://victorbrca.github.io/blog/2017/09/19/bash-parameter-expansion/" />
+<meta name="twitter:title" content="This Is a Test" />
+<meta name="twitter:description" content="Description" />
+<meta name="twitter:url" content="https://victorbrca.github.io/blog/2018/01/26/this-is-a-test/" />
 <meta name="twitter:domain" content="https://victorbrca.github.io/blog/">
   
 
@@ -50,7 +48,7 @@
 
 
 
-<link rel="canonical" href="https://victorbrca.github.io/blog/2017/09/19/bash-parameter-expansion/" />
+<link rel="canonical" href="https://victorbrca.github.io/blog/2018/01/26/this-is-a-test/" />
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://victorbrca.github.io/blog/touch-icon-144-precomposed.png">
 <link rel="icon" href="https://victorbrca.github.io/blog/favicon.png">
 <meta name="generator" content="Hugo 0.30" />
@@ -147,47 +145,45 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
   <div class="text-center">
 
-    <h1>Bash: Parameter Expansion (Substitution)
+    <h1>This Is a Test
 </h1>
 
     <div class="metas">
 <small>
   <i class="fa fa-calendar"></i>
-  <time datetime="2017-09-19">19 Sep, 2017</time>
+  <time datetime="2018-01-26">26 Jan, 2018</time>
 </small>
 
 
   <small>
     &middot; by Victor Mendonça
   
-  &middot; Read in about 3 min
-  &middot; (573 words)
+  &middot; Read in about 1 min
+  &middot; (4 words)
   &middot; 
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2018%2f01%2f26%2fthis-is-a-test%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=Bash%3a%20Parameter%20Expansion%20%28Substitution%29&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=This%20Is%20a%20Test&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2018%2f01%2f26%2fthis-is-a-test%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2018%2f01%2f26%2fthis-is-a-test%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2018%2f01%2f26%2fthis-is-a-test%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f19%2fbash-parameter-expansion%2f&amp;title=Bash%3a%20Parameter%20Expansion%20%28Substitution%29" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2018%2f01%2f26%2fthis-is-a-test%2f&amp;title=This%20Is%20a%20Test" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=Bash%3a%20Parameter%20Expansion%20%28Substitution%29&amp;body=Check out this site https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=This%20Is%20a%20Test&amp;body=Check out this site https%3a%2f%2fvictorbrca.github.io%2fblog%2f2018%2f01%2f26%2fthis-is-a-test%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   </small>
 
 <div class="margin-10">
   <i class="fa fa-tags"></i>
-  
-  <a href="https://victorbrca.github.io/blog/tags/bash" class="label label-primary">Bash</a>
   
   <a href="https://victorbrca.github.io/blog/tags/linux" class="label label-primary">Linux</a>
   
@@ -202,259 +198,7 @@
 </div>
 
       <div class="content">
-  
-
-<h2 id="default-usage">Default Usage</h2>
-
-<p><code>${PARAMETER}</code></p>
-
-<p>Expand parameter value. It can be used for:</p>
-
-<ul>
-<li>Separating characters from variable names
-
-<ul>
-<li><code>cd /home/${user}</code></li>
-</ul></li>
-<li>Positional parameter higher than 9
-
-<ul>
-<li><code>echo &quot;Argument 10 is: ${10}&quot;</code></li>
-</ul></li>
-</ul>
-
-<h2 id="indirection">Indirection</h2>
-
-<p><code>${!PARAMETER}</code></p>
-
-<p>Expands to the value of the variable named by the value of parameter.</p>
-
-<pre><code>var=var1
-var1=temp
-
-$ echo ${!var}
-temp
-</code></pre>
-
-<h2 id="case-modification">Case Modification</h2>
-
-<p><code>${PARAMETER^}, ${PARAMETER^^}</code>
-<code>${PARAMETER,}, ${PARAMETER,,}</code>
-<code>${PARAMETER~}, ${PARAMETER~~}</code></p>
-
-<p>|Operator|Action|
-|&ndash;|&mdash;&mdash;&mdash;&mdash;&ndash;|
-|^|Changes first character to upper case|
-|^^|Changes all characters to upper case|
-|,|Changes first character to lower case|
-|,,|Changes all characters to lower case|
-|~|Inverts case of first character|
-|~~|Inverts case of all characters|</p>
-
-<h2 id="variable-name-prefix-expansion">Variable Name (Prefix) Expansion</h2>
-
-<p><code>${!PREFIX*}</code>
-<code>${!PREFIX@}</code></p>
-
-<p>Expands to a list of all set variable names beginning with the string in <code>PREFIX</code>.</p>
-
-<pre><code>$ echo ${!XDG*}
-XDG_CURRENT_DESKTOP XDG_MENU_PREFIX XDG_RUNTIME_DIR XDG_SEAT XDG_SESSION_DESKTOP XDG_SESSION_ID XDG_SESSION_TYPE XDG_VTNR
-</code></pre>
-
-<h2 id="substring-removal">Substring Removal</h2>
-
-<p><code>${PARAMETER#PATTERN}</code>
-<code>${PARAMETER##PATTERN}</code>
-<code>${PARAMETER%PATTERN}</code>
-<code>${PARAMETER%%PATTERN}</code></p>
-
-<p>With <code>#</code>, it removes the mathing pattern from the beggining of the variable, where <code>#</code> removes the shortest match, and <code>##</code> removes the longest.</p>
-
-<p>Note the empty spaces in the example below.</p>
-
-<pre><code>substr=&quot;the quick brown fox jumps over the lazy dog&quot;
-
-$ echo ${substr#* }
-quick brown fox jumps over the lazy dog
-
-$ echo ${substr##* }
-dog
-</code></pre>
-
-<p>Removing path from a file:</p>
-
-<pre><code>mlog=/var/log/clamav/freshclam.log
-
-$ echo ${mlog##*/}
-freshclam.log
-</code></pre>
-
-<p>The operator <code>%</code> does the same, but at the end of the file.</p>
-
-<pre><code>$ echo ${substr% *}
-the quick brown fox jumps over the lazy
-
-$ echo ${substr%% *}
-the
-</code></pre>
-
-<p>Changing the extension of a file</p>
-
-<pre><code>file=123.txt
-
-$ echo ${file%.*}
-123
-
-$ echo ${file%.*}.log
-123.log
-</code></pre>
-
-<h2 id="search-and-replace">Search and Replace</h2>
-
-<p><code>${PARAMETER/PATTERN/STRING}</code>
-<code>${PARAMETER//PATTERN/STRING}</code>
-<code>${PARAMETER/PATTERN}</code>
-<code>${PARAMETER//PATTERN}</code></p>
-
-<p>The main diffence is that a single <code>/</code> substitutes the first occurrence, while double <code>//</code> substitute all occurences:</p>
-
-<pre><code>$ echo $substr
-the quick brown fox jumps over the lazy dog
-
-$ echo ${substr/the/da}
-da quick brown fox jumps over the lazy dog
-
-$ echo ${substr//the/da}
-da quick brown fox jumps over da lazy dog
-
-$ echo ${substr/the}
-quick brown fox jumps over the lazy dog
-
-$ echo ${substr//the}
-quick brown fox jumps over lazy dog
-</code></pre>
-
-<h3 id="anchoring"><strong>Anchoring</strong></h3>
-
-<p>You can use <code>#</code> and <code>%</code> to anchor to the beginning and end respectively</p>
-
-<pre><code>var1=00000000
-
-$ echo ${var1/#0/1}
-10000000
-
-$ echo ${var1/%0/1}
-00000001
-</code></pre>
-
-<h2 id="offset-and-lenght">Offset and Lenght</h2>
-
-<p><code>${PARAMETER:OFFSET}</code>
-<code>${PARAMETER:OFFSET:LENGTH}</code></p>
-
-<ul>
-<li>Offset removes the amount of characters as specified</li>
-<li>Lenght prints the specified character lenght after offset</li>
-</ul>
-
-<p><strong><em>Note:</em></strong> <em>You can also use a negative value for offset and lenght, which will be calculated from the end of the file</em></p>
-
-<pre><code>$ echo ${substr}
-the quick brown fox jumps over the lazy dog
-123456789...
-</code></pre>
-
-<p>Removes first 9 chars</p>
-
-<pre><code>$ echo ${substr:9}
-brown fox jumps over the lazy dog
-</code></pre>
-
-<p>Removes first 3 chars and print the next 5</p>
-
-<pre><code>$ echo ${substr:4:5}
-quick
-</code></pre>
-
-<h2 id="use-default">Use Default</h2>
-
-<p><code>${PARAMETER:-WORD}</code>
-<code>${PARAMETER-WORD}</code></p>
-
-<p>If parameter unset (or null if using <code>:</code>), expand to word.</p>
-
-<pre><code>$ my_var=gru
-$ echo ${my_var:-yyz}
-gru
-
-$ unset my_var
-$ echo ${my_var:-yyz}
-yyz
-</code></pre>
-
-<h2 id="use-alternate-value">Use Alternate Value</h2>
-
-<p><code>${PARAMETER:+WORD}</code>
-<code>${PARAMETER+WORD}</code></p>
-
-<p>If parameter <strong>is set</strong> (or null if using <code>:</code>), expand to word.</p>
-
-<pre><code>$ my_var=gru
-$ echo ${my_var:+yyz}
-yyz
-
-$ unset my_var
-$ echo ${my_var:+yyz}
-
-</code></pre>
-
-<h2 id="use-default-and-assign">Use Default And Assign</h2>
-
-<p><code>${PARAMETER:=WORD}</code>
-<code>${PARAMETER=WORD}</code></p>
-
-<p>If parameter unset (or null if using <code>:</code>), expand to word and assign parameter to the value of word.</p>
-
-<pre><code>my_var=gru
-
-$ echo ${my_var:=yyz}
-gru
-
-$ unset my_var
-$ echo ${my_var:=yyz}
-yyz
-
-$ echo $my_var
-yyz
-</code></pre>
-
-<h2 id="display-error">Display Error</h2>
-
-<p><code>${PARAMETER:?WORD}</code>
-<code>${PARAMETER?WORD}</code></p>
-
-<p>If parameter unset (or null if using <code>:</code>), display error with word as appendix, otherwise expand parameter.</p>
-
-<pre><code>my_var=gru
-
-$ echo ${my_var:?Not set}
-gru
-
-$ unset my_var
-$ echo ${my_var:?Not set}
-bash: my_var: Not set
-</code></pre>
-
-<hr />
-
-<p><strong>Reference:</strong></p>
-
-<ul>
-<li><a href="http://wiki.bash-hackers.org/syntax/pe">wiki.bash-hackers.org</a></li>
-<li><a href="http://www.tldp.org/LDP/abs/html/parameter-substitution.html">tldp.org</a></li>
-<li><a href="https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html">gnu.org</a></li>
-</ul>
+  <p>Here goes my post</p>
 
 </div>
 
@@ -462,22 +206,22 @@ bash: my_var: Not set
       <footer>
   
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2018%2f01%2f26%2fthis-is-a-test%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=Bash%3a%20Parameter%20Expansion%20%28Substitution%29&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=This%20Is%20a%20Test&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2018%2f01%2f26%2fthis-is-a-test%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2018%2f01%2f26%2fthis-is-a-test%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2018%2f01%2f26%2fthis-is-a-test%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f19%2fbash-parameter-expansion%2f&amp;title=Bash%3a%20Parameter%20Expansion%20%28Substitution%29" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2018%2f01%2f26%2fthis-is-a-test%2f&amp;title=This%20Is%20a%20Test" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=Bash%3a%20Parameter%20Expansion%20%28Substitution%29&amp;body=Check out this site https%3a%2f%2fvictorbrca.github.io%2fblog%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=This%20Is%20a%20Test&amp;body=Check out this site https%3a%2f%2fvictorbrca.github.io%2fblog%2f2018%2f01%2f26%2fthis-is-a-test%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -486,18 +230,12 @@ bash: my_var: Not set
     <nav><ul class="pager">
     
         <li class="previous">
-          <a href="https://victorbrca.github.io/blog/2017/08/30/alternatives-to-top/" title="Alternatives to Top">
+          <a href="https://victorbrca.github.io/blog/2017/12/25/custom-standup-desk-build/" title="Custom Stand-up Desk Build">
             <span aria-hidden="true">&larr;</span>Previous
           </a>
         </li>
     
 
-    
-      <li class="next">
-        <a href="https://victorbrca.github.io/blog/2017/09/20/additional-status-for-vim-with-powerline/" title="Additional Status for Vim With Powerline">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
     
     </ul> </nav>
   
@@ -575,6 +313,10 @@ bash: my_var: Not set
         <ul>
         
           <li>
+          <a href="https://victorbrca.github.io/blog/2018/01/26/this-is-a-test/">This Is a Test</a>
+          </li>
+        
+          <li>
           <a href="https://victorbrca.github.io/blog/2017/12/25/custom-standup-desk-build/">Custom Stand-up Desk Build</a>
           </li>
         
@@ -588,10 +330,6 @@ bash: my_var: Not set
         
           <li>
           <a href="https://victorbrca.github.io/blog/2017/10/06/how-to-view-dns-calls-made-by-processes/">How to View DNS Calls Made by Processes</a>
-          </li>
-        
-          <li>
-          <a href="https://victorbrca.github.io/blog/2017/09/26/bash-special-parameters/">Bash Special Parameters</a>
           </li>
         
         </ul>
