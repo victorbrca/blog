@@ -32,7 +32,7 @@
 <link rel="canonical" href="https://victorbrca.github.io/blog/" />
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://victorbrca.github.io/blog/touch-icon-144-precomposed.png">
 <link rel="icon" href="https://victorbrca.github.io/blog/favicon.png">
-<meta name="generator" content="Hugo 0.36" />
+<meta name="generator" content="Hugo 0.40.3" />
 
   <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
@@ -125,6 +125,132 @@
     <div class="row">
       <div class="col-sm-9">
         
+        
+          <div>
+  <h2><a href="https://victorbrca.github.io/blog/2016/10/19/how-to-create-a-prompt-with-timeout-in-bash/">How to Create a Prompt With Timeout in Bash</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2016-10-19">19 Oct, 2016</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://victorbrca.github.io/blog/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://victorbrca.github.io/blog/tags/bash" class="label label-primary">Bash</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  <p>Here&rsquo;s a quick function that will display a prompt with timeout in a bash script:</p>
+
+<pre><code class="language-bash">_myCountdownFunction () {
+echo -e &quot;Hit \&quot;Ctrl+c\&quot; to quit or \&quot;Enter\&quot; to continue...    \c&quot;
+cnt=5
+while (( cnt &gt;= 0 )) ; do
+  if (( cnt &lt; 9 )) ; then
+    echo -e &quot;\b\b${cnt}s\c&quot;
+  elif (( cnt == 9 )) ; then
+    echo -e &quot;\b\b\b ${cnt}s\c&quot;
+  elif (( cnt &lt;= 99 )) ; then
+    echo -e &quot;\b\b\b\b ${cnt}s\c&quot;
+  elif (( cnt &lt; 999 )) ; then
+    echo -e &quot;\b\b\b\b${cnt}s\c&quot;
+  fi
+  read -t 1 my_reply
+  (( $? == 0 )) &amp;&amp; exit 1
+  let cnt-=1
+done
+}
+</code></pre>
+
+<p>The user will see the following message on his terminal with the seconds counting down in place:</p>
+
+<pre><code>Hit &quot;Ctrl+c&quot; to quit or &quot;Enter&quot; to continue... 5s
+</code></pre>
+
+<p>At the end of the specified time in &lsquo;cnt&rsquo;, the script (where the function would be) will continue executing, and if the user hits &laquo;Ctrl+c&raquo; before that, it will exit (both script and function).</p>
+
+<p>The function supports up to 999s (which should be enough).</p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2016%2f10%2f19%2fhow-to-create-a-prompt-with-timeout-in-bash%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Create%20a%20Prompt%20With%20Timeout%20in%20Bash&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2016%2f10%2f19%2fhow-to-create-a-prompt-with-timeout-in-bash%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2016%2f10%2f19%2fhow-to-create-a-prompt-with-timeout-in-bash%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2016%2f10%2f19%2fhow-to-create-a-prompt-with-timeout-in-bash%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fvictorbrca.github.io%2fblog%2f2016%2f10%2f19%2fhow-to-create-a-prompt-with-timeout-in-bash%2f&amp;title=How%20to%20Create%20a%20Prompt%20With%20Timeout%20in%20Bash" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20Create%20a%20Prompt%20With%20Timeout%20in%20Bash&amp;body=Check out this site https%3a%2f%2fvictorbrca.github.io%2fblog%2f2016%2f10%2f19%2fhow-to-create-a-prompt-with-timeout-in-bash%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://victorbrca.github.io/blog/2015/12/18/bash-scripting---best-practices/" title="Bash Scripting - Best Practices">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://victorbrca.github.io/blog/2016/11/02/how-to-record-and-share-a-terminal-session/" title="How to Record and Share a Terminal Session">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
         
           <div>
   <h2><a href="https://victorbrca.github.io/blog/2015/12/18/bash-scripting---best-practices/">Bash Scripting - Best Practices</a>
@@ -724,6 +850,10 @@ ls 123 &gt; /dev/null 2&gt;&amp;1
         <ul>
         
           <li>
+          <a href="https://victorbrca.github.io/blog/2018/05/14/creating-a-simple-systemd-user-service/">Creating a Simple Systemd User Service</a>
+          </li>
+        
+          <li>
           <a href="https://victorbrca.github.io/blog/2018/02/09/how-to-scan-for-rtsp-urls/">How to Scan for RTSP Urls</a>
           </li>
         
@@ -737,10 +867,6 @@ ls 123 &gt; /dev/null 2&gt;&amp;1
         
           <li>
           <a href="https://victorbrca.github.io/blog/2017/10/11/how-to-load-gitlab-inside-an-iframe/">How to Load Gitlab Inside an Iframe</a>
-          </li>
-        
-          <li>
-          <a href="https://victorbrca.github.io/blog/2017/10/06/how-to-view-dns-calls-made-by-processes/">How to View DNS Calls Made by Processes</a>
           </li>
         
         </ul>
