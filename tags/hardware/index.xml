@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2016 Copyright my blog</copyright>
-    <lastBuildDate>Mon, 25 Dec 2017 11:09:12 -0500</lastBuildDate>
+    <lastBuildDate>Tue, 26 Jun 2018 18:36:26 -0400</lastBuildDate>
     
 	<atom:link href="https://victorbrca.github.io/blog/tags/hardware/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Installing Kuman 3</title>
+      <link>https://victorbrca.github.io/blog/2018/06/26/installing-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b/</link>
+      <pubDate>Tue, 26 Jun 2018 18:36:26 -0400</pubDate>
+      
+      <guid>https://victorbrca.github.io/blog/2018/06/26/installing-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b/</guid>
+      <description>Simple instructions (assuming a new Raspbian install) to install Kuman 3.5 TFT LCD on Raspberry Pi 3 Model B.
+a. Download Rasbian strech (with desktop) and extract the .img file from the downloaded zip (it&amp;rsquo;s always good to also check the hash of the downloaded file)
+b. Insert the SD card and make note of the device being used (make sure you get this right not to overwrite your OS)</description>
+    </item>
     
     <item>
       <title>Custom Stand-up Desk Build</title>
