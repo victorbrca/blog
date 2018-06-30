@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://victorbrca.github.io/blog/2018/06/29/how-to-fix-sddm-on-multiple-screens/</loc>
+    <lastmod>2018-06-29T19:20:45-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://victorbrca.github.io/blog/2018/06/26/installing-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b/</loc>
     <lastmod>2018-06-26T18:36:26-04:00</lastmod>
   </url>
@@ -128,8 +133,14 @@
   </url>
   
   <url>
+    <loc>https://victorbrca.github.io/blog/tags/kde/</loc>
+    <lastmod>2018-06-29T19:20:45-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://victorbrca.github.io/blog/tags/linux/</loc>
-    <lastmod>2018-06-26T18:36:26-04:00</lastmod>
+    <lastmod>2018-06-29T19:20:45-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -159,7 +170,7 @@
   
   <url>
     <loc>https://victorbrca.github.io/blog/post/</loc>
-    <lastmod>2018-06-26T18:36:26-04:00</lastmod>
+    <lastmod>2018-06-29T19:20:45-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -194,7 +205,7 @@
   
   <url>
     <loc>https://victorbrca.github.io/blog/</loc>
-    <lastmod>2018-06-26T18:36:26-04:00</lastmod>
+    <lastmod>2018-06-29T19:20:45-04:00</lastmod>
     <priority>0</priority>
   </url>
   
