@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Networking on Victor&#39;s Blog</title>
-    <link>http://blog.victormendonca.com/tags/networking/</link>
+    <link>https://blog.victormendonca.com/tags/networking/</link>
     <description>Recent content in Networking on Victor&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2016 Copyright my blog</copyright>
     <lastBuildDate>Fri, 09 Feb 2018 23:04:40 -0500</lastBuildDate>
     
-	<atom:link href="http://blog.victormendonca.com/tags/networking/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.victormendonca.com/tags/networking/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>How to Scan for RTSP Urls</title>
-      <link>http://blog.victormendonca.com/2018/02/09/how-to-scan-for-rtsp-urls/</link>
+      <link>https://blog.victormendonca.com/2018/02/09/how-to-scan-for-rtsp-urls/</link>
       <pubDate>Fri, 09 Feb 2018 23:04:40 -0500</pubDate>
       
-      <guid>http://blog.victormendonca.com/2018/02/09/how-to-scan-for-rtsp-urls/</guid>
+      <guid>https://blog.victormendonca.com/2018/02/09/how-to-scan-for-rtsp-urls/</guid>
       <description>So you have a camera but can&amp;rsquo;t figure out what the RTSP URL is? Here&amp;rsquo;s the solution.
 Head over to nmap.org and download their rtsp-url-brute script to your computer. Then run it with nmap as:
 nmap --script rtsp-url-brute -p 554 [IP]  You should see results similar to the ones below:
@@ -26,10 +26,10 @@ nmap --script rtsp-url-brute -p 554 192.168.1.15 Starting Nmap 7.60 ( https://nm
     
     <item>
       <title>How to Create a Quick Web Server</title>
-      <link>http://blog.victormendonca.com/2017/10/11/how-to-create-a-quick-web-server/</link>
+      <link>https://blog.victormendonca.com/2017/10/11/how-to-create-a-quick-web-server/</link>
       <pubDate>Wed, 11 Oct 2017 17:58:37 -0400</pubDate>
       
-      <guid>http://blog.victormendonca.com/2017/10/11/how-to-create-a-quick-web-server/</guid>
+      <guid>https://blog.victormendonca.com/2017/10/11/how-to-create-a-quick-web-server/</guid>
       <description>Have you ever had the need to create a web server to perform a test? Well, here are a few quick options on how to do this.
 Got Netcat? If you have Netcat on the server (which is pretty easy to get), then you can do this.
 Example 1: Display the date and the text &amp;laquo;It works&amp;raquo;

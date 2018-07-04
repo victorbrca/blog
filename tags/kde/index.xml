@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Kde on Victor&#39;s Blog</title>
-    <link>http://blog.victormendonca.com/tags/kde/</link>
+    <link>https://blog.victormendonca.com/tags/kde/</link>
     <description>Recent content in Kde on Victor&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2016 Copyright my blog</copyright>
     <lastBuildDate>Fri, 29 Jun 2018 19:20:45 -0400</lastBuildDate>
     
-	<atom:link href="http://blog.victormendonca.com/tags/kde/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.victormendonca.com/tags/kde/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>How to Fix Sddm on Multiple Screens</title>
-      <link>http://blog.victormendonca.com/2018/06/29/how-to-fix-sddm-on-multiple-screens/</link>
+      <link>https://blog.victormendonca.com/2018/06/29/how-to-fix-sddm-on-multiple-screens/</link>
       <pubDate>Fri, 29 Jun 2018 19:20:45 -0400</pubDate>
       
-      <guid>http://blog.victormendonca.com/2018/06/29/how-to-fix-sddm-on-multiple-screens/</guid>
+      <guid>https://blog.victormendonca.com/2018/06/29/how-to-fix-sddm-on-multiple-screens/</guid>
       <description>When running multiple screens on KDE with SDDM, your configuration will not be loaded until you actually login to the KDE desktop, so you might end up having screens out of order, or enabled/disabled when they should not be. To fix this is simple, and here&amp;rsquo;s how.
 Let&amp;rsquo;s get a list of the devices name, size and position with xrandr:
 $ xrandr | grep &#39; connected&#39; DP-1 connected (normal left inverted right x axis y axis) DP-3 connected 1920x1080+1920+0 (normal left inverted right x axis y axis) 480mm x 270mm DP-5 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis) 598mm x 337mm  As you can see, on my computer I have 3x monitors:</description>

@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Network on Victor&#39;s Blog</title>
-    <link>http://blog.victormendonca.com/tags/network/</link>
+    <link>https://blog.victormendonca.com/tags/network/</link>
     <description>Recent content in Network on Victor&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2016 Copyright my blog</copyright>
     <lastBuildDate>Fri, 06 Oct 2017 18:46:20 -0400</lastBuildDate>
     
-	<atom:link href="http://blog.victormendonca.com/tags/network/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.victormendonca.com/tags/network/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>How to View DNS Calls Made by Processes</title>
-      <link>http://blog.victormendonca.com/2017/10/06/how-to-view-dns-calls-made-by-processes/</link>
+      <link>https://blog.victormendonca.com/2017/10/06/how-to-view-dns-calls-made-by-processes/</link>
       <pubDate>Fri, 06 Oct 2017 18:46:20 -0400</pubDate>
       
-      <guid>http://blog.victormendonca.com/2017/10/06/how-to-view-dns-calls-made-by-processes/</guid>
+      <guid>https://blog.victormendonca.com/2017/10/06/how-to-view-dns-calls-made-by-processes/</guid>
       <description>We had the need at work to monitor DNS calls made by an application in a RHEL system in order to stabilish if a connection pool config change had taken full effect, or if we had missed any configuration file. And the solution was to use SystemTap for this task.
 SystemTap (stap) is a scripting language and tool that simplifies the gathering of information about the running Linux system. It allows you to monitor and trace the operation of a Linux kernel.</description>
     </item>

@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hardware on Victor&#39;s Blog</title>
-    <link>http://blog.victormendonca.com/tags/hardware/</link>
+    <link>https://blog.victormendonca.com/tags/hardware/</link>
     <description>Recent content in Hardware on Victor&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2016 Copyright my blog</copyright>
     <lastBuildDate>Tue, 26 Jun 2018 18:36:26 -0400</lastBuildDate>
     
-	<atom:link href="http://blog.victormendonca.com/tags/hardware/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.victormendonca.com/tags/hardware/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Installing Kuman 3</title>
-      <link>http://blog.victormendonca.com/2018/06/26/installing-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b/</link>
+      <link>https://blog.victormendonca.com/2018/06/26/installing-kuman-3/</link>
       <pubDate>Tue, 26 Jun 2018 18:36:26 -0400</pubDate>
       
-      <guid>http://blog.victormendonca.com/2018/06/26/installing-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b/</guid>
+      <guid>https://blog.victormendonca.com/2018/06/26/installing-kuman-3/</guid>
       <description>Simple instructions (assuming a new Raspbian install) to install Kuman 3.5 TFT LCD on Raspberry Pi 3 Model B.
 a. Download Rasbian strech (with desktop) and extract the .img file from the downloaded zip (it&amp;rsquo;s always good to also check the hash of the downloaded file)
 b. Insert the SD card and make note of the device being used (make sure you get this right not to overwrite your OS)</description>
@@ -25,19 +25,19 @@ b. Insert the SD card and make note of the device being used (make sure you get 
     
     <item>
       <title>Custom Stand-up Desk Build</title>
-      <link>http://blog.victormendonca.com/2017/12/25/custom-standup-desk-build/</link>
+      <link>https://blog.victormendonca.com/2017/12/25/custom-standup-desk-build/</link>
       <pubDate>Mon, 25 Dec 2017 11:09:12 -0500</pubDate>
       
-      <guid>http://blog.victormendonca.com/2017/12/25/custom-standup-desk-build/</guid>
+      <guid>https://blog.victormendonca.com/2017/12/25/custom-standup-desk-build/</guid>
       <description>After commuting close to 1000kms a week for 6 years, I have decided to the the leap and move to Toronto. After all, I was here around 4 nights a week, and having to commute back and forward between Mississauga and Toronto had become a hassle. This would also increase my work drive (from 85kms each way to 115kms), but luckily my client agreed for me to work remote 4 days of the week, with made my move even more possible.</description>
     </item>
     
     <item>
       <title>Gnome Touchpad Settings Missing in Arch Xps 13</title>
-      <link>http://blog.victormendonca.com/2017/09/23/gnome-touchpad-settings-missing-in-arch-xps-13/</link>
+      <link>https://blog.victormendonca.com/2017/09/23/gnome-touchpad-settings-missing-in-arch-xps-13/</link>
       <pubDate>Sat, 23 Sep 2017 22:47:40 -0400</pubDate>
       
-      <guid>http://blog.victormendonca.com/2017/09/23/gnome-touchpad-settings-missing-in-arch-xps-13/</guid>
+      <guid>https://blog.victormendonca.com/2017/09/23/gnome-touchpad-settings-missing-in-arch-xps-13/</guid>
       <description>I had an issue where the Gnome extension &amp;lsquo;Touchpad Indicator&amp;rsquo; stopped working on my xps 13 (Arch). After looking a bit further, it seems that the Gnome Touchpad settings had also stopped working. All I could see was the mouse settings, and the touchpad section was completelly gone.
 Solution:
 With Gnome 3.20, xf86-input-synaptics is not longer supported, and you should use xf86-input-libinput instead.
