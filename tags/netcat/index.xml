@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Netcat on Victor&#39;s Blog</title>
-    <link>https://victorbrca.github.io/blog/tags/netcat/</link>
+    <link>http://blog.victormendonca.com/tags/netcat/</link>
     <description>Recent content in Netcat on Victor&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2016 Copyright my blog</copyright>
     <lastBuildDate>Wed, 11 Oct 2017 17:58:37 -0400</lastBuildDate>
     
-	<atom:link href="https://victorbrca.github.io/blog/tags/netcat/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://blog.victormendonca.com/tags/netcat/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>How to Create a Quick Web Server</title>
-      <link>https://victorbrca.github.io/blog/2017/10/11/how-to-create-a-quick-web-server/</link>
+      <link>http://blog.victormendonca.com/2017/10/11/how-to-create-a-quick-web-server/</link>
       <pubDate>Wed, 11 Oct 2017 17:58:37 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/2017/10/11/how-to-create-a-quick-web-server/</guid>
+      <guid>http://blog.victormendonca.com/2017/10/11/how-to-create-a-quick-web-server/</guid>
       <description>Have you ever had the need to create a web server to perform a test? Well, here are a few quick options on how to do this.
 Got Netcat? If you have Netcat on the server (which is pretty easy to get), then you can do this.
 Example 1: Display the date and the text &amp;laquo;It works&amp;raquo;

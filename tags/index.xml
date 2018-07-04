@@ -2,148 +2,148 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Victor&#39;s Blog</title>
-    <link>https://victorbrca.github.io/blog/tags/</link>
+    <link>http://blog.victormendonca.com/tags/</link>
     <description>Recent content in Tags on Victor&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2016 Copyright my blog</copyright>
     <lastBuildDate>Sat, 23 Sep 2017 22:47:40 -0400</lastBuildDate>
     
-	<atom:link href="https://victorbrca.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://blog.victormendonca.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Arch</title>
-      <link>https://victorbrca.github.io/blog/tags/arch/</link>
+      <link>http://blog.victormendonca.com/tags/arch/</link>
       <pubDate>Sat, 23 Sep 2017 22:47:40 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/tags/arch/</guid>
+      <guid>http://blog.victormendonca.com/tags/arch/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Bash</title>
-      <link>https://victorbrca.github.io/blog/tags/bash/</link>
+      <link>http://blog.victormendonca.com/tags/bash/</link>
       <pubDate>Tue, 26 Sep 2017 22:46:27 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/tags/bash/</guid>
+      <guid>http://blog.victormendonca.com/tags/bash/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Git</title>
-      <link>https://victorbrca.github.io/blog/tags/git/</link>
+      <link>http://blog.victormendonca.com/tags/git/</link>
       <pubDate>Wed, 11 Oct 2017 17:08:34 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/tags/git/</guid>
+      <guid>http://blog.victormendonca.com/tags/git/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Gitlab</title>
-      <link>https://victorbrca.github.io/blog/tags/gitlab/</link>
+      <link>http://blog.victormendonca.com/tags/gitlab/</link>
       <pubDate>Wed, 11 Oct 2017 17:08:34 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/tags/gitlab/</guid>
+      <guid>http://blog.victormendonca.com/tags/gitlab/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Hardware</title>
-      <link>https://victorbrca.github.io/blog/tags/hardware/</link>
+      <link>http://blog.victormendonca.com/tags/hardware/</link>
       <pubDate>Tue, 26 Jun 2018 18:36:26 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/tags/hardware/</guid>
+      <guid>http://blog.victormendonca.com/tags/hardware/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Kde</title>
-      <link>https://victorbrca.github.io/blog/tags/kde/</link>
+      <link>http://blog.victormendonca.com/tags/kde/</link>
       <pubDate>Fri, 29 Jun 2018 19:20:45 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/tags/kde/</guid>
+      <guid>http://blog.victormendonca.com/tags/kde/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Linux</title>
-      <link>https://victorbrca.github.io/blog/tags/linux/</link>
+      <link>http://blog.victormendonca.com/tags/linux/</link>
       <pubDate>Fri, 29 Jun 2018 19:20:45 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/tags/linux/</guid>
+      <guid>http://blog.victormendonca.com/tags/linux/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Markdown</title>
-      <link>https://victorbrca.github.io/blog/tags/markdown/</link>
+      <link>http://blog.victormendonca.com/tags/markdown/</link>
       <pubDate>Sun, 24 Sep 2017 22:46:02 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/tags/markdown/</guid>
+      <guid>http://blog.victormendonca.com/tags/markdown/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Netcat</title>
-      <link>https://victorbrca.github.io/blog/tags/netcat/</link>
+      <link>http://blog.victormendonca.com/tags/netcat/</link>
       <pubDate>Wed, 11 Oct 2017 17:58:37 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/tags/netcat/</guid>
+      <guid>http://blog.victormendonca.com/tags/netcat/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Network</title>
-      <link>https://victorbrca.github.io/blog/tags/network/</link>
+      <link>http://blog.victormendonca.com/tags/network/</link>
       <pubDate>Fri, 06 Oct 2017 18:46:20 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/tags/network/</guid>
+      <guid>http://blog.victormendonca.com/tags/network/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Networking</title>
-      <link>https://victorbrca.github.io/blog/tags/networking/</link>
+      <link>http://blog.victormendonca.com/tags/networking/</link>
       <pubDate>Fri, 09 Feb 2018 23:04:40 -0500</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/tags/networking/</guid>
+      <guid>http://blog.victormendonca.com/tags/networking/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Python</title>
-      <link>https://victorbrca.github.io/blog/tags/python/</link>
+      <link>http://blog.victormendonca.com/tags/python/</link>
       <pubDate>Wed, 11 Oct 2017 17:58:37 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/tags/python/</guid>
+      <guid>http://blog.victormendonca.com/tags/python/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Shell</title>
-      <link>https://victorbrca.github.io/blog/tags/shell/</link>
+      <link>http://blog.victormendonca.com/tags/shell/</link>
       <pubDate>Fri, 09 Feb 2018 23:04:40 -0500</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/tags/shell/</guid>
+      <guid>http://blog.victormendonca.com/tags/shell/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Systemd</title>
-      <link>https://victorbrca.github.io/blog/tags/systemd/</link>
+      <link>http://blog.victormendonca.com/tags/systemd/</link>
       <pubDate>Mon, 14 May 2018 12:53:43 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/tags/systemd/</guid>
+      <guid>http://blog.victormendonca.com/tags/systemd/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Vim</title>
-      <link>https://victorbrca.github.io/blog/tags/vim/</link>
+      <link>http://blog.victormendonca.com/tags/vim/</link>
       <pubDate>Wed, 20 Sep 2017 13:26:46 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/tags/vim/</guid>
+      <guid>http://blog.victormendonca.com/tags/vim/</guid>
       <description></description>
     </item>
     

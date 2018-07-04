@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Gitlab on Victor&#39;s Blog</title>
-    <link>https://victorbrca.github.io/blog/tags/gitlab/</link>
+    <link>http://blog.victormendonca.com/tags/gitlab/</link>
     <description>Recent content in Gitlab on Victor&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2016 Copyright my blog</copyright>
     <lastBuildDate>Wed, 11 Oct 2017 17:08:34 -0400</lastBuildDate>
     
-	<atom:link href="https://victorbrca.github.io/blog/tags/gitlab/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://blog.victormendonca.com/tags/gitlab/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>How to Load Gitlab Inside an Iframe</title>
-      <link>https://victorbrca.github.io/blog/2017/10/11/how-to-load-gitlab-inside-an-iframe/</link>
+      <link>http://blog.victormendonca.com/2017/10/11/how-to-load-gitlab-inside-an-iframe/</link>
       <pubDate>Wed, 11 Oct 2017 17:08:34 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/2017/10/11/how-to-load-gitlab-inside-an-iframe/</guid>
+      <guid>http://blog.victormendonca.com/2017/10/11/how-to-load-gitlab-inside-an-iframe/</guid>
       <description>So you are trying to load GitLab inside another page via iframe, and you are not able to. Due to security reasons, this is default behavior for GitLab, and as per the project (see issue 2347, this will not change, and I agree).
 However for some internal users this might not be the best approach, so here&amp;rsquo;s how to enable it.
 Browse to your install directory and go to your ‘nginx’ folder.</description>

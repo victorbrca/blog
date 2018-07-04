@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Bash on Victor&#39;s Blog</title>
-    <link>https://victorbrca.github.io/blog/tags/bash/</link>
+    <link>http://blog.victormendonca.com/tags/bash/</link>
     <description>Recent content in Bash on Victor&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2016 Copyright my blog</copyright>
     <lastBuildDate>Tue, 26 Sep 2017 22:46:27 -0400</lastBuildDate>
     
-	<atom:link href="https://victorbrca.github.io/blog/tags/bash/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://blog.victormendonca.com/tags/bash/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Bash Special Parameters</title>
-      <link>https://victorbrca.github.io/blog/2017/09/26/bash-special-parameters/</link>
+      <link>http://blog.victormendonca.com/2017/09/26/bash-special-parameters/</link>
       <pubDate>Tue, 26 Sep 2017 22:46:27 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/2017/09/26/bash-special-parameters/</guid>
+      <guid>http://blog.victormendonca.com/2017/09/26/bash-special-parameters/</guid>
       <description>Special parameters are set by the shell to store information about aspects of its current state, such as the number of arguments and the exit code of the last command. Special parameters can only be referenced and cannot have it&amp;rsquo;s value assigned.
 Special parameters are: $*, $@, $#, $$, $!, $?, $0, $-, $_
    Parameter Definition     $* List of arguments (as a string)   $@ List of arguments (as an array)   $# Number of positional parameters   $$ PID of the current shell   $!</description>
@@ -25,10 +25,10 @@ Special parameters are: $*, $@, $#, $$, $!, $?, $0, $-, $_
     
     <item>
       <title>Additional Status for Vim With Powerline</title>
-      <link>https://victorbrca.github.io/blog/2017/09/20/additional-status-for-vim-with-powerline/</link>
+      <link>http://blog.victormendonca.com/2017/09/20/additional-status-for-vim-with-powerline/</link>
       <pubDate>Wed, 20 Sep 2017 13:26:46 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/2017/09/20/additional-status-for-vim-with-powerline/</guid>
+      <guid>http://blog.victormendonca.com/2017/09/20/additional-status-for-vim-with-powerline/</guid>
       <description>Would you like to have more information displayed while reading files in VIM? Powerline is a great utility for that.
 In it&amp;rsquo;s default config, it displays:
  Current mode (normal, insert, visual) Git branch File name File encoding Script type File view percentage Line number  To install it Arch: sudo pacman -Ss python-powerline powerline  Add the line below to your ~/.vimrc
@@ -37,10 +37,10 @@ set laststatus=2  Note: If you get the error below</description>
     
     <item>
       <title>Bash: Parameter Expansion (Substitution)</title>
-      <link>https://victorbrca.github.io/blog/2017/09/19/bash-parameter-expansion/</link>
+      <link>http://blog.victormendonca.com/2017/09/19/bash-parameter-expansion/</link>
       <pubDate>Tue, 19 Sep 2017 01:31:32 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/2017/09/19/bash-parameter-expansion/</guid>
+      <guid>http://blog.victormendonca.com/2017/09/19/bash-parameter-expansion/</guid>
       <description>Default Usage ${PARAMETER}
 Expand parameter value. It can be used for:
  Separating characters from variable names  cd /home/${user}  Positional parameter higher than 9  echo &amp;quot;Argument 10 is: ${10}&amp;quot;   Indirection ${!PARAMETER}
@@ -51,10 +51,10 @@ var=var1 var1=temp $ echo ${!var} temp  Case Modification ${PARAMETER^}, ${PARAM
     
     <item>
       <title>Alternatives to Top</title>
-      <link>https://victorbrca.github.io/blog/2017/08/30/alternatives-to-top/</link>
+      <link>http://blog.victormendonca.com/2017/08/30/alternatives-to-top/</link>
       <pubDate>Wed, 30 Aug 2017 01:34:30 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/2017/08/30/alternatives-to-top/</guid>
+      <guid>http://blog.victormendonca.com/2017/08/30/alternatives-to-top/</guid>
       <description>Looking for alternatives to your usual top command? Here are some options.
 htop htop is based on ncurses and is compatible with most Linux (and Unix) systems. It&amp;rsquo;s also in most the official repos for most distros.
 Features: - Mouse clicks (due to ncurses) - Defaults to multi-CPU view - Memory shown in GB
@@ -64,10 +64,10 @@ vtop vtop takes more of a graphical approach to top, while concentrating more on
     
     <item>
       <title>Bash - Command Substitution, Subshell and Codeblock</title>
-      <link>https://victorbrca.github.io/blog/2017/01/11/bash-command-substitution-subshell-and-codeblock/</link>
+      <link>http://blog.victormendonca.com/2017/01/11/bash-command-substitution-subshell-and-codeblock/</link>
       <pubDate>Wed, 11 Jan 2017 01:38:41 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/2017/01/11/bash-command-substitution-subshell-and-codeblock/</guid>
+      <guid>http://blog.victormendonca.com/2017/01/11/bash-command-substitution-subshell-and-codeblock/</guid>
       <description>Bash - Command Substitution, Subshell and Codeblock
 Quick and simple differences between using $(..), (..) and {..;}.
  $(command) or `command` - Command substitution (the output of a command replaces the command name) and is executed in a subshell. Please give preference to $(..) for better readability ( command ) - Command list is executed in a subshell { command ;} - Command list is executed in the current shell  Executing code</description>
@@ -75,30 +75,30 @@ Quick and simple differences between using $(..), (..) and {..;}.
     
     <item>
       <title>Redirecting Bash Xtrace to a Separate Log</title>
-      <link>https://victorbrca.github.io/blog/2016/12/23/redirecting-bash-xtrace-to-a-separate-log/</link>
+      <link>http://blog.victormendonca.com/2016/12/23/redirecting-bash-xtrace-to-a-separate-log/</link>
       <pubDate>Fri, 23 Dec 2016 14:58:09 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/2016/12/23/redirecting-bash-xtrace-to-a-separate-log/</guid>
+      <guid>http://blog.victormendonca.com/2016/12/23/redirecting-bash-xtrace-to-a-separate-log/</guid>
       <description>So you have a Bash script that you want to troubleshoot, but you want to send stdout to a file, and stderr to another. Here&amp;rsquo;s a solution.
 For example, I like to use Bash&amp;rsquo;s color to display failure or success on checks, and echo&amp;rsquo;s removal of new lines (echo -e &amp;quot;Wait for it...\c &amp;quot;) to wait for checks. For example, the screenshot below shows a script that check each step and report back.</description>
     </item>
     
     <item>
       <title>How to Create a Prompt With Timeout in Bash</title>
-      <link>https://victorbrca.github.io/blog/2016/10/19/how-to-create-a-prompt-with-timeout-in-bash/</link>
+      <link>http://blog.victormendonca.com/2016/10/19/how-to-create-a-prompt-with-timeout-in-bash/</link>
       <pubDate>Wed, 19 Oct 2016 17:56:37 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/2016/10/19/how-to-create-a-prompt-with-timeout-in-bash/</guid>
+      <guid>http://blog.victormendonca.com/2016/10/19/how-to-create-a-prompt-with-timeout-in-bash/</guid>
       <description>Here&amp;rsquo;s a quick function that will display a prompt with timeout in a bash script:
 _myCountdownFunction () { echo -e &amp;quot;Hit \&amp;quot;Ctrl+c\&amp;quot; to quit or \&amp;quot;Enter\&amp;quot; to continue... \c&amp;quot; cnt=5 while (( cnt &amp;gt;= 0 )) ; do if (( cnt &amp;lt; 9 )) ; then echo -e &amp;quot;\b\b${cnt}s\c&amp;quot; elif (( cnt == 9 )) ; then echo -e &amp;quot;\b\b\b ${cnt}s\c&amp;quot; elif (( cnt &amp;lt;= 99 )) ; then echo -e &amp;quot;\b\b\b\b ${cnt}s\c&amp;quot; elif (( cnt &amp;lt; 999 )) ; then echo -e &amp;quot;\b\b\b\b${cnt}s\c&amp;quot; fi read -t 1 my_reply (( $?</description>
     </item>
     
     <item>
       <title>Bash Scripting - Best Practices</title>
-      <link>https://victorbrca.github.io/blog/2015/12/18/bash-scripting---best-practices/</link>
+      <link>http://blog.victormendonca.com/2015/12/18/bash-scripting---best-practices/</link>
       <pubDate>Fri, 18 Dec 2015 18:10:57 -0400</pubDate>
       
-      <guid>https://victorbrca.github.io/blog/2015/12/18/bash-scripting---best-practices/</guid>
+      <guid>http://blog.victormendonca.com/2015/12/18/bash-scripting---best-practices/</guid>
       <description>Bash Scripting - Best Practices 1 - Readability 1.1 - Indentation There are 3 commonly used indentation practices for Bash (I prefer the first method, however all 3 are &amp;laquo;accepted&amp;raquo;):
  2 spaces 4 spaces tabs (usually 8 spaces)
   All examples will be shown using the first indentation method, however for reference here&amp;rsquo;s a comparison between all 3.
