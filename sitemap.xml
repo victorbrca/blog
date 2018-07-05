@@ -3,12 +3,17 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.victormendonca.com/2018/07/04/how-to-change-forgotten-password-on-wsl-bash-for-windows/</loc>
+    <lastmod>2018-07-04T18:48:26-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.victormendonca.com/2018/06/29/how-to-fix-sddm-on-multiple-screens/</loc>
     <lastmod>2018-06-29T19:20:45-04:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.victormendonca.com/2018/06/26/installing-kuman-3/</loc>
+    <loc>https://blog.victormendonca.com/2018/06/26/installing-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b/</loc>
     <lastmod>2018-06-26T18:36:26-04:00</lastmod>
   </url>
   
@@ -110,7 +115,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/bash/</loc>
-    <lastmod>2017-09-26T22:46:27-04:00</lastmod>
+    <lastmod>2018-07-04T18:48:26-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -140,7 +145,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/linux/</loc>
-    <lastmod>2018-06-29T19:20:45-04:00</lastmod>
+    <lastmod>2018-07-04T18:48:26-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -170,7 +175,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/post/</loc>
-    <lastmod>2018-06-29T19:20:45-04:00</lastmod>
+    <lastmod>2018-07-04T18:48:26-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -205,13 +210,19 @@
   
   <url>
     <loc>https://blog.victormendonca.com/</loc>
-    <lastmod>2018-06-29T19:20:45-04:00</lastmod>
+    <lastmod>2018-07-04T18:48:26-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.victormendonca.com/tags/vim/</loc>
     <lastmod>2017-09-20T13:26:46-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.victormendonca.com/tags/windows/</loc>
+    <lastmod>2018-07-04T18:48:26-04:00</lastmod>
     <priority>0</priority>
   </url>
   

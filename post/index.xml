@@ -7,10 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2016 Copyright my blog</copyright>
-    <lastBuildDate>Fri, 29 Jun 2018 19:20:45 -0400</lastBuildDate>
+    <lastBuildDate>Wed, 04 Jul 2018 18:48:26 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How to Change Forgotten Password on WSL (Bash for Windows)</title>
+      <link>https://blog.victormendonca.com/2018/07/04/how-to-change-forgotten-password-on-wsl-bash-for-windows/</link>
+      <pubDate>Wed, 04 Jul 2018 18:48:26 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2018/07/04/how-to-change-forgotten-password-on-wsl-bash-for-windows/</guid>
+      <description>So you have installed Bash for Windows, but forgot your password!! That&amp;rsquo;s easy to fix, and here&amp;rsquo;s how:
+a. Find you username by running Bash for Windows and executing whoami
+$ whoami victor_m  b. Change the default user to root by running the code below on a Windows command prompt (cmd.exe)
+LxRun.exe /setdefaultuser root  c. Now change the password with bash -c &#39;passwd [user]&#39; (also on the Windows command prompt)</description>
+    </item>
     
     <item>
       <title>How to Fix Sddm on Multiple Screens</title>
@@ -25,10 +37,10 @@ $ xrandr | grep &#39; connected&#39; DP-1 connected (normal left inverted right 
     
     <item>
       <title>Installing Kuman 3</title>
-      <link>https://blog.victormendonca.com/2018/06/26/installing-kuman-3/</link>
+      <link>https://blog.victormendonca.com/2018/06/26/installing-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b/</link>
       <pubDate>Tue, 26 Jun 2018 18:36:26 -0400</pubDate>
       
-      <guid>https://blog.victormendonca.com/2018/06/26/installing-kuman-3/</guid>
+      <guid>https://blog.victormendonca.com/2018/06/26/installing-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b/</guid>
       <description>Simple instructions (assuming a new Raspbian install) to install Kuman 3.5 TFT LCD on Raspberry Pi 3 Model B.
 a. Download Rasbian strech (with desktop) and extract the .img file from the downloaded zip (it&amp;rsquo;s always good to also check the hash of the downloaded file)
 b. Insert the SD card and make note of the device being used (make sure you get this right not to overwrite your OS)</description>

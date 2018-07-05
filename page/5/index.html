@@ -32,7 +32,7 @@
 <link rel="canonical" href="https://blog.victormendonca.com/" />
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
 <link rel="icon" href="https://blog.victormendonca.com/favicon.png">
-<meta name="generator" content="Hugo 0.38" />
+<meta name="generator" content="Hugo 0.42.2" />
 
   <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
@@ -125,6 +125,161 @@
     <div class="row">
       <div class="col-sm-9">
         
+        
+          <div>
+  <h2><a href="https://blog.victormendonca.com/2017/09/20/additional-status-for-vim-with-powerline/">Additional Status for Vim With Powerline</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2017-09-20">20 Sep, 2017</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/vim" class="label label-primary">vim</a>
+  
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">bash</a>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>Would you like to have more information displayed while reading files in VIM? <a href="https://powerline.readthedocs.io/en/latest/index.html">Powerline</a> is a great utility for that.</p>
+
+<p><img src="https://i.imgur.com/0vCK9an.png" alt="Imgur" /></p>
+
+<p>In it&rsquo;s default config, it displays:</p>
+
+<ul>
+<li>Current mode (normal, insert, visual)</li>
+<li>Git branch</li>
+<li>File name</li>
+<li>File encoding</li>
+<li>Script type</li>
+<li>File view percentage</li>
+<li>Line number</li>
+</ul>
+
+<h2 id="to-install-it">To install it</h2>
+
+<h3 id="arch">Arch:</h3>
+
+<pre><code class="language-bash">sudo pacman -Ss python-powerline powerline
+</code></pre>
+
+<p>Add the line below to your <code>~/.vimrc</code></p>
+
+<pre><code class="language-bash">set laststatus=2
+</code></pre>
+
+<hr />
+
+<p><strong>Note:</strong> If you get the error below</p>
+
+<pre><code>Traceback (most recent call last):
+  File &quot;&lt;string&gt;&quot;, line 9, in &lt;module&gt;
+ImportError: No module named powerline.vim
+An error occurred while importing powerline module.
+This could be caused by invalid sys.path setting,
+or by an incompatible Python version (powerline requires
+Python 2.6, 2.7 or 3.2 and later to work). Please consult
+the troubleshooting section in the documentation for
+possible solutions.
+If powerline on your system is installed for python 3 only you
+should set g:powerline_pycmd to &quot;py3&quot; to make it load correctly.
+Unable to import powerline, is it installed?
+Press ENTER or type command to continue
+</code></pre>
+
+<p>Modify either <code>~/.vimrc</code> (or <code>/etc/vimrc</code> if you want the fix available for multiple users) by adding the line below:</p>
+
+<pre><code class="language-vim">let g:powerline_pycmd = 'py3'
+</code></pre>
+
+<h3 id="ubuntu-16-04">Ubuntu 16.04</h3>
+
+<p>Use Python 3</p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Additional%20Status%20for%20Vim%20With%20Powerline&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f&amp;title=Additional%20Status%20for%20Vim%20With%20Powerline" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Additional%20Status%20for%20Vim%20With%20Powerline&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2017/09/19/bash-parameter-expansion/" title="Bash: Parameter Expansion (Substitution)">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2017/09/23/gnome-touchpad-settings-missing-in-arch-xps-13/" title="Gnome Touchpad Settings Missing in Arch Xps 13">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
         
           <div>
   <h2><a href="https://blog.victormendonca.com/2017/09/19/bash-parameter-expansion/">Bash: Parameter Expansion (Substitution)</a>
@@ -629,202 +784,6 @@ bash: my_var: Not set
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2017/01/11/bash-command-substitution-subshell-and-codeblock/">Bash - Command Substitution, Subshell and Codeblock</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2017-01-11">11 Jan, 2017</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<p>Bash - Command Substitution, Subshell and Codeblock</p>
-
-<p>Quick and simple differences between using <code>$(..)</code>, <code>(..)</code> and <code>{..;}</code>.</p>
-
-<ul>
-<li><code>$(command)</code> or <code>`command`</code> - Command substitution (the output of a command replaces the command name) and is executed in a subshell. Please give preference to <code>$(..)</code> for better readability</li>
-<li><code>( command )</code> - Command list is executed in a subshell</li>
-<li><code>{ command ;}</code> - Command list is executed in the current shell</li>
-</ul>
-
-<p><strong>Executing code</strong></p>
-
-<pre><code class="language-bash">$ ( echo 123 )
-123
-
-$ $(echo 123) # this executes the output of the command
-123: command not found
-
-$ { echo 123 ;}
-123
-</code></pre>
-
-<p><strong>Fiding subshell level with built-in <code>BASH_SUBSHELL</code> variable</strong></p>
-
-<pre><code class="language-bash">$ ( echo $BASH_SUBSHELL )
-1
-$ ( ( echo $BASH_SUBSHELL ) )
-2
-
-$ $($BASH_SUBSHELL)
-1: command not found
-
-$ { echo $BASH_SUBSHELL ;}
-0
-</code></pre>
-
-<p><strong>Passing variables to subshell</strong></p>
-
-<pre><code class="language-bash">$ var1=1
-
-$ ( echo $var1 )
-1
-
-$ $(echo $var1)
-1: command not found
-
-$ { echo $var1 ;}
-1
-</code></pre>
-
-<p><strong>Changing and getting variables values in subshell</strong></p>
-
-<pre><code class="language-bash">$ var=1
-
-$ ( var=2 ) ; echo $var
-1
-
-$ $(var=2) ; echo $var
-1
-
-# Because we did not create a subshell,
-# variable is available to original shell
-$ { var=2 ;} ; echo $var
-2
-</code></pre>
-
-<h3 id="other-usages"><strong>Other usages</strong></h3>
-
-<p><strong>Example 1:</strong></p>
-
-<p>Multiple commands and multiple lines. This can be used with <code>(..)</code> and <code>{..}</code>.</p>
-
-<pre><code class="language-bash">$ { echo 1 ; echo 2 ; echo 3; }
-1
-2
-3
-
-$ {
-&gt; echo 1
-&gt; echo 2
-&gt; echo 3;
-&gt; }
-1
-2
-3
-</code></pre>
-
-<p><strong>Example 2:</strong></p>
-
-<p>Changing the environment for subshell with separate environment. Here, <code>set -u</code> is only set in the subshell, so only the first echo will error out.</p>
-
-<pre><code class="language-bash">unset var1 var2
-(
-  set -u
-  echo $var2
-)
-echo $var1
-</code></pre>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f01%2f11%2fbash-command-substitution-subshell-and-codeblock%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Bash%20-%20Command%20Substitution%2c%20Subshell%20and%20Codeblock&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f01%2f11%2fbash-command-substitution-subshell-and-codeblock%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f01%2f11%2fbash-command-substitution-subshell-and-codeblock%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f01%2f11%2fbash-command-substitution-subshell-and-codeblock%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f01%2f11%2fbash-command-substitution-subshell-and-codeblock%2f&amp;title=Bash%20-%20Command%20Substitution%2c%20Subshell%20and%20Codeblock" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Bash%20-%20Command%20Substitution%2c%20Subshell%20and%20Codeblock&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f01%2f11%2fbash-command-substitution-subshell-and-codeblock%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2016/12/23/redirecting-bash-xtrace-to-a-separate-log/" title="Redirecting Bash Xtrace to a Separate Log">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2017/08/30/alternatives-to-top/" title="Alternatives to Top">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -950,11 +909,15 @@ echo $var1
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2018/07/04/how-to-change-forgotten-password-on-wsl-bash-for-windows/">How to Change Forgotten Password on WSL (Bash for Windows)</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2018/06/29/how-to-fix-sddm-on-multiple-screens/">How to Fix Sddm on Multiple Screens</a>
           </li>
         
           <li>
-          <a href="https://blog.victormendonca.com/2018/06/26/installing-kuman-3/">Installing Kuman 3</a>
+          <a href="https://blog.victormendonca.com/2018/06/26/installing-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b/">Installing Kuman 3</a>
           </li>
         
           <li>
@@ -963,10 +926,6 @@ echo $var1
         
           <li>
           <a href="https://blog.victormendonca.com/2018/02/09/how-to-scan-for-rtsp-urls/">How to Scan for RTSP Urls</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2017/12/25/custom-standup-desk-build/">Custom Stand-up Desk Build</a>
           </li>
         
         </ul>
