@@ -31,6 +31,15 @@
     </item>
     
     <item>
+      <title>Docker</title>
+      <link>https://blog.victormendonca.com/tags/docker/</link>
+      <pubDate>Thu, 05 Jul 2018 15:20:24 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Git</title>
       <link>https://blog.victormendonca.com/tags/git/</link>
       <pubDate>Wed, 11 Oct 2017 17:08:34 -0400</pubDate>
@@ -69,7 +78,7 @@
     <item>
       <title>Linux</title>
       <link>https://blog.victormendonca.com/tags/linux/</link>
-      <pubDate>Wed, 04 Jul 2018 18:48:26 -0400</pubDate>
+      <pubDate>Thu, 05 Jul 2018 15:20:24 -0400</pubDate>
       
       <guid>https://blog.victormendonca.com/tags/linux/</guid>
       <description></description>
@@ -81,6 +90,15 @@
       <pubDate>Sun, 24 Sep 2017 22:46:02 -0400</pubDate>
       
       <guid>https://blog.victormendonca.com/tags/markdown/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Mattermost</title>
+      <link>https://blog.victormendonca.com/tags/mattermost/</link>
+      <pubDate>Thu, 05 Jul 2018 15:20:24 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/tags/mattermost/</guid>
       <description></description>
     </item>
     

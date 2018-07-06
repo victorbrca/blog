@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.victormendonca.com/2018/07/05/how-to-change-config.json-for-docker-mattermost-preview/</loc>
+    <lastmod>2018-07-05T15:20:24-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.victormendonca.com/2018/07/04/how-to-change-forgotten-password-on-wsl-bash-for-windows/</loc>
     <lastmod>2018-07-04T18:48:26-04:00</lastmod>
   </url>
@@ -120,6 +125,12 @@
   </url>
   
   <url>
+    <loc>https://blog.victormendonca.com/tags/docker/</loc>
+    <lastmod>2018-07-05T15:20:24-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.victormendonca.com/tags/git/</loc>
     <lastmod>2017-10-11T17:08:34-04:00</lastmod>
     <priority>0</priority>
@@ -145,13 +156,19 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/linux/</loc>
-    <lastmod>2018-07-04T18:48:26-04:00</lastmod>
+    <lastmod>2018-07-05T15:20:24-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.victormendonca.com/tags/markdown/</loc>
     <lastmod>2017-09-24T22:46:02-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.victormendonca.com/tags/mattermost/</loc>
+    <lastmod>2018-07-05T15:20:24-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -175,7 +192,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/post/</loc>
-    <lastmod>2018-07-04T18:48:26-04:00</lastmod>
+    <lastmod>2018-07-05T15:20:24-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -210,7 +227,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/</loc>
-    <lastmod>2018-07-04T18:48:26-04:00</lastmod>
+    <lastmod>2018-07-05T15:20:24-04:00</lastmod>
     <priority>0</priority>
   </url>
   

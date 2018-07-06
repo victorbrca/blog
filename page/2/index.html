@@ -119,6 +119,168 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2018/06/26/installing-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b/">Installing Kuman 3</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2018-06-26">26 Jun, 2018</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/hardware" class="label label-primary">Hardware</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  <p>Simple instructions (assuming a new Raspbian install) to install <a href="https://www.amazon.ca/gp/product/B01FXCFA2M/ref=oh_aui_search_detailpage?ie=UTF8&amp;psc=1">Kuman 3.5 TFT LCD</a> on Raspberry Pi 3 Model B.</p>
+
+<p>a. Download <a href="https://www.raspberrypi.org/downloads/raspbian/">Rasbian strech</a> (with desktop) and extract the <code>.img</code> file from the downloaded zip (it&rsquo;s always good to also check the hash of the downloaded file)</p>
+
+<p>b. Insert the SD card and make note of the device being used (<strong>make sure you get this right not to overwrite your OS</strong>)</p>
+
+<p>c. Use <code>dd</code> to copy the image to the SD card (the values for <code>if</code> and <code>of</code> should be changed accordingly. If you never used <code>dd</code> please do yourself a favor and read up first)</p>
+
+<pre><code>sudo dd bs=4M if=2018-04-18-raspbian-stretch.img of=/dev/mmcblk0 status=progress oflag=sync
+</code></pre>
+
+<p>d. Once the process is done, mount (if needed) the <code>boot</code> and <code>rootfs</code> partitions</p>
+
+<p>e. Browse to the mount point of <code>boot</code> and create a blank file called <code>ssh</code> (to enable sshd on boot)</p>
+
+<pre><code>touch ssh
+</code></pre>
+
+<p>f. Open <code>cmdline.txt</code> and write down the value of <code>root=</code>. Now substitute the existing line with the line below, and then change the value of <code>root=</code> back to the original value</p>
+
+<pre><code>dwc_otg.lpm_enable=0 console=tty1 console=ttyAMA0,115200 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait fbcon=map:10 fbcon=font:ProFont6x11 logo.nologo
+</code></pre>
+
+<p>g. Open <code>config.txt</code> and add the lines below to the end of the file</p>
+
+<pre><code>dtparam=audio=on
+dtparam=spi=on
+dtoverlay=ads7846,penirq=25,penirq_pull=2,xohms=150,swapxy=1,xmin=300,ymin=700,xmax=3800,ymax=3400,pmax=255
+dtoverlay=waveshare35a
+</code></pre>
+
+<p>h. Download <code>waveshare35a-overlay.dtb</code> from <a href="https://github.com/swkim01/waveshare-dtoverlays">GitHub</a> to <code>/boot/overlays</code> and rename it to <code>waveshare35a.dtbo</code></p>
+
+<p>i. Change <code>Option &quot;fbdev&quot; &quot;/dev/fb0&quot;</code> in <code>/usr/share/X11/xorg.conf.d/99-fbturbo.conf</code> to <code>Option &quot;fbdev&quot; &quot;/dev/fb1&quot;</code></p>
+
+<pre><code>Section &quot;Device&quot;
+    Identifier &quot;Allwinner A10/A13 FBDEV&quot;
+    Driver &quot;fbturbo&quot;
+    Option &quot;fbdev&quot; &quot;/dev/fb1&quot;
+
+    Option &quot;SwapbuffersWait&quot; &quot;true&quot;
+EndSection
+</code></pre>
+
+<p>j. Create a new file <code>/etc/X11/xorg.conf.d/99-calibration.conf</code> with the lines below</p>
+
+<pre><code>Section &quot;InputClass&quot;
+    Identifier &quot;calibration&quot;
+    MatchProduct &quot;ADS7846 Touchscreen&quot;
+    Option &quot;Calibration&quot; &quot;3932 300 294 3801&quot;
+    Option &quot;SwapAxes&quot; &quot;1&quot;
+EndSection
+</code></pre>
+
+<p>k. Reboot and enjoy</p>
+
+<p><img src="https://i.imgur.com/Gvtpp8f.jpg" alt="" /></p>
+
+<hr />
+
+<p><strong>References</strong></p>
+
+<ul>
+<li><a href="https://github.com/goodtft/LCD-show/issues/17">GitHub</a></li>
+<li><a href="https://www.amazon.com/review/R3CGCFPLQ232W2/ref=cm_cr_dp_title?ie=UTF8&amp;ASIN=B01CNJVG8K&amp;channel=detail-glance&amp;nodeID=541966&amp;store=pc">Amazon</a></li>
+</ul>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f06%2f26%2finstalling-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Installing%20Kuman%203&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f06%2f26%2finstalling-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f06%2f26%2finstalling-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f06%2f26%2finstalling-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f06%2f26%2finstalling-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b%2f&amp;title=Installing%20Kuman%203" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Installing%20Kuman%203&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f06%2f26%2finstalling-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2018/05/14/creating-a-simple-systemd-user-service/" title="Creating a Simple Systemd User Service">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2018/06/29/how-to-fix-sddm-on-multiple-screens/" title="How to Fix Sddm on Multiple Screens">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2018/05/14/creating-a-simple-systemd-user-service/">Creating a Simple Systemd User Service</a>
 </h2>
 
@@ -497,193 +659,6 @@ PORT    STATE SERVICE
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2017/12/25/custom-standup-desk-build/">Custom Stand-up Desk Build</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2017-12-25">25 Dec, 2017</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/hardware" class="label label-primary">Hardware</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<p>After commuting  close to 1000kms a week for 6 years, I have decided to the the leap and move to Toronto. After all, I was here around 4 nights a week, and having to commute back and forward between Mississauga and Toronto had become a hassle. This would also increase my work drive (from 85kms each way to 115kms), but luckily my client agreed for me to work remote 4 days of the week, with made my move even more possible.</p>
-
-<p>Seeing how I would be working from home most of the week, and how my office would be in the living room of our new place, I needed a space that not only was functional, but that could hold my three 27&raquo; monitors have have a clean look. I also wanted a standing desk because I can no longer get used to sitting the whole day.</p>
-
-<p>After searching pinterest and online for ideas, I finally had a plan and knew what parts I would need.</p>
-
-<p>And here&rsquo;s the final work:</p>
-
-<p><img src="https://i.imgur.com/pL5BWrj.jpg" alt="" /></p>
-
-<h2 id="the-wall">The Wall</h2>
-
-<p>The space I had was perfect. The back wall has the length of 64&raquo;, with 4 wood studs distributed evenly with 16&raquo; of space. The side wall had a stud 13&raquo; away from the corner, and another stud 16&raquo; away from it. I needed to leave space for the cabling since I did not want to bring it through the wall. Space was needed on the left for my NAS cables to go through, and in the middle for the cables coming down from the monitors, LEDs and keyboard and mouse.</p>
-
-<p><img src="https://i.imgur.com/d1EifxF.png" alt="" /></p>
-
-<h2 id="the-monitor-mount">The Monitor Mount</h2>
-
-<p>For the monitors I purchased the 3x <a href="https://www.amazon.ca/gp/product/B00ZKFRKIU/ref=oh_aui_detailpage_o05_s00?ie=UTF8&amp;psc=1">mounts</a> below on Amazon. I have the two main monitors mounted to a piece of plywood, which is in turn attached to the wall.</p>
-
-<p><img src="https://i.imgur.com/eBqccqU.jpg" alt="Imgur" /></p>
-
-<p><img src="https://i.imgur.com/iBL7rAc.jpg" alt="Imgur" /></p>
-
-<h2 id="support">Support</h2>
-
-<p>I&rsquo;m using 3x pieces of 2x4 over 4 wood studs, and an Ikea&rsquo;s <a href="http://www.ikea.com/ca/en/catalog/products/60261626/">Gerton extendable leg</a></p>
-
-<p><img src="https://i.imgur.com/7Q8tcVi.png" alt="Imgur" /></p>
-
-<p><img src="https://i.imgur.com/p8ns8FB.png" alt="Imgur" /></p>
-
-<p><img src="https://i.imgur.com/pylDTkF.jpg" alt="Imgur" /></p>
-
-<p><img src="https://i.imgur.com/GR5dW2L.jpg" alt="Imgur" /></p>
-
-<h2 id="table-top">Table Top</h2>
-
-<p>The table is solid wood and also from Ikea - <a href="http://www.ikea.com/ca/en/catalog/products/50106773/">GERTON Table top, beech</a>. It measures 61&raquo; L by 29&raquo; &frac12; W.</p>
-
-<p>Because this is a stand-up desk, the top of table sits at 42&raquo; from the floor.</p>
-
-<p><img src="https://i.imgur.com/uA8fav2.jpg" alt="Imgur" /></p>
-
-<h2 id="lighting">Lighting</h2>
-
-<p>I&rsquo;m using the cheap 12v LEDs that you can buy anywhere.</p>
-
-<p><img src="https://i.imgur.com/lfFTCov.jpg" alt="Imgur" /></p>
-
-<p>For behind the monitors, I have cut the strips and I&rsquo;m connecting them with also cheap LED connectors.</p>
-
-<p><img src="https://i.imgur.com/2KNMTMi.jpg" alt="Imgur" /></p>
-
-<p>The table LEDs go through an aluminum channel.</p>
-
-<p><img src="https://i.imgur.com/knY1IOf.png" alt="Imgur" /></p>
-
-<p><img src="https://i.imgur.com/vBaW6jy.jpg" alt="Imgur" /></p>
-
-<p><img src="https://i.imgur.com/N3LQXgY.jpg" alt="Imgur" /></p>
-
-<h2 id="cabling">Cabling</h2>
-
-<p>I&rsquo;m using Ikea&rsquo;s <a href="http://www.ikea.com/ca/en/catalog/products/30200253/">Signum Cable management</a> under the desk and the <a href="http://www.ikea.com/ca/en/catalog/products/80224893/">Uppleva Cord cover strip, white</a> to hide the cables on the wall.</p>
-
-<p><img src="https://i.imgur.com/q0ozWiK.jpg" alt="Imgur" /></p>
-
-<p><img src="https://i.imgur.com/oyLvzUS.jpg" alt="Imgur" /></p>
-
-<h2 id="controlling-the-lighting">Controlling the Lighting</h2>
-
-<p>I&rsquo;m using a custom bash script running on the background that checks if my monitors are on or off, and turns on the lights via curl commands to a Wemo Switch:</p>
-
-<ul>
-<li><a href="https://gist.github.com/victorbrca/8520b815d055ebfba86904ebfd16b13c">wemo_control.sh</a></li>
-<li><a href="https://gist.github.com/victorbrca/8cf004f43b2a432024f6edb239b50434">desktop-led.sh</a></li>
-</ul>
-
-<h2 id="other-stuff-on-my-desktop">Other Stuff on My Desktop</h2>
-
-<ul>
-<li>Case (FreeNAS) - <a href="http://www.lian-li.com/en/dt-portfolio/pc-q25/">Lian Li, PC-Q25</a></li>
-<li>Speakers - <a href="http://www.edifier.com/ca/en/speakers/e10bt-exclaim-bt-connect-bluetooth-computer-speakers">Edifier, Exclaim</a></li>
-<li>Linux plush</li>
-<li>Suse plush</li>
-<li>Dyzplastic Android Mini Collectible Figure</li>
-<li>RioRand ligh cube</li>
-</ul>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f12%2f25%2fcustom-standup-desk-build%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Custom%20Stand-up%20Desk%20Build&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f12%2f25%2fcustom-standup-desk-build%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f12%2f25%2fcustom-standup-desk-build%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f12%2f25%2fcustom-standup-desk-build%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f12%2f25%2fcustom-standup-desk-build%2f&amp;title=Custom%20Stand-up%20Desk%20Build" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Custom%20Stand-up%20Desk%20Build&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f12%2f25%2fcustom-standup-desk-build%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2017/10/11/how-to-create-a-quick-web-server/" title="How to Create a Quick Web Server">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2018/02/09/how-to-scan-for-rtsp-urls/" title="How to Scan for RTSP Urls">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -791,7 +766,7 @@ PORT    STATE SERVICE
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li>
           </ul>
         </div>
       </div>
@@ -809,6 +784,10 @@ PORT    STATE SERVICE
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2018/07/05/how-to-change-config.json-for-docker-mattermost-preview/">How to Change cconfig.json for Docker Mattermost Preview</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2018/07/04/how-to-change-forgotten-password-on-wsl-bash-for-windows/">How to Change Forgotten Password on WSL (Bash for Windows)</a>
           </li>
         
@@ -822,10 +801,6 @@ PORT    STATE SERVICE
         
           <li>
           <a href="https://blog.victormendonca.com/2018/05/14/creating-a-simple-systemd-user-service/">Creating a Simple Systemd User Service</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2018/02/09/how-to-scan-for-rtsp-urls/">How to Scan for RTSP Urls</a>
           </li>
         
         </ul>
