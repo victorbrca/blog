@@ -19,7 +19,7 @@
       
       <guid>https://blog.victormendonca.com/2018/07/04/how-to-change-forgotten-password-on-wsl-bash-for-windows/</guid>
       <description>So you have installed Bash for Windows, but forgot your password!! That&amp;rsquo;s easy to fix, and here&amp;rsquo;s how:
-a. Find you username by running Bash for Windows and executing whoami
+a. Find your username by running Bash for Windows and executing whoami
 $ whoami victor_m  b. Change the default user to root by running the code below on a Windows command prompt (cmd.exe)
 LxRun.exe /setdefaultuser root  c. Now change the password with bash -c &#39;passwd [user]&#39; (also on the Windows command prompt)</description>
     </item>
