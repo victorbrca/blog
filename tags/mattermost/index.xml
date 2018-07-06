@@ -21,7 +21,7 @@
       <description>These instructions show you how to change the config.json file for a Docker Mattermost Preview.
 a- As root (or if you enabled non root users to manipulate docker), let&amp;rsquo;s open a shell in the docker container
 docker exec -ti mattermost-preview /bin/bash  b. Update the APT db on the docker instance and install vim (needed to edit the file)
-apt update apt install vim  c. Change config.json as needed</description>
+apt update apt install vim  c. Change config_docker.json as needed</description>
     </item>
     
   </channel>
