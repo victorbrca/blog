@@ -32,7 +32,7 @@
 <link rel="canonical" href="https://blog.victormendonca.com/" />
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
 <link rel="icon" href="https://blog.victormendonca.com/favicon.png">
-<meta name="generator" content="Hugo 0.42.2" />
+<meta name="generator" content="Hugo 0.44" />
 
   <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
@@ -117,6 +117,355 @@
     <div class="row">
       <div class="col-sm-9">
         
+        
+          <div>
+  <h2><a href="https://blog.victormendonca.com/2017/09/19/bash-parameter-expansion/">Bash: Parameter Expansion (Substitution)</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2017-09-19">19 Sep, 2017</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<h2 id="default-usage">Default Usage</h2>
+
+<p><code>${PARAMETER}</code></p>
+
+<p>Expand parameter value. It can be used for:</p>
+
+<ul>
+<li>Separating characters from variable names
+
+<ul>
+<li><code>cd /home/${user}</code></li>
+</ul></li>
+<li>Positional parameter higher than 9
+
+<ul>
+<li><code>echo &quot;Argument 10 is: ${10}&quot;</code></li>
+</ul></li>
+</ul>
+
+<h2 id="indirection">Indirection</h2>
+
+<p><code>${!PARAMETER}</code></p>
+
+<p>Expands to the value of the variable named by the value of parameter.</p>
+
+<pre><code>var=var1
+var1=temp
+
+$ echo ${!var}
+temp
+</code></pre>
+
+<h2 id="case-modification">Case Modification</h2>
+
+<p><code>${PARAMETER^}, ${PARAMETER^^}</code>
+<code>${PARAMETER,}, ${PARAMETER,,}</code>
+<code>${PARAMETER~}, ${PARAMETER~~}</code></p>
+
+<p>|Operator|Action|
+|&ndash;|&mdash;&mdash;&mdash;&mdash;&ndash;|
+|^|Changes first character to upper case|
+|^^|Changes all characters to upper case|
+|,|Changes first character to lower case|
+|,,|Changes all characters to lower case|
+|~|Inverts case of first character|
+|~~|Inverts case of all characters|</p>
+
+<h2 id="variable-name-prefix-expansion">Variable Name (Prefix) Expansion</h2>
+
+<p><code>${!PREFIX*}</code>
+<code>${!PREFIX@}</code></p>
+
+<p>Expands to a list of all set variable names beginning with the string in <code>PREFIX</code>.</p>
+
+<pre><code>$ echo ${!XDG*}
+XDG_CURRENT_DESKTOP XDG_MENU_PREFIX XDG_RUNTIME_DIR XDG_SEAT XDG_SESSION_DESKTOP XDG_SESSION_ID XDG_SESSION_TYPE XDG_VTNR
+</code></pre>
+
+<h2 id="substring-removal">Substring Removal</h2>
+
+<p><code>${PARAMETER#PATTERN}</code>
+<code>${PARAMETER##PATTERN}</code>
+<code>${PARAMETER%PATTERN}</code>
+<code>${PARAMETER%%PATTERN}</code></p>
+
+<p>With <code>#</code>, it removes the mathing pattern from the beggining of the variable, where <code>#</code> removes the shortest match, and <code>##</code> removes the longest.</p>
+
+<p>Note the empty spaces in the example below.</p>
+
+<pre><code>substr=&quot;the quick brown fox jumps over the lazy dog&quot;
+
+$ echo ${substr#* }
+quick brown fox jumps over the lazy dog
+
+$ echo ${substr##* }
+dog
+</code></pre>
+
+<p>Removing path from a file:</p>
+
+<pre><code>mlog=/var/log/clamav/freshclam.log
+
+$ echo ${mlog##*/}
+freshclam.log
+</code></pre>
+
+<p>The operator <code>%</code> does the same, but at the end of the file.</p>
+
+<pre><code>$ echo ${substr% *}
+the quick brown fox jumps over the lazy
+
+$ echo ${substr%% *}
+the
+</code></pre>
+
+<p>Changing the extension of a file</p>
+
+<pre><code>file=123.txt
+
+$ echo ${file%.*}
+123
+
+$ echo ${file%.*}.log
+123.log
+</code></pre>
+
+<h2 id="search-and-replace">Search and Replace</h2>
+
+<p><code>${PARAMETER/PATTERN/STRING}</code>
+<code>${PARAMETER//PATTERN/STRING}</code>
+<code>${PARAMETER/PATTERN}</code>
+<code>${PARAMETER//PATTERN}</code></p>
+
+<p>The main diffence is that a single <code>/</code> substitutes the first occurrence, while double <code>//</code> substitute all occurences:</p>
+
+<pre><code>$ echo $substr
+the quick brown fox jumps over the lazy dog
+
+$ echo ${substr/the/da}
+da quick brown fox jumps over the lazy dog
+
+$ echo ${substr//the/da}
+da quick brown fox jumps over da lazy dog
+
+$ echo ${substr/the}
+quick brown fox jumps over the lazy dog
+
+$ echo ${substr//the}
+quick brown fox jumps over lazy dog
+</code></pre>
+
+<h3 id="anchoring"><strong>Anchoring</strong></h3>
+
+<p>You can use <code>#</code> and <code>%</code> to anchor to the beginning and end respectively</p>
+
+<pre><code>var1=00000000
+
+$ echo ${var1/#0/1}
+10000000
+
+$ echo ${var1/%0/1}
+00000001
+</code></pre>
+
+<h2 id="offset-and-lenght">Offset and Lenght</h2>
+
+<p><code>${PARAMETER:OFFSET}</code>
+<code>${PARAMETER:OFFSET:LENGTH}</code></p>
+
+<ul>
+<li>Offset removes the amount of characters as specified</li>
+<li>Lenght prints the specified character lenght after offset</li>
+</ul>
+
+<p><strong><em>Note:</em></strong> <em>You can also use a negative value for offset and lenght, which will be calculated from the end of the file</em></p>
+
+<pre><code>$ echo ${substr}
+the quick brown fox jumps over the lazy dog
+123456789...
+</code></pre>
+
+<p>Removes first 9 chars</p>
+
+<pre><code>$ echo ${substr:9}
+brown fox jumps over the lazy dog
+</code></pre>
+
+<p>Removes first 3 chars and print the next 5</p>
+
+<pre><code>$ echo ${substr:4:5}
+quick
+</code></pre>
+
+<h2 id="use-default">Use Default</h2>
+
+<p><code>${PARAMETER:-WORD}</code>
+<code>${PARAMETER-WORD}</code></p>
+
+<p>If parameter unset (or null if using <code>:</code>), expand to word.</p>
+
+<pre><code>$ my_var=gru
+$ echo ${my_var:-yyz}
+gru
+
+$ unset my_var
+$ echo ${my_var:-yyz}
+yyz
+</code></pre>
+
+<h2 id="use-alternate-value">Use Alternate Value</h2>
+
+<p><code>${PARAMETER:+WORD}</code>
+<code>${PARAMETER+WORD}</code></p>
+
+<p>If parameter <strong>is set</strong> (or null if using <code>:</code>), expand to word.</p>
+
+<pre><code>$ my_var=gru
+$ echo ${my_var:+yyz}
+yyz
+
+$ unset my_var
+$ echo ${my_var:+yyz}
+
+</code></pre>
+
+<h2 id="use-default-and-assign">Use Default And Assign</h2>
+
+<p><code>${PARAMETER:=WORD}</code>
+<code>${PARAMETER=WORD}</code></p>
+
+<p>If parameter unset (or null if using <code>:</code>), expand to word and assign parameter to the value of word.</p>
+
+<pre><code>my_var=gru
+
+$ echo ${my_var:=yyz}
+gru
+
+$ unset my_var
+$ echo ${my_var:=yyz}
+yyz
+
+$ echo $my_var
+yyz
+</code></pre>
+
+<h2 id="display-error">Display Error</h2>
+
+<p><code>${PARAMETER:?WORD}</code>
+<code>${PARAMETER?WORD}</code></p>
+
+<p>If parameter unset (or null if using <code>:</code>), display error with word as appendix, otherwise expand parameter.</p>
+
+<pre><code>my_var=gru
+
+$ echo ${my_var:?Not set}
+gru
+
+$ unset my_var
+$ echo ${my_var:?Not set}
+bash: my_var: Not set
+</code></pre>
+
+<hr />
+
+<p><strong>Reference:</strong></p>
+
+<ul>
+<li><a href="http://wiki.bash-hackers.org/syntax/pe">wiki.bash-hackers.org</a></li>
+<li><a href="http://www.tldp.org/LDP/abs/html/parameter-substitution.html">tldp.org</a></li>
+<li><a href="https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html">gnu.org</a></li>
+</ul>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Bash%3a%20Parameter%20Expansion%20%28Substitution%29&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f&amp;title=Bash%3a%20Parameter%20Expansion%20%28Substitution%29" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Bash%3a%20Parameter%20Expansion%20%28Substitution%29&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2017/08/30/alternatives-to-top/" title="Alternatives to Top">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2017/09/20/additional-status-for-vim-with-powerline/" title="Additional Status for Vim With Powerline">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
         
           <div>
   <h2><a href="https://blog.victormendonca.com/2017/08/30/alternatives-to-top/">Alternatives to Top</a>
@@ -468,123 +817,6 @@ echo $var1
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2016/12/23/redirecting-bash-xtrace-to-a-separate-log/">Redirecting Bash Xtrace to a Separate Log</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2016-12-23">23 Dec, 2016</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  <p>So you have a Bash script that you want to troubleshoot, but you want to send stdout to a file, and stderr to another. Here&rsquo;s a solution.</p>
-
-<p>For example, I like to use Bash&rsquo;s color to display failure or success on checks, and echo&rsquo;s removal of new lines (<code>echo -e &quot;Wait for it...\c &quot;</code>) to wait for checks. For example, the screenshot below shows a script that check each step and report back.</p>
-
-<p><img src="https://i.imgur.com/H3Bm6s7.png" alt="terminal" /></p>
-
-<p>Errors are displayed in red, and success in green, and this same output is sent to the stdout and to a log file as well.</p>
-
-<p>Now I want to get error messages in a separate log file, so I can go back to my original log and match the time where it failed, with additional verbose from Bash&rsquo;s xtrace.</p>
-
-<p>The solution is very simple&hellip; I can just add the lines below to the top of my script:</p>
-
-<pre><code class="language-bash"># Debugging
-debug_log=&quot;${HOME}/bin/log/script.debug&quot;
-exec 2&gt;&gt;${debug_log}
-set -x
-</code></pre>
-
-<p>The first line setups my debug log, the second redirects stderr to my debug log, and the third enables xtrace (same as <code>bash -x [script]</code>).</p>
-
-<p>Note that doing this will disable any errors from being show in stdout.</p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f&amp;title=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2016/11/02/how-to-record-and-share-a-terminal-session/" title="How to Record and Share a Terminal Session">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2017/01/11/bash-command-substitution-subshell-and-codeblock/" title="Bash - Command Substitution, Subshell and Codeblock">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -645,6 +877,12 @@ set -x
     </a>
 </li>
 
+<li >
+  <a href="https://blog.victormendonca.com//page/8/">
+    8
+    </a>
+</li>
+
 
 <li >
   <a aria-label="Next" href="https://blog.victormendonca.com//page/7/">
@@ -652,7 +890,7 @@ set -x
     </a>
 </li>
 <li >
-  <a aria-label="Last" href="https://blog.victormendonca.com//page/7/">
+  <a aria-label="Last" href="https://blog.victormendonca.com//page/8/">
     <span aria-hidden="true">&raquo;&raquo;</span>
   </a>
 </li>
@@ -710,6 +948,10 @@ set -x
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2018/07/19/how-to-create-a-timer-in-bash/">How to Create a Timer in Bash</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2018/07/05/how-to-change-config.json-for-docker-mattermost-preview/">How to Change config.json for Docker Mattermost Preview</a>
           </li>
         
@@ -723,10 +965,6 @@ set -x
         
           <li>
           <a href="https://blog.victormendonca.com/2018/06/26/installing-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b/">Installing Kuman 3</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2018/05/14/creating-a-simple-systemd-user-service/">Creating a Simple Systemd User Service</a>
           </li>
         
         </ul>

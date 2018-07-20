@@ -5,32 +5,34 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title>Atom as Markdown Editor  &middot; Victor&#39;s Blog</title>
+  <title>How to Create a Timer in Bash  &middot; Victor&#39;s Blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="description" content="Using Atom as a Markdown editor." />
+<meta name="description" content="How to create a timer (countdown) in Bash using the built-in `$SECONDS` variable" />
 
-<meta name="keywords" content="Markdown, ">
+<meta name="keywords" content="Linux, Bash, ">
 
 
-<meta property="og:title" content="Atom as Markdown Editor  &middot; Victor&#39;s Blog ">
+<meta property="og:title" content="How to Create a Timer in Bash  &middot; Victor&#39;s Blog ">
 <meta property="og:site_name" content="Victor&#39;s Blog"/>
-<meta property="og:url" content="https://blog.victormendonca.com/2017/09/24/atom-as-markdown-editor/" />
+<meta property="og:url" content="https://blog.victormendonca.com/2018/07/19/how-to-create-a-timer-in-bash/" />
 <meta property="og:locale" content="en">
 
 
 <meta property="og:type" content="article" />
-<meta property="og:description" content="Using Atom as a Markdown editor."/>
-<meta property="og:article:published_time" content="2017-09-24T22:46:02-04:00" />
-<meta property="og:article:modified_time" content="2017-09-24T22:46:02-04:00" />
+<meta property="og:description" content="How to create a timer (countdown) in Bash using the built-in `$SECONDS` variable"/>
+<meta property="og:article:published_time" content="2018-07-19T09:45:45-04:00" />
+<meta property="og:article:modified_time" content="2018-07-19T09:45:45-04:00" />
 
   
     
-<meta property="og:article:tag" content="Markdown">
+<meta property="og:article:tag" content="Linux">
+    
+<meta property="og:article:tag" content="Bash">
     
   
 
@@ -38,9 +40,9 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@18440926" />
 <meta name="twitter:creator" content="@18440926" />
-<meta name="twitter:title" content="Atom as Markdown Editor" />
-<meta name="twitter:description" content="Using Atom as a Markdown editor." />
-<meta name="twitter:url" content="https://blog.victormendonca.com/2017/09/24/atom-as-markdown-editor/" />
+<meta name="twitter:title" content="How to Create a Timer in Bash" />
+<meta name="twitter:description" content="How to create a timer (countdown) in Bash using the built-in `$SECONDS` variable" />
+<meta name="twitter:url" content="https://blog.victormendonca.com/2018/07/19/how-to-create-a-timer-in-bash/" />
 <meta name="twitter:domain" content="https://blog.victormendonca.com/">
   
 
@@ -48,7 +50,7 @@
 
 
 
-<link rel="canonical" href="https://blog.victormendonca.com/2017/09/24/atom-as-markdown-editor/" />
+<link rel="canonical" href="https://blog.victormendonca.com/2018/07/19/how-to-create-a-timer-in-bash/" />
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
 <link rel="icon" href="https://blog.victormendonca.com/favicon.png">
 <meta name="generator" content="Hugo 0.44" />
@@ -137,13 +139,13 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
   <div class="text-center">
 
-    <h1>Atom as Markdown Editor
+    <h1>How to Create a Timer in Bash
 </h1>
 
     <div class="metas">
 <small>
   <i class="fa fa-calendar"></i>
-  <time datetime="2017-09-24">24 Sep, 2017</time>
+  <time datetime="2018-07-19">19 Jul, 2018</time>
 </small>
 
 
@@ -151,25 +153,25 @@
     &middot; by Victor Mendonça
   
   &middot; Read in about 1 min
-  &middot; (84 words)
+  &middot; (79 words)
   &middot; 
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f24%2fatom-as-markdown-editor%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f19%2fhow-to-create-a-timer-in-bash%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=Atom%20as%20Markdown%20Editor&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f24%2fatom-as-markdown-editor%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Create%20a%20Timer%20in%20Bash&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f19%2fhow-to-create-a-timer-in-bash%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f24%2fatom-as-markdown-editor%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f19%2fhow-to-create-a-timer-in-bash%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f24%2fatom-as-markdown-editor%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f19%2fhow-to-create-a-timer-in-bash%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f24%2fatom-as-markdown-editor%2f&amp;title=Atom%20as%20Markdown%20Editor" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f19%2fhow-to-create-a-timer-in-bash%2f&amp;title=How%20to%20Create%20a%20Timer%20in%20Bash" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=Atom%20as%20Markdown%20Editor&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f24%2fatom-as-markdown-editor%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=How%20to%20Create%20a%20Timer%20in%20Bash&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f19%2fhow-to-create-a-timer-in-bash%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   </small>
@@ -177,7 +179,9 @@
 <div class="margin-10">
   <i class="fa fa-tags"></i>
   
-  <a href="https://blog.victormendonca.com/tags/markdown" class="label label-primary">Markdown</a>
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
   
 
 
@@ -190,35 +194,15 @@
 </div>
 
       <div class="content">
-  <p>I have been looking for a good Markdown editor for quite a while, and after a lot of research, I finally I found one.</p>
+  <p>Following my previous post on &laquo;<a href="https://blog.victormendonca.com/2016/10/19/how-to-create-a-prompt-with-timeout-in-bash/">How to Create a Prompt With Timeout in Bash </a>&raquo;, we will now see how to create a timer (countdown) in Bash using the built-in <code>$SECONDS</code> variable.</p>
 
-<p>Some of the key features that were very important to me on a Markdown editor were:</p>
+<p>The <code>$SECONDS</code> variable holds in the number of seconds the script has been running. So it can easily be used to create a timer inside your script in Bash.</p>
 
-<ul>
-<li>Live preview</li>
-<li>File browser (sidebar)</li>
-<li>GitHub flavored</li>
-<li>Fast and non laggy preview</li>
-</ul>
-
-<p>And not surprisingly, <a href="https://atom.io/">Atom</a> from GitHub was my solution.</p>
-
-<p><img src="https://i.imgur.com/NNfA8MJ.gif" alt="Imgur" /></p>
-
-<p>You might also want to:</p>
-
-<ul>
-<li>Change the preferences of the already installed package <a href="https://github.com/atom/markdown-preview">markdown-preview</a> to GitHub flavored</li>
-</ul>
-
-<p><img src="https://imgur.com/eyJYliK.gif" alt="" /></p>
-
-<ul>
-<li>And install <a href="https://atom.io/packages/markdown-preview-auto-open">markdown-preview-auto-open</a></li>
-</ul>
-
-<pre><code>apm install markdown-preview-auto-open
+<pre><code>$ bash -c 'while true ; do echo -en &quot;\r${SECONDS}s elapsed&quot; ; sleep 1 ; done'
+203s elapsed
 </code></pre>
+
+<p><img src="https://imgur.com//KZAso8o.gif" alt="Imgur" /></p>
 
 </div>
 
@@ -226,22 +210,22 @@
       <footer>
   
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f24%2fatom-as-markdown-editor%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f19%2fhow-to-create-a-timer-in-bash%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=Atom%20as%20Markdown%20Editor&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f24%2fatom-as-markdown-editor%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Create%20a%20Timer%20in%20Bash&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f19%2fhow-to-create-a-timer-in-bash%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f24%2fatom-as-markdown-editor%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f19%2fhow-to-create-a-timer-in-bash%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f24%2fatom-as-markdown-editor%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f19%2fhow-to-create-a-timer-in-bash%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f24%2fatom-as-markdown-editor%2f&amp;title=Atom%20as%20Markdown%20Editor" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f19%2fhow-to-create-a-timer-in-bash%2f&amp;title=How%20to%20Create%20a%20Timer%20in%20Bash" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=Atom%20as%20Markdown%20Editor&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f24%2fatom-as-markdown-editor%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=How%20to%20Create%20a%20Timer%20in%20Bash&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f19%2fhow-to-create-a-timer-in-bash%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -250,18 +234,12 @@
     <nav><ul class="pager">
     
         <li class="previous">
-          <a href="https://blog.victormendonca.com/2017/09/23/gnome-touchpad-settings-missing-in-arch-xps-13/" title="Gnome Touchpad Settings Missing in Arch Xps 13">
+          <a href="https://blog.victormendonca.com/2018/07/05/how-to-change-config.json-for-docker-mattermost-preview/" title="How to Change config.json for Docker Mattermost Preview">
             <span aria-hidden="true">&larr;</span>Previous
           </a>
         </li>
     
 
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2017/09/26/bash-special-parameters/" title="Bash Special Parameters">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
     
     </ul> </nav>
   

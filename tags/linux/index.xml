@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2016 Copyright my blog</copyright>
-    <lastBuildDate>Thu, 05 Jul 2018 15:20:24 -0400</lastBuildDate>
+    <lastBuildDate>Thu, 19 Jul 2018 09:45:45 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How to Create a Timer in Bash</title>
+      <link>https://blog.victormendonca.com/2018/07/19/how-to-create-a-timer-in-bash/</link>
+      <pubDate>Thu, 19 Jul 2018 09:45:45 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2018/07/19/how-to-create-a-timer-in-bash/</guid>
+      <description>Following my previous post on &amp;laquo;How to Create a Prompt With Timeout in Bash &amp;raquo;, we will now see how to create a timer (countdown) in Bash using the built-in $SECONDS variable.
+The $SECONDS variable holds in the number of seconds the script has been running. So it can easily be used to create a timer inside your script in Bash.
+$ bash -c &#39;while true ; do echo -en &amp;quot;\r${SECONDS}s elapsed&amp;quot; ; sleep 1 ; done&#39; 203s elapsed  </description>
+    </item>
     
     <item>
       <title>How to Change config.json for Docker Mattermost Preview</title>

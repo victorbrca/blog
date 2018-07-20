@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.victormendonca.com/2018/07/19/how-to-create-a-timer-in-bash/</loc>
+    <lastmod>2018-07-19T09:45:45-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.victormendonca.com/2018/07/05/how-to-change-config.json-for-docker-mattermost-preview/</loc>
     <lastmod>2018-07-05T15:20:24-04:00</lastmod>
   </url>
@@ -120,7 +125,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/bash/</loc>
-    <lastmod>2018-07-04T18:48:26-04:00</lastmod>
+    <lastmod>2018-07-19T09:45:45-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -156,7 +161,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/linux/</loc>
-    <lastmod>2018-07-05T15:20:24-04:00</lastmod>
+    <lastmod>2018-07-19T09:45:45-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -192,7 +197,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/post/</loc>
-    <lastmod>2018-07-05T15:20:24-04:00</lastmod>
+    <lastmod>2018-07-19T09:45:45-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -227,7 +232,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/</loc>
-    <lastmod>2018-07-05T15:20:24-04:00</lastmod>
+    <lastmod>2018-07-19T09:45:45-04:00</lastmod>
     <priority>0</priority>
   </url>
   
