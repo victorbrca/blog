@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.victormendonca.com/2018/08/20/kde-win7-volume-mixer/</loc>
+    <lastmod>2018-08-20T12:54:35-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.victormendonca.com/2018/07/19/how-to-create-a-timer-in-bash/</loc>
     <lastmod>2018-07-19T09:45:45-04:00</lastmod>
   </url>
@@ -155,13 +160,13 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/kde/</loc>
-    <lastmod>2018-06-29T19:20:45-04:00</lastmod>
+    <lastmod>2018-08-20T12:54:35-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.victormendonca.com/tags/linux/</loc>
-    <lastmod>2018-07-19T09:45:45-04:00</lastmod>
+    <lastmod>2018-08-20T12:54:35-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -197,7 +202,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/post/</loc>
-    <lastmod>2018-07-19T09:45:45-04:00</lastmod>
+    <lastmod>2018-08-20T12:54:35-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -232,7 +237,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/</loc>
-    <lastmod>2018-07-19T09:45:45-04:00</lastmod>
+    <lastmod>2018-08-20T12:54:35-04:00</lastmod>
     <priority>0</priority>
   </url>
   
