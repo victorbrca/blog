@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2016 Copyright my blog</copyright>
-    <lastBuildDate>Mon, 20 Aug 2018 12:54:35 -0400</lastBuildDate>
+    <lastBuildDate>Wed, 12 Sep 2018 04:10:58 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A Simple Powerline Prompt for Bash</title>
+      <link>https://blog.victormendonca.com/2018/09/12/a-simple-powerline-prompt-for-bash/</link>
+      <pubDate>Wed, 12 Sep 2018 04:10:58 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2018/09/12/a-simple-powerline-prompt-for-bash/</guid>
+      <description>Powerline-simple is a simple powerline prompt for Bash, written by yours truly.
+The prompt displays the following information:
+ Previous exit code Username Hostname (when connecting via SSH) Battery status sudo cached credentials Current path Git status  You can download it from the GitHub project page.</description>
+    </item>
     
     <item>
       <title>KDE Win7 Volume Mixer</title>
