@@ -119,13 +119,13 @@
         
         
           <div>
-  <h2><a href="https://blog.victormendonca.com/2018/06/26/installing-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b/">Installing Kuman 3</a>
+  <h2><a href="https://blog.victormendonca.com/2017/12/25/custom-standup-desk-build/">Custom Stand-up Desk Build</a>
 </h2>
 
   <div class="margin-10">
     <small>
   <i class="fa fa-calendar"></i>
-  <time datetime="2018-06-26">26 Jun, 2018</time>
+  <time datetime="2017-12-25">25 Dec, 2017</time>
 </small>
 
     
@@ -141,71 +141,96 @@
 </div>
 
           <div class="content">
-  <p>Simple instructions (assuming a new Raspbian install) to install <a href="https://www.amazon.ca/gp/product/B01FXCFA2M/ref=oh_aui_search_detailpage?ie=UTF8&amp;psc=1">Kuman 3.5 TFT LCD</a> on Raspberry Pi 3 Model B.</p>
+  
 
-<p>a. Download <a href="https://www.raspberrypi.org/downloads/raspbian/">Rasbian strech</a> (with desktop) and extract the <code>.img</code> file from the downloaded zip (it&rsquo;s always good to also check the hash of the downloaded file)</p>
+<p>After commuting  close to 1000kms a week for 6 years, I have decided to the the leap and move to Toronto. After all, I was here around 4 nights a week, and having to commute back and forward between Mississauga and Toronto had become a hassle. This would also increase my work drive (from 85kms each way to 115kms), but luckily my client agreed for me to work remote 4 days of the week, with made my move even more possible.</p>
 
-<p>b. Insert the SD card and make note of the device being used (<strong>make sure you get this right not to overwrite your OS</strong>)</p>
+<p>Seeing how I would be working from home most of the week, and how my office would be in the living room of our new place, I needed a space that not only was functional, but that could hold my three 27&raquo; monitors have have a clean look. I also wanted a standing desk because I can no longer get used to sitting the whole day.</p>
 
-<p>c. Use <code>dd</code> to copy the image to the SD card (the values for <code>if</code> and <code>of</code> should be changed accordingly. If you never used <code>dd</code> please do yourself a favor and read up first)</p>
+<p>After searching pinterest and online for ideas, I finally had a plan and knew what parts I would need.</p>
 
-<pre><code>sudo dd bs=4M if=2018-04-18-raspbian-stretch.img of=/dev/mmcblk0 status=progress oflag=sync
-</code></pre>
+<p>And here&rsquo;s the final work:</p>
 
-<p>d. Once the process is done, mount (if needed) the <code>boot</code> and <code>rootfs</code> partitions</p>
+<p><img src="https://i.imgur.com/pL5BWrj.jpg" alt="" /></p>
 
-<p>e. Browse to the mount point of <code>boot</code> and create a blank file called <code>ssh</code> (to enable sshd on boot)</p>
+<h2 id="the-wall">The Wall</h2>
 
-<pre><code>touch ssh
-</code></pre>
+<p>The space I had was perfect. The back wall has the length of 64&raquo;, with 4 wood studs distributed evenly with 16&raquo; of space. The side wall had a stud 13&raquo; away from the corner, and another stud 16&raquo; away from it. I needed to leave space for the cabling since I did not want to bring it through the wall. Space was needed on the left for my NAS cables to go through, and in the middle for the cables coming down from the monitors, LEDs and keyboard and mouse.</p>
 
-<p>f. Open <code>cmdline.txt</code> and write down the value of <code>root=</code>. Now substitute the existing line with the line below, and then change the value of <code>root=</code> back to the original value</p>
+<p><img src="https://i.imgur.com/d1EifxF.png" alt="" /></p>
 
-<pre><code>dwc_otg.lpm_enable=0 console=tty1 console=ttyAMA0,115200 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait fbcon=map:10 fbcon=font:ProFont6x11 logo.nologo
-</code></pre>
+<h2 id="the-monitor-mount">The Monitor Mount</h2>
 
-<p>g. Open <code>config.txt</code> and add the lines below to the end of the file</p>
+<p>For the monitors I purchased the 3x <a href="https://www.amazon.ca/gp/product/B00ZKFRKIU/ref=oh_aui_detailpage_o05_s00?ie=UTF8&amp;psc=1">mounts</a> below on Amazon. I have the two main monitors mounted to a piece of plywood, which is in turn attached to the wall.</p>
 
-<pre><code>dtparam=audio=on
-dtparam=spi=on
-dtoverlay=ads7846,penirq=25,penirq_pull=2,xohms=150,swapxy=1,xmin=300,ymin=700,xmax=3800,ymax=3400,pmax=255
-dtoverlay=waveshare35a
-</code></pre>
+<p><img src="https://i.imgur.com/eBqccqU.jpg" alt="Imgur" /></p>
 
-<p>h. Download <code>waveshare35a-overlay.dtb</code> from <a href="https://github.com/swkim01/waveshare-dtoverlays">GitHub</a> to <code>/boot/overlays</code> and rename it to <code>waveshare35a.dtbo</code></p>
+<p><img src="https://i.imgur.com/iBL7rAc.jpg" alt="Imgur" /></p>
 
-<p>i. Change <code>Option &quot;fbdev&quot; &quot;/dev/fb0&quot;</code> in <code>/usr/share/X11/xorg.conf.d/99-fbturbo.conf</code> to <code>Option &quot;fbdev&quot; &quot;/dev/fb1&quot;</code></p>
+<h2 id="support">Support</h2>
 
-<pre><code>Section &quot;Device&quot;
-    Identifier &quot;Allwinner A10/A13 FBDEV&quot;
-    Driver &quot;fbturbo&quot;
-    Option &quot;fbdev&quot; &quot;/dev/fb1&quot;
+<p>I&rsquo;m using 3x pieces of 2x4 over 4 wood studs, and an Ikea&rsquo;s <a href="http://www.ikea.com/ca/en/catalog/products/60261626/">Gerton extendable leg</a></p>
 
-    Option &quot;SwapbuffersWait&quot; &quot;true&quot;
-EndSection
-</code></pre>
+<p><img src="https://i.imgur.com/7Q8tcVi.png" alt="Imgur" /></p>
 
-<p>j. Create a new file <code>/etc/X11/xorg.conf.d/99-calibration.conf</code> with the lines below</p>
+<p><img src="https://i.imgur.com/p8ns8FB.png" alt="Imgur" /></p>
 
-<pre><code>Section &quot;InputClass&quot;
-    Identifier &quot;calibration&quot;
-    MatchProduct &quot;ADS7846 Touchscreen&quot;
-    Option &quot;Calibration&quot; &quot;3932 300 294 3801&quot;
-    Option &quot;SwapAxes&quot; &quot;1&quot;
-EndSection
-</code></pre>
+<p><img src="https://i.imgur.com/pylDTkF.jpg" alt="Imgur" /></p>
 
-<p>k. Reboot and enjoy</p>
+<p><img src="https://i.imgur.com/GR5dW2L.jpg" alt="Imgur" /></p>
 
-<p><img src="https://i.imgur.com/Gvtpp8f.jpg" alt="" /></p>
+<h2 id="table-top">Table Top</h2>
 
-<hr />
+<p>The table is solid wood and also from Ikea - <a href="http://www.ikea.com/ca/en/catalog/products/50106773/">GERTON Table top, beech</a>. It measures 61&raquo; L by 29&raquo; &frac12; W.</p>
 
-<p><strong>References</strong></p>
+<p>Because this is a stand-up desk, the top of table sits at 42&raquo; from the floor.</p>
+
+<p><img src="https://i.imgur.com/uA8fav2.jpg" alt="Imgur" /></p>
+
+<h2 id="lighting">Lighting</h2>
+
+<p>I&rsquo;m using the cheap 12v LEDs that you can buy anywhere.</p>
+
+<p><img src="https://i.imgur.com/lfFTCov.jpg" alt="Imgur" /></p>
+
+<p>For behind the monitors, I have cut the strips and I&rsquo;m connecting them with also cheap LED connectors.</p>
+
+<p><img src="https://i.imgur.com/2KNMTMi.jpg" alt="Imgur" /></p>
+
+<p>The table LEDs go through an aluminum channel.</p>
+
+<p><img src="https://i.imgur.com/knY1IOf.png" alt="Imgur" /></p>
+
+<p><img src="https://i.imgur.com/vBaW6jy.jpg" alt="Imgur" /></p>
+
+<p><img src="https://i.imgur.com/N3LQXgY.jpg" alt="Imgur" /></p>
+
+<h2 id="cabling">Cabling</h2>
+
+<p>I&rsquo;m using Ikea&rsquo;s <a href="http://www.ikea.com/ca/en/catalog/products/30200253/">Signum Cable management</a> under the desk and the <a href="http://www.ikea.com/ca/en/catalog/products/80224893/">Uppleva Cord cover strip, white</a> to hide the cables on the wall.</p>
+
+<p><img src="https://i.imgur.com/q0ozWiK.jpg" alt="Imgur" /></p>
+
+<p><img src="https://i.imgur.com/oyLvzUS.jpg" alt="Imgur" /></p>
+
+<h2 id="controlling-the-lighting">Controlling the Lighting</h2>
+
+<p>I&rsquo;m using a custom bash script running on the background that checks if my monitors are on or off, and turns on the lights via curl commands to a Wemo Switch:</p>
 
 <ul>
-<li><a href="https://github.com/goodtft/LCD-show/issues/17">GitHub</a></li>
-<li><a href="https://www.amazon.com/review/R3CGCFPLQ232W2/ref=cm_cr_dp_title?ie=UTF8&amp;ASIN=B01CNJVG8K&amp;channel=detail-glance&amp;nodeID=541966&amp;store=pc">Amazon</a></li>
+<li><a href="https://gist.github.com/victorbrca/8520b815d055ebfba86904ebfd16b13c">wemo_control.sh</a></li>
+<li><a href="https://gist.github.com/victorbrca/8cf004f43b2a432024f6edb239b50434">desktop-led.sh</a></li>
+</ul>
+
+<h2 id="other-stuff-on-my-desktop">Other Stuff on My Desktop</h2>
+
+<ul>
+<li>Case (FreeNAS) - <a href="http://www.lian-li.com/en/dt-portfolio/pc-q25/">Lian Li, PC-Q25</a></li>
+<li>Speakers - <a href="http://www.edifier.com/ca/en/speakers/e10bt-exclaim-bt-connect-bluetooth-computer-speakers">Edifier, Exclaim</a></li>
+<li>Linux plush</li>
+<li>Suse plush</li>
+<li>Dyzplastic Android Mini Collectible Figure</li>
+<li>RioRand ligh cube</li>
 </ul>
 
 </div>
@@ -214,22 +239,22 @@ EndSection
           <footer>
   
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f06%2f26%2finstalling-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f12%2f25%2fcustom-standup-desk-build%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=Installing%20Kuman%203&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f06%2f26%2finstalling-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=Custom%20Stand-up%20Desk%20Build&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f12%2f25%2fcustom-standup-desk-build%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f06%2f26%2finstalling-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f12%2f25%2fcustom-standup-desk-build%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f06%2f26%2finstalling-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f12%2f25%2fcustom-standup-desk-build%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f06%2f26%2finstalling-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b%2f&amp;title=Installing%20Kuman%203" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f12%2f25%2fcustom-standup-desk-build%2f&amp;title=Custom%20Stand-up%20Desk%20Build" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=Installing%20Kuman%203&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f06%2f26%2finstalling-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=Custom%20Stand-up%20Desk%20Build&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f12%2f25%2fcustom-standup-desk-build%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -238,7 +263,7 @@ EndSection
     <nav><ul class="pager">
     
         <li class="previous">
-          <a href="https://blog.victormendonca.com/2018/05/14/creating-a-simple-systemd-user-service/" title="Creating a Simple Systemd User Service">
+          <a href="https://blog.victormendonca.com/2017/10/11/how-to-create-a-quick-web-server/" title="How to Create a Quick Web Server">
             <span aria-hidden="true">&larr;</span>Previous
           </a>
         </li>
@@ -246,7 +271,7 @@ EndSection
 
     
       <li class="next">
-        <a href="https://blog.victormendonca.com/2018/06/29/how-to-fix-sddm-on-multiple-screens/" title="How to Fix Sddm on Multiple Screens">
+        <a href="https://blog.victormendonca.com/2018/02/09/how-to-scan-for-rtsp-urls/" title="How to Scan for RTSP Urls">
             Next <span aria-hidden="true">&rarr;</span>
         </a>
       </li>
@@ -281,310 +306,100 @@ EndSection
 
         
           <div>
-  <h2><a href="https://blog.victormendonca.com/2018/05/14/creating-a-simple-systemd-user-service/">Creating a Simple Systemd User Service</a>
+  <h2><a href="https://blog.victormendonca.com/2017/10/11/how-to-create-a-quick-web-server/">How to Create a Quick Web Server</a>
 </h2>
 
   <div class="margin-10">
     <small>
   <i class="fa fa-calendar"></i>
-  <time datetime="2018-05-14">14 May, 2018</time>
+  <time datetime="2017-10-11">11 Oct, 2017</time>
 </small>
 
     
   <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/systemd" class="label label-primary">Systemd</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  <p>Quick instructions on how to create a simple systemd user service for a program or script.</p>
-
-<p>1- Identify the script or program/binary that you will be using</p>
-
-<p>2- Create a systemd unit file using the example below, give it a name that will make sense to you with a <code>.service</code> extension (like <code>[my_service].service</code>), and save it to <code>$USER/.config/systemd/user</code></p>
-
-<pre><code>[Unit]
-Description=[Service description]
-
-[Service]
-Type=simple
-StandardOutput=journal
-ExecStart=[script path]
-
-[Install]
-WantedBy=default.target
-</code></pre>
-
-<p>For this example we used a service type simple, which allows systemd to take care of the most basic needs for us. The options used are:</p>
-
-<ul>
-<li><strong>Description</strong> = Description of your service. This will be shown when handling your service with <code>systemctl</code></li>
-<li><strong>Type</strong> = We will be using the simple type, and this could be left out</li>
-<li><strong>StandardOutput</strong> = We will be logging it to the system log (you can use <code>journalctl</code> to view it)</li>
-<li><strong>ExectStart</strong> = The script or program to be executed</li>
-<li><strong>WantedBy</strong> = Service will be run using the default target. You can find what the default.target is with <code>systemctl get-default</code></li>
-</ul>
-
-<p>3- Enable your service so it starts automatically</p>
-
-<pre><code>systemctl --user enable [my_service].service
-</code></pre>
-
-<p>4- Start the service</p>
-
-<pre><code>systemctl --user start [my_service].service
-</code></pre>
-
-<p>4- Check that it&rsquo;s running</p>
-
-<pre><code>systemctl --user status [my_service].service
-</code></pre>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Creating%20a%20Simple%20Systemd%20User%20Service&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f&amp;title=Creating%20a%20Simple%20Systemd%20User%20Service" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Creating%20a%20Simple%20Systemd%20User%20Service&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2018/02/09/how-to-scan-for-rtsp-urls/" title="How to Scan for RTSP Urls">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2018/06/26/installing-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b/" title="Installing Kuman 3">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2018/02/09/how-to-scan-for-rtsp-urls/">How to Scan for RTSP Urls</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2018-02-09">9 Feb, 2018</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/shell" class="label label-primary">Shell</a>
   
   <a href="https://blog.victormendonca.com/tags/networking" class="label label-primary">Networking</a>
   
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/netcat" class="label label-primary">Netcat</a>
+  
+  <a href="https://blog.victormendonca.com/tags/python" class="label label-primary">python</a>
+  
 
 
   </div>
 </div>
 
           <div class="content">
-  <p>So you have a camera but can&rsquo;t figure out what the RTSP URL is? Here&rsquo;s the solution.</p>
+  
 
-<p>Head over to <a href="https://nmap.org/nsedoc/scripts/rtsp-url-brute.html">nmap.org</a> and download their <a href="https://svn.nmap.org/nmap/scripts/rtsp-url-brute.nse">rtsp-url-brute</a> script to your computer. Then run it with nmap as:</p>
+<p>Have you ever had the need to create a web server to perform a test? Well, here are a few quick options on how to do this.</p>
 
-<pre><code>nmap --script rtsp-url-brute -p 554 [IP]
+<h2 id="got-netcat">Got Netcat?</h2>
+
+<p>If you have Netcat on the server (which is pretty easy to get), then you can do this.</p>
+
+<p><strong>Example 1:</strong> Display the date and the text &laquo;It works&raquo;</p>
+
+<pre><code>nc -kl 10001 -c 'echo -e &quot;HTTPS/1.1 200 OK\r\n\r\n$(date)\r\n\r\nIt works&quot;'
 </code></pre>
 
-<p>You should see results similar to the ones below:</p>
+<p><strong>Example 2:</strong> Display an index.html file</p>
 
-<pre><code>nmap --script rtsp-url-brute -p 554 192.168.1.15
+<pre><code>nc -kl 10001 -c 'echo -e &quot;HTTPS/1.1 200 OK\r\n\r\n$(cat index.html)&quot;'
+</code></pre>
 
-Starting Nmap 7.60 ( https://nmap.org ) at 2018-02-09 23:00 EST
-Nmap scan report for 192.168.1.15
-Host is up (0.0033s latency).
+<p><strong>Example 3:</strong> Using HTTPS</p>
 
-PORT    STATE SERVICE
-554/tcp open  rtsp
-| rtsp-url-brute:
-|   errors:
-|     rtsp://192.168.1.15/media.amp
-|     rtsp://192.168.1.15/media/media.amp
-|     rtsp://192.168.1.15/media/video1
-|     rtsp://192.168.1.15/media/video2
-|     rtsp://192.168.1.15/media/video3
-|     rtsp://192.168.1.15/medias1
-|     rtsp://192.168.1.15/mjpeg.cgi
-|     rtsp://192.168.1.15/mjpeg/media.smp
-|     rtsp://192.168.1.15/media
-|     rtsp://192.168.1.15/mp4
-|   discovered:
-|     rtsp://192.168.1.15/
-|     rtsp://192.168.1.15/1
-|     rtsp://192.168.1.15/1.AMP
-|     rtsp://192.168.1.15/1/1:1/main
-|     rtsp://192.168.1.15/1/cif
-|     rtsp://192.168.1.15/1/stream1
-|     rtsp://192.168.1.15/11
-|     rtsp://192.168.1.15/12
-|   other responses:
-|     400:
-|       rtsp://192.168.1.15/0
-|       rtsp://192.168.1.15/0/video1
-|       rtsp://192.168.1.15/4
-|       rtsp://192.168.1.15/CAM_ID.password.mp2
-|       rtsp://192.168.1.15/CH001.sdp
-|       rtsp://192.168.1.15/GetData.cgi
-|       rtsp://192.168.1.15/H264
-|       rtsp://192.168.1.15/HighResolutionVideo
-|       rtsp://192.168.1.15/HighResolutionvideo
-|       rtsp://192.168.1.15/Image.jpg
-|       rtsp://192.168.1.15/LowResolutionVideo
-|       rtsp://192.168.1.15/MJPEG.cgi
-|       rtsp://192.168.1.15/MediaInput/h264
-|       rtsp://192.168.1.15/MediaInput/h264/stream_1
-|       rtsp://192.168.1.15/MediaInput/mpeg4
-|       rtsp://192.168.1.15/ONVIF/MediaInput
-|       rtsp://192.168.1.15/ONVIF/channel1
-|       rtsp://192.168.1.15/PSIA/Streaming/channels/0?videoCodecType=H.264
-|       rtsp://192.168.1.15/PSIA/Streaming/channels/1
-|       rtsp://192.168.1.15/PSIA/Streaming/channels/1?videoCodecType=MPEG4
-|       rtsp://192.168.1.15/PSIA/Streaming/channels/h264
-|       rtsp://192.168.1.15/Possible
-|       rtsp://192.168.1.15/ROH/channel/11
-|       rtsp://192.168.1.15/Streaming/Channels/1
-|       rtsp://192.168.1.15/Streaming/Channels/101
-|       rtsp://192.168.1.15/Streaming/Channels/102
-|       rtsp://192.168.1.15/Streaming/Channels/103
-|       rtsp://192.168.1.15/Streaming/Channels/2
-|       rtsp://192.168.1.15/Streaming/Unicast/channels/101
-|       rtsp://192.168.1.15/Streaming/channels/101
-|       rtsp://192.168.1.15/Video?Codec=MPEG4&amp;Width=720&amp;Height=576&amp;Fps=30
-|       rtsp://192.168.1.15/VideoInput/1/h264/1
-|       rtsp://192.168.1.15/access_code
-|       rtsp://192.168.1.15/access_name_for_stream_1_to_5
-|       rtsp://192.168.1.15/av0_0
-|       rtsp://192.168.1.15/av0_1
-|       rtsp://192.168.1.15/av2
-|       rtsp://192.168.1.15/avn=2
-|       rtsp://192.168.1.15/axis-media/media.amp
-|       rtsp://192.168.1.15/axis-media/media.amp?videocodec=h264&amp;resolution=640x480
-|       rtsp://192.168.1.15/cam
-|       rtsp://192.168.1.15/cam/realmonitor
-|       rtsp://192.168.1.15/cam/realmonitor?channel=1&amp;subtype=00
-|       rtsp://192.168.1.15/cam/realmonitor?channel=1&amp;subtype=01
-|       rtsp://192.168.1.15/cam/realmonitor?channel=1&amp;subtype=1
-|       rtsp://192.168.1.15/cam0_0
-|       rtsp://192.168.1.15/cam0_1
-|       rtsp://192.168.1.15/cam1/h264
-|       rtsp://192.168.1.15/cam1/h264/multicast
-|       rtsp://192.168.1.15/cam1/mjpeg
-|       rtsp://192.168.1.15/cam1/mpeg4
-|       rtsp://192.168.1.15/cam1/onvif-h264
-|       rtsp://192.168.1.15/cam4/mpeg4
-|       rtsp://192.168.1.15/camera.stm
-|       rtsp://192.168.1.15/cgi-bin/viewer/video.jpg?resolution=640x480
-|       rtsp://192.168.1.15/ch0
-|       rtsp://192.168.1.15/ch0.h264
-|       rtsp://192.168.1.15/ch001.sdp
-|       rtsp://192.168.1.15/ch01.264
-|       rtsp://192.168.1.15/ch0_0.h264
-|       rtsp://192.168.1.15/ch0_unicast_firststream
-|       rtsp://192.168.1.15/ch0_unicast_secondstream
-|       rtsp://192.168.1.15/channel1
-|       rtsp://192.168.1.15/dms.jpg
-|       rtsp://192.168.1.15/dms?nowprofileid=2
-|       rtsp://192.168.1.15/h264
-|       rtsp://192.168.1.15/h264.sdp
-|       rtsp://192.168.1.15/h264/ch1/sub/
-|       rtsp://192.168.1.15/h264/media.amp
-|       rtsp://192.168.1.15/h264Preview_01_main
-|       rtsp://192.168.1.15/h264Preview_01_sub
-|       rtsp://192.168.1.15/h264_vga.sdp
-|       rtsp://192.168.1.15/image.jpg
-|       rtsp://192.168.1.15/image.mpg
-|       rtsp://192.168.1.15/image/jpeg.cgi
-|       rtsp://192.168.1.15/img/media.sav
-|       rtsp://192.168.1.15/img/video.asf
-|       rtsp://192.168.1.15/img/video.sav
-|       rtsp://192.168.1.15/ioImage/1
-|       rtsp://192.168.1.15/ipcam.sdp
-|       rtsp://192.168.1.15/ipcam/stream.cgi?nowprofileid=2
-|       rtsp://192.168.1.15/ipcam_h264.sdp
-|       rtsp://192.168.1.15/jpg/image.jpg?size=3
-|       rtsp://192.168.1.15/live
-|       rtsp://192.168.1.15/live.sdp
-|       rtsp://192.168.1.15/live/av0
-|       rtsp://192.168.1.15/live/ch0
-|       rtsp://192.168.1.15/live/ch00_0
-|       rtsp://192.168.1.15/live/ch00_1
-|       rtsp://192.168.1.15/live/ch1
-|       rtsp://192.168.1.15/live/ch2
-|       rtsp://192.168.1.15/live/h264
-|       rtsp://192.168.1.15/live/mpeg4
-|       rtsp://192.168.1.15/live0.264
-|       rtsp://192.168.1.15/live1.264
-|       rtsp://192.168.1.15/live1.sdp
-|       rtsp://192.168.1.15/live2.sdp
-|       rtsp://192.168.1.15/live3.sdp
-|       rtsp://192.168.1.15/live_h264.sdp
-|       rtsp://192.168.1.15/live_mpeg4.sdp
-|       rtsp://192.168.1.15/livestream
-|_      rtsp://192.168.1.15/livestream/
+<p>a. First get a set of self-signed certificate and key (either generate or download here - <a href="http://www.selfsignedcertificate.com/">http://www.selfsignedcertificate.com/</a>)</p>
+
+<p>b. Add the certificate to the server and run netcate with the following parameters</p>
+
+<pre><code>nc -l -p 10001 -k --ssl --ssl-cert ca.crt --ssl-key ca.key -c 'echo -e &quot;HTTP/1.1 200 OK\r\n\r\n$(date)\r\n\r\nIt works&quot;'
+</code></pre>
+
+<h2 id="python">Python</h2>
+
+<p>This is the easiest one, as long as you have Python on that system. Just run the commands below and you are set. If you have an index file on that folder, Python will display, otherwise it will do a directory listing.</p>
+
+<pre><code>$ python -m SimpleHTTPServer 8888
+Serving HTTP on 0.0.0.0 port 8888 ...
+</code></pre>
+
+<h3 id="using-https-ssl">Using HTTPS/SSL</h3>
+
+<p>And you can also create a SSL enabled listener with Python. For this test, you will need to have the certificate and key in <code>pem</code> format.</p>
+
+<p><strong>Pyton 3</strong></p>
+
+<pre><code class="language-python">from http.server import HTTPServer, BaseHTTPRequestHandler
+import ssl
+
+
+httpd = HTTPServer(('localhost', 4443), SimpleHTTPRequestHandler)
+
+httpd.socket = ssl.wrap_socket (httpd.socket,
+        keyfile=&quot;path/to/key.pem&quot;,
+        certfile='path/to/cert.pem', server_side=True)
+
+httpd.serve_forever()
+</code></pre>
+
+<p><strong>Python 2.x</strong></p>
+
+<pre><code class="language-python">import BaseHTTPServer, SimpleHTTPServer
+import ssl
+
+
+httpd = BaseHTTPServer.HTTPServer(('localhost', 4443),
+        SimpleHTTPServer.SimpleHTTPRequestHandler)
+
+httpd.socket = ssl.wrap_socket (httpd.socket,
+        keyfile=&quot;path/tp/key.pem&quot;,
+        certfile='path/to/cert.pem', server_side=True)
+
+httpd.serve_forever()
 </code></pre>
 
 </div>
@@ -593,22 +408,22 @@ PORT    STATE SERVICE
           <footer>
   
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-create-a-quick-web-server%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Scan%20for%20RTSP%20Urls&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Create%20a%20Quick%20Web%20Server&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-create-a-quick-web-server%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-create-a-quick-web-server%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-create-a-quick-web-server%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f&amp;title=How%20to%20Scan%20for%20RTSP%20Urls" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-create-a-quick-web-server%2f&amp;title=How%20to%20Create%20a%20Quick%20Web%20Server" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=How%20to%20Scan%20for%20RTSP%20Urls&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=How%20to%20Create%20a%20Quick%20Web%20Server&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-create-a-quick-web-server%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -617,7 +432,7 @@ PORT    STATE SERVICE
     <nav><ul class="pager">
     
         <li class="previous">
-          <a href="https://blog.victormendonca.com/2017/12/25/custom-standup-desk-build/" title="Custom Stand-up Desk Build">
+          <a href="https://blog.victormendonca.com/2017/10/11/how-to-load-gitlab-inside-an-iframe/" title="How to Load Gitlab Inside an Iframe">
             <span aria-hidden="true">&larr;</span>Previous
           </a>
         </li>
@@ -625,7 +440,554 @@ PORT    STATE SERVICE
 
     
       <li class="next">
-        <a href="https://blog.victormendonca.com/2018/05/14/creating-a-simple-systemd-user-service/" title="Creating a Simple Systemd User Service">
+        <a href="https://blog.victormendonca.com/2017/12/25/custom-standup-desk-build/" title="Custom Stand-up Desk Build">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
+  <h2><a href="https://blog.victormendonca.com/2017/10/11/how-to-load-gitlab-inside-an-iframe/">How to Load Gitlab Inside an Iframe</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2017-10-11">11 Oct, 2017</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/git" class="label label-primary">Git</a>
+  
+  <a href="https://blog.victormendonca.com/tags/gitlab" class="label label-primary">GitLab</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  <p>So you are trying to load GitLab inside another page via iframe, and you are not able to. Due to security reasons, this is default behavior for GitLab, and as per the project (see issue <a href="https://gitlab.com/gitlab-org/gitlab-ce/issues/2347">2347</a>, this will not change, and I agree).</p>
+
+<p>However for some internal users this might not be the best approach, so here&rsquo;s how to enable it.</p>
+
+<p>Browse to your install directory and go to your ‘nginx’ folder. If you are not sure where it is, with your GitLab instance running, use the following command (assuming you are using port 8888).</p>
+
+<pre><code># netstat -anp | grep 8888
+tcp        0      0 0.0.0.0:8888                0.0.0.0:*                   LISTEN      19761/nginx
+</code></pre>
+
+<p>Now use the PID to find where ‘nginx’ is running:</p>
+
+<pre><code># ps -ef | grep 19761
+root     19761  1029  0 13:12 ?        00:00:00 nginx: master process /opt/gitlab/embedded/sbin/nginx -p /var/opt/gitlab/nginx
+</code></pre>
+
+<p>Browse to the config folder and edit the ‘gitlab-http.conf’</p>
+
+<pre><code># cd /var/opt/gitlab/nginx/conf
+
+# vim gitlab-http.conf
+</code></pre>
+
+<p>Add the line <code>proxy_hide_header X-Frame-Options;</code><code>in the</code>location /` code block</p>
+
+<pre><code class="language-http.conf"> location / {
+     ## Serve static files from defined root folder.
+     ## @gitlab is a named location for the upstream fallback, see below.
+     try_files $uri $uri/index.html $uri.html @gitlab;
+   }
+
+
+   proxy_hide_header X-Frame-Options;
+</code></pre>
+
+<p>Comment the line <code>proxy_hide_header X-Frame-Options;</code> if present</p>
+
+<pre><code class="language-http.conf">location @gitlab {
+    ## If you use HTTPS make sure you disable gzip compression
+    ## to be safe against BREACH attack.
+
+
+    ## https://github.com/gitlabhq/gitlabhq/issues/694
+    ## Some requests take more than 30 seconds.
+    proxy_read_timeout      300;
+    proxy_connect_timeout   300;
+    proxy_redirect          off;
+
+    proxy_set_header   X-Forwarded-Proto $scheme;
+    proxy_set_header   Host              $http_host;
+    proxy_set_header   X-Real-IP         $remote_addr;
+    proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
+    proxy_set_header   X-Frame-Options   SAMEORIGIN;
+    #proxy_hide_header X-Frame-Options;
+
+    proxy_pass http://gitlab;
+  }
+</code></pre>
+
+<p>Restart GitLab</p>
+
+<pre><code># gitlab-ctl restart
+ok: run: logrotate: (pid 31748) 1s
+ok: run: nginx: (pid 31752) 0s
+ok: run: postgresql: (pid 31757) 1s
+ok: run: redis: (pid 31766) 0s
+ok: run: sidekiq: (pid 31774) 0s
+ok: run: unicorn: (pid 31786) 0s
+</code></pre>
+
+<p>That should be it!!!</p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-load-gitlab-inside-an-iframe%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Load%20Gitlab%20Inside%20an%20Iframe&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-load-gitlab-inside-an-iframe%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-load-gitlab-inside-an-iframe%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-load-gitlab-inside-an-iframe%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-load-gitlab-inside-an-iframe%2f&amp;title=How%20to%20Load%20Gitlab%20Inside%20an%20Iframe" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20Load%20Gitlab%20Inside%20an%20Iframe&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-load-gitlab-inside-an-iframe%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2017/10/06/how-to-view-dns-calls-made-by-processes/" title="How to View DNS Calls Made by Processes">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2017/10/11/how-to-create-a-quick-web-server/" title="How to Create a Quick Web Server">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
+  <h2><a href="https://blog.victormendonca.com/2017/10/06/how-to-view-dns-calls-made-by-processes/">How to View DNS Calls Made by Processes</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2017-10-06">6 Oct, 2017</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/network" class="label label-primary">Network</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>We had the need at work to monitor DNS calls made by an application in a RHEL system in order to stabilish if a connection pool config change had taken full effect, or if we had missed any configuration file. And the solution was to use <code>SystemTap</code> for this task.</p>
+
+<p><a href="https://en.wikipedia.org/wiki/SystemTap">SystemTap (stap)</a> is a scripting language and tool that simplifies the gathering of information about the running Linux system. It allows you to monitor and trace the operation of a Linux kernel.</p>
+
+<p>It should be present on most RHEL server installs, but for other desktop based distros (like Arch), you might need to install it.</p>
+
+<h2 id="overview">Overview</h2>
+
+<p>The image below shows you the sript working and recording DNS lookup from Firefox (note the difference on the amount of connections between Google/Yahoo vs DuckDuckGo).</p>
+
+<p><img src="https://imgur.com/i7optIs.gif" alt="" /></p>
+
+<h2 id="installation">Installation</h2>
+
+<p>Install <code>systemtap</code> and <code>linux-headers</code>:</p>
+
+<pre><code>pacman -Syu systemtap linux-headers
+</code></pre>
+
+<h2 id="initial-config-and-test">Initial Config and Test</h2>
+
+<p>Because we are trying to figure out how the application makes DNS calls, we need to find where our <code>libc6</code> library lives so we can probe it for requests (most likelly <code>/usr/lib/libc.so.6</code> for Arch).</p>
+
+<pre><code>pacman -Ql glibc | grep '/libc.*so'
+glibc /usr/lib/libc-2.26.so
+glibc /usr/lib/libc.so
+------------------------
+glibc /usr/lib/libc.so.6
+------------------------
+glibc /usr/lib/libcidn-2.26.so
+glibc /usr/lib/libcidn.so
+glibc /usr/lib/libcidn.so.1
+glibc /usr/lib/libcrypt-2.26.so
+glibc /usr/lib/libcrypt.so
+glibc /usr/lib/libcrypt.so.1
+</code></pre>
+
+<p>To test it, make sure the string <code>probe process(&quot;/usr/lib/libc.so.6&quot;)</code> has the location for libc6 on your system and run the command below:</p>
+
+<pre><code>sudo /usr/bin/stap -e 'probe process(&quot;/usr/lib/libc.so.6&quot;).function(&quot;getaddrinfo&quot;) { log(execname()) }'
+</code></pre>
+
+<p>You may get the following warning when running the script:</p>
+
+<blockquote>
+<p>WARNING: Kernel function symbol table missing [man warning::symbols]</p>
+</blockquote>
+
+<p>This is because Systemtap may need a linux-build style System.map file to find addresses of kernel functions/data. Try the command below to create it by hand:</p>
+
+<pre><code>sudo cp /proc/kallsyms /boot/System.map-`uname -r`
+</code></pre>
+
+<h2 id="running-it">Running It</h2>
+
+<hr />
+
+<p>You can run the script below (or just the code) as <code>root</code> to monitor the connections. Output will be displayed on your current terminal, or you can choose to save it to a file.</p>
+
+<pre><code>_#!/bin/bash
+
+
+system_stap=&quot;/usr/bin/stap&quot;
+
+_getaddrInfo () {
+  /usr/bin/stap -e 'probe process(&quot;/usr/lib/libc.so.6&quot;).function(&quot;getaddrinfo&quot;)
+{
+  printf(&quot;| %-15s| %-7d| %-35s |\n&quot;, execname(), pid(), kernel_string(pointer_arg(1)))
+}'
+}
+
+echo &quot;&quot;
+printf &quot;| %-15s| %-7s| %-35s |\n&quot; &quot;Process&quot; &quot;PID&quot; &quot;Destination Name&quot;
+echo &quot;|----------------|--------|-------------------------------------|&quot;
+
+
+while true ; do
+  _getaddrInfo
+done
+</code></pre>
+
+<pre><code>probe
+  process(&quot;/lib64/libc.so.6&quot;).function(&quot;__gethostbyname_r&quot;).call,
+  process(&quot;/lib64/libc.so.6&quot;).function(&quot;gethostbyname&quot;).call,
+  process(&quot;/lib64/libc.so.6&quot;).function(&quot;__gethostbyname2_r&quot;).call,
+  process(&quot;/lib64/libc.so.6&quot;).function(&quot;gethostbyname2&quot;).call,
+  process(&quot;/lib64/libc.so.6&quot;).function(&quot;__new_gethostbyname2_r&quot;).call
+{
+	printf(&quot;[%s][%d]-&gt;%s(%s)\n&quot;, execname(), pid(), user_string(pointer_arg(1)), kernel_string(pointer_arg(1)))
+}
+
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>$ sudo ./getAdreessInfo.sh
+[sudo] password for victor:           
+
+| Process        | PID    | Destination Name                    |
+|----------------|--------|-------------------------------------|
+| WorkerPool/5863| 5104   | adservice.google.ca                 |
+| WorkerPool/6005| 5104   | apis.google.com                     |
+| WorkerPool/1335| 5104   | clients5.google.com                 |
+| WorkerPool/5823| 5104   | notifications.google.com            |
+| WorkerPool/1856| 5104   | lh3.googleusercontent.com           |
+| WorkerPool/5297| 5104   | ogs.google.com                      |
+| WorkerPool/5823| 5104   | www.google.com                      |
+| WorkerPool/1335| 5104   | www.gstatic.com                     |
+| WorkerPool/5863| 5104   | uaswitcher.org                      |
+| WorkerPool/6005| 5104   | fonts.gstatic.com                   |
+| WorkerPool/5823| 5104   | play.google.com                     |
+</code></pre>
+
+<h2 id="closing-notes">Closing Notes</h2>
+
+<hr />
+
+<p>The uses for <code>SystemTap</code> are very wide and diverse. You will be able to find great tutorials and documentation online. I&rsquo;m also providing a few links below to some great documentation to get you started.</p>
+
+<ul>
+<li>Red Hat Enterprise - <a href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/SystemTap_Beginners_Guide/index.html">SystemTap Beginners Guide</a></li>
+<li>Arch Linux Wiki - <a href="https://wiki.archlinux.org/index.php/SystemTap">SystemTap</a></li>
+<li>IBM Developerworks - <a href="https://www.ibm.com/developerworks/library/l-systemtap/index.html">Linux introspection and SystemTap</a></li>
+<li>Ubuntu Wiki - <a href="https://wiki.ubuntu.com/Kernel/Systemtap">SystemTap</a></li>
+</ul>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f06%2fhow-to-view-dns-calls-made-by-processes%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20View%20DNS%20Calls%20Made%20by%20Processes&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f06%2fhow-to-view-dns-calls-made-by-processes%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f06%2fhow-to-view-dns-calls-made-by-processes%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f06%2fhow-to-view-dns-calls-made-by-processes%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f06%2fhow-to-view-dns-calls-made-by-processes%2f&amp;title=How%20to%20View%20DNS%20Calls%20Made%20by%20Processes" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20View%20DNS%20Calls%20Made%20by%20Processes&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f06%2fhow-to-view-dns-calls-made-by-processes%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2017/09/26/bash-special-parameters/" title="Bash Special Parameters">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2017/10/11/how-to-load-gitlab-inside-an-iframe/" title="How to Load Gitlab Inside an Iframe">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
+  <h2><a href="https://blog.victormendonca.com/2017/09/26/bash-special-parameters/">Bash Special Parameters</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2017-09-26">26 Sep, 2017</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  <p>Special parameters are set by the shell to store information about aspects of its current state, such as the number of arguments and the exit code of the last command. Special parameters can only be referenced and cannot have it&rsquo;s value assigned.</p>
+
+<p>Special parameters are: <code>$*, $@, $#, $$, $!, $?, $0, $-, $_</code></p>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Definition</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>$*</td>
+<td>List of arguments (as a string)</td>
+</tr>
+
+<tr>
+<td>$@</td>
+<td>List of arguments (as an array)</td>
+</tr>
+
+<tr>
+<td>$#</td>
+<td>Number of positional parameters</td>
+</tr>
+
+<tr>
+<td>$$</td>
+<td>PID of the current shell</td>
+</tr>
+
+<tr>
+<td>$!</td>
+<td>PID of the last command executed in the background</td>
+</tr>
+
+<tr>
+<td>$?</td>
+<td>Exit code of the last-executed command</td>
+</tr>
+
+<tr>
+<td>$0</td>
+<td>Path to the currently running script</td>
+</tr>
+
+<tr>
+<td>$-</td>
+<td>Current shell option flags</td>
+</tr>
+
+<tr>
+<td>$_</td>
+<td>Gives the last argument to the previous command</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f26%2fbash-special-parameters%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Bash%20Special%20Parameters&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f26%2fbash-special-parameters%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f26%2fbash-special-parameters%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f26%2fbash-special-parameters%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f26%2fbash-special-parameters%2f&amp;title=Bash%20Special%20Parameters" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Bash%20Special%20Parameters&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f26%2fbash-special-parameters%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2017/09/24/atom-as-markdown-editor/" title="Atom as Markdown Editor">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2017/10/06/how-to-view-dns-calls-made-by-processes/" title="How to View DNS Calls Made by Processes">
             Next <span aria-hidden="true">&rarr;</span>
         </a>
       </li>
@@ -707,24 +1069,6 @@ PORT    STATE SERVICE
     </a>
 </li>
 
-<li >
-  <a href="https://blog.victormendonca.com//page/6/">
-    6
-    </a>
-</li>
-
-<li >
-  <a href="https://blog.victormendonca.com//page/7/">
-    7
-    </a>
-</li>
-
-<li >
-  <a href="https://blog.victormendonca.com//page/8/">
-    8
-    </a>
-</li>
-
 
 <li >
   <a aria-label="Next" href="https://blog.victormendonca.com//page/4/">
@@ -732,7 +1076,7 @@ PORT    STATE SERVICE
     </a>
 </li>
 <li >
-  <a aria-label="Last" href="https://blog.victormendonca.com//page/8/">
+  <a aria-label="Last" href="https://blog.victormendonca.com//page/5/">
     <span aria-hidden="true">&raquo;&raquo;</span>
   </a>
 </li>
@@ -768,11 +1112,11 @@ PORT    STATE SERVICE
       
       
       <div class="section taxonomies">
-        <header><div class="title"><b>tag</b></div></header>
+        <header><div class="title"><b>tags</b></div></header>
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/windows">windows</a></li>
           </ul>
         </div>
       </div>
@@ -788,6 +1132,10 @@ PORT    STATE SERVICE
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2018/09/17/how-to-create-an-init-like-script/">How to Create an Init Like Script</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2018/09/12/a-simple-powerline-prompt-for-bash/">A Simple Powerline Prompt for Bash</a>
@@ -807,6 +1155,10 @@ PORT    STATE SERVICE
         
           <li>
           <a href="https://blog.victormendonca.com/2018/07/04/how-to-change-forgotten-password-on-wsl-bash-for-windows/">How to Change Forgotten Password on WSL (Bash for Windows)</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2018/06/29/how-to-fix-sddm-on-multiple-screens/">How to Fix Sddm on Multiple Screens</a>
           </li>
         
         </ul>
@@ -842,10 +1194,6 @@ PORT    STATE SERVICE
 </div>
 <div class="pull-right">
 
-<a href="https://blog.victormendonca.com/disclaimer/">Disclaimer</a> <i>&middot;</i>
-
-<a href="https://blog.victormendonca.com/terms/">Terms</a> 
-
 </div>
 
         </div>
@@ -854,7 +1202,7 @@ PORT    STATE SERVICE
     
 <div class="container footline">
     <small>
-  code with <i class='fa fa-heart'></i>
+  code with <i class='fa fa-linux'></i>
 
 </small>
 </div>
@@ -863,7 +1211,7 @@ PORT    STATE SERVICE
     
 <div class="container copyright">
     <small>
-  &copy; 2016 Copyright my blog
+  &copy; 2018 Copyright Victor Mendonça
 
   </small>
 </div>

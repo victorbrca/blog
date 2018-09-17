@@ -5,52 +5,31 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title>Bash Scripting - Best Practices  &middot; Victor&#39;s Blog</title>
+  <title>Victor&#39;s Blog </title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="description" content="Best practices for Bash scripting" />
+<meta name="description" content="" />
 
-<meta name="keywords" content="Linux, Bash, ">
+<meta name="keywords" content="">
 
 
-<meta property="og:title" content="Bash Scripting - Best Practices  &middot; Victor&#39;s Blog ">
+<meta property="og:title" content="Victor&#39;s Blog ">
 <meta property="og:site_name" content="Victor&#39;s Blog"/>
-<meta property="og:url" content="https://blog.victormendonca.com/2015/12/18/bash-scripting---best-practices/" />
+<meta property="og:url" content="https://blog.victormendonca.com/" />
 <meta property="og:locale" content="en">
 
 
-<meta property="og:type" content="article" />
-<meta property="og:description" content="Best practices for Bash scripting"/>
-<meta property="og:article:published_time" content="2015-12-18T18:10:57-04:00" />
-<meta property="og:article:modified_time" content="2015-12-18T18:10:57-04:00" />
-
-  
-    
-<meta property="og:article:tag" content="Linux">
-    
-<meta property="og:article:tag" content="Bash">
-    
-  
-
-  
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:site" content="@18440926" />
-<meta name="twitter:creator" content="@18440926" />
-<meta name="twitter:title" content="Bash Scripting - Best Practices" />
-<meta name="twitter:description" content="Best practices for Bash scripting" />
-<meta name="twitter:url" content="https://blog.victormendonca.com/2015/12/18/bash-scripting---best-practices/" />
-<meta name="twitter:domain" content="https://blog.victormendonca.com/">
-  
-
-  
+<meta property="og:type" content="website" />
 
 
 
-<link rel="canonical" href="https://blog.victormendonca.com/2015/12/18/bash-scripting---best-practices/" />
+<link href="https://blog.victormendonca.com/index.xml" rel="alternate" type="application/rss+xml" title="Victor&#39;s Blog" />
+
+<link rel="canonical" href="https://blog.victormendonca.com/" />
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
 <link rel="icon" href="https://blog.victormendonca.com/favicon.png">
 <meta name="generator" content="Hugo 0.48" />
@@ -133,50 +112,23 @@
   </header>
 
 
-<div class="container">
-  <div class="row">
-    <div class="col-sm-9">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  <div class="text-center">
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-sm-9">
+        
+        
+          <div>
+  <h2><a href="https://blog.victormendonca.com/2015/12/18/bash-scripting---best-practices/">Bash Scripting - Best Practices</a>
+</h2>
 
-    <h1>Bash Scripting - Best Practices
-</h1>
-
-    <div class="metas">
-<small>
+  <div class="margin-10">
+    <small>
   <i class="fa fa-calendar"></i>
   <time datetime="2015-12-18">18 Dec, 2015</time>
 </small>
 
-
-  <small>
-    &middot; by Victor Mendonça
-  
-  &middot; Read in about 6 min
-  &middot; (1122 words)
-  &middot; 
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2015%2f12%2f18%2fbash-scripting---best-practices%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Bash%20Scripting%20-%20Best%20Practices&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2015%2f12%2f18%2fbash-scripting---best-practices%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2015%2f12%2f18%2fbash-scripting---best-practices%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2015%2f12%2f18%2fbash-scripting---best-practices%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2015%2f12%2f18%2fbash-scripting---best-practices%2f&amp;title=Bash%20Scripting%20-%20Best%20Practices" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Bash%20Scripting%20-%20Best%20Practices&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2015%2f12%2f18%2fbash-scripting---best-practices%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  </small>
-
-<div class="margin-10">
+    
   <i class="fa fa-tags"></i>
   
   <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
@@ -185,15 +137,10 @@
   
 
 
-</div>
-
-<br>
-</div>
-
   </div>
 </div>
 
-      <div class="content">
+          <div class="content">
   
 
 <h1 id="bash-scripting-best-practices">Bash Scripting - Best Practices</h1>
@@ -587,7 +534,7 @@ ls 123 &gt; /dev/null 2&gt;&amp;1
 </div>
 
 
-      <footer>
+          <footer>
   
 <span class="share-box">Share this on:
     <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2015%2f12%2f18%2fbash-scripting---best-practices%2f" onclick="window.open(this.href, 'mywin',
@@ -649,10 +596,100 @@ ls 123 &gt; /dev/null 2&gt;&amp;1
 
 </footer>
 
-    </div>
+        
+        
+<nav>
+  <ul class="pagination">
     
-      <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-        <div>
+
+
+<li >
+  <a aria-label="First" href="https://blog.victormendonca.com//">
+    <span aria-hidden="true">&laquo;&laquo;</span>
+  </a>
+</li>
+
+<li >
+  <a aria-label="Previous" href="https://blog.victormendonca.com//page/8/">
+    <span aria-hidden="true">&laquo;</span>
+    </a>
+</li>
+
+<li >
+  <a href="https://blog.victormendonca.com//">
+    1
+    </a>
+</li>
+
+<li >
+  <a href="https://blog.victormendonca.com//page/2/">
+    2
+    </a>
+</li>
+
+<li >
+  <a href="https://blog.victormendonca.com//page/3/">
+    3
+    </a>
+</li>
+
+<li >
+  <a href="https://blog.victormendonca.com//page/4/">
+    4
+    </a>
+</li>
+
+<li >
+  <a href="https://blog.victormendonca.com//page/5/">
+    5
+    </a>
+</li>
+
+<li >
+  <a href="https://blog.victormendonca.com//page/6/">
+    6
+    </a>
+</li>
+
+<li >
+  <a href="https://blog.victormendonca.com//page/7/">
+    7
+    </a>
+</li>
+
+<li >
+  <a href="https://blog.victormendonca.com//page/8/">
+    8
+    </a>
+</li>
+
+<li  class="active" >
+  <a href="https://blog.victormendonca.com//page/9/">
+    9
+    </a>
+</li>
+
+
+<li  class="disabled" >
+  <a aria-label="Next" href="#">
+    <span aria-hidden="true">&raquo;</span>
+    </a>
+</li>
+<li  class="disabled" >
+  <a aria-label="Last" href="https://blog.victormendonca.com//page/9/">
+    <span aria-hidden="true">&raquo;&raquo;</span>
+  </a>
+</li>
+
+
+  </ul>
+</nav>
+
+
+      </div>
+      
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+          <div>
   
 
    
@@ -675,11 +712,11 @@ ls 123 &gt; /dev/null 2&gt;&amp;1
       
       
       <div class="section taxonomies">
-        <header><div class="title"><b>tags</b></div></header>
+        <header><div class="title"><b>tag</b></div></header>
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/windows">windows</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li>
           </ul>
         </div>
       </div>
@@ -716,14 +753,6 @@ ls 123 &gt; /dev/null 2&gt;&amp;1
           <a href="https://blog.victormendonca.com/2018/07/05/how-to-change-config.json-for-docker-mattermost-preview/">How to Change config.json for Docker Mattermost Preview</a>
           </li>
         
-          <li>
-          <a href="https://blog.victormendonca.com/2018/07/04/how-to-change-forgotten-password-on-wsl-bash-for-windows/">How to Change Forgotten Password on WSL (Bash for Windows)</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2018/06/29/how-to-fix-sddm-on-multiple-screens/">How to Fix Sddm on Multiple Screens</a>
-          </li>
-        
         </ul>
       </div>
     </div>
@@ -741,10 +770,12 @@ ls 123 &gt; /dev/null 2&gt;&amp;1
 
 </div>
 
-      </div>
-    
+        </div>
+      
+    </div>
+
   </div>
-</div>
+
     
 <footer class="footer hidden-print">
   <div class="container">
@@ -755,6 +786,10 @@ ls 123 &gt; /dev/null 2&gt;&amp;1
 </div>
 <div class="pull-right">
 
+<a href="https://blog.victormendonca.com/disclaimer/">Disclaimer</a> <i>&middot;</i>
+
+<a href="https://blog.victormendonca.com/terms/">Terms</a> 
+
 </div>
 
         </div>
@@ -763,7 +798,7 @@ ls 123 &gt; /dev/null 2&gt;&amp;1
     
 <div class="container footline">
     <small>
-  code with <i class='fa fa-linux'></i>
+  code with <i class='fa fa-heart'></i>
 
 </small>
 </div>
@@ -772,7 +807,7 @@ ls 123 &gt; /dev/null 2&gt;&amp;1
     
 <div class="container copyright">
     <small>
-  &copy; 2018 Copyright Victor Mendonça
+  &copy; 2016 Copyright my blog
 
   </small>
 </div>
