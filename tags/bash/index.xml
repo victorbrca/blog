@@ -7,10 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Mon, 17 Sep 2018 11:40:47 -0400</lastBuildDate>
+    <lastBuildDate>Tue, 18 Sep 2018 15:25:08 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/tags/bash/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Special Characters and Symbols in Bash</title>
+      <link>https://blog.victormendonca.com/2018/09/18/special-characters-and-symbols-in-bash/</link>
+      <pubDate>Tue, 18 Sep 2018 15:25:08 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2018/09/18/special-characters-and-symbols-in-bash/</guid>
+      <description>Special Unicode Characters Character Recognition Shapecatcher You can use Shapecatcher: Draw the Unicode character you want! to draw a character and try to recognize it.
+&amp;amp;what: Discover Unicode &amp;amp; HTML Character Entities Unicode® character table
+In Bash Awesome symbols and characters in a bash prompt - Unix &amp;amp; Linux Stack Exchange
+If you can paste the character in Bash, you can dump the character in hex with hexdump
+$ echo &amp;quot;✰&amp;quot; | hexdump -C 00000000 e2 9c b0 0a |.</description>
+    </item>
     
     <item>
       <title>How to Create an Init Like Script</title>
