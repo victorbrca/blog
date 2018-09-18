@@ -18,11 +18,11 @@
       <pubDate>Tue, 18 Sep 2018 15:25:08 -0400</pubDate>
       
       <guid>https://blog.victormendonca.com/2018/09/18/special-characters-and-symbols-in-bash/</guid>
-      <description>Special Unicode Characters Character Recognition Shapecatcher You can use Shapecatcher: Draw the Unicode character you want! to draw a character and try to recognize it.
-&amp;amp;what: Discover Unicode &amp;amp; HTML Character Entities Unicode® character table
-In Bash Awesome symbols and characters in a bash prompt - Unix &amp;amp; Linux Stack Exchange
-If you can paste the character in Bash, you can dump the character in hex with hexdump
-$ echo &amp;quot;✰&amp;quot; | hexdump -C 00000000 e2 9c b0 0a |.</description>
+      <description> Character Recognition Shapecatcher You can use Shapecatcher to draw a character and try to recognize it.
+Other usefull sites are &amp;amp;what and Unicode® character table.
+In Bash If you can paste the character in Bash, you can dump the character in hex with hexdump
+$ echo &amp;quot;✰&amp;quot; | hexdump -C 00000000 e2 9c b0 0a |....| 00000004  Use the hex value to recreate the character:
+$ echo -e &amp;quot;\xe2\x9c\xb0&amp;quot; ✰  </description>
     </item>
     
     <item>
