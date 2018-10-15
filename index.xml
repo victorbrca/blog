@@ -20,7 +20,7 @@
       <guid>https://blog.victormendonca.com/2018/10/15/quickly-backing-up-files-in-bash/</guid>
       <description>Here&amp;rsquo;s a quick and simple way to backup files in Bash by using Bash&amp;rsquo;s built-in brace expansion {,}.
 Let&amp;rsquo;s first create a file:
-ls -l &amp;gt; listing.txt  Now let&amp;rsquo;s create a backup:
+$ ls -l &amp;gt; listing.txt  Now let&amp;rsquo;s create a backup:
 $ cp listing.txt{,.bak}  And the result is a new file with the .bak extension:
 $ ls -l listing* Permissions Size User Group Date Modified Name .rw-r--r-- 2.5k victor users 15 Oct 14:21 listing.txt .rw-r--r-- 2.5k victor users 15 Oct 14:21 listing.</description>
     </item>

@@ -153,7 +153,7 @@
     &middot; by Victor Mendonça
   
   &middot; Read in about 1 min
-  &middot; (122 words)
+  &middot; (123 words)
   &middot; 
 <span class="share-box">Share this on:
     <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f15%2fquickly-backing-up-files-in-bash%2f" onclick="window.open(this.href, 'mywin',
@@ -198,17 +198,17 @@
 
 <p>Let&rsquo;s first create a file:</p>
 
-<pre><code>ls -l &gt; listing.txt
+<pre><code class="language-bash">$ ls -l &gt; listing.txt
 </code></pre>
 
 <p>Now let&rsquo;s create a backup:</p>
 
-<pre><code>$ cp listing.txt{,.bak}
+<pre><code class="language-bash">$ cp listing.txt{,.bak}
 </code></pre>
 
 <p>And the result is a new file with the <code>.bak</code> extension:</p>
 
-<pre><code>$ ls -l listing*
+<pre><code class="language-bash">$ ls -l listing*
 Permissions Size User   Group Date Modified Name
 .rw-r--r--  2.5k victor users 15 Oct 14:21  listing.txt
 .rw-r--r--  2.5k victor users 15 Oct 14:21  listing.txt.bak
@@ -216,12 +216,12 @@ Permissions Size User   Group Date Modified Name
 
 <p>How about getting fancy and adding a date?</p>
 
-<pre><code>cp listing.txt{,.$(date +%Y%m%d_%H%M)}
+<pre><code class="language-bash">cp listing.txt{,.$(date +%Y%m%d_%H%M)}
 </code></pre>
 
 <p>And the result:</p>
 
-<pre><code>$ ls -l listing.tx*
+<pre><code class="language-bash">$ ls -l listing.tx*
 Permissions Size User   Group Date Modified Name
 .rw-r--r--  2.5k victor users 15 Oct 14:21  listing.txt
 .rw-r--r--  2.5k victor users 15 Oct 14:21  listing.txt.bak
