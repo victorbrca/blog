@@ -5,34 +5,34 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title>Redirecting Bash Xtrace to a Separate Log  &middot; Victor&#39;s Blog</title>
+  <title>TLDR Instead of MAN  &middot; Victor&#39;s Blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="description" content="How to redirect stderr to a separate log in a Bash script." />
+<meta name="description" content="Using tldr instead of the man pages" />
 
-<meta name="keywords" content="Linux, Bash, ">
+<meta name="keywords" content="Bash, Linux, ">
 
 
-<meta property="og:title" content="Redirecting Bash Xtrace to a Separate Log  &middot; Victor&#39;s Blog ">
+<meta property="og:title" content="TLDR Instead of MAN  &middot; Victor&#39;s Blog ">
 <meta property="og:site_name" content="Victor&#39;s Blog"/>
-<meta property="og:url" content="https://blog.victormendonca.com/2016/12/23/redirecting-bash-xtrace-to-a-separate-log/" />
+<meta property="og:url" content="https://blog.victormendonca.com/2018/10/16/tldr-instead-of-man/" />
 <meta property="og:locale" content="en">
 
 
 <meta property="og:type" content="article" />
-<meta property="og:description" content="How to redirect stderr to a separate log in a Bash script."/>
-<meta property="og:article:published_time" content="2016-12-23T14:58:09-04:00" />
-<meta property="og:article:modified_time" content="2016-12-23T14:58:09-04:00" />
+<meta property="og:description" content="Using tldr instead of the man pages"/>
+<meta property="og:article:published_time" content="2018-10-16T08:49:07-04:00" />
+<meta property="og:article:modified_time" content="2018-10-16T08:49:07-04:00" />
 
   
     
-<meta property="og:article:tag" content="Linux">
-    
 <meta property="og:article:tag" content="Bash">
+    
+<meta property="og:article:tag" content="Linux">
     
   
 
@@ -40,9 +40,9 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@18440926" />
 <meta name="twitter:creator" content="@18440926" />
-<meta name="twitter:title" content="Redirecting Bash Xtrace to a Separate Log" />
-<meta name="twitter:description" content="How to redirect stderr to a separate log in a Bash script." />
-<meta name="twitter:url" content="https://blog.victormendonca.com/2016/12/23/redirecting-bash-xtrace-to-a-separate-log/" />
+<meta name="twitter:title" content="TLDR Instead of MAN" />
+<meta name="twitter:description" content="Using tldr instead of the man pages" />
+<meta name="twitter:url" content="https://blog.victormendonca.com/2018/10/16/tldr-instead-of-man/" />
 <meta name="twitter:domain" content="https://blog.victormendonca.com/">
   
 
@@ -50,7 +50,7 @@
 
 
 
-<link rel="canonical" href="https://blog.victormendonca.com/2016/12/23/redirecting-bash-xtrace-to-a-separate-log/" />
+<link rel="canonical" href="https://blog.victormendonca.com/2018/10/16/tldr-instead-of-man/" />
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
 <link rel="icon" href="https://blog.victormendonca.com/favicon.png">
 <meta name="generator" content="Hugo 0.48" />
@@ -139,13 +139,13 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
   <div class="text-center">
 
-    <h1>Redirecting Bash Xtrace to a Separate Log
+    <h1>TLDR Instead of MAN
 </h1>
 
     <div class="metas">
 <small>
   <i class="fa fa-calendar"></i>
-  <time datetime="2016-12-23">23 Dec, 2016</time>
+  <time datetime="2018-10-16">16 Oct, 2018</time>
 </small>
 
 
@@ -153,25 +153,25 @@
     &middot; by Victor Mendonça
   
   &middot; Read in about 1 min
-  &middot; (195 words)
+  &middot; (111 words)
   &middot; 
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=TLDR%20Instead%20of%20MAN&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f&amp;title=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f&amp;title=TLDR%20Instead%20of%20MAN" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=TLDR%20Instead%20of%20MAN&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   </small>
@@ -179,9 +179,9 @@
 <div class="margin-10">
   <i class="fa fa-tags"></i>
   
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
   <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
   
 
 
@@ -194,27 +194,46 @@
 </div>
 
       <div class="content">
-  <p>So you have a Bash script that you want to troubleshoot, but you want to send stdout to a file, and stderr to another. Here&rsquo;s a solution.</p>
+  
 
-<p>For example, I like to use Bash&rsquo;s color to display failure or success on checks, and echo&rsquo;s removal of new lines (<code>echo -e &quot;Wait for it...\c &quot;</code>) to wait for checks. For example, the screenshot below shows a script that check each step and report back.</p>
+<p>Here&rsquo;s a quick way to get quick simplified explanation and usage for commands in Bash with <a href="https://tldr.sh/">TLDR Pages</a>.</p>
 
-<p><img src="https://i.imgur.com/H3Bm6s7.png" alt="terminal" /></p>
+<pre><code>$ tldr tldr
+# tldr                                                                            
 
-<p>Errors are displayed in red, and success in green, and this same output is sent to the stdout and to a log file as well.</p>
+  Simplified man pages.                                                           
 
-<p>Now I want to get error messages in a separate log file, so I can go back to my original log and match the time where it failed, with additional verbose from Bash&rsquo;s xtrace.</p>
+- Get typical usages of a command (hint: this is how you got here!):              
 
-<p>The solution is very simple&hellip; I can just add the lines below to the top of my script:</p>
-
-<pre><code class="language-bash"># Debugging
-debug_log=&quot;${HOME}/bin/log/script.debug&quot;
-exec 2&gt;&gt;${debug_log}
-set -x
+  tldr command       
 </code></pre>
 
-<p>The first line setups my debug log, the second redirects stderr to my debug log, and the third enables xtrace (same as <code>bash -x [script]</code>).</p>
+<p><img src="../img/tldr-instead-of-man/tldr.rsync.png" alt="" /></p>
 
-<p>Note that doing this will disable any errors from being show in stdout.</p>
+<p>TLDR pages is community driven and holds common commands for UNIX, Linux, macOS, SunOS and Windows. The amount of commands available is already pretty vast, and users are encouraged to contribute with new pages on their git repo - <a href="https://github.com/tldr-pages/tldr">https://github.com/tldr-pages/tldr</a>.</p>
+
+<p>You can also access a web/live version of tldr on <a href="https://tldr.ostera.io/">https://tldr.ostera.io/</a>.</p>
+
+<h2 id="install">Install</h2>
+
+<p><strong>Arch</strong></p>
+
+<pre><code class="language-bash">pacman -Sy community/tldr
+</code></pre>
+
+<p><strong>Other distros:</strong></p>
+
+<pre><code class="language-bash">npm install -g tldr
+</code></pre>
+
+<p><strong>Snap</strong></p>
+
+<pre><code class="language-bash">sudo snap install tldr
+</code></pre>
+
+<p><strong>Android</strong></p>
+
+<p><a href="https://play.google.com/store/apps/details?id=io.github.hidroh.tldroid">https://play.google.com/store/apps/details?id=io.github.hidroh.tldroid</a></p>
 
 </div>
 
@@ -222,22 +241,22 @@ set -x
       <footer>
   
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=TLDR%20Instead%20of%20MAN&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f&amp;title=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f&amp;title=TLDR%20Instead%20of%20MAN" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=TLDR%20Instead%20of%20MAN&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -246,18 +265,12 @@ set -x
     <nav><ul class="pager">
     
         <li class="previous">
-          <a href="https://blog.victormendonca.com/2016/11/02/how-to-record-and-share-a-terminal-session/" title="How to Record and Share a Terminal Session">
+          <a href="https://blog.victormendonca.com/2018/10/15/quickly-backing-up-files-in-bash/" title="Quickly Backing Up Files in Bash">
             <span aria-hidden="true">&larr;</span>Previous
           </a>
         </li>
     
 
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2017/01/11/bash-command-substitution-subshell-and-codeblock/" title="Bash - Command Substitution, Subshell and Codeblock">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
     
     </ul> </nav>
   
