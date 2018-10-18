@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Tue, 16 Oct 2018 08:49:07 -0400</lastBuildDate>
+    <lastBuildDate>Thu, 18 Oct 2018 12:10:00 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Using Latte as a Dock in Kde</title>
+      <link>https://blog.victormendonca.com/2018/10/18/using-latte-as-a-dock-in-kde/</link>
+      <pubDate>Thu, 18 Oct 2018 12:10:00 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2018/10/18/using-latte-as-a-dock-in-kde/</guid>
+      <description>Latte is a great &amp;laquo;newish&amp;raquo; dock for KDE that can be used as launching/task dock, or even completely replace your plasma panels. The dock is fast stable with a good &amp;laquo;feel&amp;raquo;, and it fully supports plasma widgets.
+I myself do not like the Apple like task docks. I prefer using docks for app launching and let my panels do the task management. I was looking for a fast dock for my Arch VM at work, and Latte was one of the best options.</description>
+    </item>
     
     <item>
       <title>TLDR Instead of MAN</title>
