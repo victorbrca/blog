@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Wed, 19 Sep 2018 10:41:47 -0400</lastBuildDate>
+    <lastBuildDate>Mon, 31 Dec 2018 13:44:17 -0500</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/tags/vim/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How to Install and Configure Vim Plug</title>
+      <link>https://blog.victormendonca.com/2018/12/31/how-to-install-and-configure-vim-plug/</link>
+      <pubDate>Mon, 31 Dec 2018 13:44:17 -0500</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2018/12/31/how-to-install-and-configure-vim-plug/</guid>
+      <description>Quick step by step instructions to get you started with the Vim plugin manager vim-plug.
+a- Install the vim-plug package (Arch) from the AUR repo
+aur/vim-plug 0.10.0-1 [installed] (19) (0.05) A vim plugin manager  b. Configure your ~/.vimrc with a section for the new plugins. This is where you will define all the plugins that you want to use. I would also add this section at the top of your file.</description>
+    </item>
     
     <item>
       <title>Editing Multiple Lines in Vim</title>
