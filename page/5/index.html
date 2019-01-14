@@ -119,6 +119,229 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2017/10/06/how-to-view-dns-calls-made-by-processes/">How to View DNS Calls Made by Processes</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2017-10-06">6 Oct, 2017</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/network" class="label label-primary">Network</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>We had the need at work to monitor DNS calls made by an application in a RHEL system in order to stabilish if a connection pool config change had taken full effect, or if we had missed any configuration file. And the solution was to use <code>SystemTap</code> for this task.</p>
+
+<p><a href="https://en.wikipedia.org/wiki/SystemTap">SystemTap (stap)</a> is a scripting language and tool that simplifies the gathering of information about the running Linux system. It allows you to monitor and trace the operation of a Linux kernel.</p>
+
+<p>It should be present on most RHEL server installs, but for other desktop based distros (like Arch), you might need to install it.</p>
+
+<h2 id="overview">Overview</h2>
+
+<p>The image below shows you the sript working and recording DNS lookup from Firefox (note the difference on the amount of connections between Google/Yahoo vs DuckDuckGo).</p>
+
+<p><img src="https://imgur.com/i7optIs.gif" alt="" /></p>
+
+<h2 id="installation">Installation</h2>
+
+<p>Install <code>systemtap</code> and <code>linux-headers</code>:</p>
+
+<pre><code>pacman -Syu systemtap linux-headers
+</code></pre>
+
+<h2 id="initial-config-and-test">Initial Config and Test</h2>
+
+<p>Because we are trying to figure out how the application makes DNS calls, we need to find where our <code>libc6</code> library lives so we can probe it for requests (most likelly <code>/usr/lib/libc.so.6</code> for Arch).</p>
+
+<pre><code>pacman -Ql glibc | grep '/libc.*so'
+glibc /usr/lib/libc-2.26.so
+glibc /usr/lib/libc.so
+------------------------
+glibc /usr/lib/libc.so.6
+------------------------
+glibc /usr/lib/libcidn-2.26.so
+glibc /usr/lib/libcidn.so
+glibc /usr/lib/libcidn.so.1
+glibc /usr/lib/libcrypt-2.26.so
+glibc /usr/lib/libcrypt.so
+glibc /usr/lib/libcrypt.so.1
+</code></pre>
+
+<p>To test it, make sure the string <code>probe process(&quot;/usr/lib/libc.so.6&quot;)</code> has the location for libc6 on your system and run the command below:</p>
+
+<pre><code>sudo /usr/bin/stap -e 'probe process(&quot;/usr/lib/libc.so.6&quot;).function(&quot;getaddrinfo&quot;) { log(execname()) }'
+</code></pre>
+
+<p>You may get the following warning when running the script:</p>
+
+<blockquote>
+<p>WARNING: Kernel function symbol table missing [man warning::symbols]</p>
+</blockquote>
+
+<p>This is because Systemtap may need a linux-build style System.map file to find addresses of kernel functions/data. Try the command below to create it by hand:</p>
+
+<pre><code>sudo cp /proc/kallsyms /boot/System.map-`uname -r`
+</code></pre>
+
+<h2 id="running-it">Running It</h2>
+
+<hr />
+
+<p>You can run the script below (or just the code) as <code>root</code> to monitor the connections. Output will be displayed on your current terminal, or you can choose to save it to a file.</p>
+
+<pre><code>_#!/bin/bash
+
+
+system_stap=&quot;/usr/bin/stap&quot;
+
+_getaddrInfo () {
+  /usr/bin/stap -e 'probe process(&quot;/usr/lib/libc.so.6&quot;).function(&quot;getaddrinfo&quot;)
+{
+  printf(&quot;| %-15s| %-7d| %-35s |\n&quot;, execname(), pid(), kernel_string(pointer_arg(1)))
+}'
+}
+
+echo &quot;&quot;
+printf &quot;| %-15s| %-7s| %-35s |\n&quot; &quot;Process&quot; &quot;PID&quot; &quot;Destination Name&quot;
+echo &quot;|----------------|--------|-------------------------------------|&quot;
+
+
+while true ; do
+  _getaddrInfo
+done
+</code></pre>
+
+<pre><code>probe
+  process(&quot;/lib64/libc.so.6&quot;).function(&quot;__gethostbyname_r&quot;).call,
+  process(&quot;/lib64/libc.so.6&quot;).function(&quot;gethostbyname&quot;).call,
+  process(&quot;/lib64/libc.so.6&quot;).function(&quot;__gethostbyname2_r&quot;).call,
+  process(&quot;/lib64/libc.so.6&quot;).function(&quot;gethostbyname2&quot;).call,
+  process(&quot;/lib64/libc.so.6&quot;).function(&quot;__new_gethostbyname2_r&quot;).call
+{
+	printf(&quot;[%s][%d]-&gt;%s(%s)\n&quot;, execname(), pid(), user_string(pointer_arg(1)), kernel_string(pointer_arg(1)))
+}
+
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>$ sudo ./getAdreessInfo.sh
+[sudo] password for victor:           
+
+| Process        | PID    | Destination Name                    |
+|----------------|--------|-------------------------------------|
+| WorkerPool/5863| 5104   | adservice.google.ca                 |
+| WorkerPool/6005| 5104   | apis.google.com                     |
+| WorkerPool/1335| 5104   | clients5.google.com                 |
+| WorkerPool/5823| 5104   | notifications.google.com            |
+| WorkerPool/1856| 5104   | lh3.googleusercontent.com           |
+| WorkerPool/5297| 5104   | ogs.google.com                      |
+| WorkerPool/5823| 5104   | www.google.com                      |
+| WorkerPool/1335| 5104   | www.gstatic.com                     |
+| WorkerPool/5863| 5104   | uaswitcher.org                      |
+| WorkerPool/6005| 5104   | fonts.gstatic.com                   |
+| WorkerPool/5823| 5104   | play.google.com                     |
+</code></pre>
+
+<h2 id="closing-notes">Closing Notes</h2>
+
+<hr />
+
+<p>The uses for <code>SystemTap</code> are very wide and diverse. You will be able to find great tutorials and documentation online. I&rsquo;m also providing a few links below to some great documentation to get you started.</p>
+
+<ul>
+<li>Red Hat Enterprise - <a href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/SystemTap_Beginners_Guide/index.html">SystemTap Beginners Guide</a></li>
+<li>Arch Linux Wiki - <a href="https://wiki.archlinux.org/index.php/SystemTap">SystemTap</a></li>
+<li>IBM Developerworks - <a href="https://www.ibm.com/developerworks/library/l-systemtap/index.html">Linux introspection and SystemTap</a></li>
+<li>Ubuntu Wiki - <a href="https://wiki.ubuntu.com/Kernel/Systemtap">SystemTap</a></li>
+</ul>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f06%2fhow-to-view-dns-calls-made-by-processes%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20View%20DNS%20Calls%20Made%20by%20Processes&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f06%2fhow-to-view-dns-calls-made-by-processes%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f06%2fhow-to-view-dns-calls-made-by-processes%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f06%2fhow-to-view-dns-calls-made-by-processes%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f06%2fhow-to-view-dns-calls-made-by-processes%2f&amp;title=How%20to%20View%20DNS%20Calls%20Made%20by%20Processes" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20View%20DNS%20Calls%20Made%20by%20Processes&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f06%2fhow-to-view-dns-calls-made-by-processes%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2017/09/26/bash-special-parameters/" title="Bash Special Parameters">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2017/10/11/how-to-load-gitlab-inside-an-iframe/" title="How to Load Gitlab Inside an Iframe">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2017/09/26/bash-special-parameters/">Bash Special Parameters</a>
 </h2>
 
@@ -668,355 +891,6 @@ Press ENTER or type command to continue
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2017/09/19/bash-parameter-expansion/">Bash: Parameter Expansion (Substitution)</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2017-09-19">19 Sep, 2017</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<h2 id="default-usage">Default Usage</h2>
-
-<p><code>${PARAMETER}</code></p>
-
-<p>Expand parameter value. It can be used for:</p>
-
-<ul>
-<li>Separating characters from variable names
-
-<ul>
-<li><code>cd /home/${user}</code></li>
-</ul></li>
-<li>Positional parameter higher than 9
-
-<ul>
-<li><code>echo &quot;Argument 10 is: ${10}&quot;</code></li>
-</ul></li>
-</ul>
-
-<h2 id="indirection">Indirection</h2>
-
-<p><code>${!PARAMETER}</code></p>
-
-<p>Expands to the value of the variable named by the value of parameter.</p>
-
-<pre><code>var=var1
-var1=temp
-
-$ echo ${!var}
-temp
-</code></pre>
-
-<h2 id="case-modification">Case Modification</h2>
-
-<p><code>${PARAMETER^}, ${PARAMETER^^}</code>
-<code>${PARAMETER,}, ${PARAMETER,,}</code>
-<code>${PARAMETER~}, ${PARAMETER~~}</code></p>
-
-<p>|Operator|Action|
-|&ndash;|&mdash;&mdash;&mdash;&mdash;&ndash;|
-|^|Changes first character to upper case|
-|^^|Changes all characters to upper case|
-|,|Changes first character to lower case|
-|,,|Changes all characters to lower case|
-|~|Inverts case of first character|
-|~~|Inverts case of all characters|</p>
-
-<h2 id="variable-name-prefix-expansion">Variable Name (Prefix) Expansion</h2>
-
-<p><code>${!PREFIX*}</code>
-<code>${!PREFIX@}</code></p>
-
-<p>Expands to a list of all set variable names beginning with the string in <code>PREFIX</code>.</p>
-
-<pre><code>$ echo ${!XDG*}
-XDG_CURRENT_DESKTOP XDG_MENU_PREFIX XDG_RUNTIME_DIR XDG_SEAT XDG_SESSION_DESKTOP XDG_SESSION_ID XDG_SESSION_TYPE XDG_VTNR
-</code></pre>
-
-<h2 id="substring-removal">Substring Removal</h2>
-
-<p><code>${PARAMETER#PATTERN}</code>
-<code>${PARAMETER##PATTERN}</code>
-<code>${PARAMETER%PATTERN}</code>
-<code>${PARAMETER%%PATTERN}</code></p>
-
-<p>With <code>#</code>, it removes the mathing pattern from the beggining of the variable, where <code>#</code> removes the shortest match, and <code>##</code> removes the longest.</p>
-
-<p>Note the empty spaces in the example below.</p>
-
-<pre><code>substr=&quot;the quick brown fox jumps over the lazy dog&quot;
-
-$ echo ${substr#* }
-quick brown fox jumps over the lazy dog
-
-$ echo ${substr##* }
-dog
-</code></pre>
-
-<p>Removing path from a file:</p>
-
-<pre><code>mlog=/var/log/clamav/freshclam.log
-
-$ echo ${mlog##*/}
-freshclam.log
-</code></pre>
-
-<p>The operator <code>%</code> does the same, but at the end of the file.</p>
-
-<pre><code>$ echo ${substr% *}
-the quick brown fox jumps over the lazy
-
-$ echo ${substr%% *}
-the
-</code></pre>
-
-<p>Changing the extension of a file</p>
-
-<pre><code>file=123.txt
-
-$ echo ${file%.*}
-123
-
-$ echo ${file%.*}.log
-123.log
-</code></pre>
-
-<h2 id="search-and-replace">Search and Replace</h2>
-
-<p><code>${PARAMETER/PATTERN/STRING}</code>
-<code>${PARAMETER//PATTERN/STRING}</code>
-<code>${PARAMETER/PATTERN}</code>
-<code>${PARAMETER//PATTERN}</code></p>
-
-<p>The main diffence is that a single <code>/</code> substitutes the first occurrence, while double <code>//</code> substitute all occurences:</p>
-
-<pre><code>$ echo $substr
-the quick brown fox jumps over the lazy dog
-
-$ echo ${substr/the/da}
-da quick brown fox jumps over the lazy dog
-
-$ echo ${substr//the/da}
-da quick brown fox jumps over da lazy dog
-
-$ echo ${substr/the}
-quick brown fox jumps over the lazy dog
-
-$ echo ${substr//the}
-quick brown fox jumps over lazy dog
-</code></pre>
-
-<h3 id="anchoring"><strong>Anchoring</strong></h3>
-
-<p>You can use <code>#</code> and <code>%</code> to anchor to the beginning and end respectively</p>
-
-<pre><code>var1=00000000
-
-$ echo ${var1/#0/1}
-10000000
-
-$ echo ${var1/%0/1}
-00000001
-</code></pre>
-
-<h2 id="offset-and-lenght">Offset and Lenght</h2>
-
-<p><code>${PARAMETER:OFFSET}</code>
-<code>${PARAMETER:OFFSET:LENGTH}</code></p>
-
-<ul>
-<li>Offset removes the amount of characters as specified</li>
-<li>Lenght prints the specified character lenght after offset</li>
-</ul>
-
-<p><strong><em>Note:</em></strong> <em>You can also use a negative value for offset and lenght, which will be calculated from the end of the file</em></p>
-
-<pre><code>$ echo ${substr}
-the quick brown fox jumps over the lazy dog
-123456789...
-</code></pre>
-
-<p>Removes first 9 chars</p>
-
-<pre><code>$ echo ${substr:9}
-brown fox jumps over the lazy dog
-</code></pre>
-
-<p>Removes first 3 chars and print the next 5</p>
-
-<pre><code>$ echo ${substr:4:5}
-quick
-</code></pre>
-
-<h2 id="use-default">Use Default</h2>
-
-<p><code>${PARAMETER:-WORD}</code>
-<code>${PARAMETER-WORD}</code></p>
-
-<p>If parameter unset (or null if using <code>:</code>), expand to word.</p>
-
-<pre><code>$ my_var=gru
-$ echo ${my_var:-yyz}
-gru
-
-$ unset my_var
-$ echo ${my_var:-yyz}
-yyz
-</code></pre>
-
-<h2 id="use-alternate-value">Use Alternate Value</h2>
-
-<p><code>${PARAMETER:+WORD}</code>
-<code>${PARAMETER+WORD}</code></p>
-
-<p>If parameter <strong>is set</strong> (or null if using <code>:</code>), expand to word.</p>
-
-<pre><code>$ my_var=gru
-$ echo ${my_var:+yyz}
-yyz
-
-$ unset my_var
-$ echo ${my_var:+yyz}
-
-</code></pre>
-
-<h2 id="use-default-and-assign">Use Default And Assign</h2>
-
-<p><code>${PARAMETER:=WORD}</code>
-<code>${PARAMETER=WORD}</code></p>
-
-<p>If parameter unset (or null if using <code>:</code>), expand to word and assign parameter to the value of word.</p>
-
-<pre><code>my_var=gru
-
-$ echo ${my_var:=yyz}
-gru
-
-$ unset my_var
-$ echo ${my_var:=yyz}
-yyz
-
-$ echo $my_var
-yyz
-</code></pre>
-
-<h2 id="display-error">Display Error</h2>
-
-<p><code>${PARAMETER:?WORD}</code>
-<code>${PARAMETER?WORD}</code></p>
-
-<p>If parameter unset (or null if using <code>:</code>), display error with word as appendix, otherwise expand parameter.</p>
-
-<pre><code>my_var=gru
-
-$ echo ${my_var:?Not set}
-gru
-
-$ unset my_var
-$ echo ${my_var:?Not set}
-bash: my_var: Not set
-</code></pre>
-
-<hr />
-
-<p><strong>Reference:</strong></p>
-
-<ul>
-<li><a href="http://wiki.bash-hackers.org/syntax/pe">wiki.bash-hackers.org</a></li>
-<li><a href="http://www.tldp.org/LDP/abs/html/parameter-substitution.html">tldp.org</a></li>
-<li><a href="https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html">gnu.org</a></li>
-</ul>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Bash%3a%20Parameter%20Expansion%20%28Substitution%29&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f&amp;title=Bash%3a%20Parameter%20Expansion%20%28Substitution%29" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Bash%3a%20Parameter%20Expansion%20%28Substitution%29&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2017/08/30/alternatives-to-top/" title="Alternatives to Top">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2017/09/20/additional-status-for-vim-with-powerline/" title="Additional Status for Vim With Powerline">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1124,7 +998,7 @@ bash: my_var: Not set
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/windows">windows</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/windows">windows</a></li>
           </ul>
         </div>
       </div>
@@ -1140,6 +1014,10 @@ bash: my_var: Not set
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2019/01/14/how-to-migrate-unifi-controller/">How to Migrate Unifi Controller</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2018/12/31/how-to-install-and-configure-vim-plug/">How to Install and Configure Vim Plug</a>
@@ -1163,10 +1041,6 @@ bash: my_var: Not set
         
           <li>
           <a href="https://blog.victormendonca.com/2018/09/18/special-characters-and-symbols-in-bash/">Special Characters and Symbols in Bash</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2018/09/17/how-to-create-an-init-like-script/">How to Create an Init Like Script</a>
           </li>
         
         </ul>

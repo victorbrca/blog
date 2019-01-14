@@ -119,6 +119,118 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2019/01/14/how-to-migrate-unifi-controller/">How to Migrate Unifi Controller</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2019-01-14">14 Jan, 2019</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/networking" class="label label-primary">Networking</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  <p>Quick instructions on how to migrate a Unifi controller on Linux. Note that it requires SSH access to the AP and a bit of downtime.</p>
+
+<p>a. Logon to your old Unifi controller, go to <code>Settings=&gt;Auto Backup</code> and download a backup</p>
+
+<p><strong>Note:</strong> <em>Force a new backup if you have new changes</em></p>
+
+<p><img src="../img/how-to-migrate-unifi-controller/img1.png" alt="" /></p>
+
+<p>b. Browse to your AP, write down the IP address</p>
+
+<p>c. Select the AP, go to <code>Config=&gt;Manage Device=&gt;Forget this device</code> and click on <code>Forget</code> (click ok on the alert)</p>
+
+<p>d. Login to the new controller and on the first screen restore the backup you save on step <code>a</code></p>
+
+<p>e. Once the controller is back up, SSH into the device&rsquo;s AP with the default user (<code>ubnt:ubnt</code> or <code>root:ubnt</code>) and run the following command (change <code>[controler_ip] for the IP of your controller</code>)</p>
+
+<pre><code>set-inform http://[controller-ip]:8080/inform
+</code></pre>
+
+<p>f. On the new controller, under devices, the AP should be showing for &lsquo;adoption&rsquo;. Click on <code>Adopt</code></p>
+
+<p><img src="../img/how-to-migrate-unifi-controller/img2.png" alt="" /></p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2019%2f01%2f14%2fhow-to-migrate-unifi-controller%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Migrate%20Unifi%20Controller&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f01%2f14%2fhow-to-migrate-unifi-controller%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f01%2f14%2fhow-to-migrate-unifi-controller%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f01%2f14%2fhow-to-migrate-unifi-controller%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f01%2f14%2fhow-to-migrate-unifi-controller%2f&amp;title=How%20to%20Migrate%20Unifi%20Controller" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20Migrate%20Unifi%20Controller&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2019%2f01%2f14%2fhow-to-migrate-unifi-controller%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2018/12/31/how-to-install-and-configure-vim-plug/" title="How to Install and Configure Vim Plug">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2018/12/31/how-to-install-and-configure-vim-plug/">How to Install and Configure Vim Plug</a>
 </h2>
 
@@ -219,6 +331,12 @@ call plug#end()
         </li>
     
 
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2019/01/14/how-to-migrate-unifi-controller/" title="How to Migrate Unifi Controller">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
     
     </ul> </nav>
   
@@ -632,118 +750,6 @@ Permissions Size User   Group Date Modified Name
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2018/09/19/uncomment-multiple-lines-in-vim/">Editing Multiple Lines in Vim</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2018-09-19">19 Sep, 2018</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/vim" class="label label-primary">Vim</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  <p>A simple way of to edit (like commenting or uncommenting) a block of lines/code in Vim.</p>
-
-<p>The example below explains how to comment multiple lines:</p>
-
-<ul>
-<li>Place the cursor on the first line that you&rsquo;d like to edit</li>
-<li>Press <code>Ctrl+v</code></li>
-<li>User the arrow keys to go down until the last line</li>
-<li>Press <code>Shift+i</code> to go into insert mode</li>
-<li>Press <code>#</code></li>
-<li>Press <code>Esc</code> and wait a second</li>
-</ul>
-
-<p><img src="https://blog.victormendonca.com/img/uncomment-multiple-lines-in-vim.gif" alt="" /></p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f19%2funcomment-multiple-lines-in-vim%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Editing%20Multiple%20Lines%20in%20Vim&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f19%2funcomment-multiple-lines-in-vim%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f19%2funcomment-multiple-lines-in-vim%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f19%2funcomment-multiple-lines-in-vim%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f19%2funcomment-multiple-lines-in-vim%2f&amp;title=Editing%20Multiple%20Lines%20in%20Vim" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Editing%20Multiple%20Lines%20in%20Vim&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f19%2funcomment-multiple-lines-in-vim%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2018/09/18/special-characters-and-symbols-in-bash/" title="Special Characters and Symbols in Bash">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2018/10/15/quickly-backing-up-files-in-bash/" title="Quickly Backing Up Files in Bash">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -851,7 +857,7 @@ Permissions Size User   Group Date Modified Name
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/windows">windows</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/windows">windows</a></li>
           </ul>
         </div>
       </div>
@@ -867,6 +873,10 @@ Permissions Size User   Group Date Modified Name
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2019/01/14/how-to-migrate-unifi-controller/">How to Migrate Unifi Controller</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2018/12/31/how-to-install-and-configure-vim-plug/">How to Install and Configure Vim Plug</a>
@@ -890,10 +900,6 @@ Permissions Size User   Group Date Modified Name
         
           <li>
           <a href="https://blog.victormendonca.com/2018/09/18/special-characters-and-symbols-in-bash/">Special Characters and Symbols in Bash</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2018/09/17/how-to-create-an-init-like-script/">How to Create an Init Like Script</a>
           </li>
         
         </ul>

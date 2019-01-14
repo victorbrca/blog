@@ -7,10 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Mon, 31 Dec 2018 13:44:17 -0500</lastBuildDate>
+    <lastBuildDate>Mon, 14 Jan 2019 12:57:11 -0500</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How to Migrate Unifi Controller</title>
+      <link>https://blog.victormendonca.com/2019/01/14/how-to-migrate-unifi-controller/</link>
+      <pubDate>Mon, 14 Jan 2019 12:57:11 -0500</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2019/01/14/how-to-migrate-unifi-controller/</guid>
+      <description>Quick instructions on how to migrate a Unifi controller on Linux. Note that it requires SSH access to the AP and a bit of downtime.
+a. Logon to your old Unifi controller, go to Settings=&amp;gt;Auto Backup and download a backup
+Note: Force a new backup if you have new changes
+b. Browse to your AP, write down the IP address
+c. Select the AP, go to Config=&amp;gt;Manage Device=&amp;gt;Forget this device and click on Forget (click ok on the alert)</description>
+    </item>
     
     <item>
       <title>How to Install and Configure Vim Plug</title>
