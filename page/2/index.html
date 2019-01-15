@@ -119,6 +119,135 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2018/10/15/quickly-backing-up-files-in-bash/">Quickly Backing Up Files in Bash</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2018-10-15">15 Oct, 2018</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">bash</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  <p>Here&rsquo;s a quick and simple way to backup files in Bash by using Bash&rsquo;s built-in brace expansion <code>{,}</code>.</p>
+
+<p>Let&rsquo;s first create a file:</p>
+
+<pre><code class="language-bash">$ ls -l &gt; listing.txt
+</code></pre>
+
+<p>Now let&rsquo;s create a backup:</p>
+
+<pre><code class="language-bash">$ cp listing.txt{,.bak}
+</code></pre>
+
+<p>And the result is a new file with the <code>.bak</code> extension:</p>
+
+<pre><code class="language-bash">$ ls -l listing*
+Permissions Size User   Group Date Modified Name
+.rw-r--r--  2.5k victor users 15 Oct 14:21  listing.txt
+.rw-r--r--  2.5k victor users 15 Oct 14:21  listing.txt.bak
+</code></pre>
+
+<p>How about getting fancy and adding a date?</p>
+
+<pre><code class="language-bash">cp listing.txt{,.$(date +%Y%m%d_%H%M)}
+</code></pre>
+
+<p>And the result:</p>
+
+<pre><code class="language-bash">$ ls -l listing.tx*
+Permissions Size User   Group Date Modified Name
+.rw-r--r--  2.5k victor users 15 Oct 14:21  listing.txt
+.rw-r--r--  2.5k victor users 15 Oct 14:21  listing.txt.bak
+.rw-r--r--  2.5k victor users 15 Oct 14:23  listing.txt.20181015_1423
+</code></pre>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f15%2fquickly-backing-up-files-in-bash%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Quickly%20Backing%20Up%20Files%20in%20Bash&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f15%2fquickly-backing-up-files-in-bash%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f15%2fquickly-backing-up-files-in-bash%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f15%2fquickly-backing-up-files-in-bash%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f15%2fquickly-backing-up-files-in-bash%2f&amp;title=Quickly%20Backing%20Up%20Files%20in%20Bash" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Quickly%20Backing%20Up%20Files%20in%20Bash&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f15%2fquickly-backing-up-files-in-bash%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2018/09/19/uncomment-multiple-lines-in-vim/" title="Editing Multiple Lines in Vim">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2018/10/16/tldr-instead-of-man/" title="TLDR Instead of MAN">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2018/09/19/uncomment-multiple-lines-in-vim/">Editing Multiple Lines in Vim</a>
 </h2>
 
@@ -629,113 +758,6 @@ exit 0
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2018/08/20/kde-win7-volume-mixer/">KDE Win7 Volume Mixer</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2018-08-20">20 Aug, 2018</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/kde" class="label label-primary">kde</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  <p>It&rsquo;s not often that we see Linux using something inspired by Microsoft, and this is one of those cases. If you are running KDE as your default DE, you should definitely take a look at &laquo;<a href="https://store.kde.org/p/1100894/">Win7 Volume Mixer</a>&raquo; as an alternative to the default volume mixer. It adds a great visual and a more user friendly interface.</p>
-
-<p>Here&rsquo;s a quick visual comparison:</p>
-
-<p><strong>Default Mixer</strong></p>
-
-<p><img src="https://i.imgur.com/anieyMO.png" alt="Imgur" /></p>
-
-<p><strong>Win7 Volume Mixer</strong></p>
-
-<p><img src="https://i.imgur.com/gl36Ris.png" alt="Imgur" /></p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f08%2f20%2fkde-win7-volume-mixer%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=KDE%20Win7%20Volume%20Mixer&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f08%2f20%2fkde-win7-volume-mixer%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f08%2f20%2fkde-win7-volume-mixer%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f08%2f20%2fkde-win7-volume-mixer%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f08%2f20%2fkde-win7-volume-mixer%2f&amp;title=KDE%20Win7%20Volume%20Mixer" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=KDE%20Win7%20Volume%20Mixer&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f08%2f20%2fkde-win7-volume-mixer%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2018/07/19/how-to-create-a-timer-in-bash/" title="How to Create a Timer in Bash">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2018/09/12/a-simple-powerline-prompt-for-bash/" title="A Simple Powerline Prompt for Bash">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -843,7 +865,7 @@ exit 0
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/windows">windows</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/programming">programming</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/windows">windows</a></li>
           </ul>
         </div>
       </div>
@@ -859,6 +881,10 @@ exit 0
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2019/01/15/count-lines-of-codes-with-cloc/">Count Lines of Codes With Cloc</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2019/01/14/how-to-migrate-unifi-controller/">How to Migrate Unifi Controller</a>
@@ -882,10 +908,6 @@ exit 0
         
           <li>
           <a href="https://blog.victormendonca.com/2018/09/19/uncomment-multiple-lines-in-vim/">Editing Multiple Lines in Vim</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2018/09/18/special-characters-and-symbols-in-bash/">Special Characters and Symbols in Bash</a>
           </li>
         
         </ul>

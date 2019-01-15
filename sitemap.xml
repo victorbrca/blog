@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.victormendonca.com/2019/01/15/count-lines-of-codes-with-cloc/</loc>
+    <lastmod>2019-01-15T10:52:48-05:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.victormendonca.com/2019/01/14/how-to-migrate-unifi-controller/</loc>
     <lastmod>2019-01-14T12:57:11-05:00</lastmod>
   </url>
@@ -211,7 +216,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/linux/</loc>
-    <lastmod>2019-01-14T12:57:11-05:00</lastmod>
+    <lastmod>2019-01-15T10:52:48-05:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -247,7 +252,13 @@
   
   <url>
     <loc>https://blog.victormendonca.com/post/</loc>
-    <lastmod>2019-01-14T12:57:11-05:00</lastmod>
+    <lastmod>2019-01-15T10:52:48-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.victormendonca.com/tags/programming/</loc>
+    <lastmod>2019-01-15T10:52:48-05:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -282,7 +293,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/</loc>
-    <lastmod>2019-01-14T12:57:11-05:00</lastmod>
+    <lastmod>2019-01-15T10:52:48-05:00</lastmod>
     <priority>0</priority>
   </url>
   

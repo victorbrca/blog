@@ -153,7 +153,7 @@
     &middot; by Victor Mendonça
   
   &middot; Read in about 1 min
-  &middot; (149 words)
+  &middot; (148 words)
   &middot; 
 <span class="share-box">Share this on:
     <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2019%2f01%2f14%2fhow-to-migrate-unifi-controller%2f" onclick="window.open(this.href, 'mywin',
@@ -206,14 +206,14 @@
 
 <p>c. Select the AP, go to <code>Config=&gt;Manage Device=&gt;Forget this device</code> and click on <code>Forget</code> (click ok on the alert)</p>
 
-<p>d. Login to the new controller and on the first screen restore the backup you save on step <code>a</code></p>
+<p>d. Login to the new controller and on the first screen restore the backup you saved on step <code>a</code></p>
 
-<p>e. Once the controller is back up, SSH into the device&rsquo;s AP with the default user (<code>ubnt:ubnt</code> or <code>root:ubnt</code>) and run the following command (change <code>[controler_ip] for the IP of your controller</code>)</p>
+<p>e. Once the controller is back up, SSH into the AP with the default user (<code>ubnt:ubnt</code> or <code>root:ubnt</code>) and run the following command (change <code>[controler_ip]</code> for the IP of your controller)</p>
 
 <pre><code>set-inform http://[controller-ip]:8080/inform
 </code></pre>
 
-<p>f. On the new controller, under devices, the AP should be showing for &lsquo;adoption&rsquo;. Click on <code>Adopt</code></p>
+<p>f. On the new controller, under devices, the AP should be showing for &lsquo;adoption&rsquo;. Click on <code>ADOPT</code></p>
 
 <p><img src="../img/how-to-migrate-unifi-controller/img2.png" alt="" /></p>
 
@@ -253,6 +253,12 @@
         </li>
     
 
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2019/01/15/count-lines-of-codes-with-cloc/" title="Count Lines of Codes With Cloc">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
     
     </ul> </nav>
   
@@ -312,7 +318,7 @@
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/windows">windows</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/programming">programming</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/windows">windows</a></li>
           </ul>
         </div>
       </div>
@@ -328,6 +334,10 @@
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2019/01/15/count-lines-of-codes-with-cloc/">Count Lines of Codes With Cloc</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2019/01/14/how-to-migrate-unifi-controller/">How to Migrate Unifi Controller</a>
@@ -351,10 +361,6 @@
         
           <li>
           <a href="https://blog.victormendonca.com/2018/09/19/uncomment-multiple-lines-in-vim/">Editing Multiple Lines in Vim</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2018/09/18/special-characters-and-symbols-in-bash/">Special Characters and Symbols in Bash</a>
           </li>
         
         </ul>
