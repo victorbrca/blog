@@ -119,6 +119,123 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2017/09/23/gnome-touchpad-settings-missing-in-arch-xps-13/">Gnome Touchpad Settings Missing in Arch Xps 13</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2017-09-23">23 Sep, 2017</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/arch" class="label label-primary">Arch</a>
+  
+  <a href="https://blog.victormendonca.com/tags/hardware" class="label label-primary">Hardware</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  <p>I had an issue where the Gnome extension &lsquo;<a href="https://extensions.gnome.org/extension/131/touchpad-indicator/">Touchpad Indicator</a>&rsquo; stopped working on my xps 13 (Arch). After looking a bit further, it seems that the Gnome Touchpad settings had also stopped working. All I could see was the mouse settings, and the touchpad section was completelly gone.</p>
+
+<hr />
+
+<p><strong>Solution:</strong></p>
+
+<p>With Gnome 3.20, <code>xf86-input-synaptics</code> is not longer supported, and you should use <code>xf86-input-libinput</code> instead.</p>
+
+<p>You can check what is installed on your Arch system with <code>pacman -Q | grep input</code>. In my case, I had both packages installed:</p>
+
+<pre><code>$ pacman -Q | grep input
+inputproto 2.3.2-1
+libinput 1.8.2-1
+xf86-input-libinput 0.26.0-1
+xf86-input-synaptics 1.9.0-1
+xorg-xinput 1.6.2-1
+</code></pre>
+
+<p>Remove <code>xf86-input-synaptics</code> and any configuration file (like <code>/etc/X11/xorg.conf.d/50-synaptics.conf</code>), install <code>xf86-input-libinput</code> and reboot. That should get your configuration working again.</p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f23%2fgnome-touchpad-settings-missing-in-arch-xps-13%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Gnome%20Touchpad%20Settings%20Missing%20in%20Arch%20Xps%2013&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f23%2fgnome-touchpad-settings-missing-in-arch-xps-13%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f23%2fgnome-touchpad-settings-missing-in-arch-xps-13%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f23%2fgnome-touchpad-settings-missing-in-arch-xps-13%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f23%2fgnome-touchpad-settings-missing-in-arch-xps-13%2f&amp;title=Gnome%20Touchpad%20Settings%20Missing%20in%20Arch%20Xps%2013" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Gnome%20Touchpad%20Settings%20Missing%20in%20Arch%20Xps%2013&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f23%2fgnome-touchpad-settings-missing-in-arch-xps-13%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2017/09/20/additional-status-for-vim-with-powerline/" title="Additional Status for Vim With Powerline">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2017/09/24/atom-as-markdown-editor/" title="Atom as Markdown Editor">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2017/09/20/additional-status-for-vim-with-powerline/">Additional Status for Vim With Powerline</a>
 </h2>
 
@@ -972,123 +1089,6 @@ echo $var1
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2016/12/23/redirecting-bash-xtrace-to-a-separate-log/">Redirecting Bash Xtrace to a Separate Log</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2016-12-23">23 Dec, 2016</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  <p>So you have a Bash script that you want to troubleshoot, but you want to send stdout to a file, and stderr to another. Here&rsquo;s a solution.</p>
-
-<p>For example, I like to use Bash&rsquo;s color to display failure or success on checks, and echo&rsquo;s removal of new lines (<code>echo -e &quot;Wait for it...\c &quot;</code>) to wait for checks. For example, the screenshot below shows a script that check each step and report back.</p>
-
-<p><img src="https://i.imgur.com/H3Bm6s7.png" alt="terminal" /></p>
-
-<p>Errors are displayed in red, and success in green, and this same output is sent to the stdout and to a log file as well.</p>
-
-<p>Now I want to get error messages in a separate log file, so I can go back to my original log and match the time where it failed, with additional verbose from Bash&rsquo;s xtrace.</p>
-
-<p>The solution is very simple&hellip; I can just add the lines below to the top of my script:</p>
-
-<pre><code class="language-bash"># Debugging
-debug_log=&quot;${HOME}/bin/log/script.debug&quot;
-exec 2&gt;&gt;${debug_log}
-set -x
-</code></pre>
-
-<p>The first line setups my debug log, the second redirects stderr to my debug log, and the third enables xtrace (same as <code>bash -x [script]</code>).</p>
-
-<p>Note that doing this will disable any errors from being show in stdout.</p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f&amp;title=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2016/11/02/how-to-record-and-share-a-terminal-session/" title="How to Record and Share a Terminal Session">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2017/01/11/bash-command-substitution-subshell-and-codeblock/" title="Bash - Command Substitution, Subshell and Codeblock">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1214,6 +1214,10 @@ set -x
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2019/02/11/bash-theme-powerline-2column/">Bash Theme Powerline 2column</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2019/01/15/count-lines-of-codes-with-cloc/">Count Lines of Codes With Cloc</a>
           </li>
         
@@ -1235,10 +1239,6 @@ set -x
         
           <li>
           <a href="https://blog.victormendonca.com/2018/10/15/quickly-backing-up-files-in-bash/">Quickly Backing Up Files in Bash</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2018/09/19/uncomment-multiple-lines-in-vim/">Editing Multiple Lines in Vim</a>
           </li>
         
         </ul>

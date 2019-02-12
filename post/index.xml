@@ -7,10 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Tue, 15 Jan 2019 10:52:48 -0500</lastBuildDate>
+    <lastBuildDate>Mon, 11 Feb 2019 13:53:01 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Bash Theme Powerline 2column</title>
+      <link>https://blog.victormendonca.com/2019/02/11/bash-theme-powerline-2column/</link>
+      <pubDate>Mon, 11 Feb 2019 13:53:01 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2019/02/11/bash-theme-powerline-2column/</guid>
+      <description>powerline-2column is a simple powerline like prompt for Bash that displays information in two columns.
+The prompt provides the following information:
+Left Side
+ Folder icon for:  Git folder with provider icon Home folder Dropbox folder  Username Hostname (when connecting via SSH) Current path Git status  untracked uncommited ahead/behind   Right Side
+ Previous exit code Battery status sudo cached credentials Time  Check out some of the things it can do on the video below.</description>
+    </item>
     
     <item>
       <title>Count Lines of Codes With Cloc</title>
