@@ -202,18 +202,18 @@
 
 <p>The video below shows a basic interaction using a list or files from the <code>fd</code> search utility:</p>
 
-<p><img src="../img/fzf-for-the-win/fzf.gif" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/fzf-for-the-win/fzf.gif" alt="" /></p>
 
 <p><code>fzf</code> can also be used with other Bash tasks, like history, ssh and even file/dir completion. The GitHub page has a lot documentation on how to implement auto completion.</p>
 
-<p><img src="../img/fzf-for-the-win/history-and-ssh.gif" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/fzf-for-the-win/history-and-ssh.gif" alt="" /></p>
 
 <p>You can also use the <code>--preview</code> option to output the current selection into a preview box, and even call a command to be used with that value. For example, we can preview all the files in a folder by searching for files (with <code>find</code> or <code>fd</code>), piping the output to <code>fzf</code>, and then using a program like <code>cat</code> (on the example below I&rsquo;m using <code>bat</code>, which is a clone of <code>cat</code> with the addition of syntax highlight and other cool things) to preview the files.</p>
 
 <pre><code>fd -d 1 -t f | fzf --preview 'bat --color &quot;always&quot; {}' --preview-window=right:60%
 </code></pre>
 
-<p><img src="../img/fzf-for-the-win/preview.gif" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/fzf-for-the-win/preview.gif" alt="" /></p>
 
 <p>I&rsquo;ve covered only the very basic usage for <code>fzf</code>, but it should give you an idea of how powerful this finder utility is. On future posts I&rsquo;m going to cover other use cases, like the git workflow that I use.</p>
 
