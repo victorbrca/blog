@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fzf on Victor&#39;s Blog</title>
+    <link>https://blog.victormendonca.com/tags/fzf/</link>
+    <description>Recent content in Fzf on Victor&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
+    <lastBuildDate>Wed, 27 Feb 2019 08:00:39 -0400</lastBuildDate>
+    
+	<atom:link href="https://blog.victormendonca.com/tags/fzf/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Fzf for the Win</title>
+      <link>https://blog.victormendonca.com/2019/02/27/fzf-for-the-win/</link>
+      <pubDate>Wed, 27 Feb 2019 08:00:39 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2019/02/27/fzf-for-the-win/</guid>
+      <description>fzf is a command line fuzzy finder that can be used to automatically filter a list of items. Think of it as an interactive search tool, where items get filtered as you type characters in your terminal.
+The video below shows a basic interaction using a list or files from the fd search utility:
+fzf can also be used with other Bash tasks, like history, ssh and even file/dir completion. The GitHub page has a lot documentation on how to implement auto completion.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.victormendonca.com/2019/02/27/fzf-for-the-win/</loc>
+    <lastmod>2019-02-27T08:00:39-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.victormendonca.com/2019/02/11/bash-theme-powerline-2column/</loc>
     <lastmod>2019-02-11T13:53:01-04:00</lastmod>
   </url>
@@ -185,13 +190,19 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/bash/</loc>
-    <lastmod>2019-02-11T13:53:01-04:00</lastmod>
+    <lastmod>2019-02-27T08:00:39-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.victormendonca.com/tags/docker/</loc>
     <lastmod>2018-07-05T15:20:24-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.victormendonca.com/tags/fzf/</loc>
+    <lastmod>2019-02-27T08:00:39-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -221,7 +232,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/linux/</loc>
-    <lastmod>2019-02-11T13:53:01-04:00</lastmod>
+    <lastmod>2019-02-27T08:00:39-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -257,7 +268,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/post/</loc>
-    <lastmod>2019-02-11T13:53:01-04:00</lastmod>
+    <lastmod>2019-02-27T08:00:39-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -298,7 +309,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/</loc>
-    <lastmod>2019-02-11T13:53:01-04:00</lastmod>
+    <lastmod>2019-02-27T08:00:39-04:00</lastmod>
     <priority>0</priority>
   </url>
   

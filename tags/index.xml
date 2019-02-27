@@ -24,7 +24,7 @@
     <item>
       <title>Bash</title>
       <link>https://blog.victormendonca.com/tags/bash/</link>
-      <pubDate>Mon, 11 Feb 2019 13:53:01 -0400</pubDate>
+      <pubDate>Wed, 27 Feb 2019 08:00:39 -0400</pubDate>
       
       <guid>https://blog.victormendonca.com/tags/bash/</guid>
       <description></description>
@@ -36,6 +36,15 @@
       <pubDate>Thu, 05 Jul 2018 15:20:24 -0400</pubDate>
       
       <guid>https://blog.victormendonca.com/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Fzf</title>
+      <link>https://blog.victormendonca.com/tags/fzf/</link>
+      <pubDate>Wed, 27 Feb 2019 08:00:39 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/tags/fzf/</guid>
       <description></description>
     </item>
     
@@ -78,7 +87,7 @@
     <item>
       <title>Linux</title>
       <link>https://blog.victormendonca.com/tags/linux/</link>
-      <pubDate>Mon, 11 Feb 2019 13:53:01 -0400</pubDate>
+      <pubDate>Wed, 27 Feb 2019 08:00:39 -0400</pubDate>
       
       <guid>https://blog.victormendonca.com/tags/linux/</guid>
       <description></description>
