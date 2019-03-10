@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Wed, 27 Feb 2019 08:00:39 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 10 Mar 2019 15:17:22 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/tags/bash/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Colorful Banners With figlet and lolcat</title>
+      <link>https://blog.victormendonca.com/2019/03/10/colorful-banners-with-figlet-and-lolcat/</link>
+      <pubDate>Sun, 10 Mar 2019 15:17:22 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2019/03/10/colorful-banners-with-figlet-and-lolcat/</guid>
+      <description>Banners in *nix like systems is something that is being used for a very long time. System admins would sometimes use it to let users know that the system was going down (nowadays built-in with the shutdown command), or setup motd messages for SSH logins. Within the past years people got very creative with the use of different fonts and ASCII art.
+For today&amp;rsquo;s post we will work With two different apps to display beautiful banners on your systems or config/dot files:</description>
+    </item>
     
     <item>
       <title>Fzf for the Win</title>

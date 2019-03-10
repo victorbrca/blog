@@ -119,6 +119,143 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2018/12/31/how-to-install-and-configure-vim-plug/">How to Install and Configure Vim Plug</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2018-12-31">31 Dec, 2018</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/vim" class="label label-primary">vim</a>
+  
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">bash</a>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  <p>Quick step by step instructions to get you started with the Vim plugin manager <a href="https://github.com/junegunn/vim-plug">vim-plug</a>.</p>
+
+<p>a- Install the <code>vim-plug</code> package (Arch) from the AUR repo</p>
+
+<pre><code>aur/vim-plug 0.10.0-1 [installed] (19) (0.05)
+    A vim plugin manager
+</code></pre>
+
+<p>b. Configure your <code>~/.vimrc</code> with a section for the new plugins. This is where you will define all the plugins that you want to use. I would also add this section at the top of your file.</p>
+
+<pre><code>&quot;==============================================================================
+&quot; Plugin Manager
+&quot;==============================================================================
+
+call plug#begin('~/.vim/plugged')
+
+&quot; Initialize plugin system
+call plug#end()
+</code></pre>
+
+<p>c. Add a plugin to the plugin section. If you don&rsquo;t know what to add you can start with <code>vim-illuminate</code>, which highlights multiple instances of the same word that is under the cursor.</p>
+
+<pre><code>call plug#begin('~/.vim/plugged')
+
+&quot;Vim plugin for selectively illuminating other uses of the current word under the cursor
+&quot;https://github.com/RRethy/vim-illuminate
+Plug 'RRethy/vim-illuminate'
+
+&quot; Initialize plugin system
+call plug#end()
+</code></pre>
+
+<p>d. Now open a file with vim, or if you already have a file open, source your <code>vimrc</code> with <code>:source ~/.vimrc</code></p>
+
+<p>e. Now that we have the plugin section and a plugin defined, call vim-plug to install your plugin with <code>:PlugInstall</code></p>
+
+<p>And that&rsquo;s it! You are ready to start using your new plugin.</p>
+
+<p>Whenever you want to install a plugin, repeat steps &laquo;c&raquo; through &laquo;e&raquo;.</p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f12%2f31%2fhow-to-install-and-configure-vim-plug%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Install%20and%20Configure%20Vim%20Plug&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f12%2f31%2fhow-to-install-and-configure-vim-plug%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f12%2f31%2fhow-to-install-and-configure-vim-plug%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f12%2f31%2fhow-to-install-and-configure-vim-plug%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f12%2f31%2fhow-to-install-and-configure-vim-plug%2f&amp;title=How%20to%20Install%20and%20Configure%20Vim%20Plug" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20Install%20and%20Configure%20Vim%20Plug&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f12%2f31%2fhow-to-install-and-configure-vim-plug%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2018/10/18/using-latte-as-a-dock-in-kde/" title="Using Latte as a Dock in Kde">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2019/01/14/how-to-migrate-unifi-controller/" title="How to Migrate Unifi Controller">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2018/10/18/using-latte-as-a-dock-in-kde/">Using Latte as a Dock in Kde</a>
 </h2>
 
@@ -613,127 +750,6 @@ Permissions Size User   Group Date Modified Name
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2018/09/18/special-characters-and-symbols-in-bash/">Special Characters and Symbols in Bash</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2018-09-18">18 Sep, 2018</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<h2 id="character-recognition">Character Recognition</h2>
-
-<h4 id="shapecatcher">Shapecatcher</h4>
-
-<p>You can use <a href="http://shapecatcher.com/">Shapecatcher</a> to draw a character and try to recognize it.</p>
-
-<p>Other usefull sites are <a href="http://www.amp-what.com/">&amp;what</a> and <a href="https://unicode-table.com/en/">Unicode® character table</a>.</p>
-
-<h4 id="in-bash">In Bash</h4>
-
-<p>If you can paste the character in Bash, you can dump the character in hex with <code>hexdump</code></p>
-
-<pre><code>$ echo &quot;✰&quot; | hexdump -C
-00000000  e2 9c b0 0a                                       |....|
-00000004
-
-</code></pre>
-
-<p>Use the hex value to recreate the character:</p>
-
-<pre><code>$ echo -e &quot;\xe2\x9c\xb0&quot;
-✰
-</code></pre>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f18%2fspecial-characters-and-symbols-in-bash%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Special%20Characters%20and%20Symbols%20in%20Bash&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f18%2fspecial-characters-and-symbols-in-bash%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f18%2fspecial-characters-and-symbols-in-bash%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f18%2fspecial-characters-and-symbols-in-bash%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f18%2fspecial-characters-and-symbols-in-bash%2f&amp;title=Special%20Characters%20and%20Symbols%20in%20Bash" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Special%20Characters%20and%20Symbols%20in%20Bash&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f18%2fspecial-characters-and-symbols-in-bash%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2018/09/17/how-to-create-an-init-like-script/" title="How to Create an Init Like Script">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2018/09/19/uncomment-multiple-lines-in-vim/" title="Editing Multiple Lines in Vim">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -794,6 +810,12 @@ Permissions Size User   Group Date Modified Name
     </a>
 </li>
 
+<li >
+  <a href="https://blog.victormendonca.com//page/8/">
+    8
+    </a>
+</li>
+
 
 <li >
   <a aria-label="Next" href="https://blog.victormendonca.com//page/3/">
@@ -801,7 +823,7 @@ Permissions Size User   Group Date Modified Name
     </a>
 </li>
 <li >
-  <a aria-label="Last" href="https://blog.victormendonca.com//page/7/">
+  <a aria-label="Last" href="https://blog.victormendonca.com//page/8/">
     <span aria-hidden="true">&raquo;&raquo;</span>
   </a>
 </li>
@@ -859,6 +881,10 @@ Permissions Size User   Group Date Modified Name
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2019/03/10/colorful-banners-with-figlet-and-lolcat/">Colorful Banners With figlet and lolcat</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2019/02/27/fzf-for-the-win/">Fzf for the Win</a>
           </li>
         
@@ -880,10 +906,6 @@ Permissions Size User   Group Date Modified Name
         
           <li>
           <a href="https://blog.victormendonca.com/2018/10/18/using-latte-as-a-dock-in-kde/">Using Latte as a Dock in Kde</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2018/10/16/tldr-instead-of-man/">TLDR Instead of MAN</a>
           </li>
         
         </ul>
