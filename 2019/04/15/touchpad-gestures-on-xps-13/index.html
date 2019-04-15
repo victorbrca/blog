@@ -205,7 +205,7 @@
 
 <p>After installing the 2 packages you should be able to run <code>libinput-gestures -d</code> as root and try the pre-defined gestures. You should see an output when you swipe left/right/up/down with &frac34; fingers and pinch in/out.</p>
 
-<pre><code># libinput-gestures -d
+<pre><code class="language-none"># libinput-gestures -d
 
 libinput-gestures: session unknown+unknown on Linux-5.0.6-arch1-1-ARCH-x86_64-with-arch, python 3.7.3, libinput 1.13.0
 /usr/bin/libinput-gestures: hash 4cc3250c5befc6926c04b3e499114677
@@ -225,14 +225,14 @@ libinput-gestures: SWIPE right 3 [755.69, -17.479999999999993]
 
 <p>Let&rsquo;s add your user to the <code>input</code> group (because it should not run as <code>root</code>), then re-login:</p>
 
-<pre><code>sudo gpasswd -a [user] input
+<pre><code class="language-none">sudo gpasswd -a [user] input
 </code></pre>
 
 <p>Now let&rsquo;s edit our personal config file in <code>~/.config/libinput-gestures.conf</code>. Using <code>xdotool</code> create a map of what keyboard shortcuts you would like to map your gestures to. Keep in mind you can also map it to commands.</p>
 
 <p>For example, my config file looks like this:</p>
 
-<pre><code># Gestures
+<pre><code class="language-none"># Gestures
 gesture swipe up 3 xdotool key Ctrl+F9
 gesture swipe up 4 xdotool key Ctrl+F10
 gesture swipe left 3 xdotool key Ctrl+Alt+Right
@@ -252,12 +252,12 @@ gesture swipe down 3 xdotool key Super+Down
 
 <p>Let&rsquo;s configure the gestures to start with the desktop environment:</p>
 
-<pre><code>$ libinput-gestures-setup autostart
+<pre><code class="language-none">$ libinput-gestures-setup autostart
 </code></pre>
 
 <p>And start the gestures for the current session:</p>
 
-<pre><code>$ libinput-gestures-setup start
+<pre><code class="language-none">$ libinput-gestures-setup start
 
 Icon theme &quot;papirus&quot; not found.
 Icon theme &quot;ubuntu-mono-dark&quot; not found.
