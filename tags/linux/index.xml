@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Mon, 11 Mar 2019 18:30:00 -0400</lastBuildDate>
+    <lastBuildDate>Mon, 15 Apr 2019 18:14:35 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Touchpad Gestures on XPS 13</title>
+      <link>https://blog.victormendonca.com/2019/04/15/touchpad-gestures-on-xps-13/</link>
+      <pubDate>Mon, 15 Apr 2019 18:14:35 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2019/04/15/touchpad-gestures-on-xps-13/</guid>
+      <description>The XPS 13 is a great laptop and it comes with an equally matched touchpad. Setting up touch gestures is pretty easy, and we will cover what needs to be done to get it working on Arch.
+First, let&amp;rsquo;s install all the needed software:
+ extra/libinput aur/libinput-gestures  After installing the 2 packages you should be able to run libinput-gestures -d as root and try the pre-defined gestures. You should see an output when you swipe left/right/up/down with &amp;frac34; fingers and pinch in/out.</description>
+    </item>
     
     <item>
       <title>Bash Tips: History</title>

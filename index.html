@@ -119,6 +119,170 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2019/04/15/touchpad-gestures-on-xps-13/">Touchpad Gestures on XPS 13</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2019-04-15">15 Apr, 2019</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/hardware" class="label label-primary">Hardware</a>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  <p>The XPS 13 is a great laptop and it comes with an equally matched touchpad. Setting up touch gestures is pretty easy, and we will cover what needs to be done to get it working on Arch.</p>
+
+<p>First, let&rsquo;s install all the needed software:</p>
+
+<ul>
+<li><code>extra/libinput</code></li>
+<li><code>aur/libinput-gestures</code></li>
+</ul>
+
+<p>After installing the 2 packages you should be able to run <code>libinput-gestures -d</code> as root and try the pre-defined gestures. You should see an output when you swipe left/right/up/down with &frac34; fingers and pinch in/out.</p>
+
+<pre><code># libinput-gestures -d
+
+libinput-gestures: session unknown+unknown on Linux-5.0.6-arch1-1-ARCH-x86_64-with-arch, python 3.7.3, libinput 1.13.0
+/usr/bin/libinput-gestures: hash 4cc3250c5befc6926c04b3e499114677
+Gestures configured in /etc/libinput-gestures.conf:
+swipe up           _internal ws_up
+swipe down         _internal ws_down
+swipe left         xdotool key alt+Right
+swipe right        xdotool key alt+Left
+pinch in           xdotool key super+s
+pinch out          xdotool key super+s
+libinput-gestures: device /dev/input/event10: DLL075B:01 06CB:76AF Touchpad
+libinput-gestures: SWIPE up 3 [-33.88000000000001, -604.8000000000001]
+   _internal ws_up
+libinput-gestures: SWIPE right 3 [755.69, -17.479999999999993]
+   xdotool key alt+Left
+</code></pre>
+
+<p>Let&rsquo;s add your user to the <code>input</code> group (because it should not run as <code>root</code>), then re-login:</p>
+
+<pre><code>sudo gpasswd -a [user] input
+</code></pre>
+
+<p>Now let&rsquo;s edit our personal config file in <code>~/.config/libinput-gestures.conf</code>. Using <code>xdotool</code> create a map of what keyboard shortcuts you would like to map your gestures to. Keep in mind you can also map it to commands.</p>
+
+<p>For example, my config file looks like this:</p>
+
+<pre><code># Gestures
+gesture swipe up 3 xdotool key Ctrl+F9
+gesture swipe up 4 xdotool key Ctrl+F10
+gesture swipe left 3 xdotool key Ctrl+Alt+Right
+gesture swipe right 3 xdotool key Ctrl+Alt+Left
+gesture swipe down 3 xdotool key Super+Down
+</code></pre>
+
+<p>And the keyboard shortcuts are mapped to (KDE):</p>
+
+<ul>
+<li><code>Ctrl+F9</code> - Show all windows (current desktop)</li>
+<li><code>Ctrl+F10</code> - Show all windows (all desktops)</li>
+<li><code>Ctrl+Alt+Right</code> - Move to desktop on right</li>
+<li><code>Ctrl+Alt+Left</code> - Move to desktop on left</li>
+<li><code>Super+Down</code> - Desktop preview</li>
+</ul>
+
+<p>Let&rsquo;s configure the gestures to start with the desktop environment:</p>
+
+<pre><code>$ libinput-gestures-setup autostart
+</code></pre>
+
+<p>And start the gestures for the current session:</p>
+
+<pre><code>$ libinput-gestures-setup start
+
+Icon theme &quot;papirus&quot; not found.
+Icon theme &quot;ubuntu-mono-dark&quot; not found.
+Icon theme &quot;Mint-X&quot; not found.
+Icon theme &quot;elementary&quot; not found.
+Icon theme &quot;gnome&quot; not found.
+libinput-gestures started.
+</code></pre>
+
+<p>Enjoy your new setup gestures.</p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2019%2f04%2f15%2ftouchpad-gestures-on-xps-13%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Touchpad%20Gestures%20on%20XPS%2013&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f04%2f15%2ftouchpad-gestures-on-xps-13%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f04%2f15%2ftouchpad-gestures-on-xps-13%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f04%2f15%2ftouchpad-gestures-on-xps-13%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f04%2f15%2ftouchpad-gestures-on-xps-13%2f&amp;title=Touchpad%20Gestures%20on%20XPS%2013" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Touchpad%20Gestures%20on%20XPS%2013&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2019%2f04%2f15%2ftouchpad-gestures-on-xps-13%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2019/03/11/bash-tips-history/" title="Bash Tips: History">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2019/03/11/bash-tips-history/">Bash Tips: History</a>
 </h2>
 
@@ -316,6 +480,12 @@ shopt -s histappend
         </li>
     
 
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2019/04/15/touchpad-gestures-on-xps-13/" title="Touchpad Gestures on XPS 13">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
     
     </ul> </nav>
   
@@ -776,169 +946,6 @@ shopt -s histappend
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2019/01/15/count-lines-of-codes-with-cloc/">Count Lines of Codes With Cloc</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2019-01-15">15 Jan, 2019</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/programming" class="label label-primary">Programming</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  <p>Have you ever had the nead to count the lines of code in a project or a folder? If you did, or want to, <code>cloc</code> is a neat utility that can help with just that.</p>
-
-<p>As per it&rsquo;s description on the <a href="https://github.com/AlDanial/cloc">GitHub</a> page, &laquo;<em>cloc counts blank lines, comment lines, and physical lines of source code in many programming languages</em>&raquo;. It displays a summary of file types and counted files, and then it breaks down a list of lines of code per language.</p>
-
-<p>Here&rsquo;s the output from my <a href="https://github.com/victorbrca/bash-config">bash-config</a> project:</p>
-
-<pre><code> ~/Git/bash-config $ cloc .
-      45 text files.
-      43 unique files.                              
-       4 files ignored.
-
-github.com/AlDanial/cloc v 1.80  T=0.29 s (146.6 files/s, 10151.3 lines/s)
---------------------------------------------------------------------------------
-Language                      files          blank        comment           code
---------------------------------------------------------------------------------
-Bourne Again Shell               38            355            440           1525
-Bourne Shell                      2             41             32            276
-Markdown                          2             52              0            187
---------------------------------------------------------------------------------
-SUM:                             42            448            472           1988
---------------------------------------------------------------------------------
-</code></pre>
-
-<p>And here&rsquo;s a view of a more complex project with multiple languages:</p>
-
-<pre><code>     346 text files.
-     338 unique files.                                          
-     110 files ignored.
-
-github.com/AlDanial/cloc v 1.80  T=0.75 s (319.4 files/s, 45153.6 lines/s)
-----------------------------------------------------------------------------------------
-Language                              files          blank        comment           code
-----------------------------------------------------------------------------------------
-Bourne Shell                            102           3417           3753          14810
-Bourne Again Shell                       28           1209           1040           5480
-XML                                       3             88             13            713
-DOS Batch                                 6             90             24            448
-Markdown                                  5            122              0            411
-Visual Basic                              5             56             31            331
-ERB                                      66             69              0            322
-HTML                                      4             12             62            182
-SQL                                      10             65            203            166
-Korn Shell                                2             33             65            115
-Velocity Template Language                1              0              0            114
-Python                                    3             18             45             59
-CSS                                       1              1              1             24
-Java                                      1              3              3             22
-Ruby                                      1              6              5             11
-----------------------------------------------------------------------------------------
-SUM:                                    238           5189           5245          23208
-----------------------------------------------------------------------------------------
-</code></pre>
-
-<p><code>cloc</code> is available on many distros default repo, as well as npm install. To install it use:</p>
-
-<pre><code>sudo apt install cloc                  # Debian, Ubuntu
-sudo yum install cloc                  # Red Hat, Fedora
-sudo dnf install cloc                  # Fedora 22 or later
-sudo pacman -S cloc                    # Arch
-sudo emerge -av dev-util/cloc          # Gentoo https://packages.gentoo.org/packages/dev-util/cloc
-sudo apk add cloc                      # Alpine Linux
-sudo pkg install cloc                  # FreeBSD
-sudo port install cloc                 # Mac OS X with MacPorts
-brew install cloc                      # Mac OS X with Homebrew
-choco install cloc                     # Windows with Chocolatey
-scoop install cloc                     # Windows with Scoop
-</code></pre>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2019%2f01%2f15%2fcount-lines-of-codes-with-cloc%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Count%20Lines%20of%20Codes%20With%20Cloc&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f01%2f15%2fcount-lines-of-codes-with-cloc%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f01%2f15%2fcount-lines-of-codes-with-cloc%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f01%2f15%2fcount-lines-of-codes-with-cloc%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f01%2f15%2fcount-lines-of-codes-with-cloc%2f&amp;title=Count%20Lines%20of%20Codes%20With%20Cloc" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Count%20Lines%20of%20Codes%20With%20Cloc&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2019%2f01%2f15%2fcount-lines-of-codes-with-cloc%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2019/01/14/how-to-migrate-unifi-controller/" title="How to Migrate Unifi Controller">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2019/02/11/bash-theme-powerline-2column/" title="Bash Theme Powerline 2column">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1070,6 +1077,10 @@ scoop install cloc                     # Windows with Scoop
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2019/04/15/touchpad-gestures-on-xps-13/">Touchpad Gestures on XPS 13</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2019/03/11/bash-tips-history/">Bash Tips: History</a>
           </li>
         
@@ -1091,10 +1102,6 @@ scoop install cloc                     # Windows with Scoop
         
           <li>
           <a href="https://blog.victormendonca.com/2019/01/14/how-to-migrate-unifi-controller/">How to Migrate Unifi Controller</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2018/12/31/how-to-install-and-configure-vim-plug/">How to Install and Configure Vim Plug</a>
           </li>
         
         </ul>
