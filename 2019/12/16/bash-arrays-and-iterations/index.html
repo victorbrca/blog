@@ -5,34 +5,34 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title>Creating a Simple Systemd User Service  &middot; Victor&#39;s Blog</title>
+  <title>Bash Arrays and Iterations  &middot; Victor&#39;s Blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="description" content="Tutorial on creating a simple systemd service" />
+<meta name="description" content="Using Bash arrays for iterations" />
 
-<meta name="keywords" content="Linux, Systemd, ">
+<meta name="keywords" content="Bash, Linux, ">
 
 
-<meta property="og:title" content="Creating a Simple Systemd User Service  &middot; Victor&#39;s Blog ">
+<meta property="og:title" content="Bash Arrays and Iterations  &middot; Victor&#39;s Blog ">
 <meta property="og:site_name" content="Victor&#39;s Blog"/>
-<meta property="og:url" content="https://blog.victormendonca.com/2018/05/14/creating-a-simple-systemd-user-service/" />
+<meta property="og:url" content="https://blog.victormendonca.com/2019/12/16/bash-arrays-and-iterations/" />
 <meta property="og:locale" content="en">
 
 
 <meta property="og:type" content="article" />
-<meta property="og:description" content="Tutorial on creating a simple systemd service"/>
-<meta property="og:article:published_time" content="2018-05-14T12:53:43-04:00" />
-<meta property="og:article:modified_time" content="2018-05-14T12:53:43-04:00" />
+<meta property="og:description" content="Using Bash arrays for iterations"/>
+<meta property="og:article:published_time" content="2019-12-16T09:57:18-05:00" />
+<meta property="og:article:modified_time" content="2019-12-16T09:57:18-05:00" />
 
   
     
-<meta property="og:article:tag" content="Linux">
+<meta property="og:article:tag" content="Bash">
     
-<meta property="og:article:tag" content="Systemd">
+<meta property="og:article:tag" content="Linux">
     
   
 
@@ -40,9 +40,9 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@18440926" />
 <meta name="twitter:creator" content="@18440926" />
-<meta name="twitter:title" content="Creating a Simple Systemd User Service" />
-<meta name="twitter:description" content="Tutorial on creating a simple systemd service" />
-<meta name="twitter:url" content="https://blog.victormendonca.com/2018/05/14/creating-a-simple-systemd-user-service/" />
+<meta name="twitter:title" content="Bash Arrays and Iterations" />
+<meta name="twitter:description" content="Using Bash arrays for iterations" />
+<meta name="twitter:url" content="https://blog.victormendonca.com/2019/12/16/bash-arrays-and-iterations/" />
 <meta name="twitter:domain" content="https://blog.victormendonca.com/">
   
 
@@ -50,7 +50,7 @@
 
 
 
-<link rel="canonical" href="https://blog.victormendonca.com/2018/05/14/creating-a-simple-systemd-user-service/" />
+<link rel="canonical" href="https://blog.victormendonca.com/2019/12/16/bash-arrays-and-iterations/" />
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
 <link rel="icon" href="https://blog.victormendonca.com/favicon.png">
 <meta name="generator" content="Hugo 0.48" />
@@ -139,13 +139,13 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
   <div class="text-center">
 
-    <h1>Creating a Simple Systemd User Service
+    <h1>Bash Arrays and Iterations
 </h1>
 
     <div class="metas">
 <small>
   <i class="fa fa-calendar"></i>
-  <time datetime="2018-05-14">14 May, 2018</time>
+  <time datetime="2019-12-16">16 Dec, 2019</time>
 </small>
 
 
@@ -153,25 +153,25 @@
     &middot; by Victor Mendonça
   
   &middot; Read in about 1 min
-  &middot; (201 words)
+  &middot; (177 words)
   &middot; 
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2019%2f12%2f16%2fbash-arrays-and-iterations%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=Creating%20a%20Simple%20Systemd%20User%20Service&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=Bash%20Arrays%20and%20Iterations&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f12%2f16%2fbash-arrays-and-iterations%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f12%2f16%2fbash-arrays-and-iterations%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f12%2f16%2fbash-arrays-and-iterations%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f&amp;title=Creating%20a%20Simple%20Systemd%20User%20Service" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f12%2f16%2fbash-arrays-and-iterations%2f&amp;title=Bash%20Arrays%20and%20Iterations" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=Creating%20a%20Simple%20Systemd%20User%20Service&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=Bash%20Arrays%20and%20Iterations&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2019%2f12%2f16%2fbash-arrays-and-iterations%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   </small>
@@ -179,9 +179,9 @@
 <div class="margin-10">
   <i class="fa fa-tags"></i>
   
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
   
-  <a href="https://blog.victormendonca.com/tags/systemd" class="label label-primary">Systemd</a>
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
   
 
 
@@ -194,48 +194,60 @@
 </div>
 
       <div class="content">
-  <p>Quick instructions on how to create a simple systemd user service for a program or script.</p>
+  <p>Bash arrays can be great for iterating over a list of items.  I&rsquo;m giving a quick example below on a list of services. All you need is to list all values in different arrays and use an index to map them back together.</p>
 
-<p>1- Identify the script or program/binary that you will be using</p>
+<p>Example:</p>
 
-<p>2- Create a systemd unit file using the example below, give it a name that will make sense to you with a <code>.service</code> extension (like <code>[my_service].service</code>), and save it to <code>$USER/.config/systemd/user</code></p>
+<p>|#|Service|Path|Config File|
+|-|&mdash;|&mdash;|&mdash;|
+|1|CUPS|/etc/cups|cupsd.conf|
+|2|MPD|/etc|mpd.conf|
+|3|SSHD|/etc/ssh|sshd.conf|
+|4|DHCPD|/etc|dhcpd.conf|</p>
 
-<pre><code>[Unit]
-Description=[Service description]
+<p>Let&rsquo;s break down our columns into arrays:</p>
 
-[Service]
-Type=simple
-StandardOutput=journal
-ExecStart=[script path]
+<pre><code class="language-bash">service_arr=(
+  CUPS
+  MPD
+  SSHD
+  DHCPD
+)
 
-[Install]
-WantedBy=default.target
+path_arr=(
+  /etc/cups
+  /etc
+  /etc
+  /etc
+)
+
+config_file_arr=(
+  cupsd.conf
+  mpd.conf
+  sshd.conf
+  dhcpd.conf
+)
 </code></pre>
 
-<p>For this example we used a service type simple, which allows systemd to take care of the most basic needs for us. The options used are:</p>
+<p>Now to iterate through our items, let&rsquo;s make sure we start at index 1 and add at each run:</p>
 
-<ul>
-<li><strong>Description</strong> = Description of your service. This will be shown when handling your service with <code>systemctl</code></li>
-<li><strong>Type</strong> = We will be using the simple type, and this could be left out</li>
-<li><strong>StandardOutput</strong> = We will be logging it to the system log (you can use <code>journalctl</code> to view it)</li>
-<li><strong>ExectStart</strong> = The script or program to be executed</li>
-<li><strong>WantedBy</strong> = Service will be run using the default target. You can find what the default.target is with <code>systemctl get-default</code></li>
-</ul>
+<pre><code>cnt=1
 
-<p>3- Enable your service so it starts automatically</p>
-
-<pre><code>systemctl --user enable [my_service].service
+for i in ${!service_arr[@]} ; do
+  echo &quot;The configuration file for the service ${service_arr[$i]} is ${path_arr[$i]}/${config_file_arr[$i]}&quot;
+  let count+=1
+done
 </code></pre>
 
-<p>4- Start the service</p>
+<p>The result is:</p>
 
-<pre><code>systemctl --user start [my_service].service
+<pre><code>The configuration file for the service CUPS is /etc/cups/cupsd.conf
+The configuration file for the service MPD is /etc/mpd.conf
+The configuration file for the service SSHD is /etc/sshd.conf
+The configuration file for the service DHCPD is /etc/dhcpd.conf
 </code></pre>
 
-<p>4- Check that it&rsquo;s running</p>
-
-<pre><code>systemctl --user status [my_service].service
-</code></pre>
+<p>You can also use especial characters (like <code>*</code> when searching for files and using shell expansion). Just make sure to properly quote them.</p>
 
 </div>
 
@@ -243,22 +255,22 @@ WantedBy=default.target
       <footer>
   
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2019%2f12%2f16%2fbash-arrays-and-iterations%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=Creating%20a%20Simple%20Systemd%20User%20Service&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=Bash%20Arrays%20and%20Iterations&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f12%2f16%2fbash-arrays-and-iterations%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f12%2f16%2fbash-arrays-and-iterations%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f12%2f16%2fbash-arrays-and-iterations%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f&amp;title=Creating%20a%20Simple%20Systemd%20User%20Service" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f12%2f16%2fbash-arrays-and-iterations%2f&amp;title=Bash%20Arrays%20and%20Iterations" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=Creating%20a%20Simple%20Systemd%20User%20Service&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=Bash%20Arrays%20and%20Iterations&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2019%2f12%2f16%2fbash-arrays-and-iterations%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -267,18 +279,12 @@ WantedBy=default.target
     <nav><ul class="pager">
     
         <li class="previous">
-          <a href="https://blog.victormendonca.com/2018/02/09/how-to-scan-for-rtsp-urls/" title="How to Scan for RTSP Urls">
+          <a href="https://blog.victormendonca.com/2019/04/15/touchpad-gestures-on-xps-13/" title="Touchpad Gestures on XPS 13">
             <span aria-hidden="true">&larr;</span>Previous
           </a>
         </li>
     
 
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2018/06/26/installing-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b/" title="Installing Kuman 3">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
     
     </ul> </nav>
   
