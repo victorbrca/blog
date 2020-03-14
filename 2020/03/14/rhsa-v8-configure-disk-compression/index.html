@@ -5,34 +5,36 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title>Bash: Parameter Expansion (Substitution)  &middot; Victor&#39;s Blog</title>
+  <title>RHCSA V8: Configure Disk Compression  &middot; Victor&#39;s Blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="description" content="Explanation on manipulating and/or expanding Bash variables" />
+<meta name="description" content="" />
 
-<meta name="keywords" content="Bash, Linux, ">
+<meta name="keywords" content="Linux, RedHat, RHCSA, ">
 
 
-<meta property="og:title" content="Bash: Parameter Expansion (Substitution)  &middot; Victor&#39;s Blog ">
+<meta property="og:title" content="RHCSA V8: Configure Disk Compression  &middot; Victor&#39;s Blog ">
 <meta property="og:site_name" content="Victor&#39;s Blog"/>
-<meta property="og:url" content="https://blog.victormendonca.com/2017/09/19/bash-parameter-expansion/" />
+<meta property="og:url" content="https://blog.victormendonca.com/2020/03/14/rhsa-v8-configure-disk-compression/" />
 <meta property="og:locale" content="en">
 
 
 <meta property="og:type" content="article" />
-<meta property="og:description" content="Explanation on manipulating and/or expanding Bash variables"/>
-<meta property="og:article:published_time" content="2017-09-19T01:31:32-04:00" />
-<meta property="og:article:modified_time" content="2017-09-19T01:31:32-04:00" />
+<meta property="og:description" content=""/>
+<meta property="og:article:published_time" content="2020-03-14T14:56:39-04:00" />
+<meta property="og:article:modified_time" content="2020-03-14T14:56:39-04:00" />
 
   
     
-<meta property="og:article:tag" content="Bash">
-    
 <meta property="og:article:tag" content="Linux">
+    
+<meta property="og:article:tag" content="RedHat">
+    
+<meta property="og:article:tag" content="RHCSA">
     
   
 
@@ -40,9 +42,9 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@18440926" />
 <meta name="twitter:creator" content="@18440926" />
-<meta name="twitter:title" content="Bash: Parameter Expansion (Substitution)" />
-<meta name="twitter:description" content="Explanation on manipulating and/or expanding Bash variables" />
-<meta name="twitter:url" content="https://blog.victormendonca.com/2017/09/19/bash-parameter-expansion/" />
+<meta name="twitter:title" content="RHCSA V8: Configure Disk Compression" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:url" content="https://blog.victormendonca.com/2020/03/14/rhsa-v8-configure-disk-compression/" />
 <meta name="twitter:domain" content="https://blog.victormendonca.com/">
   
 
@@ -50,7 +52,7 @@
 
 
 
-<link rel="canonical" href="https://blog.victormendonca.com/2017/09/19/bash-parameter-expansion/" />
+<link rel="canonical" href="https://blog.victormendonca.com/2020/03/14/rhsa-v8-configure-disk-compression/" />
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
 <link rel="icon" href="https://blog.victormendonca.com/favicon.png">
 <meta name="generator" content="Hugo 0.48" />
@@ -139,39 +141,39 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
   <div class="text-center">
 
-    <h1>Bash: Parameter Expansion (Substitution)
+    <h1>RHCSA V8: Configure Disk Compression
 </h1>
 
     <div class="metas">
 <small>
   <i class="fa fa-calendar"></i>
-  <time datetime="2017-09-19">19 Sep, 2017</time>
+  <time datetime="2020-03-14">14 Mar, 2020</time>
 </small>
 
 
   <small>
     &middot; by Victor Mendonça
   
-  &middot; Read in about 3 min
-  &middot; (573 words)
+  &middot; Read in about 5 min
+  &middot; (971 words)
   &middot; 
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f14%2frhsa-v8-configure-disk-compression%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=Bash%3a%20Parameter%20Expansion%20%28Substitution%29&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=RHCSA%20V8%3a%20Configure%20Disk%20Compression&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f14%2frhsa-v8-configure-disk-compression%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f14%2frhsa-v8-configure-disk-compression%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f14%2frhsa-v8-configure-disk-compression%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f&amp;title=Bash%3a%20Parameter%20Expansion%20%28Substitution%29" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f14%2frhsa-v8-configure-disk-compression%2f&amp;title=RHCSA%20V8%3a%20Configure%20Disk%20Compression" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=Bash%3a%20Parameter%20Expansion%20%28Substitution%29&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=RHCSA%20V8%3a%20Configure%20Disk%20Compression&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f14%2frhsa-v8-configure-disk-compression%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   </small>
@@ -179,9 +181,11 @@
 <div class="margin-10">
   <i class="fa fa-tags"></i>
   
-  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
-  
   <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/redhat" class="label label-primary">RedHat</a>
+  
+  <a href="https://blog.victormendonca.com/tags/rhcsa" class="label label-primary">RHCSA</a>
   
 
 
@@ -196,256 +200,202 @@
       <div class="content">
   
 
-<h2 id="default-usage">Default Usage</h2>
+<h4 id="disclaimer">Disclaimer</h4>
 
-<p><code>${PARAMETER}</code></p>
+<p>These are my study notes for the RHCSA exam on disk compression. There&rsquo;s most likely more information than what&rsquo;s needed for the exam, and I cannot guarantee that all information is correct.</p>
 
-<p>Expand parameter value. It can be used for:</p>
+<p><br></p>
 
-<ul>
-<li>Separating characters from variable names
+<h2 id="definition">Definition</h2>
 
-<ul>
-<li><code>cd /home/${user}</code></li>
-</ul></li>
-<li>Positional parameter higher than 9
+<p>Virtual Data Optimizer (VDO) provides inline data reduction for Linux in the form of deduplication, compression, and thin provisioning. When you set up a VDO volume, you specify a block device on which to construct your VDO volume and the amount of logical storage you plan to present.</p>
 
-<ul>
-<li><code>echo &quot;Argument 10 is: ${10}&quot;</code></li>
-</ul></li>
-</ul>
+<blockquote>
+<p>In the Red Hat Enterprise Linux 7.5 Beta, we introduced virtual data optimizer (VDO). VDO is a kernel module that can save disk space and reduce replication bandwidth. VDO sits on top of any block storage device and provides zero-block elimination, deduplication of redundant blocks, and data compression.</p>
+</blockquote>
 
-<h2 id="indirection">Indirection</h2>
+<p>VDO can be applied to a block device, and then normal disk operations can be applied to that device. LVM for example, can sit on top of VDO.</p>
 
-<p><code>${!PARAMETER}</code></p>
+<p><em>Physical disk -&gt; VDO -&gt; Volumegroup -&gt; Logical volume -&gt; file system</em></p>
 
-<p>Expands to the value of the variable named by the value of parameter.</p>
+<p><img src="https://blog.victormendonca.com/img/rhsa-v8-configure-disk-compression/overview.png" alt="" /></p>
 
-<pre><code>var=var1
-var1=temp
+<h2 id="requirements-and-recommendations">Requirements and Recommendations</h2>
 
-$ echo ${!var}
-temp
+<h3 id="memory">Memory</h3>
+
+<p>Each VDO volume has two distinct memory requirements:<br />
+<br></p>
+
+<h4 id="the-vdo-module">The VDO module</h4>
+
+<p>VDO requires 370 MB of DRAM plus an additional 268 MB per each 1 TB of physical storage managed by the volume.<br />
+<br></p>
+
+<h4 id="the-universal-deduplication-service-uds-index">The Universal Deduplication Service (UDS) index</h4>
+
+<p>UDS requires a minimum of 250 MB of DRAM, which is also the default amount that deduplication uses.</p>
+
+<p>The memory required for the UDS index is determined by the index type and the required size of the deduplication window:</p>
+
+<p><img src="https://blog.victormendonca.com/img/rhsa-v8-configure-disk-compression/memory_requirements.png" alt="" /></p>
+
+<p><em><strong>Note:</strong> Sparse is the recommended configuration.</em></p>
+
+<p><br></p>
+
+<h3 id="storage">Storage</h3>
+
+<p><br></p>
+
+<h4 id="logical-size"><strong>Logical Size</strong></h4>
+
+<p>Specifies the logical VDO volume size. The VDO Logical Size is how much storage we tell the OS that we have. Because of reduction and deduplication, this number will be bigger than the real physical size. This ratio will vary according to the type of data that is being stored (binary, video, audio, compressed data will have a very low ratio).<br />
+<br></p>
+
+<h4 id="red-hat-s-recommendation">Red Hat&rsquo;s Recommendation</h4>
+
+<p><strong>For active VMs or container storage</strong></p>
+
+<p><em>Use logical size that is ten times the physical size of your block device. For example, if your block device is 1TB in size, use 10T here.</em></p>
+
+<p><strong>For object storage</strong></p>
+
+<p><em>Use logical size that is three times the physical size of your block device. For example, if your block device is 1TB in size, use 3T here.</em></p>
+
+<p><br></p>
+
+<h4 id="slab-size"><strong>Slab Size</strong></h4>
+
+<p>Specifies the size of the increment by which a VDO is grown. All of the slabs for a given volume will be of the same size, which may be any power of 2 multiple of 128 MB up to 32 GB. At least one entire slab is reserved by VDO for metadata, and therefore cannot be used for storing user data.</p>
+
+<p>The default slab size is 2 GB in order to facilitate evaluating VDO on smaller test systems. A single VDO volume may have up to 8096 slabs. Therefore, in the default configuration with 2 GB slabs, the maximum allowed physical storage is 16 TB. When using 32 GB slabs, the maximum allowed physical storage is 256 TB.</p>
+
+<p><img src="https://blog.victormendonca.com/img/rhsa-v8-configure-disk-compression/vdo_slab_sizes.png" alt="" /></p>
+
+<p><em>The table above is from RHEL 7 documentation</em></p>
+
+<p><br></p>
+
+<h4 id="examples-of-vdo-system-requirements-by-physical-volume-size"><strong>Examples of VDO System Requirements by Physical Volume Size</strong></h4>
+
+<p>The following tables provide approximate system requirements of VDO based on the size of the underlying physical volume. Each table lists requirements appropriate to the intended deployment, such as primary storage or backup storage.</p>
+
+<p><img src="https://blog.victormendonca.com/img/rhsa-v8-configure-disk-compression/primary_storage.png" alt="" /></p>
+
+<p><img src="https://blog.victormendonca.com/img/rhsa-v8-configure-disk-compression/backup_storage.png" alt="" /></p>
+
+<p><br></p>
+
+<h3 id="deduplication-indexing-and-compression">Deduplication, Indexing and Compression</h3>
+
+<p><br></p>
+
+<h4 id="deduplication-and-index">Deduplication and Index</h4>
+
+<p>VDO uses a high-performance de-duplication index called UDS to detect duplicate blocks of data as they are being stored. The UDS index provides the foundation of the VDO product. For each new piece of data, it quickly determines if that piece is identical to any previously stored piece of data. If the index finds match, the storage system can then internally reference the existing item to avoid storing the same information more than once.</p>
+
+<p>Deduplication is enabled by default.</p>
+
+<p>To disable deduplication during VDO block creation (so only compression is used), use the <code>--deduplication=disabled</code> option (you will not be able to use the <code>sparseIndex</code> option)</p>
+
+<pre><code># vdo create --name=[name] --device=/dev/[device] --vdoLogicalSize=[VDO logical size] --deduplication=disabled --vdoSlabSize=[slab size]
 </code></pre>
 
-<h2 id="case-modification">Case Modification</h2>
+<p>To enable/disable deduplication on a existing block</p>
 
-<p><code>${PARAMETER^}, ${PARAMETER^^}</code>
-<code>${PARAMETER,}, ${PARAMETER,,}</code>
-<code>${PARAMETER~}, ${PARAMETER~~}</code></p>
+<pre><code># vdo enableDeduplication --name=my_vdo
 
-<p>|Operator|Action|
-|&ndash;|&mdash;&mdash;&mdash;&mdash;&ndash;|
-|^|Changes first character to upper case|
-|^^|Changes all characters to upper case|
-|,|Changes first character to lower case|
-|,,|Changes all characters to lower case|
-|~|Inverts case of first character|
-|~~|Inverts case of all characters|</p>
-
-<h2 id="variable-name-prefix-expansion">Variable Name (Prefix) Expansion</h2>
-
-<p><code>${!PREFIX*}</code>
-<code>${!PREFIX@}</code></p>
-
-<p>Expands to a list of all set variable names beginning with the string in <code>PREFIX</code>.</p>
-
-<pre><code>$ echo ${!XDG*}
-XDG_CURRENT_DESKTOP XDG_MENU_PREFIX XDG_RUNTIME_DIR XDG_SEAT XDG_SESSION_DESKTOP XDG_SESSION_ID XDG_SESSION_TYPE XDG_VTNR
+# vdo disableDeduplication --name=my_vdo
 </code></pre>
 
-<h2 id="substring-removal">Substring Removal</h2>
+<p><br></p>
 
-<p><code>${PARAMETER#PATTERN}</code>
-<code>${PARAMETER##PATTERN}</code>
-<code>${PARAMETER%PATTERN}</code>
-<code>${PARAMETER%%PATTERN}</code></p>
+<h4 id="compression">Compression</h4>
 
-<p>With <code>#</code>, it removes the mathing pattern from the beggining of the variable, where <code>#</code> removes the shortest match, and <code>##</code> removes the longest.</p>
+<p>In addition to block-level deduplication, VDO also provides inline block-level compression using the HIOPS Compression™ technology.</p>
 
-<p>Note the empty spaces in the example below.</p>
+<p>VDO volume compression is on by default.</p>
 
-<pre><code>substr=&quot;the quick brown fox jumps over the lazy dog&quot;
+<p>Compression operates on blocks that have not been identified as duplicates. When unique data is seen for the first time, it is compressed. Subsequent copies of data that have already been stored are deduplicated without requiring an additional compression step.</p>
 
-$ echo ${substr#* }
-quick brown fox jumps over the lazy dog
+<p><br></p>
 
-$ echo ${substr##* }
-dog
+<h2 id="configuration-steps">Configuration Steps</h2>
+
+<p>Install &lsquo;vdo&rsquo; (and if not installed by default &lsquo;kmod-vdo&rsquo;)</p>
+
+<pre><code># yum install vdo
 </code></pre>
 
-<p>Removing path from a file:</p>
+<p>Start the service</p>
 
-<pre><code>mlog=/var/log/clamav/freshclam.log
-
-$ echo ${mlog##*/}
-freshclam.log
+<pre><code># systemctl start vdo.service
 </code></pre>
 
-<p>The operator <code>%</code> does the same, but at the end of the file.</p>
+<p>Create the volume</p>
 
-<pre><code>$ echo ${substr% *}
-the quick brown fox jumps over the lazy
-
-$ echo ${substr%% *}
-the
+<pre><code># vdo create --name=[name] --device=/dev/[device] --vdoLogicalSize=[VDO logical size] --sparseIndex=enabled --vdoSlabSize=[slab size]
 </code></pre>
 
-<p>Changing the extension of a file</p>
+<p><em>Note: Using &lsquo;&ndash;sparseIndex=disabled&rsquo; will enable &lsquo;dense&rsquo; indexing</em></p>
 
-<pre><code>file=123.txt
+<p>Optionally add LVM config, and/or create the file system (make sure to use the option to not discard blocks)</p>
 
-$ echo ${file%.*}
-123
+<pre><code># mkfs.ext4 -E nodiscard /dev/mapper/[name]
 
-$ echo ${file%.*}.log
-123.log
+# mkfs.xfs -K /dev/mapper/[name]
 </code></pre>
 
-<h2 id="search-and-replace">Search and Replace</h2>
+<p>Update the system with the new device</p>
 
-<p><code>${PARAMETER/PATTERN/STRING}</code>
-<code>${PARAMETER//PATTERN/STRING}</code>
-<code>${PARAMETER/PATTERN}</code>
-<code>${PARAMETER//PATTERN}</code></p>
-
-<p>The main diffence is that a single <code>/</code> substitutes the first occurrence, while double <code>//</code> substitute all occurences:</p>
-
-<pre><code>$ echo $substr
-the quick brown fox jumps over the lazy dog
-
-$ echo ${substr/the/da}
-da quick brown fox jumps over the lazy dog
-
-$ echo ${substr//the/da}
-da quick brown fox jumps over da lazy dog
-
-$ echo ${substr/the}
-quick brown fox jumps over the lazy dog
-
-$ echo ${substr//the}
-quick brown fox jumps over lazy dog
+<pre><code># udevadm settle
 </code></pre>
 
-<h3 id="anchoring"><strong>Anchoring</strong></h3>
+<p>Mount the device</p>
 
-<p>You can use <code>#</code> and <code>%</code> to anchor to the beginning and end respectively</p>
-
-<pre><code>var1=00000000
-
-$ echo ${var1/#0/1}
-10000000
-
-$ echo ${var1/%0/1}
-00000001
+<pre><code># mount /dev/mapper/[name] /mount/point
 </code></pre>
 
-<h2 id="offset-and-lenght">Offset and Lenght</h2>
+<p>To add it to &lsquo;/etc/fstab&rsquo;. You will need to add additional params so that systemd waits for VDO to start before mounting</p>
 
-<p><code>${PARAMETER:OFFSET}</code>
-<code>${PARAMETER:OFFSET:LENGTH}</code></p>
-
-<ul>
-<li>Offset removes the amount of characters as specified</li>
-<li>Lenght prints the specified character lenght after offset</li>
-</ul>
-
-<p><strong><em>Note:</em></strong> <em>You can also use a negative value for offset and lenght, which will be calculated from the end of the file</em></p>
-
-<pre><code>$ echo ${substr}
-the quick brown fox jumps over the lazy dog
-123456789...
+<pre><code># /dev/mapper/vdo-device /mount/point [fstype] defaults,_netdev,x-systemd.device-timeout=0,x-systemd.requires=vdo.service 0 0
 </code></pre>
 
-<p>Removes first 9 chars</p>
+<p>See man pages for &lsquo;systemd.mount&rsquo;:</p>
 
-<pre><code>$ echo ${substr:9}
-brown fox jumps over the lazy dog
+<pre><code class="language-nothing">x-systemd.device-timeout=
+          Configure how long systemd should wait for a device to show up before
+          giving up on an entry from /etc/fstab. Specify a time in seconds or
+          explicitly append a unit such as &quot;s&quot;, &quot;min&quot;, &quot;h&quot;, &quot;ms&quot;.
+
+x-systemd.requires=
+          Configures a Requires= and an After= dependency between the created mount
+          unit and another systemd unit, such as a device or mount unit.
 </code></pre>
 
-<p>Removes first 3 chars and print the next 5</p>
+<p><br></p>
 
-<pre><code>$ echo ${substr:4:5}
-quick
+<h2 id="administration">Administration</h2>
+
+<p>Check for real physical space usage</p>
+
+<pre><code class="language-nothing"># vdostats --human-readable
+
+Device              Size   Used   Available   Use%   Space Saving%
+/dev/mapper/my_vdo  1.8T  407.9G    1.4T       22%       21%
 </code></pre>
 
-<h2 id="use-default">Use Default</h2>
-
-<p><code>${PARAMETER:-WORD}</code>
-<code>${PARAMETER-WORD}</code></p>
-
-<p>If parameter unset (or null if using <code>:</code>), expand to word.</p>
-
-<pre><code>$ my_var=gru
-$ echo ${my_var:-yyz}
-gru
-
-$ unset my_var
-$ echo ${my_var:-yyz}
-yyz
-</code></pre>
-
-<h2 id="use-alternate-value">Use Alternate Value</h2>
-
-<p><code>${PARAMETER:+WORD}</code>
-<code>${PARAMETER+WORD}</code></p>
-
-<p>If parameter <strong>is set</strong> (or null if using <code>:</code>), expand to word.</p>
-
-<pre><code>$ my_var=gru
-$ echo ${my_var:+yyz}
-yyz
-
-$ unset my_var
-$ echo ${my_var:+yyz}
-
-</code></pre>
-
-<h2 id="use-default-and-assign">Use Default And Assign</h2>
-
-<p><code>${PARAMETER:=WORD}</code>
-<code>${PARAMETER=WORD}</code></p>
-
-<p>If parameter unset (or null if using <code>:</code>), expand to word and assign parameter to the value of word.</p>
-
-<pre><code>my_var=gru
-
-$ echo ${my_var:=yyz}
-gru
-
-$ unset my_var
-$ echo ${my_var:=yyz}
-yyz
-
-$ echo $my_var
-yyz
-</code></pre>
-
-<h2 id="display-error">Display Error</h2>
-
-<p><code>${PARAMETER:?WORD}</code>
-<code>${PARAMETER?WORD}</code></p>
-
-<p>If parameter unset (or null if using <code>:</code>), display error with word as appendix, otherwise expand parameter.</p>
-
-<pre><code>my_var=gru
-
-$ echo ${my_var:?Not set}
-gru
-
-$ unset my_var
-$ echo ${my_var:?Not set}
-bash: my_var: Not set
-</code></pre>
+<p><br></p>
 
 <hr />
 
-<p><strong>Reference:</strong></p>
+<p><strong>References:</strong></p>
 
 <ul>
-<li><a href="http://wiki.bash-hackers.org/syntax/pe">wiki.bash-hackers.org</a></li>
-<li><a href="http://www.tldp.org/LDP/abs/html/parameter-substitution.html">tldp.org</a></li>
-<li><a href="https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html">gnu.org</a></li>
+<li><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/system_design_guide/deploying-vdo_system-design-guide">https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/system_design_guide/deploying-vdo_system-design-guide</a></li>
+<li><a href="https://www.linuxsysadmins.com/setting-up-virtual-data-optimizer-on-centos/">https://www.linuxsysadmins.com/setting-up-virtual-data-optimizer-on-centos/</a></li>
+<li><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/system_design_guide/deploying-vdo_system-design-guide">https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/system_design_guide/deploying-vdo_system-design-guide</a></li>
 </ul>
 
 </div>
@@ -454,22 +404,22 @@ bash: my_var: Not set
       <footer>
   
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f14%2frhsa-v8-configure-disk-compression%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=Bash%3a%20Parameter%20Expansion%20%28Substitution%29&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=RHCSA%20V8%3a%20Configure%20Disk%20Compression&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f14%2frhsa-v8-configure-disk-compression%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f14%2frhsa-v8-configure-disk-compression%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f14%2frhsa-v8-configure-disk-compression%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f&amp;title=Bash%3a%20Parameter%20Expansion%20%28Substitution%29" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f14%2frhsa-v8-configure-disk-compression%2f&amp;title=RHCSA%20V8%3a%20Configure%20Disk%20Compression" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=Bash%3a%20Parameter%20Expansion%20%28Substitution%29&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f19%2fbash-parameter-expansion%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=RHCSA%20V8%3a%20Configure%20Disk%20Compression&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f14%2frhsa-v8-configure-disk-compression%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -478,18 +428,12 @@ bash: my_var: Not set
     <nav><ul class="pager">
     
         <li class="previous">
-          <a href="https://blog.victormendonca.com/2017/08/30/alternatives-to-top/" title="Alternatives to Top">
+          <a href="https://blog.victormendonca.com/2020/03/14/rhcsa---whats-new/" title="RHCSA v8 - What&#39;s New">
             <span aria-hidden="true">&larr;</span>Previous
           </a>
         </li>
     
 
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2017/09/20/additional-status-for-vim-with-powerline/" title="Additional Status for Vim With Powerline">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
     
     </ul> </nav>
   

@@ -119,6 +119,172 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2019/03/10/colorful-banners-with-figlet-and-lolcat/">Colorful Banners With figlet and lolcat</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2019-03-10">10 Mar, 2019</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>Banners in *nix like systems is something that is being used for a very long time. System admins would sometimes use it to let users know that the system was going down (nowadays built-in with the <code>shutdown</code> command), or setup <code>motd</code> messages for SSH logins. Within the past years people got very creative with the use of different fonts and ASCII art.</p>
+
+<p>For today&rsquo;s post we will work With two different apps to display beautiful banners on your systems or config/dot files:</p>
+
+<ul>
+<li><code>figlet</code> - displays the banners</li>
+<li><code>lolcat</code> - colorizes the banners</li>
+</ul>
+
+<h3 id="installation-arch">Installation (Arch)</h3>
+
+<pre><code class="language-bash">pacman -Sy figlet lolcat
+</code></pre>
+
+<h3 id="figlet">figlet</h3>
+
+<p>Figlet comes with a default font and you can start using it right away</p>
+
+<pre><code class="language-blank">$ figlet &quot;Hello World&quot;
+ _   _      _ _        __        __         _     _
+| | | | ___| | | ___   \ \      / /__  _ __| | __| |
+| |_| |/ _ \ | |/ _ \   \ \ /\ / / _ \| '__| |/ _` |
+|  _  |  __/ | | (_) |   \ V  V / (_) | |  | | (_| |
+|_| |_|\___|_|_|\___/     \_/\_/ \___/|_|  |_|\__,_|
+</code></pre>
+
+<p>You can also download additional fonts (which is what we want). This will allow you to create a huge variety of banners.</p>
+
+<p>Head over to the <a href="https://github.com/xero/figlet-fonts">figlet-fonts</a> project and take a look at the font files (<code>*.flf</code>). I would advise downloading the <code>3d.flf</code> because that&rsquo;s what we will use here. You can also clone the whole repo.</p>
+
+<p>Place the new font in <code>~/.local/share/fonts/</code> and give it as an argument to the <code>-f</code> option in figlet:</p>
+
+<pre><code>$ figlet -f ~/.local/share/fonts/3d.flf &quot;Hello World&quot;
+ ██      ██          ██  ██            ██       ██                  ██      ██
+░██     ░██         ░██ ░██           ░██      ░██                 ░██     ░██
+░██     ░██  █████  ░██ ░██  ██████   ░██   █  ░██  ██████  ██████ ░██     ░██
+░██████████ ██░░░██ ░██ ░██ ██░░░░██  ░██  ███ ░██ ██░░░░██░░██░░█ ░██  ██████
+░██░░░░░░██░███████ ░██ ░██░██   ░██  ░██ ██░██░██░██   ░██ ░██ ░  ░██ ██░░░██
+░██     ░██░██░░░░  ░██ ░██░██   ░██  ░████ ░░████░██   ░██ ░██    ░██░██  ░██
+░██     ░██░░██████ ███ ███░░██████   ░██░   ░░░██░░██████ ░███    ███░░██████
+░░      ░░  ░░░░░░ ░░░ ░░░  ░░░░░░    ░░       ░░  ░░░░░░  ░░░    ░░░  ░░░░░░
+</code></pre>
+
+<h3 id="lolcat">lolcat</h3>
+
+<p>Lolcat produces a rainbow effect on terminal text. For example, try listing a directory and then piping it to <code>lolcat</code>. It should produce an output similar to the one below:</p>
+
+<p><img src="https://blog.victormendonca.com/img/colorful-banners-with-figlet-and-lolcat/lolcat-list.png" alt="" /></p>
+
+<h3 id="putting-it-all-together">Putting it all together</h3>
+
+<p>Use the same <code>figlet</code> command we used before to print out &laquo;Hello World&raquo; and pipe it through <code>lolcat</code> to get the result below:</p>
+
+<p><img src="https://blog.victormendonca.com/img/colorful-banners-with-figlet-and-lolcat/lolbanner.png" alt="" /></p>
+
+<p>Optionally, you can add Bash alias/function to quickly display colorized banners:</p>
+
+<pre><code>lolbanner ()
+{
+    echo
+    figlet -f ~/.local/share/fonts/3d.flf $* | lolcat
+    echo
+}
+</code></pre>
+
+<p><img src="https://blog.victormendonca.com/img/colorful-banners-with-figlet-and-lolcat/vimrc.png" alt="" /></p>
+
+<p>Have fun adding banners to your dot files, config files and screenshots/videos. Just remember that for config files, the colors will not be saved/shown.</p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2019%2f03%2f10%2fcolorful-banners-with-figlet-and-lolcat%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Colorful%20Banners%20With%20figlet%20and%20lolcat&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f03%2f10%2fcolorful-banners-with-figlet-and-lolcat%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f03%2f10%2fcolorful-banners-with-figlet-and-lolcat%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f03%2f10%2fcolorful-banners-with-figlet-and-lolcat%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f03%2f10%2fcolorful-banners-with-figlet-and-lolcat%2f&amp;title=Colorful%20Banners%20With%20figlet%20and%20lolcat" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Colorful%20Banners%20With%20figlet%20and%20lolcat&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2019%2f03%2f10%2fcolorful-banners-with-figlet-and-lolcat%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2019/02/27/fzf-for-the-win/" title="Fzf for the Win">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2019/03/11/bash-tips-history/" title="Bash Tips: History">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2019/02/27/fzf-for-the-win/">Fzf for the Win</a>
 </h2>
 
@@ -663,143 +829,6 @@ scoop install cloc                     # Windows with Scoop
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2018/12/31/how-to-install-and-configure-vim-plug/">How to Install and Configure Vim Plug</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2018-12-31">31 Dec, 2018</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/vim" class="label label-primary">vim</a>
-  
-  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">bash</a>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  <p>Quick step by step instructions to get you started with the Vim plugin manager <a href="https://github.com/junegunn/vim-plug">vim-plug</a>.</p>
-
-<p>a- Install the <code>vim-plug</code> package (Arch) from the AUR repo</p>
-
-<pre><code>aur/vim-plug 0.10.0-1 [installed] (19) (0.05)
-    A vim plugin manager
-</code></pre>
-
-<p>b. Configure your <code>~/.vimrc</code> with a section for the new plugins. This is where you will define all the plugins that you want to use. I would also add this section at the top of your file.</p>
-
-<pre><code>&quot;==============================================================================
-&quot; Plugin Manager
-&quot;==============================================================================
-
-call plug#begin('~/.vim/plugged')
-
-&quot; Initialize plugin system
-call plug#end()
-</code></pre>
-
-<p>c. Add a plugin to the plugin section. If you don&rsquo;t know what to add you can start with <code>vim-illuminate</code>, which highlights multiple instances of the same word that is under the cursor.</p>
-
-<pre><code>call plug#begin('~/.vim/plugged')
-
-&quot;Vim plugin for selectively illuminating other uses of the current word under the cursor
-&quot;https://github.com/RRethy/vim-illuminate
-Plug 'RRethy/vim-illuminate'
-
-&quot; Initialize plugin system
-call plug#end()
-</code></pre>
-
-<p>d. Now open a file with vim, or if you already have a file open, source your <code>vimrc</code> with <code>:source ~/.vimrc</code></p>
-
-<p>e. Now that we have the plugin section and a plugin defined, call vim-plug to install your plugin with <code>:PlugInstall</code></p>
-
-<p>And that&rsquo;s it! You are ready to start using your new plugin.</p>
-
-<p>Whenever you want to install a plugin, repeat steps &laquo;c&raquo; through &laquo;e&raquo;.</p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f12%2f31%2fhow-to-install-and-configure-vim-plug%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Install%20and%20Configure%20Vim%20Plug&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f12%2f31%2fhow-to-install-and-configure-vim-plug%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f12%2f31%2fhow-to-install-and-configure-vim-plug%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f12%2f31%2fhow-to-install-and-configure-vim-plug%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f12%2f31%2fhow-to-install-and-configure-vim-plug%2f&amp;title=How%20to%20Install%20and%20Configure%20Vim%20Plug" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=How%20to%20Install%20and%20Configure%20Vim%20Plug&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f12%2f31%2fhow-to-install-and-configure-vim-plug%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2018/10/18/using-latte-as-a-dock-in-kde/" title="Using Latte as a Dock in Kde">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2019/01/14/how-to-migrate-unifi-controller/" title="How to Migrate Unifi Controller">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -866,6 +895,12 @@ call plug#end()
     </a>
 </li>
 
+<li >
+  <a href="https://blog.victormendonca.com//page/9/">
+    9
+    </a>
+</li>
+
 
 <li >
   <a aria-label="Next" href="https://blog.victormendonca.com//page/3/">
@@ -873,7 +908,7 @@ call plug#end()
     </a>
 </li>
 <li >
-  <a aria-label="Last" href="https://blog.victormendonca.com//page/8/">
+  <a aria-label="Last" href="https://blog.victormendonca.com//page/9/">
     <span aria-hidden="true">&raquo;&raquo;</span>
   </a>
 </li>
@@ -913,7 +948,7 @@ call plug#end()
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/fzf">fzf</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/programming">programming</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/fzf">fzf</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/programming">programming</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li>
           </ul>
         </div>
       </div>
@@ -929,6 +964,10 @@ call plug#end()
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2020/03/14/rhsa-v8-configure-disk-compression/">RHCSA V8: Configure Disk Compression</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2020/03/14/rhcsa---whats-new/">RHCSA v8 - What&#39;s New</a>
@@ -952,10 +991,6 @@ call plug#end()
         
           <li>
           <a href="https://blog.victormendonca.com/2019/02/27/fzf-for-the-win/">Fzf for the Win</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2019/02/11/bash-theme-powerline-2column/">Bash Theme Powerline 2column</a>
           </li>
         
         </ul>

@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Sat, 14 Mar 2020 11:31:56 -0400</lastBuildDate>
+    <lastBuildDate>Sat, 14 Mar 2020 14:56:39 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>RHCSA V8: Configure Disk Compression</title>
+      <link>https://blog.victormendonca.com/2020/03/14/rhsa-v8-configure-disk-compression/</link>
+      <pubDate>Sat, 14 Mar 2020 14:56:39 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2020/03/14/rhsa-v8-configure-disk-compression/</guid>
+      <description>Disclaimer These are my study notes for the RHCSA exam on disk compression. There&amp;rsquo;s most likely more information than what&amp;rsquo;s needed for the exam, and I cannot guarantee that all information is correct.
+
+Definition Virtual Data Optimizer (VDO) provides inline data reduction for Linux in the form of deduplication, compression, and thin provisioning. When you set up a VDO volume, you specify a block device on which to construct your VDO volume and the amount of logical storage you plan to present.</description>
+    </item>
     
     <item>
       <title>RHCSA v8 - What&#39;s New</title>
