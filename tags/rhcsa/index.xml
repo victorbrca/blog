@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rhcsa on Victor&#39;s Blog</title>
+    <link>https://blog.victormendonca.com/tags/rhcsa/</link>
+    <description>Recent content in Rhcsa on Victor&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
+    <lastBuildDate>Sat, 14 Mar 2020 11:31:56 -0400</lastBuildDate>
+    
+	<atom:link href="https://blog.victormendonca.com/tags/rhcsa/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>RHCSA v8 - What&#39;s New</title>
+      <link>https://blog.victormendonca.com/2020/03/14/rhcsa---whats-new/</link>
+      <pubDate>Sat, 14 Mar 2020 11:31:56 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2020/03/14/rhcsa---whats-new/</guid>
+      <description>The updated RHCSA exam for RHEL 8 has been out since last year, however, the old exam is still available, and will stay available until August 1st, 2020:
+You may be trying to figure out what version will be best for you, and I&amp;rsquo;m hoping the information here will help you.
+Something to take in consideration is that the exam is valid for 3 years, or 2 releases (meaning that once RHEL 9 is out, your RHSCA on RHEL 7 is no longer valid).</description>
+    </item>
+    
+  </channel>
+</rss>

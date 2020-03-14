@@ -119,6 +119,169 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2018/09/17/how-to-create-an-init-like-script/">How to Create an Init Like Script</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2018-09-17">17 Sep, 2018</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  <p>On this tutorial I will explain how to create a quick init like script to be run in the background. We will <strong>not</strong> be adding this script to <code>/etc/init</code> or look into how to run it at startup. Instead we will run it manually. If you are looking for a Systemd version of this tutorial, check out my previous post <a href="https://blog.victormendonca.com/2018/05/14/creating-a-simple-systemd-user-service/">Creating a Simple Systemd User Service</a>.</p>
+
+<p>First let&rsquo;s create our service script. This is the daemon that will be running in the background. For this example we will create a script that monitors a log file:</p>
+
+<pre><code>tail -fn0 logfile | \
+while read line ; do
+  echo &quot;$line&quot; | grep &quot;pattern&quot;
+  if [ $? = 0 ]
+  then
+    ... do something ...
+  fi
+done
+</code></pre>
+
+<p>Now let&rsquo;s create a control script. This script is what we will use to start/stop our daemon.</p>
+
+<pre><code>#!/bin/bash
+
+daemon=&quot;[path_to_my_daemon_script]&quot;
+name=&quot;Name for the service/daemon&quot;
+desc=&quot;Description for the script&quot;
+pid_file=&quot;/var/run/[daemon_name].pid&quot;
+
+# Check whether the binary is still present:
+test -x &quot;$daemon&quot; || exit 0
+
+case &quot;$1&quot; in
+start)
+  [ -f &quot;$pid_file&quot; ] &amp;&amp; { echo &quot;Already running&quot; ; exit 0 ; }
+  echo &quot;Starting $name&quot;
+  &quot;$daemon&quot; &amp;
+  echo $! &gt; &quot;$pid_file&quot;
+  ;;
+stop)
+  [ ! -f &quot;$pid_file&quot; ] &amp;&amp; { echo &quot;Not running&quot; ; exit 0 ; }
+   echo &quot;Stopping  $name&quot;
+   kill &quot;$(cat $pid_file)&quot;
+   rm &quot;$pid_file&quot;
+   ;;
+restart)
+   $0 stop
+   $0 start
+   ;;
+status)
+   if [ -e &quot;$pid_file&quot; ]; then
+      echo &quot;$name is running, pid=$(cat $pid_file)&quot;
+   else
+      echo &quot;$name is not running&quot;
+      exit 1
+   fi
+   ;;
+*)
+   echo &quot;Usage: $0 {start|stop|status|restart}&quot;
+esac
+
+exit 0
+</code></pre>
+
+<p>Make sure both files are executable and you are ready to start your daemon.</p>
+
+<pre><code>[controlscript] start
+</code></pre>
+
+<p>You can check the status, stop, etc&hellip;</p>
+
+<pre><code>[controlscript] status
+</code></pre>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f17%2fhow-to-create-an-init-like-script%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Create%20an%20Init%20Like%20Script&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f17%2fhow-to-create-an-init-like-script%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f17%2fhow-to-create-an-init-like-script%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f17%2fhow-to-create-an-init-like-script%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f17%2fhow-to-create-an-init-like-script%2f&amp;title=How%20to%20Create%20an%20Init%20Like%20Script" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20Create%20an%20Init%20Like%20Script&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f17%2fhow-to-create-an-init-like-script%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2018/09/12/a-simple-powerline-prompt-for-bash/" title="A Simple Powerline Prompt for Bash">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2018/09/18/special-characters-and-symbols-in-bash/" title="Special Characters and Symbols in Bash">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2018/09/12/a-simple-powerline-prompt-for-bash/">A Simple Powerline Prompt for Bash</a>
 </h2>
 
@@ -567,131 +730,6 @@ vim config_docker.json
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2018/07/04/how-to-change-forgotten-password-on-wsl-bash-for-windows/">How to Change Forgotten Password on WSL (Bash for Windows)</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2018-07-04">4 Jul, 2018</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
-  
-  <a href="https://blog.victormendonca.com/tags/windows" class="label label-primary">Windows</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  <p>So you have installed Bash for Windows, but forgot your password!! That&rsquo;s easy to fix, and here&rsquo;s how:</p>
-
-<p>a. Find your username by running Bash for Windows and executing <code>whoami</code></p>
-
-<pre><code>$ whoami
-victor_m
-</code></pre>
-
-<p>b. Change the default user to <code>root</code> by running the code below on a Windows command prompt (cmd.exe)</p>
-
-<pre><code>LxRun.exe /setdefaultuser root
-</code></pre>
-
-<p>c. Now change the password with <code>bash -c 'passwd [user]'</code> (also on the Windows command prompt)</p>
-
-<pre><code>bash -c 'passwd victor_m'
-Enter new UNIX password:
-Retype new UNIX password:
-passwd: password updated successfully
-</code></pre>
-
-<p>d. Change the default user back to your user</p>
-
-<pre><code>LxRun.exe /setdefaultuser victor_m
-</code></pre>
-
-<p>e. Profit</p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f04%2fhow-to-change-forgotten-password-on-wsl-bash-for-windows%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Change%20Forgotten%20Password%20on%20WSL%20%28Bash%20for%20Windows%29&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f04%2fhow-to-change-forgotten-password-on-wsl-bash-for-windows%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f04%2fhow-to-change-forgotten-password-on-wsl-bash-for-windows%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f04%2fhow-to-change-forgotten-password-on-wsl-bash-for-windows%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f04%2fhow-to-change-forgotten-password-on-wsl-bash-for-windows%2f&amp;title=How%20to%20Change%20Forgotten%20Password%20on%20WSL%20%28Bash%20for%20Windows%29" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=How%20to%20Change%20Forgotten%20Password%20on%20WSL%20%28Bash%20for%20Windows%29&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f04%2fhow-to-change-forgotten-password-on-wsl-bash-for-windows%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2018/06/29/how-to-fix-sddm-on-multiple-screens/" title="How to Fix Sddm on Multiple Screens">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2018/07/05/how-to-change-config.json-for-docker-mattermost-preview/" title="How to Change config.json for Docker Mattermost Preview">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -805,7 +843,7 @@ passwd: password updated successfully
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/fzf">fzf</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/programming">programming</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/windows">windows</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/fzf">fzf</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/programming">programming</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li>
           </ul>
         </div>
       </div>
@@ -821,6 +859,10 @@ passwd: password updated successfully
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2020/03/14/rhcsa---whats-new/">RHCSA v8 - What&#39;s New</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2019/12/16/bash-arrays-and-iterations/">Bash Arrays and Iterations</a>
@@ -844,10 +886,6 @@ passwd: password updated successfully
         
           <li>
           <a href="https://blog.victormendonca.com/2019/02/11/bash-theme-powerline-2column/">Bash Theme Powerline 2column</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2019/01/15/count-lines-of-codes-with-cloc/">Count Lines of Codes With Cloc</a>
           </li>
         
         </ul>

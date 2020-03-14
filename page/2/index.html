@@ -119,6 +119,132 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2019/02/27/fzf-for-the-win/">Fzf for the Win</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2019-02-27">27 Feb, 2019</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
+  
+  <a href="https://blog.victormendonca.com/tags/fzf" class="label label-primary">fzf</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  <p><code>fzf</code> is a command line fuzzy finder that can be used to automatically filter a list of items. Think of it as an interactive search tool, where items get filtered as you type characters in your terminal.</p>
+
+<p>The video below shows a basic interaction using a list or files from the <code>fd</code> search utility:</p>
+
+<p><img src="https://blog.victormendonca.com/img/fzf-for-the-win/fzf.gif" alt="" /></p>
+
+<p><code>fzf</code> can also be used with other Bash tasks, like history, ssh and even file/dir completion. The GitHub page has a lot documentation on how to implement auto completion.</p>
+
+<p><img src="https://blog.victormendonca.com/img/fzf-for-the-win/history-and-ssh.gif" alt="" /></p>
+
+<p>You can also use the <code>--preview</code> option to output the current selection into a preview box, and even call a command to be used with that value. For example, we can preview all the files in a folder by searching for files (with <code>find</code> or <code>fd</code>), piping the output to <code>fzf</code>, and then using a program like <code>cat</code> (on the example below I&rsquo;m using <code>bat</code>, which is a clone of <code>cat</code> with the addition of syntax highlight and other cool things) to preview the files.</p>
+
+<pre><code>fd -d 1 -t f | fzf --preview 'bat --color &quot;always&quot; {}' --preview-window=right:60%
+</code></pre>
+
+<p><img src="https://blog.victormendonca.com/img/fzf-for-the-win/preview.gif" alt="" /></p>
+
+<p>I&rsquo;ve covered only the very basic usage for <code>fzf</code>, but it should give you an idea of how powerful this finder utility is. On future posts I&rsquo;m going to cover other use cases, like the git workflow that I use.</p>
+
+<hr />
+
+<p><strong>References:</strong></p>
+
+<ul>
+<li>fzf - <a href="https://github.com/junegunn/fzf">https://github.com/junegunn/fzf</a></li>
+<li>fd  - <a href="https://github.com/sharkdp/fd">https://github.com/sharkdp/fd</a></li>
+<li>bat - <a href="https://github.com/sharkdp/bat">https://github.com/sharkdp/bat</a></li>
+</ul>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f27%2ffzf-for-the-win%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Fzf%20for%20the%20Win&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f27%2ffzf-for-the-win%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f27%2ffzf-for-the-win%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f27%2ffzf-for-the-win%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f27%2ffzf-for-the-win%2f&amp;title=Fzf%20for%20the%20Win" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Fzf%20for%20the%20Win&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f27%2ffzf-for-the-win%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2019/02/11/bash-theme-powerline-2column/" title="Bash Theme Powerline 2column">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2019/03/10/colorful-banners-with-figlet-and-lolcat/" title="Colorful Banners With figlet and lolcat">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2019/02/11/bash-theme-powerline-2column/">Bash Theme Powerline 2column</a>
 </h2>
 
@@ -674,124 +800,6 @@ call plug#end()
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2018/10/18/using-latte-as-a-dock-in-kde/">Using Latte as a Dock in Kde</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2018-10-18">18 Oct, 2018</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/kde" class="label label-primary">KDE</a>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  <p><a href="https://github.com/psifidotos/Latte-Dock">Latte</a> is a great &laquo;newish&raquo; dock for KDE that can be used as launching/task dock, or even completely replace your plasma panels. The dock is fast stable with a good &laquo;feel&raquo;, and it fully supports plasma widgets.</p>
-
-<p>I myself do not like the Apple like task docks. I prefer using docks for app launching and let my panels do the task management. I was looking for a fast dock for my Arch VM at work, and Latte was one of the best options. The only thing missing was how to remove the task manager option. But luckily I ended up finding a way on my own (which feels more of a bug, but I won&rsquo;t get into it), and I&rsquo;m sharing the instructions here.</p>
-
-<p>a. Install <code>latte-dock</code></p>
-
-<pre><code class="language-bash">$ pacman -Syu latte-dock
-</code></pre>
-
-<p>b. Start the dock (from the terminal or with <code>Alt+F2</code>)</p>
-
-<p>c. Right click on the dock and click on &laquo;Add/Widgets&raquo;. Add a widget (like the &laquo;Audio Volume&raquo; widget)</p>
-
-<p>d. Right click on the dock again and click on &laquo;Dock/Panel Settings&raquo;</p>
-
-<p>e. Remove the &laquo;Latte Widget&raquo;</p>
-
-<p>F. Now try to drag an application icon (like from <code>/usr/share/applications</code>) to the dock. If that does not work, try opening and closing the &laquo;Dock/Panel Settings&raquo;. It will eventually let you add the application icon (hence why I said it seems like a bug). Once the first application shortcut has been added you can drag more.</p>
-
-<p>Here&rsquo;s a gif animation of the whole process.</p>
-
-<p><img src="https://blog.victormendonca.com/img/using-latte-as-a-dock-in-kde/latte-dock.gif" alt="" /></p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f18%2fusing-latte-as-a-dock-in-kde%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Using%20Latte%20as%20a%20Dock%20in%20Kde&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f18%2fusing-latte-as-a-dock-in-kde%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f18%2fusing-latte-as-a-dock-in-kde%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f18%2fusing-latte-as-a-dock-in-kde%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f18%2fusing-latte-as-a-dock-in-kde%2f&amp;title=Using%20Latte%20as%20a%20Dock%20in%20Kde" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Using%20Latte%20as%20a%20Dock%20in%20Kde&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f18%2fusing-latte-as-a-dock-in-kde%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2018/10/16/tldr-instead-of-man/" title="TLDR Instead of MAN">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2018/12/31/how-to-install-and-configure-vim-plug/" title="How to Install and Configure Vim Plug">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -905,7 +913,7 @@ call plug#end()
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/fzf">fzf</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/programming">programming</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/windows">windows</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/fzf">fzf</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/programming">programming</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li>
           </ul>
         </div>
       </div>
@@ -921,6 +929,10 @@ call plug#end()
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2020/03/14/rhcsa---whats-new/">RHCSA v8 - What&#39;s New</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2019/12/16/bash-arrays-and-iterations/">Bash Arrays and Iterations</a>
@@ -944,10 +956,6 @@ call plug#end()
         
           <li>
           <a href="https://blog.victormendonca.com/2019/02/11/bash-theme-powerline-2column/">Bash Theme Powerline 2column</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2019/01/15/count-lines-of-codes-with-cloc/">Count Lines of Codes With Cloc</a>
           </li>
         
         </ul>

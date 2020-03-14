@@ -119,6 +119,202 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2017/01/11/bash-command-substitution-subshell-and-codeblock/">Bash - Command Substitution, Subshell and Codeblock</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2017-01-11">11 Jan, 2017</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>Bash - Command Substitution, Subshell and Codeblock</p>
+
+<p>Quick and simple differences between using <code>$(..)</code>, <code>(..)</code> and <code>{..;}</code>.</p>
+
+<ul>
+<li><code>$(command)</code> or <code>`command`</code> - Command substitution (the output of a command replaces the command name) and is executed in a subshell. Please give preference to <code>$(..)</code> for better readability</li>
+<li><code>( command )</code> - Command list is executed in a subshell</li>
+<li><code>{ command ;}</code> - Command list is executed in the current shell</li>
+</ul>
+
+<p><strong>Executing code</strong></p>
+
+<pre><code class="language-bash">$ ( echo 123 )
+123
+
+$ $(echo 123) # this executes the output of the command
+123: command not found
+
+$ { echo 123 ;}
+123
+</code></pre>
+
+<p><strong>Fiding subshell level with built-in <code>BASH_SUBSHELL</code> variable</strong></p>
+
+<pre><code class="language-bash">$ ( echo $BASH_SUBSHELL )
+1
+$ ( ( echo $BASH_SUBSHELL ) )
+2
+
+$ $($BASH_SUBSHELL)
+1: command not found
+
+$ { echo $BASH_SUBSHELL ;}
+0
+</code></pre>
+
+<p><strong>Passing variables to subshell</strong></p>
+
+<pre><code class="language-bash">$ var1=1
+
+$ ( echo $var1 )
+1
+
+$ $(echo $var1)
+1: command not found
+
+$ { echo $var1 ;}
+1
+</code></pre>
+
+<p><strong>Changing and getting variables values in subshell</strong></p>
+
+<pre><code class="language-bash">$ var=1
+
+$ ( var=2 ) ; echo $var
+1
+
+$ $(var=2) ; echo $var
+1
+
+# Because we did not create a subshell,
+# variable is available to original shell
+$ { var=2 ;} ; echo $var
+2
+</code></pre>
+
+<h3 id="other-usages"><strong>Other usages</strong></h3>
+
+<p><strong>Example 1:</strong></p>
+
+<p>Multiple commands and multiple lines. This can be used with <code>(..)</code> and <code>{..}</code>.</p>
+
+<pre><code class="language-bash">$ { echo 1 ; echo 2 ; echo 3; }
+1
+2
+3
+
+$ {
+&gt; echo 1
+&gt; echo 2
+&gt; echo 3;
+&gt; }
+1
+2
+3
+</code></pre>
+
+<p><strong>Example 2:</strong></p>
+
+<p>Changing the environment for subshell with separate environment. Here, <code>set -u</code> is only set in the subshell, so only the first echo will error out.</p>
+
+<pre><code class="language-bash">unset var1 var2
+(
+  set -u
+  echo $var2
+)
+echo $var1
+</code></pre>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f01%2f11%2fbash-command-substitution-subshell-and-codeblock%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Bash%20-%20Command%20Substitution%2c%20Subshell%20and%20Codeblock&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f01%2f11%2fbash-command-substitution-subshell-and-codeblock%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f01%2f11%2fbash-command-substitution-subshell-and-codeblock%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f01%2f11%2fbash-command-substitution-subshell-and-codeblock%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f01%2f11%2fbash-command-substitution-subshell-and-codeblock%2f&amp;title=Bash%20-%20Command%20Substitution%2c%20Subshell%20and%20Codeblock" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Bash%20-%20Command%20Substitution%2c%20Subshell%20and%20Codeblock&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f01%2f11%2fbash-command-substitution-subshell-and-codeblock%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2016/12/23/redirecting-bash-xtrace-to-a-separate-log/" title="Redirecting Bash Xtrace to a Separate Log">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2017/08/30/alternatives-to-top/" title="Alternatives to Top">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2016/12/23/redirecting-bash-xtrace-to-a-separate-log/">Redirecting Bash Xtrace to a Separate Log</a>
 </h2>
 
@@ -1066,7 +1262,7 @@ ls 123 &gt; /dev/null 2&gt;&amp;1
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/fzf">fzf</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/programming">programming</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/windows">windows</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/fzf">fzf</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/programming">programming</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li>
           </ul>
         </div>
       </div>
@@ -1082,6 +1278,10 @@ ls 123 &gt; /dev/null 2&gt;&amp;1
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2020/03/14/rhcsa---whats-new/">RHCSA v8 - What&#39;s New</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2019/12/16/bash-arrays-and-iterations/">Bash Arrays and Iterations</a>
@@ -1105,10 +1305,6 @@ ls 123 &gt; /dev/null 2&gt;&amp;1
         
           <li>
           <a href="https://blog.victormendonca.com/2019/02/11/bash-theme-powerline-2column/">Bash Theme Powerline 2column</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2019/01/15/count-lines-of-codes-with-cloc/">Count Lines of Codes With Cloc</a>
           </li>
         
         </ul>
