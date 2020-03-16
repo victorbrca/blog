@@ -5,34 +5,36 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title>TLDR Instead of MAN  &middot; Victor&#39;s Blog</title>
+  <title>RHCSA v8: Work with Package Module Streams  &middot; Victor&#39;s Blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="description" content="Using tldr instead of the man pages" />
+<meta name="description" content="Working with YUM modules on RHEL 8" />
 
-<meta name="keywords" content="Bash, Linux, ">
+<meta name="keywords" content="Linux, RedHat, RHCSA, ">
 
 
-<meta property="og:title" content="TLDR Instead of MAN  &middot; Victor&#39;s Blog ">
+<meta property="og:title" content="RHCSA v8: Work with Package Module Streams  &middot; Victor&#39;s Blog ">
 <meta property="og:site_name" content="Victor&#39;s Blog"/>
-<meta property="og:url" content="https://blog.victormendonca.com/2018/10/16/tldr-instead-of-man/" />
+<meta property="og:url" content="https://blog.victormendonca.com/2020/03/15/rhcsa-v8-work-with-package-module-streams/" />
 <meta property="og:locale" content="en">
 
 
 <meta property="og:type" content="article" />
-<meta property="og:description" content="Using tldr instead of the man pages"/>
-<meta property="og:article:published_time" content="2018-10-16T08:49:07-04:00" />
-<meta property="og:article:modified_time" content="2018-10-16T08:49:07-04:00" />
+<meta property="og:description" content="Working with YUM modules on RHEL 8"/>
+<meta property="og:article:published_time" content="2020-03-15T20:52:36-04:00" />
+<meta property="og:article:modified_time" content="2020-03-15T20:52:36-04:00" />
 
   
     
-<meta property="og:article:tag" content="Bash">
-    
 <meta property="og:article:tag" content="Linux">
+    
+<meta property="og:article:tag" content="RedHat">
+    
+<meta property="og:article:tag" content="RHCSA">
     
   
 
@@ -40,9 +42,9 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@18440926" />
 <meta name="twitter:creator" content="@18440926" />
-<meta name="twitter:title" content="TLDR Instead of MAN" />
-<meta name="twitter:description" content="Using tldr instead of the man pages" />
-<meta name="twitter:url" content="https://blog.victormendonca.com/2018/10/16/tldr-instead-of-man/" />
+<meta name="twitter:title" content="RHCSA v8: Work with Package Module Streams" />
+<meta name="twitter:description" content="Working with YUM modules on RHEL 8" />
+<meta name="twitter:url" content="https://blog.victormendonca.com/2020/03/15/rhcsa-v8-work-with-package-module-streams/" />
 <meta name="twitter:domain" content="https://blog.victormendonca.com/">
   
 
@@ -50,7 +52,7 @@
 
 
 
-<link rel="canonical" href="https://blog.victormendonca.com/2018/10/16/tldr-instead-of-man/" />
+<link rel="canonical" href="https://blog.victormendonca.com/2020/03/15/rhcsa-v8-work-with-package-module-streams/" />
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
 <link rel="icon" href="https://blog.victormendonca.com/favicon.png">
 <meta name="generator" content="Hugo 0.48" />
@@ -139,39 +141,39 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
   <div class="text-center">
 
-    <h1>TLDR Instead of MAN
+    <h1>RHCSA v8: Work with Package Module Streams
 </h1>
 
     <div class="metas">
 <small>
   <i class="fa fa-calendar"></i>
-  <time datetime="2018-10-16">16 Oct, 2018</time>
+  <time datetime="2020-03-15">15 Mar, 2020</time>
 </small>
 
 
   <small>
     &middot; by Victor Mendonça
   
-  &middot; Read in about 1 min
-  &middot; (111 words)
+  &middot; Read in about 4 min
+  &middot; (810 words)
   &middot; 
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f15%2frhcsa-v8-work-with-package-module-streams%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=TLDR%20Instead%20of%20MAN&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=RHCSA%20v8%3a%20Work%20with%20Package%20Module%20Streams&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f15%2frhcsa-v8-work-with-package-module-streams%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f15%2frhcsa-v8-work-with-package-module-streams%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f15%2frhcsa-v8-work-with-package-module-streams%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f&amp;title=TLDR%20Instead%20of%20MAN" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f15%2frhcsa-v8-work-with-package-module-streams%2f&amp;title=RHCSA%20v8%3a%20Work%20with%20Package%20Module%20Streams" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=TLDR%20Instead%20of%20MAN&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=RHCSA%20v8%3a%20Work%20with%20Package%20Module%20Streams&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f15%2frhcsa-v8-work-with-package-module-streams%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   </small>
@@ -179,9 +181,11 @@
 <div class="margin-10">
   <i class="fa fa-tags"></i>
   
-  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
-  
   <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/redhat" class="label label-primary">RedHat</a>
+  
+  <a href="https://blog.victormendonca.com/tags/rhcsa" class="label label-primary">RHCSA</a>
   
 
 
@@ -196,44 +200,205 @@
       <div class="content">
   
 
-<p>Here&rsquo;s a quick way to get quick simplified explanation and usage for commands in Bash with <a href="https://tldr.sh/">TLDR Pages</a>.</p>
+<h4 id="disclaimer">Disclaimer</h4>
 
-<pre><code>$ tldr tldr
-# tldr                                                                            
+<p>These are my study notes for the RHCSA exam on YUM modules. There&rsquo;s most likely more information than what&rsquo;s needed for the exam, and I cannot guarantee that all information is correct.</p>
 
-  Simplified man pages.                                                           
+<h2 id="definition">Definition</h2>
 
-- Get typical usages of a command (hint: this is how you got here!):              
+<p>RHEL 8 content is distributed through two main repositories: BaseOS and AppStream.<br />
+<br></p>
 
-  tldr command       
+<h4 id="baseos"><strong>BaseOS</strong></h4>
+
+<p>Content in the BaseOS repository is intended to provide the core set of the underlying OS functionality that provides the foundation for all installations. This content is available in the RPM format and is subject to support terms similar to those in previous releases of Red Hat Enterprise Linux.<br />
+<br></p>
+
+<h4 id="appstream"><strong>AppStream</strong></h4>
+
+<p>Content in the AppStream repository includes additional user-space applications, runtime languages, and databases in support of the varied workloads and use cases. Content in AppStream is available in one of two formats - the familiar RPM format and an extension to the RPM format called modules.</p>
+
+<p>Components made available as Application Streams can be packaged as modules or RPM packages and are delivered through the AppStream repository in Red Hat Enterprise Linux 8. Each AppStream component has a given life cycle.</p>
+
+<h3 id="modules">Modules</h3>
+
+<p>Modules allow you to install a specific version and/or type of an application in your system. For example, for &lsquo;postgresql&rsquo; you can choose to install from multiple versions (stream), and client or server type (profile).</p>
+
+<p><img src="https://blog.victormendonca.com/img/rhsa-v8-work-with-package-module-streams/postgresql.png" alt="" /></p>
+
+<pre><code class="language-nothing"># yum module list postgresql
+
+Last metadata expiration check: 0:20:44 ago on Sat 14 Mar 2020 08:59:58 PM UTC.
+CentOS-8 - AppStream
+Name                     Stream              Profiles                        Summary
+postgresql               9.6           client, server [d]              PostgreSQL server and client module
+postgresql               10 [d]        client, server [d]              PostgreSQL server and client module
+postgresql               12            client, server                  PostgreSQL server and client module
+
+Hint: [d]efault, [e]nabled, [x]disabled, [i]nstalled
 </code></pre>
 
-<p><img src="https://blog.victormendonca.com/img/tldr-instead-of-man/tldr.rsync.png" alt="" /></p>
+<p><br>
+For httpd on Centos8, currently only one stream (version) is available, and profiles are the package type (common, minimal, development)</p>
 
-<p>TLDR pages is community driven and holds common commands for UNIX, Linux, macOS, SunOS and Windows. The amount of commands available is already pretty vast, and users are encouraged to contribute with new pages on their git repo - <a href="https://github.com/tldr-pages/tldr">https://github.com/tldr-pages/tldr</a>.</p>
+<p><img src="https://blog.victormendonca.com/img/rhsa-v8-work-with-package-module-streams/httpd.png" alt="" /></p>
 
-<p>You can also access a web/live version of tldr on <a href="https://tldr.ostera.io/">https://tldr.ostera.io/</a>.</p>
+<pre><code class="language-nothing"># yum module list httpd
 
-<h2 id="install">Install</h2>
+Last metadata expiration check: 0:21:46 ago on Sat 14 Mar 2020 08:59:58 PM UTC.
+CentOS-8 - AppStream
+Name                  Stream               Profiles                              Summary
+httpd                 2.4 [d][e]           common [d], devel, minimal            Apache HTTP Server
 
-<p><strong>Arch</strong></p>
-
-<pre><code class="language-bash">pacman -Sy community/tldr
+Hint: [d]efault, [e]nabled, [x]disabled, [i]nstalled
 </code></pre>
 
-<p><strong>Other distros:</strong></p>
+<p><br></p>
 
-<pre><code class="language-bash">npm install -g tldr
+<h2 id="working-with-modules">Working with Modules</h2>
+
+<h3 id="getting-information-on-modules">Getting Information on Modules</h3>
+
+<p><br>
+Listing all modules</p>
+
+<pre><code># yum module list
 </code></pre>
 
-<p><strong>Snap</strong></p>
+<p><br>
+Listing module summary for one module with <code>yum module list [module]</code></p>
 
-<pre><code class="language-bash">sudo snap install tldr
+<pre><code class="language-nothing"># yum module list httpd
+
+Last metadata expiration check: 0:21:46 ago on Sat 14 Mar 2020 08:59:58 PM UTC.
+CentOS-8 - AppStream
+Name                  Stream               Profiles                              Summary
+httpd                 2.4 [d][e]           common [d], devel, minimal            Apache HTTP Server
 </code></pre>
 
-<p><strong>Android</strong></p>
+<p><br>
+Listing info on a module with <code>yum module info [module]</code></p>
 
-<p><a href="https://play.google.com/store/apps/details?id=io.github.hidroh.tldroid">https://play.google.com/store/apps/details?id=io.github.hidroh.tldroid</a></p>
+<pre><code class="language-nothing"># yum module info httpd
+
+Last metadata expiration check: 0:35:45 ago on Sat 14 Mar 2020 08:59:58 PM UTC.
+Name             : httpd
+Stream           : 2.4 [d][e][a]
+Version          : 8010020191223202455
+Context          : cdc1202b
+Architecture     : x86_64
+Profiles         : common [d], devel, minimal
+Default profiles : common
+Repo             : AppStream
+Summary          : Apache HTTP Server
+Description      : Apache httpd is a powerful, efficient, and extensible HTTP server.
+Artifacts        : httpd-0:2.4.37-16.module_el8.1.0+256+ae790463.src
+                 : httpd-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : httpd-debuginfo-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : httpd-debugsource-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : httpd-devel-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : httpd-filesystem-0:2.4.37-16.module_el8.1.0+256+ae790463.noarch
+                 : httpd-manual-0:2.4.37-16.module_el8.1.0+256+ae790463.noarch
+                 : httpd-tools-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : httpd-tools-debuginfo-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : mod_http2-0:1.11.3-3.module_el8.1.0+213+acce2796.src
+                 : mod_http2-0:1.11.3-3.module_el8.1.0+213+acce2796.x86_64
+                 : mod_http2-debuginfo-0:1.11.3-3.module_el8.1.0+213+acce2796.x86_64
+                 : mod_http2-debugsource-0:1.11.3-3.module_el8.1.0+213+acce2796.x86_64
+                 : mod_ldap-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : mod_ldap-debuginfo-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : mod_md-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : mod_md-debuginfo-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : mod_proxy_html-1:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : mod_proxy_html-debuginfo-1:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : mod_session-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : mod_session-debuginfo-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : mod_ssl-1:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : mod_ssl-debuginfo-1:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+</code></pre>
+
+<p><br>
+Listing profiles with <code>yum module info --profile [module]</code></p>
+
+<pre><code class="language-nothing"># yum module info --profile httpd
+
+Last metadata expiration check: 0:36:28 ago on Sat 14 Mar 2020 08:59:58 PM UTC.
+Name    : httpd:2.4:8010020191223202455:cdc1202b:x86_64
+common  : httpd
+        : httpd-filesystem
+        : httpd-tools
+        : mod_http2
+        : mod_ssl
+devel   : httpd
+        : httpd-devel
+        : httpd-filesystem
+        : httpd-tools
+minimal : httpd
+</code></pre>
+
+<p><br>
+You can also filter the information with <code>[module_name]:[stream]</code></p>
+
+<pre><code># yum module info --profile php:7.3
+</code></pre>
+
+<p><br></p>
+
+<h3 id="enabling-stream">Enabling Stream</h3>
+
+<p>Note that switching module streams will not alter installed packages. You will need to remove a package, enable the stream and then install the package.<br />
+<br>
+Enable the stream for &lsquo;postgresql&rsquo; v9.6</p>
+
+<pre><code class="language-nothing"># yum module enable postgresql:9.6
+</code></pre>
+
+<p><br>
+Enable the httpd devel profile</p>
+
+<pre><code class="language-nothing"># yum module enable --profile httpd:2.4/devel
+
+Last metadata expiration check: 0:47:51 ago on Sat 14 Mar 2020 08:59:58 PM UTC.
+Ignoring unnecessary profile: 'httpd/devel'
+Dependencies resolved.
+Nothing to do.
+Complete!
+</code></pre>
+
+<p><br>
+Then install the package</p>
+
+<pre><code># yum install postgresql httpd  
+</code></pre>
+
+<p><br>
+To change a module stream again, you will need to run <code>yum module reset [module name]</code>, and then enable the new module.</p>
+
+<pre><code class="language-nothing"># yum module enable postgresql:10
+
+Last metadata expiration check: 0:06:07 ago on Sat 14 Mar 2020 09:57:50 PM UTC.
+Dependencies resolved.
+The operation would result in switching of module 'postgresql' stream '9.6' to stream '10'
+Error: It is not possible to switch enabled streams of a module.
+It is recommended to remove all installed content from the module, and reset the module using 'dnf module reset &lt;module_name&gt;' command. After you reset the module, you can install the other stream.
+</code></pre>
+
+<pre><code class="language-nothing"># yum module reset postgresql
+
+Last metadata expiration check: 0:06:15 ago on Sat 14 Mar 2020 09:57:50 PM UTC.
+Dependencies resolved.
+=================================================================================================
+Package               Architecture         Version                  Repository             Size
+=================================================================================================
+Resetting modules:
+postgresql                                                                                
+
+Transaction Summary
+=================================================================================================
+
+Is this ok [y/N]: y
+Complete!
+</code></pre>
 
 </div>
 
@@ -241,22 +406,22 @@
       <footer>
   
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f15%2frhcsa-v8-work-with-package-module-streams%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=TLDR%20Instead%20of%20MAN&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=RHCSA%20v8%3a%20Work%20with%20Package%20Module%20Streams&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f15%2frhcsa-v8-work-with-package-module-streams%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f15%2frhcsa-v8-work-with-package-module-streams%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f15%2frhcsa-v8-work-with-package-module-streams%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f&amp;title=TLDR%20Instead%20of%20MAN" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f15%2frhcsa-v8-work-with-package-module-streams%2f&amp;title=RHCSA%20v8%3a%20Work%20with%20Package%20Module%20Streams" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=TLDR%20Instead%20of%20MAN&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f10%2f16%2ftldr-instead-of-man%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=RHCSA%20v8%3a%20Work%20with%20Package%20Module%20Streams&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f15%2frhcsa-v8-work-with-package-module-streams%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -265,18 +430,12 @@
     <nav><ul class="pager">
     
         <li class="previous">
-          <a href="https://blog.victormendonca.com/2018/10/15/quickly-backing-up-files-in-bash/" title="Quickly Backing Up Files in Bash">
+          <a href="https://blog.victormendonca.com/2020/03/14/rhsa-v8-configure-disk-compression/" title="RHCSA V8: Configure Disk Compression">
             <span aria-hidden="true">&larr;</span>Previous
           </a>
         </li>
     
 
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2018/10/18/using-latte-as-a-dock-in-kde/" title="Using Latte as a Dock in Kde">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
     
     </ul> </nav>
   

@@ -12,7 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="description" content="" />
+<meta name="description" content="Notes on configuring disk compression with VDO" />
 
 <meta name="keywords" content="Linux, RedHat, RHCSA, ">
 
@@ -24,7 +24,7 @@
 
 
 <meta property="og:type" content="article" />
-<meta property="og:description" content=""/>
+<meta property="og:description" content="Notes on configuring disk compression with VDO"/>
 <meta property="og:article:published_time" content="2020-03-14T14:56:39-04:00" />
 <meta property="og:article:modified_time" content="2020-03-14T14:56:39-04:00" />
 
@@ -43,7 +43,7 @@
 <meta name="twitter:site" content="@18440926" />
 <meta name="twitter:creator" content="@18440926" />
 <meta name="twitter:title" content="RHCSA V8: Configure Disk Compression" />
-<meta name="twitter:description" content="" />
+<meta name="twitter:description" content="Notes on configuring disk compression with VDO" />
 <meta name="twitter:url" content="https://blog.victormendonca.com/2020/03/14/rhsa-v8-configure-disk-compression/" />
 <meta name="twitter:domain" content="https://blog.victormendonca.com/">
   
@@ -323,7 +323,7 @@
 
 <h2 id="configuration-steps">Configuration Steps</h2>
 
-<p>Install &lsquo;vdo&rsquo; (and if not installed by default &lsquo;kmod-vdo&rsquo;)</p>
+<p>Install <code>vdo</code> (and if not installed by default <code>kmod-vdo</code>)</p>
 
 <pre><code># yum install vdo
 </code></pre>
@@ -338,7 +338,7 @@
 <pre><code># vdo create --name=[name] --device=/dev/[device] --vdoLogicalSize=[VDO logical size] --sparseIndex=enabled --vdoSlabSize=[slab size]
 </code></pre>
 
-<p><em>Note: Using &lsquo;&ndash;sparseIndex=disabled&rsquo; will enable &lsquo;dense&rsquo; indexing</em></p>
+<p><em>Note: Using <code>--sparseIndex=disabled</code> will enable &lsquo;dense&rsquo; indexing</em></p>
 
 <p>Optionally add LVM config, and/or create the file system (make sure to use the option to not discard blocks)</p>
 
@@ -357,12 +357,12 @@
 <pre><code># mount /dev/mapper/[name] /mount/point
 </code></pre>
 
-<p>To add it to &lsquo;/etc/fstab&rsquo;. You will need to add additional params so that systemd waits for VDO to start before mounting</p>
+<p>To add it to <code>/etc/fstab</code>. You will need to add additional params so that systemd waits for VDO to start before mounting</p>
 
 <pre><code># /dev/mapper/vdo-device /mount/point [fstype] defaults,_netdev,x-systemd.device-timeout=0,x-systemd.requires=vdo.service 0 0
 </code></pre>
 
-<p>See man pages for &lsquo;systemd.mount&rsquo;:</p>
+<p>See man pages for <code>systemd.mount</code>:</p>
 
 <pre><code class="language-nothing">x-systemd.device-timeout=
           Configure how long systemd should wait for a device to show up before
@@ -435,6 +435,12 @@ Device              Size   Used   Available   Use%   Space Saving%
     
 
     
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2020/03/15/rhcsa-v8-work-with-package-module-streams/" title="RHCSA v8: Work with Package Module Streams">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
     </ul> </nav>
   
 
@@ -493,7 +499,7 @@ Device              Size   Used   Available   Use%   Space Saving%
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/fzf">fzf</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/programming">programming</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/fzf">fzf</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/programming">programming</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li>
           </ul>
         </div>
       </div>
@@ -509,6 +515,10 @@ Device              Size   Used   Available   Use%   Space Saving%
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2020/03/15/rhcsa-v8-work-with-package-module-streams/">RHCSA v8: Work with Package Module Streams</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2020/03/14/rhsa-v8-configure-disk-compression/">RHCSA V8: Configure Disk Compression</a>
@@ -532,10 +542,6 @@ Device              Size   Used   Available   Use%   Space Saving%
         
           <li>
           <a href="https://blog.victormendonca.com/2019/03/10/colorful-banners-with-figlet-and-lolcat/">Colorful Banners With figlet and lolcat</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2019/02/27/fzf-for-the-win/">Fzf for the Win</a>
           </li>
         
         </ul>

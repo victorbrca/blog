@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Sat, 14 Mar 2020 14:56:39 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 15 Mar 2020 20:52:36 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>RHCSA v8: Work with Package Module Streams</title>
+      <link>https://blog.victormendonca.com/2020/03/15/rhcsa-v8-work-with-package-module-streams/</link>
+      <pubDate>Sun, 15 Mar 2020 20:52:36 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2020/03/15/rhcsa-v8-work-with-package-module-streams/</guid>
+      <description>Disclaimer These are my study notes for the RHCSA exam on YUM modules. There&amp;rsquo;s most likely more information than what&amp;rsquo;s needed for the exam, and I cannot guarantee that all information is correct.
+Definition RHEL 8 content is distributed through two main repositories: BaseOS and AppStream.
+BaseOS Content in the BaseOS repository is intended to provide the core set of the underlying OS functionality that provides the foundation for all installations.</description>
+    </item>
     
     <item>
       <title>RHCSA V8: Configure Disk Compression</title>
