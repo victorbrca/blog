@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Sun, 15 Mar 2020 20:52:36 -0400</lastBuildDate>
+    <lastBuildDate>Mon, 30 Mar 2020 13:56:51 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How to Move Plex Installation on FreeNAS 11.3</title>
+      <link>https://blog.victormendonca.com/2020/03/30/how-to-move-plex-installation-on-freenas/</link>
+      <pubDate>Mon, 30 Mar 2020 13:56:51 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2020/03/30/how-to-move-plex-installation-on-freenas/</guid>
+      <description>I had some free time this weekend and decided to upgrade my FreeNAS. I went from 11.1 to 11.3-UI and the upgrade installed without any issues. However, after the reboot I discovered that my jails and plugins were missing from the UI and that they were not running. I had read the manual (FreeNAS® 11.3-U1 User Guide) before the upgrade and and the instructions did not mention anything about the plugins, so I was little worried.</description>
+    </item>
     
     <item>
       <title>RHCSA v8: Work with Package Module Streams</title>

@@ -5,34 +5,32 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title>Bash Special Parameters  &middot; Victor&#39;s Blog</title>
+  <title>How to Move Plex Installation on FreeNAS 11.3  &middot; Victor&#39;s Blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="description" content="Quick definition of Bash&#39;s special parameters." />
+<meta name="description" content="How to Move Plex data on FreeNAS 11.3 " />
 
-<meta name="keywords" content="Bash, Linux, ">
+<meta name="keywords" content="FreeNAS, ">
 
 
-<meta property="og:title" content="Bash Special Parameters  &middot; Victor&#39;s Blog ">
+<meta property="og:title" content="How to Move Plex Installation on FreeNAS 11.3  &middot; Victor&#39;s Blog ">
 <meta property="og:site_name" content="Victor&#39;s Blog"/>
-<meta property="og:url" content="https://blog.victormendonca.com/2017/09/26/bash-special-parameters/" />
+<meta property="og:url" content="https://blog.victormendonca.com/2020/03/30/how-to-move-plex-installation-on-freenas/" />
 <meta property="og:locale" content="en">
 
 
 <meta property="og:type" content="article" />
-<meta property="og:description" content="Quick definition of Bash&#39;s special parameters."/>
-<meta property="og:article:published_time" content="2017-09-26T22:46:27-04:00" />
-<meta property="og:article:modified_time" content="2017-09-26T22:46:27-04:00" />
+<meta property="og:description" content="How to Move Plex data on FreeNAS 11.3 "/>
+<meta property="og:article:published_time" content="2020-03-30T13:56:51-04:00" />
+<meta property="og:article:modified_time" content="2020-03-30T13:56:51-04:00" />
 
   
     
-<meta property="og:article:tag" content="Bash">
-    
-<meta property="og:article:tag" content="Linux">
+<meta property="og:article:tag" content="FreeNAS">
     
   
 
@@ -40,9 +38,9 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@18440926" />
 <meta name="twitter:creator" content="@18440926" />
-<meta name="twitter:title" content="Bash Special Parameters" />
-<meta name="twitter:description" content="Quick definition of Bash&#39;s special parameters." />
-<meta name="twitter:url" content="https://blog.victormendonca.com/2017/09/26/bash-special-parameters/" />
+<meta name="twitter:title" content="How to Move Plex Installation on FreeNAS 11.3" />
+<meta name="twitter:description" content="How to Move Plex data on FreeNAS 11.3 " />
+<meta name="twitter:url" content="https://blog.victormendonca.com/2020/03/30/how-to-move-plex-installation-on-freenas/" />
 <meta name="twitter:domain" content="https://blog.victormendonca.com/">
   
 
@@ -50,7 +48,7 @@
 
 
 
-<link rel="canonical" href="https://blog.victormendonca.com/2017/09/26/bash-special-parameters/" />
+<link rel="canonical" href="https://blog.victormendonca.com/2020/03/30/how-to-move-plex-installation-on-freenas/" />
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
 <link rel="icon" href="https://blog.victormendonca.com/favicon.png">
 <meta name="generator" content="Hugo 0.48" />
@@ -139,39 +137,39 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
   <div class="text-center">
 
-    <h1>Bash Special Parameters
+    <h1>How to Move Plex Installation on FreeNAS 11.3
 </h1>
 
     <div class="metas">
 <small>
   <i class="fa fa-calendar"></i>
-  <time datetime="2017-09-26">26 Sep, 2017</time>
+  <time datetime="2020-03-30">30 Mar, 2020</time>
 </small>
 
 
   <small>
     &middot; by Victor Mendonça
   
-  &middot; Read in about 1 min
-  &middot; (119 words)
+  &middot; Read in about 3 min
+  &middot; (478 words)
   &middot; 
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f26%2fbash-special-parameters%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=Bash%20Special%20Parameters&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f26%2fbash-special-parameters%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Move%20Plex%20Installation%20on%20FreeNAS%2011.3&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f26%2fbash-special-parameters%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f26%2fbash-special-parameters%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f26%2fbash-special-parameters%2f&amp;title=Bash%20Special%20Parameters" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f&amp;title=How%20to%20Move%20Plex%20Installation%20on%20FreeNAS%2011.3" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=Bash%20Special%20Parameters&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f26%2fbash-special-parameters%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=How%20to%20Move%20Plex%20Installation%20on%20FreeNAS%2011.3&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   </small>
@@ -179,9 +177,7 @@
 <div class="margin-10">
   <i class="fa fa-tags"></i>
   
-  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  <a href="https://blog.victormendonca.com/tags/freenas" class="label label-primary">FreeNAS</a>
   
 
 
@@ -194,65 +190,79 @@
 </div>
 
       <div class="content">
-  <p>Special parameters are set by the shell to store information about aspects of its current state, such as the number of arguments and the exit code of the last command. Special parameters can only be referenced and cannot have it&rsquo;s value assigned.</p>
+  
 
-<p>Special parameters are: <code>$*, $@, $#, $$, $!, $?, $0, $-, $_</code></p>
+<p>I had some free time this weekend and decided to upgrade my FreeNAS. I went from 11.1 to 11.3-UI and the upgrade installed without any issues. However, after the reboot I discovered that my jails and plugins were missing from the UI and that they were not running. I had read the manual (<a href="https://www.ixsystems.com/documentation/freenas/11.3-U1/freenas.html">FreeNAS® 11.3-U1 User Guide</a>) before the upgrade and and the instructions did not mention anything about the plugins, so I was little worried.</p>
 
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Definition</th>
-</tr>
-</thead>
+<p>After spending a lot of time researching I discovered that on FreeNAS 11.2 the project started to use the &lsquo;iocage&rsquo; jail method instead of &lsquo;warden&rsquo;. FreeNAS 11.2 had the option of migrating your jails, and it could even display then from the UI. But for 11.3-UI that was no longer an option.</p>
 
-<tbody>
-<tr>
-<td>$*</td>
-<td>List of arguments (as a string)</td>
-</tr>
+<p>If you are on the same boat as me, the instructions below will help you quickly re-create a new Plex jail a move your old data to the new jail. If you have not upgraded to 11.3-UI you might want to convert your jail before upgrading. There are a lot of tutorials on-line on how to convert your jail that might be more useful to you.</p>
 
-<tr>
-<td>$@</td>
-<td>List of arguments (as an array)</td>
-</tr>
+<h3 id="instructions">Instructions</h3>
 
-<tr>
-<td>$#</td>
-<td>Number of positional parameters</td>
-</tr>
+<p>a. Create the <code>plex</code> user with UID <code>972</code> (this is the username and UID that is used by the project)</p>
 
-<tr>
-<td>$$</td>
-<td>PID of the current shell</td>
-</tr>
+<p>b. If desired, create a new Dataset to have Plex data outside of the plugin Dataset. I won&rsquo;t go into details for this type of setup here as I keep my Plex data inside the Plex plugin Dataset</p>
 
-<tr>
-<td>$!</td>
-<td>PID of the last command executed in the background</td>
-</tr>
+<p>c. Install the &lsquo;Plex Media Server&rsquo; plugin (<a href="https://support.plex.tv/articles/installing-plex-media-server-on-freenas/">official instructions</a>)</p>
 
-<tr>
-<td>$?</td>
-<td>Exit code of the last-executed command</td>
-</tr>
+<p>d. Stop the plugin</p>
 
-<tr>
-<td>$0</td>
-<td>Path to the currently running script</td>
-</tr>
+<p>e. Go to &lsquo;Storage =&gt; Pools&rsquo; and edit the ACL for the Dataset where your media is saved. We want to give access to the &lsquo;plex&rsquo; user (in case the files are not owned by &lsquo;plex&rsquo;)</p>
 
-<tr>
-<td>$-</td>
-<td>Current shell option flags</td>
-</tr>
+<p><img src="https://blog.victormendonca.com/img/how-to-move-plex-installation-on-freenas/ACL.png" alt="" /></p>
 
-<tr>
-<td>$_</td>
-<td>Gives the last argument to the previous command</td>
-</tr>
-</tbody>
-</table>
+<p>f. With the plugin still stopped, copy the old installation data folder from the old plugin Dataset to the new plugin Dataset</p>
+
+<p><em><strong>Note:</strong> The <code>JAIL_ROOT</code> location will vary between different FreeNAS versions:</em></p>
+
+<ul>
+<li>FreeNAS 11.1 and bellow (warden) - <code>JAIL_ROOT=/mnt/[Volume]/jails/[JAIL_NAME]</code></li>
+<li>FreeNAS 11.2 and above (iocage) - <code>JAIL_ROOT=/mnt/[Volume]/iocage/jails/[JAIL_NAME]</code></li>
+</ul>
+
+<p><strong>Source for your old Plex plugin (warden)</strong></p>
+
+<p><em>If installed manually</em></p>
+
+<blockquote>
+<p><code>${JAIL_ROOT}/root/usr/local/plexdata/Plex Media Server/</code></p>
+</blockquote>
+
+<p><em>If installed via plugin</em></p>
+
+<blockquote>
+<p><code>${JAIL_ROOT}/var/db/plexdata/Plex Media Server/</code></p>
+</blockquote>
+
+<p><strong>Destination (iocage)</strong></p>
+
+<blockquote>
+<p><code>${JAIL_ROOT}/root/Plex Media Server/</code></p>
+</blockquote>
+
+<p>g. In the jails configuration menu, select the new Plex jail and add the mount point for the media folder. Try to keep the same path as the old jail so you won&rsquo;t have to edit your library. If you don&rsquo;t remember that the path was, you can access it by looking at the contents of <code>/mnt/[Volume]/jails/.[JAIL_NAME].meta/fstab</code></p>
+
+<pre><code># cat .plex.meta/fstab
+/mnt/Volume1/Movies /mnt/Volume1/jails/plex//mnt/Media nullfs rw 0 0
+</code></pre>
+
+<p><br>
+h. Start the plugin and try to access it via web</p>
+
+<p><img src="https://blog.victormendonca.com/img/how-to-move-plex-installation-on-freenas/manage.png" alt="" /></p>
+
+<hr />
+
+<p>References:</p>
+
+<ul>
+<li><a href="https://support.plex.tv/articles/201370363-move-an-install-to-another-system/">Move an Install to Another System</a></li>
+<li><a href="https://support.plex.tv/articles/installing-plex-media-server-on-freenas/">Installing Plex Media Server on FreeNAS</a></li>
+<li><a href="https://support.plex.tv/articles/202915258-where-is-the-plex-media-server-data-directory-located/">Where is the Plex Media Server data directory located?</a></li>
+<li><a href="https://www.ixsystems.com/documentation/freenas/11.3-U1/freenas.html">FreeNAS® 11.3-U1 User Guide</a></li>
+<li><a href="https://www.ixsystems.com/blog/library/freenas-11-3-release/">FreeNAS 11.3-RELEASE</a></li>
+</ul>
 
 </div>
 
@@ -260,22 +270,22 @@
       <footer>
   
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f26%2fbash-special-parameters%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=Bash%20Special%20Parameters&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f26%2fbash-special-parameters%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Move%20Plex%20Installation%20on%20FreeNAS%2011.3&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f26%2fbash-special-parameters%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f26%2fbash-special-parameters%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f26%2fbash-special-parameters%2f&amp;title=Bash%20Special%20Parameters" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f&amp;title=How%20to%20Move%20Plex%20Installation%20on%20FreeNAS%2011.3" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=Bash%20Special%20Parameters&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f26%2fbash-special-parameters%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=How%20to%20Move%20Plex%20Installation%20on%20FreeNAS%2011.3&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -284,18 +294,12 @@
     <nav><ul class="pager">
     
         <li class="previous">
-          <a href="https://blog.victormendonca.com/2017/09/24/atom-as-markdown-editor/" title="Atom as Markdown Editor">
+          <a href="https://blog.victormendonca.com/2020/03/15/rhcsa-v8-work-with-package-module-streams/" title="RHCSA v8: Work with Package Module Streams">
             <span aria-hidden="true">&larr;</span>Previous
           </a>
         </li>
     
 
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2017/10/06/how-to-view-dns-calls-made-by-processes/" title="How to View DNS Calls Made by Processes">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
     
     </ul> </nav>
   

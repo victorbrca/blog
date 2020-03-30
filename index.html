@@ -119,6 +119,167 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2020/03/30/how-to-move-plex-installation-on-freenas/">How to Move Plex Installation on FreeNAS 11.3</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2020-03-30">30 Mar, 2020</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/freenas" class="label label-primary">FreeNAS</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>I had some free time this weekend and decided to upgrade my FreeNAS. I went from 11.1 to 11.3-UI and the upgrade installed without any issues. However, after the reboot I discovered that my jails and plugins were missing from the UI and that they were not running. I had read the manual (<a href="https://www.ixsystems.com/documentation/freenas/11.3-U1/freenas.html">FreeNAS® 11.3-U1 User Guide</a>) before the upgrade and and the instructions did not mention anything about the plugins, so I was little worried.</p>
+
+<p>After spending a lot of time researching I discovered that on FreeNAS 11.2 the project started to use the &lsquo;iocage&rsquo; jail method instead of &lsquo;warden&rsquo;. FreeNAS 11.2 had the option of migrating your jails, and it could even display then from the UI. But for 11.3-UI that was no longer an option.</p>
+
+<p>If you are on the same boat as me, the instructions below will help you quickly re-create a new Plex jail a move your old data to the new jail. If you have not upgraded to 11.3-UI you might want to convert your jail before upgrading. There are a lot of tutorials on-line on how to convert your jail that might be more useful to you.</p>
+
+<h3 id="instructions">Instructions</h3>
+
+<p>a. Create the <code>plex</code> user with UID <code>972</code> (this is the username and UID that is used by the project)</p>
+
+<p>b. If desired, create a new Dataset to have Plex data outside of the plugin Dataset. I won&rsquo;t go into details for this type of setup here as I keep my Plex data inside the Plex plugin Dataset</p>
+
+<p>c. Install the &lsquo;Plex Media Server&rsquo; plugin (<a href="https://support.plex.tv/articles/installing-plex-media-server-on-freenas/">official instructions</a>)</p>
+
+<p>d. Stop the plugin</p>
+
+<p>e. Go to &lsquo;Storage =&gt; Pools&rsquo; and edit the ACL for the Dataset where your media is saved. We want to give access to the &lsquo;plex&rsquo; user (in case the files are not owned by &lsquo;plex&rsquo;)</p>
+
+<p><img src="https://blog.victormendonca.com/img/how-to-move-plex-installation-on-freenas/ACL.png" alt="" /></p>
+
+<p>f. With the plugin still stopped, copy the old installation data folder from the old plugin Dataset to the new plugin Dataset</p>
+
+<p><em><strong>Note:</strong> The <code>JAIL_ROOT</code> location will vary between different FreeNAS versions:</em></p>
+
+<ul>
+<li>FreeNAS 11.1 and bellow (warden) - <code>JAIL_ROOT=/mnt/[Volume]/jails/[JAIL_NAME]</code></li>
+<li>FreeNAS 11.2 and above (iocage) - <code>JAIL_ROOT=/mnt/[Volume]/iocage/jails/[JAIL_NAME]</code></li>
+</ul>
+
+<p><strong>Source for your old Plex plugin (warden)</strong></p>
+
+<p><em>If installed manually</em></p>
+
+<blockquote>
+<p><code>${JAIL_ROOT}/root/usr/local/plexdata/Plex Media Server/</code></p>
+</blockquote>
+
+<p><em>If installed via plugin</em></p>
+
+<blockquote>
+<p><code>${JAIL_ROOT}/var/db/plexdata/Plex Media Server/</code></p>
+</blockquote>
+
+<p><strong>Destination (iocage)</strong></p>
+
+<blockquote>
+<p><code>${JAIL_ROOT}/root/Plex Media Server/</code></p>
+</blockquote>
+
+<p>g. In the jails configuration menu, select the new Plex jail and add the mount point for the media folder. Try to keep the same path as the old jail so you won&rsquo;t have to edit your library. If you don&rsquo;t remember that the path was, you can access it by looking at the contents of <code>/mnt/[Volume]/jails/.[JAIL_NAME].meta/fstab</code></p>
+
+<pre><code># cat .plex.meta/fstab
+/mnt/Volume1/Movies /mnt/Volume1/jails/plex//mnt/Media nullfs rw 0 0
+</code></pre>
+
+<p><br>
+h. Start the plugin and try to access it via web</p>
+
+<p><img src="https://blog.victormendonca.com/img/how-to-move-plex-installation-on-freenas/manage.png" alt="" /></p>
+
+<hr />
+
+<p>References:</p>
+
+<ul>
+<li><a href="https://support.plex.tv/articles/201370363-move-an-install-to-another-system/">Move an Install to Another System</a></li>
+<li><a href="https://support.plex.tv/articles/installing-plex-media-server-on-freenas/">Installing Plex Media Server on FreeNAS</a></li>
+<li><a href="https://support.plex.tv/articles/202915258-where-is-the-plex-media-server-data-directory-located/">Where is the Plex Media Server data directory located?</a></li>
+<li><a href="https://www.ixsystems.com/documentation/freenas/11.3-U1/freenas.html">FreeNAS® 11.3-U1 User Guide</a></li>
+<li><a href="https://www.ixsystems.com/blog/library/freenas-11-3-release/">FreeNAS 11.3-RELEASE</a></li>
+</ul>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Move%20Plex%20Installation%20on%20FreeNAS%2011.3&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f&amp;title=How%20to%20Move%20Plex%20Installation%20on%20FreeNAS%2011.3" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20Move%20Plex%20Installation%20on%20FreeNAS%2011.3&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2020/03/15/rhcsa-v8-work-with-package-module-streams/" title="RHCSA v8: Work with Package Module Streams">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2020/03/15/rhcsa-v8-work-with-package-module-streams/">RHCSA v8: Work with Package Module Streams</a>
 </h2>
 
@@ -382,6 +543,12 @@ Complete!
     
 
     
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2020/03/30/how-to-move-plex-installation-on-freenas/" title="How to Move Plex Installation on FreeNAS 11.3">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
     </ul> </nav>
   
 
@@ -467,12 +634,12 @@ Complete!
 
 <h4 id="the-vdo-module">The VDO module</h4>
 
-<p>VDO requires 370 MB of DRAM plus an additional 268 MB per each 1 TB of physical storage managed by the volume.<br />
+<p>VDO requires 370 MB of RAM plus an additional 268 MB per each 1 TB of physical storage managed by the volume.<br />
 <br></p>
 
 <h4 id="the-universal-deduplication-service-uds-index">The Universal Deduplication Service (UDS) index</h4>
 
-<p>UDS requires a minimum of 250 MB of DRAM, which is also the default amount that deduplication uses.</p>
+<p>UDS requires a minimum of 250 MB of RAM, which is also the default amount that deduplication uses.</p>
 
 <p>The memory required for the UDS index is determined by the index type and the required size of the deduplication window:</p>
 
@@ -540,7 +707,7 @@ Complete!
 <pre><code># vdo create --name=[name] --device=/dev/[device] --vdoLogicalSize=[VDO logical size] --deduplication=disabled --vdoSlabSize=[slab size]
 </code></pre>
 
-<p>To enable/disable deduplication on a existing block</p>
+<p>To enable/disable deduplication on an existing block</p>
 
 <pre><code># vdo enableDeduplication --name=my_vdo
 
@@ -1110,176 +1277,6 @@ The configuration file for the service DHCPD is /etc/dhcpd.conf
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2019/04/15/touchpad-gestures-on-xps-13/">Touchpad Gestures on XPS 13</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2019-04-15">15 Apr, 2019</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/hardware" class="label label-primary">Hardware</a>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  <p>The XPS 13 is a great laptop and it comes with an equally matched touchpad. Setting up touch gestures is pretty easy, and we will cover what needs to be done to get it working on Arch.</p>
-
-<p>First, let&rsquo;s install all the needed software:</p>
-
-<ul>
-<li><code>extra/libinput</code></li>
-<li><code>aur/libinput-gestures</code></li>
-</ul>
-
-<p>After installing the 2 packages you should be able to run <code>libinput-gestures -d</code> as root and try the pre-defined gestures. You should see an output when you swipe left/right/up/down with &frac34; fingers and pinch in/out.</p>
-
-<pre><code class="language-none"># libinput-gestures -d
-
-libinput-gestures: session unknown+unknown on Linux-5.0.6-arch1-1-ARCH-x86_64-with-arch, python 3.7.3, libinput 1.13.0
-/usr/bin/libinput-gestures: hash 4cc3250c5befc6926c04b3e499114677
-Gestures configured in /etc/libinput-gestures.conf:
-swipe up           _internal ws_up
-swipe down         _internal ws_down
-swipe left         xdotool key alt+Right
-swipe right        xdotool key alt+Left
-pinch in           xdotool key super+s
-pinch out          xdotool key super+s
-libinput-gestures: device /dev/input/event10: DLL075B:01 06CB:76AF Touchpad
-libinput-gestures: SWIPE up 3 [-33.88000000000001, -604.8000000000001]
-   _internal ws_up
-libinput-gestures: SWIPE right 3 [755.69, -17.479999999999993]
-   xdotool key alt+Left
-</code></pre>
-
-<p>Let&rsquo;s add your user to the <code>input</code> group (because it should not run as <code>root</code>), then re-login:</p>
-
-<pre><code class="language-none">sudo gpasswd -a [user] input
-</code></pre>
-
-<p>Now let&rsquo;s edit our personal config file in <code>~/.config/libinput-gestures.conf</code>. Using <code>xdotool</code> create a map of what keyboard shortcuts you would like to map your gestures to. Keep in mind you can also map it to commands.</p>
-
-<p>For example, my config file looks like this:</p>
-
-<pre><code class="language-none"># Gestures
-gesture swipe up 3 xdotool key Ctrl+F9
-gesture swipe up 4 xdotool key Ctrl+F10
-gesture swipe left 3 xdotool key Ctrl+Alt+Right
-gesture swipe right 3 xdotool key Ctrl+Alt+Left
-gesture swipe down 3 xdotool key Super+Down
-</code></pre>
-
-<p>And the keyboard shortcuts are mapped to (KDE):</p>
-
-<ul>
-<li><code>Ctrl+F9</code> - Show all windows (current desktop)</li>
-<li><code>Ctrl+F10</code> - Show all windows (all desktops)</li>
-<li><code>Ctrl+Alt+Right</code> - Move to desktop on right</li>
-<li><code>Ctrl+Alt+Left</code> - Move to desktop on left</li>
-<li><code>Super+Down</code> - Desktop preview</li>
-</ul>
-
-<p>Let&rsquo;s configure the gestures to start with the desktop environment:</p>
-
-<pre><code class="language-none">$ libinput-gestures-setup autostart
-</code></pre>
-
-<p>And start the gestures for the current session:</p>
-
-<pre><code class="language-none">$ libinput-gestures-setup start
-
-Icon theme &quot;papirus&quot; not found.
-Icon theme &quot;ubuntu-mono-dark&quot; not found.
-Icon theme &quot;Mint-X&quot; not found.
-Icon theme &quot;elementary&quot; not found.
-Icon theme &quot;gnome&quot; not found.
-libinput-gestures started.
-</code></pre>
-
-<p>Enjoy your new setup gestures.</p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2019%2f04%2f15%2ftouchpad-gestures-on-xps-13%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Touchpad%20Gestures%20on%20XPS%2013&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f04%2f15%2ftouchpad-gestures-on-xps-13%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f04%2f15%2ftouchpad-gestures-on-xps-13%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f04%2f15%2ftouchpad-gestures-on-xps-13%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f04%2f15%2ftouchpad-gestures-on-xps-13%2f&amp;title=Touchpad%20Gestures%20on%20XPS%2013" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Touchpad%20Gestures%20on%20XPS%2013&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2019%2f04%2f15%2ftouchpad-gestures-on-xps-13%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2019/03/11/bash-tips-history/" title="Bash Tips: History">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2019/12/16/bash-arrays-and-iterations/" title="Bash Arrays and Iterations">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1399,7 +1396,7 @@ libinput-gestures started.
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/fzf">fzf</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/programming">programming</a></li><li><a href="https://blog.victormendonca.com/tags/python">python</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/fzf">fzf</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li><li><a href="https://blog.victormendonca.com/tags/mattermost">mattermost</a></li><li><a href="https://blog.victormendonca.com/tags/netcat">netcat</a></li><li><a href="https://blog.victormendonca.com/tags/network">network</a></li><li><a href="https://blog.victormendonca.com/tags/programming">programming</a></li>
           </ul>
         </div>
       </div>
@@ -1415,6 +1412,10 @@ libinput-gestures started.
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2020/03/30/how-to-move-plex-installation-on-freenas/">How to Move Plex Installation on FreeNAS 11.3</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2020/03/15/rhcsa-v8-work-with-package-module-streams/">RHCSA v8: Work with Package Module Streams</a>
@@ -1438,10 +1439,6 @@ libinput-gestures started.
         
           <li>
           <a href="https://blog.victormendonca.com/2019/03/11/bash-tips-history/">Bash Tips: History</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2019/03/10/colorful-banners-with-figlet-and-lolcat/">Colorful Banners With figlet and lolcat</a>
           </li>
         
         </ul>
