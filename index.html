@@ -192,12 +192,11 @@
 
 <p>g. In the jails configuration menu, select the new Plex jail and add the mount point for the media folder. Try to keep the same path as the old jail so you won&rsquo;t have to edit your library. If you don&rsquo;t remember that the path was, you can access it by looking at the contents of <code>/mnt/[Volume]/jails/.[JAIL_NAME].meta/fstab</code></p>
 
-<pre><code># cat .plex.meta/fstab
+<pre><code class="language-none"># cat .plex.meta/fstab
 /mnt/Volume1/Movies /mnt/Volume1/jails/plex//mnt/Media nullfs rw 0 0
 </code></pre>
 
-<p><br>
-h. Start the plugin and try to access it via web</p>
+<p>h. Start the plugin and try to access it via web</p>
 
 <p><img src="https://blog.victormendonca.com/img/how-to-move-plex-installation-on-freenas/manage.png" alt="" /></p>
 
@@ -312,13 +311,11 @@ h. Start the plugin and try to access it via web</p>
 
 <h2 id="definition">Definition</h2>
 
-<p>RHEL 8 content is distributed through two main repositories: BaseOS and AppStream.<br />
-<br></p>
+<p>RHEL 8 content is distributed through two main repositories: BaseOS and AppStream.</p>
 
 <h4 id="baseos"><strong>BaseOS</strong></h4>
 
-<p>Content in the BaseOS repository is intended to provide the core set of the underlying OS functionality that provides the foundation for all installations. This content is available in the RPM format and is subject to support terms similar to those in previous releases of Red Hat Enterprise Linux.<br />
-<br></p>
+<p>Content in the BaseOS repository is intended to provide the core set of the underlying OS functionality that provides the foundation for all installations. This content is available in the RPM format and is subject to support terms similar to those in previous releases of Red Hat Enterprise Linux.</p>
 
 <h4 id="appstream"><strong>AppStream</strong></h4>
 
@@ -344,8 +341,7 @@ postgresql               12            client, server                  PostgreSQ
 Hint: [d]efault, [e]nabled, [x]disabled, [i]nstalled
 </code></pre>
 
-<p><br>
-For httpd on Centos8, currently only one stream (version) is available, and profiles are the package type (common, minimal, development)</p>
+<p>For httpd on Centos8, currently only one stream (version) is available, and profiles are the package type (common, minimal, development)</p>
 
 <p><img src="https://blog.victormendonca.com/img/rhsa-v8-work-with-package-module-streams/httpd.png" alt="" /></p>
 
@@ -359,20 +355,16 @@ httpd                 2.4 [d][e]           common [d], devel, minimal           
 Hint: [d]efault, [e]nabled, [x]disabled, [i]nstalled
 </code></pre>
 
-<p><br></p>
-
 <h2 id="working-with-modules">Working with Modules</h2>
 
 <h3 id="getting-information-on-modules">Getting Information on Modules</h3>
 
-<p><br>
-Listing all modules</p>
+<p>Listing all modules</p>
 
 <pre><code># yum module list
 </code></pre>
 
-<p><br>
-Listing module summary for one module with <code>yum module list [module]</code></p>
+<p>Listing module summary for one module with <code>yum module list [module]</code></p>
 
 <pre><code class="language-nothing"># yum module list httpd
 
@@ -382,8 +374,7 @@ Name                  Stream               Profiles                             
 httpd                 2.4 [d][e]           common [d], devel, minimal            Apache HTTP Server
 </code></pre>
 
-<p><br>
-Listing info on a module with <code>yum module info [module]</code></p>
+<p>Listing info on a module with <code>yum module info [module]</code></p>
 
 <pre><code class="language-nothing"># yum module info httpd
 
@@ -423,8 +414,7 @@ Artifacts        : httpd-0:2.4.37-16.module_el8.1.0+256+ae790463.src
                  : mod_ssl-debuginfo-1:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
 </code></pre>
 
-<p><br>
-Listing profiles with <code>yum module info --profile [module]</code></p>
+<p>Listing profiles with <code>yum module info --profile [module]</code></p>
 
 <pre><code class="language-nothing"># yum module info --profile httpd
 
@@ -442,25 +432,21 @@ devel   : httpd
 minimal : httpd
 </code></pre>
 
-<p><br>
-You can also filter the information with <code>[module_name]:[stream]</code></p>
+<p>You can also filter the information with <code>[module_name]:[stream]</code></p>
 
 <pre><code># yum module info --profile php:7.3
 </code></pre>
 
-<p><br></p>
-
 <h3 id="enabling-stream">Enabling Stream</h3>
 
-<p>Note that switching module streams will not alter installed packages. You will need to remove a package, enable the stream and then install the package.<br />
-<br>
-Enable the stream for &lsquo;postgresql&rsquo; v9.6</p>
+<p>Note that switching module streams will not alter installed packages. You will need to remove a package, enable the stream and then install the package.</p>
+
+<p>Enable the stream for &lsquo;postgresql&rsquo; v9.6</p>
 
 <pre><code class="language-nothing"># yum module enable postgresql:9.6
 </code></pre>
 
-<p><br>
-Enable the httpd devel profile</p>
+<p>Enable the httpd devel profile</p>
 
 <pre><code class="language-nothing"># yum module enable --profile httpd:2.4/devel
 
@@ -471,14 +457,12 @@ Nothing to do.
 Complete!
 </code></pre>
 
-<p><br>
-Then install the package</p>
+<p>Then install the package</p>
 
 <pre><code># yum install postgresql httpd  
 </code></pre>
 
-<p><br>
-To change a module stream again, you will need to run <code>yum module reset [module name]</code>, and then enable the new module.</p>
+<p>To change a module stream again, you will need to run <code>yum module reset [module name]</code>, and then enable the new module.</p>
 
 <pre><code class="language-nothing"># yum module enable postgresql:10
 
@@ -609,8 +593,6 @@ Complete!
 
 <p>These are my study notes for the RHCSA exam on disk compression. There&rsquo;s most likely more information than what&rsquo;s needed for the exam, and I cannot guarantee that all information is correct.</p>
 
-<p><br></p>
-
 <h2 id="definition">Definition</h2>
 
 <p>Virtual Data Optimizer (VDO) provides inline data reduction for Linux in the form of deduplication, compression, and thin provisioning. When you set up a VDO volume, you specify a block device on which to construct your VDO volume and the amount of logical storage you plan to present.</p>
@@ -629,13 +611,11 @@ Complete!
 
 <h3 id="memory">Memory</h3>
 
-<p>Each VDO volume has two distinct memory requirements:<br />
-<br></p>
+<p>Each VDO volume has two distinct memory requirements:</p>
 
 <h4 id="the-vdo-module">The VDO module</h4>
 
-<p>VDO requires 370 MB of RAM plus an additional 268 MB per each 1 TB of physical storage managed by the volume.<br />
-<br></p>
+<p>VDO requires 370 MB of RAM plus an additional 268 MB per each 1 TB of physical storage managed by the volume.</p>
 
 <h4 id="the-universal-deduplication-service-uds-index">The Universal Deduplication Service (UDS) index</h4>
 
@@ -647,16 +627,11 @@ Complete!
 
 <p><em><strong>Note:</strong> Sparse is the recommended configuration.</em></p>
 
-<p><br></p>
-
 <h3 id="storage">Storage</h3>
 
-<p><br></p>
+<h4 id="logical-size">Logical Size</h4>
 
-<h4 id="logical-size"><strong>Logical Size</strong></h4>
-
-<p>Specifies the logical VDO volume size. The VDO Logical Size is how much storage we tell the OS that we have. Because of reduction and deduplication, this number will be bigger than the real physical size. This ratio will vary according to the type of data that is being stored (binary, video, audio, compressed data will have a very low ratio).<br />
-<br></p>
+<p>Specifies the logical VDO volume size. The VDO Logical Size is how much storage we tell the OS that we have. Because of reduction and deduplication, this number will be bigger than the real physical size. This ratio will vary according to the type of data that is being stored (binary, video, audio, compressed data will have a very low ratio).</p>
 
 <h4 id="red-hat-s-recommendation">Red Hat&rsquo;s Recommendation</h4>
 
@@ -668,8 +643,6 @@ Complete!
 
 <p><em>Use logical size that is three times the physical size of your block device. For example, if your block device is 1TB in size, use 3T here.</em></p>
 
-<p><br></p>
-
 <h4 id="slab-size"><strong>Slab Size</strong></h4>
 
 <p>Specifies the size of the increment by which a VDO is grown. All of the slabs for a given volume will be of the same size, which may be any power of 2 multiple of 128 MB up to 32 GB. At least one entire slab is reserved by VDO for metadata, and therefore cannot be used for storing user data.</p>
@@ -680,8 +653,6 @@ Complete!
 
 <p><em>The table above is from RHEL 7 documentation</em></p>
 
-<p><br></p>
-
 <h4 id="examples-of-vdo-system-requirements-by-physical-volume-size"><strong>Examples of VDO System Requirements by Physical Volume Size</strong></h4>
 
 <p>The following tables provide approximate system requirements of VDO based on the size of the underlying physical volume. Each table lists requirements appropriate to the intended deployment, such as primary storage or backup storage.</p>
@@ -690,11 +661,7 @@ Complete!
 
 <p><img src="https://blog.victormendonca.com/img/rhsa-v8-configure-disk-compression/backup_storage.png" alt="" /></p>
 
-<p><br></p>
-
 <h3 id="deduplication-indexing-and-compression">Deduplication, Indexing and Compression</h3>
-
-<p><br></p>
 
 <h4 id="deduplication-and-index">Deduplication and Index</h4>
 
@@ -714,8 +681,6 @@ Complete!
 # vdo disableDeduplication --name=my_vdo
 </code></pre>
 
-<p><br></p>
-
 <h4 id="compression">Compression</h4>
 
 <p>In addition to block-level deduplication, VDO also provides inline block-level compression using the HIOPS Compression™ technology.</p>
@@ -723,8 +688,6 @@ Complete!
 <p>VDO volume compression is on by default.</p>
 
 <p>Compression operates on blocks that have not been identified as duplicates. When unique data is seen for the first time, it is compressed. Subsequent copies of data that have already been stored are deduplicated without requiring an additional compression step.</p>
-
-<p><br></p>
 
 <h2 id="configuration-steps">Configuration Steps</h2>
 
@@ -779,8 +742,6 @@ x-systemd.requires=
           unit and another systemd unit, such as a device or mount unit.
 </code></pre>
 
-<p><br></p>
-
 <h2 id="administration">Administration</h2>
 
 <p>Check for real physical space usage</p>
@@ -790,8 +751,6 @@ x-systemd.requires=
 Device              Size   Used   Available   Use%   Space Saving%
 /dev/mapper/my_vdo  1.8T  407.9G    1.4T       22%       21%
 </code></pre>
-
-<p><br></p>
 
 <hr />
 
@@ -914,16 +873,11 @@ Device              Size   Used   Available   Use%   Space Saving%
 
 <p>Something to take in consideration is that the exam is valid for 3 years, or 2 releases (meaning that once RHEL 9 is out, your RHSCA on RHEL 7 is no longer valid). And seeing on how RHEL 6 to 7 took 4 years, and RHEL 7 to 8 took 5 years, with RHCSA v7 you will most likely run out of the 3 years before RHEL 9 is released.</p>
 
-<p><br></p>
-
 <h3 id="objective-differences-rhcsa-v7-vs-v8">Objective Differences - RHCSA v7 vs v8</h3>
-
-<p><br></p>
 
 <h4 id="rhcsa-v7-content-no-longer-needed-for-v8">=&gt; RHCSA v7 - Content No Longer Needed for V8</h4>
 
-<p><br>
-<strong>Operate running systems</strong></p>
+<p><strong>Operate running systems</strong></p>
 
 <ul>
 <li>Access a virtual machine’s console.</li>
@@ -970,12 +924,9 @@ Device              Size   Used   Available   Use%   Space Saving%
 </ul></li>
 </ul>
 
-<p><br></p>
-
 <h4 id="rhcsa-v8-new-content">=&gt; RHCSA v8 - New Content</h4>
 
-<p><br>
-<strong>Operate running systems</strong></p>
+<p><strong>Operate running systems</strong></p>
 
 <ul>
 <li>Preserve system journals</li>

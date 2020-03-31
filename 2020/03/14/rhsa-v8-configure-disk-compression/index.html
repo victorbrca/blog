@@ -204,8 +204,6 @@
 
 <p>These are my study notes for the RHCSA exam on disk compression. There&rsquo;s most likely more information than what&rsquo;s needed for the exam, and I cannot guarantee that all information is correct.</p>
 
-<p><br></p>
-
 <h2 id="definition">Definition</h2>
 
 <p>Virtual Data Optimizer (VDO) provides inline data reduction for Linux in the form of deduplication, compression, and thin provisioning. When you set up a VDO volume, you specify a block device on which to construct your VDO volume and the amount of logical storage you plan to present.</p>
@@ -224,13 +222,11 @@
 
 <h3 id="memory">Memory</h3>
 
-<p>Each VDO volume has two distinct memory requirements:<br />
-<br></p>
+<p>Each VDO volume has two distinct memory requirements:</p>
 
 <h4 id="the-vdo-module">The VDO module</h4>
 
-<p>VDO requires 370 MB of RAM plus an additional 268 MB per each 1 TB of physical storage managed by the volume.<br />
-<br></p>
+<p>VDO requires 370 MB of RAM plus an additional 268 MB per each 1 TB of physical storage managed by the volume.</p>
 
 <h4 id="the-universal-deduplication-service-uds-index">The Universal Deduplication Service (UDS) index</h4>
 
@@ -242,16 +238,11 @@
 
 <p><em><strong>Note:</strong> Sparse is the recommended configuration.</em></p>
 
-<p><br></p>
-
 <h3 id="storage">Storage</h3>
 
-<p><br></p>
+<h4 id="logical-size">Logical Size</h4>
 
-<h4 id="logical-size"><strong>Logical Size</strong></h4>
-
-<p>Specifies the logical VDO volume size. The VDO Logical Size is how much storage we tell the OS that we have. Because of reduction and deduplication, this number will be bigger than the real physical size. This ratio will vary according to the type of data that is being stored (binary, video, audio, compressed data will have a very low ratio).<br />
-<br></p>
+<p>Specifies the logical VDO volume size. The VDO Logical Size is how much storage we tell the OS that we have. Because of reduction and deduplication, this number will be bigger than the real physical size. This ratio will vary according to the type of data that is being stored (binary, video, audio, compressed data will have a very low ratio).</p>
 
 <h4 id="red-hat-s-recommendation">Red Hat&rsquo;s Recommendation</h4>
 
@@ -263,8 +254,6 @@
 
 <p><em>Use logical size that is three times the physical size of your block device. For example, if your block device is 1TB in size, use 3T here.</em></p>
 
-<p><br></p>
-
 <h4 id="slab-size"><strong>Slab Size</strong></h4>
 
 <p>Specifies the size of the increment by which a VDO is grown. All of the slabs for a given volume will be of the same size, which may be any power of 2 multiple of 128 MB up to 32 GB. At least one entire slab is reserved by VDO for metadata, and therefore cannot be used for storing user data.</p>
@@ -275,8 +264,6 @@
 
 <p><em>The table above is from RHEL 7 documentation</em></p>
 
-<p><br></p>
-
 <h4 id="examples-of-vdo-system-requirements-by-physical-volume-size"><strong>Examples of VDO System Requirements by Physical Volume Size</strong></h4>
 
 <p>The following tables provide approximate system requirements of VDO based on the size of the underlying physical volume. Each table lists requirements appropriate to the intended deployment, such as primary storage or backup storage.</p>
@@ -285,11 +272,7 @@
 
 <p><img src="https://blog.victormendonca.com/img/rhsa-v8-configure-disk-compression/backup_storage.png" alt="" /></p>
 
-<p><br></p>
-
 <h3 id="deduplication-indexing-and-compression">Deduplication, Indexing and Compression</h3>
-
-<p><br></p>
 
 <h4 id="deduplication-and-index">Deduplication and Index</h4>
 
@@ -309,8 +292,6 @@
 # vdo disableDeduplication --name=my_vdo
 </code></pre>
 
-<p><br></p>
-
 <h4 id="compression">Compression</h4>
 
 <p>In addition to block-level deduplication, VDO also provides inline block-level compression using the HIOPS Compression™ technology.</p>
@@ -318,8 +299,6 @@
 <p>VDO volume compression is on by default.</p>
 
 <p>Compression operates on blocks that have not been identified as duplicates. When unique data is seen for the first time, it is compressed. Subsequent copies of data that have already been stored are deduplicated without requiring an additional compression step.</p>
-
-<p><br></p>
 
 <h2 id="configuration-steps">Configuration Steps</h2>
 
@@ -374,8 +353,6 @@ x-systemd.requires=
           unit and another systemd unit, such as a device or mount unit.
 </code></pre>
 
-<p><br></p>
-
 <h2 id="administration">Administration</h2>
 
 <p>Check for real physical space usage</p>
@@ -385,8 +362,6 @@ x-systemd.requires=
 Device              Size   Used   Available   Use%   Space Saving%
 /dev/mapper/my_vdo  1.8T  407.9G    1.4T       22%       21%
 </code></pre>
-
-<p><br></p>
 
 <hr />
 

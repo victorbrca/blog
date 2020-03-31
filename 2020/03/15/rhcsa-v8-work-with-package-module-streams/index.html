@@ -206,13 +206,11 @@
 
 <h2 id="definition">Definition</h2>
 
-<p>RHEL 8 content is distributed through two main repositories: BaseOS and AppStream.<br />
-<br></p>
+<p>RHEL 8 content is distributed through two main repositories: BaseOS and AppStream.</p>
 
 <h4 id="baseos"><strong>BaseOS</strong></h4>
 
-<p>Content in the BaseOS repository is intended to provide the core set of the underlying OS functionality that provides the foundation for all installations. This content is available in the RPM format and is subject to support terms similar to those in previous releases of Red Hat Enterprise Linux.<br />
-<br></p>
+<p>Content in the BaseOS repository is intended to provide the core set of the underlying OS functionality that provides the foundation for all installations. This content is available in the RPM format and is subject to support terms similar to those in previous releases of Red Hat Enterprise Linux.</p>
 
 <h4 id="appstream"><strong>AppStream</strong></h4>
 
@@ -238,8 +236,7 @@ postgresql               12            client, server                  PostgreSQ
 Hint: [d]efault, [e]nabled, [x]disabled, [i]nstalled
 </code></pre>
 
-<p><br>
-For httpd on Centos8, currently only one stream (version) is available, and profiles are the package type (common, minimal, development)</p>
+<p>For httpd on Centos8, currently only one stream (version) is available, and profiles are the package type (common, minimal, development)</p>
 
 <p><img src="https://blog.victormendonca.com/img/rhsa-v8-work-with-package-module-streams/httpd.png" alt="" /></p>
 
@@ -253,20 +250,16 @@ httpd                 2.4 [d][e]           common [d], devel, minimal           
 Hint: [d]efault, [e]nabled, [x]disabled, [i]nstalled
 </code></pre>
 
-<p><br></p>
-
 <h2 id="working-with-modules">Working with Modules</h2>
 
 <h3 id="getting-information-on-modules">Getting Information on Modules</h3>
 
-<p><br>
-Listing all modules</p>
+<p>Listing all modules</p>
 
 <pre><code># yum module list
 </code></pre>
 
-<p><br>
-Listing module summary for one module with <code>yum module list [module]</code></p>
+<p>Listing module summary for one module with <code>yum module list [module]</code></p>
 
 <pre><code class="language-nothing"># yum module list httpd
 
@@ -276,8 +269,7 @@ Name                  Stream               Profiles                             
 httpd                 2.4 [d][e]           common [d], devel, minimal            Apache HTTP Server
 </code></pre>
 
-<p><br>
-Listing info on a module with <code>yum module info [module]</code></p>
+<p>Listing info on a module with <code>yum module info [module]</code></p>
 
 <pre><code class="language-nothing"># yum module info httpd
 
@@ -317,8 +309,7 @@ Artifacts        : httpd-0:2.4.37-16.module_el8.1.0+256+ae790463.src
                  : mod_ssl-debuginfo-1:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
 </code></pre>
 
-<p><br>
-Listing profiles with <code>yum module info --profile [module]</code></p>
+<p>Listing profiles with <code>yum module info --profile [module]</code></p>
 
 <pre><code class="language-nothing"># yum module info --profile httpd
 
@@ -336,25 +327,21 @@ devel   : httpd
 minimal : httpd
 </code></pre>
 
-<p><br>
-You can also filter the information with <code>[module_name]:[stream]</code></p>
+<p>You can also filter the information with <code>[module_name]:[stream]</code></p>
 
 <pre><code># yum module info --profile php:7.3
 </code></pre>
 
-<p><br></p>
-
 <h3 id="enabling-stream">Enabling Stream</h3>
 
-<p>Note that switching module streams will not alter installed packages. You will need to remove a package, enable the stream and then install the package.<br />
-<br>
-Enable the stream for &lsquo;postgresql&rsquo; v9.6</p>
+<p>Note that switching module streams will not alter installed packages. You will need to remove a package, enable the stream and then install the package.</p>
+
+<p>Enable the stream for &lsquo;postgresql&rsquo; v9.6</p>
 
 <pre><code class="language-nothing"># yum module enable postgresql:9.6
 </code></pre>
 
-<p><br>
-Enable the httpd devel profile</p>
+<p>Enable the httpd devel profile</p>
 
 <pre><code class="language-nothing"># yum module enable --profile httpd:2.4/devel
 
@@ -365,14 +352,12 @@ Nothing to do.
 Complete!
 </code></pre>
 
-<p><br>
-Then install the package</p>
+<p>Then install the package</p>
 
 <pre><code># yum install postgresql httpd  
 </code></pre>
 
-<p><br>
-To change a module stream again, you will need to run <code>yum module reset [module name]</code>, and then enable the new module.</p>
+<p>To change a module stream again, you will need to run <code>yum module reset [module name]</code>, and then enable the new module.</p>
 
 <pre><code class="language-nothing"># yum module enable postgresql:10
 
