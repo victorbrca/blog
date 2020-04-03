@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Mon, 30 Mar 2020 13:56:51 -0400</lastBuildDate>
+    <lastBuildDate>Thu, 02 Apr 2020 19:03:03 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How to Install chrome-remote-desktop on Arch</title>
+      <link>https://blog.victormendonca.com/2020/04/02/how-to-install-chrome-remote-desktop-on-arch/</link>
+      <pubDate>Thu, 02 Apr 2020 19:03:03 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2020/04/02/how-to-install-chrome-remote-desktop-on-arch/</guid>
+      <description>Chrome Remote Desktop has been around for quite a while, but now Google offers a .deb installer with native Linux support via Systemd. This is great because it removes the need to setup VPNs and VNC to remote connect to your machines, or in the case that you need to land a hand to a not so technical savvy family member or friend.
+Unfortunately the installer is only for Ubuntu (and Debian based distros), but with a few steps we can get it running on Arch, and (thanks to a patch by nightuser) even configure it to use existing X sessions instead of creating a new one (which is the default behavior).</description>
+    </item>
     
     <item>
       <title>How to Move Plex Installation on FreeNAS 11.3</title>
