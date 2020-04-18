@@ -96,9 +96,18 @@
     <item>
       <title>Linux</title>
       <link>https://blog.victormendonca.com/tags/linux/</link>
-      <pubDate>Thu, 02 Apr 2020 19:03:03 -0400</pubDate>
+      <pubDate>Fri, 17 Apr 2020 22:00:00 -0400</pubDate>
       
       <guid>https://blog.victormendonca.com/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Macos</title>
+      <link>https://blog.victormendonca.com/tags/macos/</link>
+      <pubDate>Fri, 17 Apr 2020 22:00:00 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/tags/macos/</guid>
       <description></description>
     </item>
     
@@ -207,6 +216,15 @@
       <pubDate>Mon, 31 Dec 2018 13:44:17 -0500</pubDate>
       
       <guid>https://blog.victormendonca.com/tags/vim/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Virtualbox</title>
+      <link>https://blog.victormendonca.com/tags/virtualbox/</link>
+      <pubDate>Fri, 17 Apr 2020 22:00:00 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/tags/virtualbox/</guid>
       <description></description>
     </item>
     
