@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Thu, 23 Apr 2020 20:24:12 -0400</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2020 13:45:00 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How to Change macOS Key Bindings</title>
+      <link>https://blog.victormendonca.com/2020/04/27/how-to-change-macos-key-bindings/</link>
+      <pubDate>Mon, 27 Apr 2020 13:45:00 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2020/04/27/how-to-change-macos-key-bindings/</guid>
+      <description>This post will show you how to change line movement and control key bindings in macOS to be similar to what we use in Linux (and windows).
+The following keyboard shortcuts will be added:
+   Sequence Command     Ctrl+Left Back one word   Ctrl+Right Forward one word   Ctrl+Shift+Left Back one word and modify selection   Ctrl+Shift+Right Forward one word and modify selection   Home Beginning of the line   End End of line   Shift+Home Beginning of the line and modify selection   Shift+End End of line and modify selection   Ctrl+Home Top of page   Ctrl+End End of page   Shift+Ctrl+Home Top of page and modify selection   Shift+Ctrl+End End of page and modify selection    Instructions a.</description>
+    </item>
     
     <item>
       <title>How to Share WiFi Credentials from Terminal</title>
