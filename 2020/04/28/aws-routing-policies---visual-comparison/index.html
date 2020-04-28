@@ -5,34 +5,32 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title>How to Record and Share a Terminal Session  &middot; Victor&#39;s Blog</title>
+  <title>AWS Routing Policies - Visual Comparison  &middot; Victor&#39;s Blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="description" content="How to record and share your terminal with `showterm`." />
+<meta name="description" content="A visual overview of the different AWS route 53 routing policies" />
 
-<meta name="keywords" content="Linux, Shell, ">
+<meta name="keywords" content="AWS, ">
 
 
-<meta property="og:title" content="How to Record and Share a Terminal Session  &middot; Victor&#39;s Blog ">
+<meta property="og:title" content="AWS Routing Policies - Visual Comparison  &middot; Victor&#39;s Blog ">
 <meta property="og:site_name" content="Victor&#39;s Blog"/>
-<meta property="og:url" content="https://blog.victormendonca.com/2016/11/02/how-to-record-and-share-a-terminal-session/" />
+<meta property="og:url" content="https://blog.victormendonca.com/2020/04/28/aws-routing-policies---visual-comparison/" />
 <meta property="og:locale" content="en">
 
 
 <meta property="og:type" content="article" />
-<meta property="og:description" content="How to record and share your terminal with `showterm`."/>
-<meta property="og:article:published_time" content="2016-11-02T17:52:10-04:00" />
-<meta property="og:article:modified_time" content="2016-11-02T17:52:10-04:00" />
+<meta property="og:description" content="A visual overview of the different AWS route 53 routing policies"/>
+<meta property="og:article:published_time" content="2020-04-28T14:45:00-04:00" />
+<meta property="og:article:modified_time" content="2020-04-28T14:45:00-04:00" />
 
   
     
-<meta property="og:article:tag" content="Linux">
-    
-<meta property="og:article:tag" content="Shell">
+<meta property="og:article:tag" content="AWS">
     
   
 
@@ -40,9 +38,9 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@18440926" />
 <meta name="twitter:creator" content="@18440926" />
-<meta name="twitter:title" content="How to Record and Share a Terminal Session" />
-<meta name="twitter:description" content="How to record and share your terminal with `showterm`." />
-<meta name="twitter:url" content="https://blog.victormendonca.com/2016/11/02/how-to-record-and-share-a-terminal-session/" />
+<meta name="twitter:title" content="AWS Routing Policies - Visual Comparison" />
+<meta name="twitter:description" content="A visual overview of the different AWS route 53 routing policies" />
+<meta name="twitter:url" content="https://blog.victormendonca.com/2020/04/28/aws-routing-policies---visual-comparison/" />
 <meta name="twitter:domain" content="https://blog.victormendonca.com/">
   
 
@@ -50,7 +48,7 @@
 
 
 
-<link rel="canonical" href="https://blog.victormendonca.com/2016/11/02/how-to-record-and-share-a-terminal-session/" />
+<link rel="canonical" href="https://blog.victormendonca.com/2020/04/28/aws-routing-policies---visual-comparison/" />
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
 <link rel="icon" href="https://blog.victormendonca.com/favicon.png">
 <meta name="generator" content="Hugo 0.48" />
@@ -139,39 +137,39 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
   <div class="text-center">
 
-    <h1>How to Record and Share a Terminal Session
+    <h1>AWS Routing Policies - Visual Comparison
 </h1>
 
     <div class="metas">
 <small>
   <i class="fa fa-calendar"></i>
-  <time datetime="2016-11-02">2 Nov, 2016</time>
+  <time datetime="2020-04-28">28 Apr, 2020</time>
 </small>
 
 
   <small>
     &middot; by Victor Mendonça
   
-  &middot; Read in about 1 min
-  &middot; (90 words)
+  &middot; Read in about 2 min
+  &middot; (341 words)
   &middot; 
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2016%2f11%2f02%2fhow-to-record-and-share-a-terminal-session%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f28%2faws-routing-policies---visual-comparison%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Record%20and%20Share%20a%20Terminal%20Session&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f11%2f02%2fhow-to-record-and-share-a-terminal-session%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=AWS%20Routing%20Policies%20-%20Visual%20Comparison&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f28%2faws-routing-policies---visual-comparison%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f11%2f02%2fhow-to-record-and-share-a-terminal-session%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f28%2faws-routing-policies---visual-comparison%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f11%2f02%2fhow-to-record-and-share-a-terminal-session%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f28%2faws-routing-policies---visual-comparison%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f11%2f02%2fhow-to-record-and-share-a-terminal-session%2f&amp;title=How%20to%20Record%20and%20Share%20a%20Terminal%20Session" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f28%2faws-routing-policies---visual-comparison%2f&amp;title=AWS%20Routing%20Policies%20-%20Visual%20Comparison" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=How%20to%20Record%20and%20Share%20a%20Terminal%20Session&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2016%2f11%2f02%2fhow-to-record-and-share-a-terminal-session%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=AWS%20Routing%20Policies%20-%20Visual%20Comparison&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f28%2faws-routing-policies---visual-comparison%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   </small>
@@ -179,9 +177,7 @@
 <div class="margin-10">
   <i class="fa fa-tags"></i>
   
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/shell" class="label label-primary">Shell</a>
+  <a href="https://blog.victormendonca.com/tags/aws" class="label label-primary">AWS</a>
   
 
 
@@ -194,23 +190,103 @@
 </div>
 
       <div class="content">
-  <p>A while ago I had shared instructions on <a href="http://wazem.blogspot.ca/2014/10/how-to-share-terminal-window-online.html">&laquo;How to Share a Terminal Window Online&raquo;</a>. This is great for live support.</p>
+  
 
-<p>Today I&rsquo;m sharing instructions on how to record your teminal session, and not only share it, but also allow users to copy and paste text from the playback video.</p>
+<p>A quick explanation and visual overview of the AWS Route 53 policies (with the exception of Geoproximity Routing).</p>
 
-<p>The installation could not be easier. And to show how great this utility is, I&rsquo;m showing the instructions using a &laquo;video&raquo; recorderd with &laquo;showterm&raquo;.</p>
+<h3 id="simple-routing-policy">Simple Routing Policy</h3>
 
-<iframe src="http://showterm.io/e01df02ef6011e200adfa" width="710" height="320"></iframe>
+<p>Use for a single resource that performs a given function for your domain, for example, a web server that serves content for the example.com website.</p>
 
-<p>Now go ahead and try copying text from the video. Isn&rsquo;t that great!?</p>
+<p><strong>Important points to remember:</strong></p>
 
-<hr />
+<ul>
+<li>Simplest routing policy</li>
+<li>Only one DNS record set</li>
+<li>Multiple IP address per record set can be used</li>
+<li>Values are returned to user in random order</li>
+<li>No health checks</li>
+</ul>
 
-<p><strong>Reference:</strong></p>
+<p><img src="img/aws-routing-policies-visual-comparison/simple_routing.png" alt="" /></p>
 
-<p><a href="http://showterm.io/">http://showterm.io/</a></p>
+<h3 id="weighted-routing-policy">Weighted Routing Policy</h3>
 
-<p><a href="https://github.com/ConradIrwin/showterm">https://github.com/ConradIrwin/showterm</a></p>
+<p>Weighted Routing Policy controls the percentage of the requests that go to a specific endpoint.</p>
+
+<p><strong>Important points to remember:</strong></p>
+
+<ul>
+<li>Weighted routing sends user traffic based on the weight that you supply</li>
+<li>You can split traffic between different regions</li>
+<li>Multiple IP address per record set can be used</li>
+<li>Health checks can be used</li>
+</ul>
+
+<p><img src="img/aws-routing-policies-visual-comparison/weighted_routing.png" alt="" /></p>
+
+<h3 id="latency-routing-policy">Latency Routing Policy</h3>
+
+<p>Use when you have resources in multiple AWS Regions and you want to route traffic to the region that provides the best latency.</p>
+
+<p><strong>Important points to remember:</strong></p>
+
+<ul>
+<li>Routing will be based on user to region latency</li>
+<li>Multiple IP address per record set can be used</li>
+<li>Health checks can be used</li>
+</ul>
+
+<p><img src="img/aws-routing-policies-visual-comparison/latency_routing.png" alt="" /></p>
+
+<h3 id="failover-routing-policy">Failover Routing Policy</h3>
+
+<p>Use failover routing policy when you want to configure active-passive failover.</p>
+
+<p><strong>Important points to remember:</strong></p>
+
+<ul>
+<li>Use failover routing policy when you want to configure active-passive failover</li>
+<li>Health checks
+
+<ul>
+<li>You can&rsquo;t save the primary record without a health check</li>
+<li>The secondary record can be created without a health check</li>
+</ul></li>
+</ul>
+
+<p><img src="img/aws-routing-policies-visual-comparison/failover_routing.png" alt="" /></p>
+
+<h3 id="geolocation-routing-policy">Geolocation Routing Policy</h3>
+
+<p>Geolocation routing lets you choose the resources that serve your traffic based on the geographic location of your users, meaning the location that DNS queries originate from.</p>
+
+<p><strong>Important points to remember:</strong></p>
+
+<ul>
+<li>This is routing based on user&rsquo;s location</li>
+<li>Multiple IP address per record set can be used</li>
+<li>Health checks can be used</li>
+</ul>
+
+<p><img src="img/aws-routing-policies-visual-comparison/geolocation_routing.png" alt="" /></p>
+
+<h3 id="multivalue-answer-routing-policy">Multivalue Answer Routing policy</h3>
+
+<p>Use when you want Route 53 to respond to DNS queries with up to eight healthy records selected at random.</p>
+
+<p><strong>Important points to remember:</strong></p>
+
+<ul>
+<li>It&rsquo;s very similar to simple routing, but with two differences:
+
+<ul>
+<li>You can have multiple record sets</li>
+<li>You can have health checks</li>
+</ul></li>
+</ul>
+
+<p><img src="img/aws-routing-policies-visual-comparison/multivalue_routing.png" alt="" /></p>
 
 </div>
 
@@ -218,22 +294,22 @@
       <footer>
   
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2016%2f11%2f02%2fhow-to-record-and-share-a-terminal-session%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f28%2faws-routing-policies---visual-comparison%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Record%20and%20Share%20a%20Terminal%20Session&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f11%2f02%2fhow-to-record-and-share-a-terminal-session%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=AWS%20Routing%20Policies%20-%20Visual%20Comparison&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f28%2faws-routing-policies---visual-comparison%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f11%2f02%2fhow-to-record-and-share-a-terminal-session%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f28%2faws-routing-policies---visual-comparison%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f11%2f02%2fhow-to-record-and-share-a-terminal-session%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f28%2faws-routing-policies---visual-comparison%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f11%2f02%2fhow-to-record-and-share-a-terminal-session%2f&amp;title=How%20to%20Record%20and%20Share%20a%20Terminal%20Session" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f28%2faws-routing-policies---visual-comparison%2f&amp;title=AWS%20Routing%20Policies%20-%20Visual%20Comparison" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=How%20to%20Record%20and%20Share%20a%20Terminal%20Session&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2016%2f11%2f02%2fhow-to-record-and-share-a-terminal-session%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=AWS%20Routing%20Policies%20-%20Visual%20Comparison&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f28%2faws-routing-policies---visual-comparison%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -242,18 +318,12 @@
     <nav><ul class="pager">
     
         <li class="previous">
-          <a href="https://blog.victormendonca.com/2016/10/19/how-to-create-a-prompt-with-timeout-in-bash/" title="How to Create a Prompt With Timeout in Bash">
+          <a href="https://blog.victormendonca.com/2020/04/27/how-to-change-macos-key-bindings/" title="How to Change macOS Key Bindings">
             <span aria-hidden="true">&larr;</span>Previous
           </a>
         </li>
     
 
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2016/12/23/redirecting-bash-xtrace-to-a-separate-log/" title="Redirecting Bash Xtrace to a Separate Log">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
     
     </ul> </nav>
   
