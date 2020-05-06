@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Aws on Victor&#39;s Blog</title>
+    <link>https://blog.victormendonca.com/tags/aws/</link>
+    <description>Recent content in Aws on Victor&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
+    <lastBuildDate>Tue, 28 Apr 2020 14:45:00 -0400</lastBuildDate>
+    
+	<atom:link href="https://blog.victormendonca.com/tags/aws/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>AWS Routing Policies - Visual Comparison</title>
+      <link>https://blog.victormendonca.com/2020/04/28/aws-routing-policies---visual-comparison/</link>
+      <pubDate>Tue, 28 Apr 2020 14:45:00 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2020/04/28/aws-routing-policies---visual-comparison/</guid>
+      <description>A quick explanation and visual overview of the AWS Route 53 policies (with the exception of Geoproximity Routing).
+Simple Routing Policy Use for a single resource that performs a given function for your domain, for example, a web server that serves content for the example.com website.
+Important points to remember:
+ Simplest routing policy Only one DNS record set Multiple IP address per record set can be used Values are returned to user in random order No health checks  Weighted Routing Policy Weighted Routing Policy controls the percentage of the requests that go to a specific endpoint.</description>
+    </item>
+    
+  </channel>
+</rss>

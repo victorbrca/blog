@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Virtualbox on Victor&#39;s Blog</title>
+    <link>https://blog.victormendonca.com/tags/virtualbox/</link>
+    <description>Recent content in Virtualbox on Victor&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
+    <lastBuildDate>Fri, 17 Apr 2020 22:00:00 -0400</lastBuildDate>
+    
+	<atom:link href="https://blog.victormendonca.com/tags/virtualbox/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How to Install macOS Catalina in Virtual Box</title>
+      <link>https://blog.victormendonca.com/2020/04/17/how-to-install-macos-catalina-in-virtual-box/</link>
+      <pubDate>Fri, 17 Apr 2020 22:00:00 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2020/04/17/how-to-install-macos-catalina-in-virtual-box/</guid>
+      <description>This document will provide instructions on getting a macOS Catalina install working with Guest Additions on VirtaulBox 6.1.
+Start by downloading a copy of the installer from the App Store. You will need a computer running macOS and you will need to convert the installer to an ISO. I will not be covering these steps here, but there are plenty tutorials online.
+Installing VirtualBox I&amp;rsquo;m hoping you already have this part covered and you are coming here only because you had issues getting macOS installed, but just in case, make sure the following packages are installed (Arch):</description>
+    </item>
+    
+  </channel>
+</rss>
