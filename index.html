@@ -119,6 +119,225 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2020/06/17/lenovo-p1-gen-tlp-on-arch/">TLP and CPUFreq on ThinkPad P1 Gen 2 (KDE Arch)</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2020-06-17">17 Jun, 2020</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/hardware" class="label label-primary">Hardware</a>
+  
+  <a href="https://blog.victormendonca.com/tags/thinkpad" class="label label-primary">ThinkPad</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>On this tutorial I will show you how to install and configure <code>TLP</code> and <code>Intel P-state and CPUFreq Manager</code> on your ThinkPad P1 Gen 2 (with KDE Arch).</p>
+
+<p>If you don&rsquo;t know, <em><strong>TLP</strong></em> allows you to configure specific rules to help optimize the battery life on your laptop, while <em><strong>Intel P-state and CPUFreq Manager</strong></em> gives you a pretty interface via a tray icon that allows you to control CPU/GPU frequencies and a few power profiles.</p>
+
+<h2 id="tlp">TLP</h2>
+
+<p>Using TLP&rsquo;s threshold functionality we can change the charge thresholds for the battery. On ThinkPads the charging process is controlled by the embedded controller (EC) firmware (instead of software running on the operating system). Lenovo&rsquo;s default settings start charging when the battery drops below 96%, and stops at 100%. This is good for &laquo;performance&raquo; but it deteriorates the battery causing a shorter lifespan. By changing the battery charge thresholds with TLP we can extend the lifespan of the battery.</p>
+
+<p><em><strong>Note:</strong> Lithium-ion batteries do not suffer from memory effect like NiCd and NiMH batteries. See the quote below (<a href="https://batteryuniversity.com">https://batteryuniversity.com</a>) for an explanation</em></p>
+
+<blockquote>
+<p>A lithium-ion battery provides 300-500 discharge/charge cycles. The battery prefers a partial rather than a full discharge. Frequent full discharges should be avoided when possible. Instead, charge the battery more often or use a larger battery. There is no concern of memory when applying unscheduled charges.</p>
+</blockquote>
+
+<h3 id="installation">Installation</h3>
+
+<p>This part is very simple. Install the following packages and then reboot:</p>
+
+<p><strong>=&gt; Main</strong></p>
+
+<ul>
+<li><code>tlp</code></li>
+<li><code>acpi_call</code></li>
+<li><code>smartmontools</code></li>
+</ul>
+
+<p><strong>=&gt; AUR</strong></p>
+
+<ul>
+<li><code>tlpui-git</code></li>
+</ul>
+
+<h3 id="configuration">Configuration</h3>
+
+<p>a. Run <code>tlpui</code> and go to the &lsquo;ThinkPad Battery&rsquo; tab on the left</p>
+
+<p>b. Set the following parameters/options</p>
+
+<h5 id="start-charge-thresh-bat0"><code>START_CHARGE_THRESH_BAT0</code></h5>
+
+<p><em>Value = 50/60</em></p>
+
+<p>This is the threshold of when the battery will start charging. If you set it to 50 the battery will only start charging when it&rsquo;s below 50%.</p>
+
+<h5 id="stop-charge-thresh-bat0"><code>STOP_CHARGE_THRESH_BAT0</code></h5>
+
+<p><em>Value = 70/80</em></p>
+
+<p>This is the value of when the battery will stop charging. If you set it to 80 the battery will stop charging when close to %80.</p>
+
+<h5 id="restore-thresholds-on-bat"><code>RESTORE_THRESHOLDS_ON_BAT</code></h5>
+
+<p><em>Value = enabled</em></p>
+
+<p>When you bypass the charge thresholds with a TLP command you would usually need to reboot your machine to reset the thresholds. When <code>RESTORE_THRESHOLDS_ON_BAT</code> is enabled the configured thresholds will be restored when the power is unplugged.</p>
+
+<p>This is useful if you need to fully charge your battery for a meeting, or to work in a place where you know you won&rsquo;t have a power outlet.</p>
+
+<h5 id="natacpi-enable"><code>NATACPI_ENABLE</code></h5>
+
+<p><em>Value = enabled</em></p>
+
+<h5 id="tpacpi-enable"><code>TPACPI_ENABLE</code></h5>
+
+<p><em>Value = enabled</em></p>
+
+<h5 id="tpsmapi-enable"><code>TPSMAPI_ENABLE</code></h5>
+
+<p><em>Value = disabled</em></p>
+
+<p><code>tp_smapi</code> doesn&rsquo;t support newer models, so we need to disable this.</p>
+
+<p>c. Go back to the &lsquo;General&rsquo; tab and enable <code>TLP_ENABLE</code></p>
+
+<p>d. Click on &lsquo;save&rsquo; and reboot</p>
+
+<h3 id="additional-tlp-commands">Additional TLP Commands</h3>
+
+<p><strong>Get a full report from TLP</strong></p>
+
+<pre><code class="language-none">sudo tlp-stat
+</code></pre>
+
+<p><strong>Get a report with battery information only</strong></p>
+
+<pre><code class="language-none">sudo tlp-stat -b
+</code></pre>
+
+<p><strong>Temporarily bypass the current config and use specified threshold</strong></p>
+
+<pre><code class="language-none">sudo tlp setcharge [start threshold] [stop threshold]
+</code></pre>
+
+<p><strong>Bypass thresholds and fully charge battery</strong></p>
+
+<pre><code class="language-none">sudo tlp fullcharge
+</code></pre>
+
+<p><strong>Bypass the start threshold and charge up to the stop threshold</strong></p>
+
+<pre><code class="language-none">sudo tlp chargeonce
+</code></pre>
+
+<h2 id="intel-p-state-and-cpufreq-manager">Intel P-state and CPUFreq Manager</h2>
+
+<p>a. Install <code>plasma5-applets-plasma-pstate</code> (AUR)</p>
+
+<p>b. Add the widget to your panel</p>
+
+<p><img src="https://blog.victormendonca.com/img/lenovo-p1-gen-tlp-on-arch/add_widget.png" alt="" /></p>
+
+<p>c. Done! You should now be able to use the widget for basic control</p>
+
+<p><img src="https://blog.victormendonca.com/img/lenovo-p1-gen-tlp-on-arch/widget_view.png" alt="" /></p>
+
+<hr />
+
+<p>Reference:</p>
+
+<ul>
+<li><a href="https://linrunner.de/tlp/faq/battery.html">https://linrunner.de/tlp/faq/battery.html</a></li>
+<li><a href="https://support.lenovo.com/ca/en/solutions/ht078208">https://support.lenovo.com/ca/en/solutions/ht078208</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/TLP">https://wiki.archlinux.org/index.php/TLP</a></li>
+<li><a href="https://store.kde.org/p/1282623/">https://store.kde.org/p/1282623/</a></li>
+</ul>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f06%2f17%2flenovo-p1-gen-tlp-on-arch%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=TLP%20and%20CPUFreq%20on%20ThinkPad%20P1%20Gen%202%20%28KDE%20Arch%29&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f06%2f17%2flenovo-p1-gen-tlp-on-arch%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f06%2f17%2flenovo-p1-gen-tlp-on-arch%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f06%2f17%2flenovo-p1-gen-tlp-on-arch%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f06%2f17%2flenovo-p1-gen-tlp-on-arch%2f&amp;title=TLP%20and%20CPUFreq%20on%20ThinkPad%20P1%20Gen%202%20%28KDE%20Arch%29" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=TLP%20and%20CPUFreq%20on%20ThinkPad%20P1%20Gen%202%20%28KDE%20Arch%29&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f06%2f17%2flenovo-p1-gen-tlp-on-arch%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2020/04/28/aws-routing-policies---visual-comparison/" title="AWS Routing Policies - Visual Comparison">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2020/04/28/aws-routing-policies---visual-comparison/">AWS Routing Policies - Visual Comparison</a>
 </h2>
 
@@ -273,6 +492,12 @@
         </li>
     
 
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2020/06/17/lenovo-p1-gen-tlp-on-arch/" title="TLP and CPUFreq on ThinkPad P1 Gen 2 (KDE Arch)">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
     
     </ul> </nav>
   
@@ -928,221 +1153,6 @@ reboot
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2020/04/02/how-to-install-chrome-remote-desktop-on-arch/">How to Install chrome-remote-desktop on Arch</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2020-04-02">2 Apr, 2020</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/arch" class="label label-primary">Arch</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<p>Chrome Remote Desktop has been around for quite a while, but now Google offers a <code>.deb</code> installer with native Linux support via Systemd. This is great because it removes the need to setup VPNs and VNC to remote connect to your machines, or in the case that you need to land a hand to a not so technical savvy family member or friend.</p>
-
-<p>Unfortunately the installer is only for Ubuntu (and Debian based distros), but with a few steps we can get it running on Arch, and (thanks to a patch by <a href="https://gist.github.com/nightuser">nightuser</a>) even configure it to use existing X sessions instead of creating a new one (which is the default behavior).</p>
-
-<p>As expected, the packages exists in the AUR, so the install should be pretty simple.</p>
-
-<h2 id="instructions">Instructions</h2>
-
-<h3 id="install">Install</h3>
-
-<p>a. Install <code>chrome-remote-desktop</code> from the AUR</p>
-
-<p>b. Run <code>crd --setup</code> to configure your connection. Hit any key</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-install-chrome-remote-desktop-on-arch/1_prompt-1.png" alt="" /></p>
-
-<p>c. Select your Desktop Environment (I selected KDE which is what I use) and save the file</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-install-chrome-remote-desktop-on-arch/2_select_de.png" alt="" /></p>
-
-<p>d. Press any key again</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-install-chrome-remote-desktop-on-arch/3_prompt-2.png" alt="" /></p>
-
-<p>e. Enter a new resolution if you would like to use something different than the default (1366x768). Save the file</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-install-chrome-remote-desktop-on-arch/4_resolution.png" alt="" /></p>
-
-<p>f. You should see the confirmation that the setup is complete</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-install-chrome-remote-desktop-on-arch/5_setup_complete.png" alt="" /></p>
-
-<p>g. Go to <a href="https://remotedesktop.google.com/headless">https://remotedesktop.google.com/headless</a> and click on &lsquo;Begin&rsquo;</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-install-chrome-remote-desktop-on-arch/6_web_setup-1.png" alt="" /></p>
-
-<p>h. Click on &lsquo;Next&rsquo;</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-install-chrome-remote-desktop-on-arch/7_web_setup-2.png" alt="" /></p>
-
-<p>i. Click on &lsquo;Authorize&rsquo;</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-install-chrome-remote-desktop-on-arch/8_web_setup-3.png" alt="" /></p>
-
-<p>j. Select the Goole account you would like to use</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-install-chrome-remote-desktop-on-arch/9_select_account.png" alt="" /></p>
-
-<p>k. Give it permission</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-install-chrome-remote-desktop-on-arch/10_select_account-2.png" alt="" /></p>
-
-<p>l. Click on the copy the button and paste it on your terminal</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-install-chrome-remote-desktop-on-arch/11_web_setup-4.png" alt="" /></p>
-
-<p>m. Give the computer a friendly name and a pin to access it</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-install-chrome-remote-desktop-on-arch/12_paste_terminal.png" alt="" /></p>
-
-<p>You should get a confirmation that everything went ok</p>
-
-<pre><code class="language-none">Starting Xvfb on display :20
-X server is active.
-Launching X session: ['/bin/sh', '/home/victor/.chrome-remote-desktop-session']
-Launching host process
-['/opt/google/chrome-remote-desktop/chrome-remote-desktop-host', '--host-config=-', '--audio-pipe-name=/home/victor/.config/chrome-remote-desktop/pulseaudio#ae6329c099/fifo_output', '--server-supports-exact-resize', '--ssh-auth-sockname=/tmp/chromoting.victor.ssh_auth_sock', '--signal-parent']
-wait() returned (1092272,0)
-Host ready to receive connections.
-Log file: /tmp/chrome_remote_desktop
-</code></pre>
-
-<h3 id="additional-configuration">Additional Configuration</h3>
-
-<p>The additional configuration will allow you to connect to an existing session instead of creating a new one when connecting.</p>
-
-<p>a. Find what display number X is using</p>
-
-<pre><code class="language-none">$ echo $DISPLAY
-:0
-</code></pre>
-
-<p>b. Create a file in <code>~/.config/chrome-remote-desktop/Xsession</code> with the display value</p>
-
-<pre><code class="language-none">$ echo &quot;0&quot; &gt; ~/.config/chrome-remote-desktop/Xsession
-</code></pre>
-
-<p>c. Stop the <code>chrome-remote-desktop.service</code></p>
-
-<pre><code class="language-none">$ systemctl --user stop chrome-remote-desktop.service
-</code></pre>
-
-<p>d. Check if it stopped with <code>crd --status</code>. If it did not, stop it with <code>crd --stop</code></p>
-
-<pre><code class="language-none">$ crd --status
-CRD status: STOPPED
-</code></pre>
-
-<p>e. Take a backup of <code>/opt/google/chrome-remote-desktop/chrome-remote-desktop</code></p>
-
-<p>f. Download the <a href="https://gist.githubusercontent.com/victorbrca/7bd9b351ccf2788a86aa94d296f4d48c/raw/7948453c8da09965b6f23280a1dbf86c432ea4c9/chrome-remote-desktop">patched</a> <code>/opt/google/chrome-remote-desktop/chrome-remote-desktop</code> to the same location, or follow the instructions to manually modify your file <a href="https://gist.github.com/nightuser/2ec1b91a66ec33ef0a0a67b6c570eb40#file-use_existing_session-patch">here</a>.</p>
-
-<p><em><strong>Note:</strong> The patched version was tested with <code>chrome-remote-desktop 81.0.4044.60-1</code></em></p>
-
-<p>g. Start the agent with <code>crd --start</code> so you can see verbose output. You should receive a confirmation when it starts</p>
-
-<pre><code class="language-none">$ crd --start
-
-Launching X server and X session.
-Using existing Xorg session: 0
-Launching host process
-['/opt/google/chrome-remote-desktop/chrome-remote-desktop-host', '--host-config=-', '--audio-pipe-name=/home/victor/.config/chrome-remote-desktop/pulseaudio#ae6329c099/fifo_output', '--ssh-auth-sockname=/tmp/chromoting.victor.ssh_auth_sock', '--signal-parent']
-Host ready to receive connections.
-Log file: /tmp/chrome_remote_desktop_20200402_202207_2vtQSb
-</code></pre>
-
-<p>h. Go to <a href="https://remotedesktop.google.com/">https://remotedesktop.google.com/</a> from another computer and try to access your computer</p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f02%2fhow-to-install-chrome-remote-desktop-on-arch%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Install%20chrome-remote-desktop%20on%20Arch&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f02%2fhow-to-install-chrome-remote-desktop-on-arch%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f02%2fhow-to-install-chrome-remote-desktop-on-arch%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f02%2fhow-to-install-chrome-remote-desktop-on-arch%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f02%2fhow-to-install-chrome-remote-desktop-on-arch%2f&amp;title=How%20to%20Install%20chrome-remote-desktop%20on%20Arch" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=How%20to%20Install%20chrome-remote-desktop%20on%20Arch&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f02%2fhow-to-install-chrome-remote-desktop-on-arch%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2020/03/30/how-to-move-plex-installation-on-freenas/" title="How to Move Plex Installation on FreeNAS 11.3">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2020/04/17/how-to-install-macos-catalina-in-virtual-box/" title="How to Install macOS Catalina in Virtual Box">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1286,6 +1296,10 @@ Log file: /tmp/chrome_remote_desktop_20200402_202207_2vtQSb
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2020/06/17/lenovo-p1-gen-tlp-on-arch/">TLP and CPUFreq on ThinkPad P1 Gen 2 (KDE Arch)</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2020/04/28/aws-routing-policies---visual-comparison/">AWS Routing Policies - Visual Comparison</a>
           </li>
         
@@ -1307,10 +1321,6 @@ Log file: /tmp/chrome_remote_desktop_20200402_202207_2vtQSb
         
           <li>
           <a href="https://blog.victormendonca.com/2020/03/30/how-to-move-plex-installation-on-freenas/">How to Move Plex Installation on FreeNAS 11.3</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2020/03/15/rhcsa-v8-work-with-package-module-streams/">RHCSA v8: Work with Package Module Streams</a>
           </li>
         
         </ul>

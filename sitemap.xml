@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.victormendonca.com/2020/06/17/lenovo-p1-gen-tlp-on-arch/</loc>
+    <lastmod>2020-06-17T20:00:36-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.victormendonca.com/2020/04/28/aws-routing-policies---visual-comparison/</loc>
     <lastmod>2020-04-28T14:45:00-04:00</lastmod>
   </url>
@@ -297,7 +302,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/hardware/</loc>
-    <lastmod>2019-04-15T18:14:35-04:00</lastmod>
+    <lastmod>2020-06-17T20:00:36-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -309,7 +314,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/linux/</loc>
-    <lastmod>2020-04-23T20:24:12-04:00</lastmod>
+    <lastmod>2020-06-17T20:00:36-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -351,7 +356,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/post/</loc>
-    <lastmod>2020-04-28T14:45:00-04:00</lastmod>
+    <lastmod>2020-06-17T20:00:36-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -398,13 +403,19 @@
   </url>
   
   <url>
+    <loc>https://blog.victormendonca.com/tags/thinkpad/</loc>
+    <lastmod>2020-06-17T20:00:36-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.victormendonca.com/topics/</loc>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.victormendonca.com/</loc>
-    <lastmod>2020-04-28T14:45:00-04:00</lastmod>
+    <lastmod>2020-06-17T20:00:36-04:00</lastmod>
     <priority>0</priority>
   </url>
   

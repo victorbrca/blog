@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Thinkpad on Victor&#39;s Blog</title>
+    <link>https://blog.victormendonca.com/tags/thinkpad/</link>
+    <description>Recent content in Thinkpad on Victor&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
+    <lastBuildDate>Wed, 17 Jun 2020 20:00:36 -0400</lastBuildDate>
+    
+	<atom:link href="https://blog.victormendonca.com/tags/thinkpad/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>TLP and CPUFreq on ThinkPad P1 Gen 2 (KDE Arch)</title>
+      <link>https://blog.victormendonca.com/2020/06/17/lenovo-p1-gen-tlp-on-arch/</link>
+      <pubDate>Wed, 17 Jun 2020 20:00:36 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2020/06/17/lenovo-p1-gen-tlp-on-arch/</guid>
+      <description>On this tutorial I will show you how to install and configure TLP and Intel P-state and CPUFreq Manager on your ThinkPad P1 Gen 2 (with KDE Arch).
+If you don&amp;rsquo;t know, TLP allows you to configure specific rules to help optimize the battery life on your laptop, while Intel P-state and CPUFreq Manager gives you a pretty interface via a tray icon that allows you to control CPU/GPU frequencies and a few power profiles.</description>
+    </item>
+    
+  </channel>
+</rss>
