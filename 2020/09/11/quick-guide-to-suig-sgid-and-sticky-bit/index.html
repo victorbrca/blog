@@ -5,36 +5,32 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title>Fzf for the Win  &middot; Victor&#39;s Blog</title>
+  <title>Quick Guide to SUID, SGID and Sticky Bit  &middot; Victor&#39;s Blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="description" content="fzf is a command line fuzzy finder" />
+<meta name="description" content="Quick Guide to using SUID, SGID and Sticky Bit" />
 
-<meta name="keywords" content="Linux, Bash, fzf, ">
+<meta name="keywords" content="Linux, ">
 
 
-<meta property="og:title" content="Fzf for the Win  &middot; Victor&#39;s Blog ">
+<meta property="og:title" content="Quick Guide to SUID, SGID and Sticky Bit  &middot; Victor&#39;s Blog ">
 <meta property="og:site_name" content="Victor&#39;s Blog"/>
-<meta property="og:url" content="https://blog.victormendonca.com/2019/02/27/fzf-for-the-win/" />
+<meta property="og:url" content="https://blog.victormendonca.com/2020/09/11/quick-guide-to-suig-sgid-and-sticky-bit/" />
 <meta property="og:locale" content="en">
 
 
 <meta property="og:type" content="article" />
-<meta property="og:description" content="fzf is a command line fuzzy finder"/>
-<meta property="og:article:published_time" content="2019-02-27T08:00:39-04:00" />
-<meta property="og:article:modified_time" content="2019-02-27T08:00:39-04:00" />
+<meta property="og:description" content="Quick Guide to using SUID, SGID and Sticky Bit"/>
+<meta property="og:article:published_time" content="2020-09-11T16:00:00-04:00" />
+<meta property="og:article:modified_time" content="2020-09-11T16:00:00-04:00" />
 
   
     
 <meta property="og:article:tag" content="Linux">
-    
-<meta property="og:article:tag" content="Bash">
-    
-<meta property="og:article:tag" content="fzf">
     
   
 
@@ -42,9 +38,9 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@18440926" />
 <meta name="twitter:creator" content="@18440926" />
-<meta name="twitter:title" content="Fzf for the Win" />
-<meta name="twitter:description" content="fzf is a command line fuzzy finder" />
-<meta name="twitter:url" content="https://blog.victormendonca.com/2019/02/27/fzf-for-the-win/" />
+<meta name="twitter:title" content="Quick Guide to SUID, SGID and Sticky Bit" />
+<meta name="twitter:description" content="Quick Guide to using SUID, SGID and Sticky Bit" />
+<meta name="twitter:url" content="https://blog.victormendonca.com/2020/09/11/quick-guide-to-suig-sgid-and-sticky-bit/" />
 <meta name="twitter:domain" content="https://blog.victormendonca.com/">
   
 
@@ -52,7 +48,7 @@
 
 
 
-<link rel="canonical" href="https://blog.victormendonca.com/2019/02/27/fzf-for-the-win/" />
+<link rel="canonical" href="https://blog.victormendonca.com/2020/09/11/quick-guide-to-suig-sgid-and-sticky-bit/" />
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
 <link rel="icon" href="https://blog.victormendonca.com/favicon.png">
 <meta name="generator" content="Hugo 0.48" />
@@ -141,13 +137,13 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
   <div class="text-center">
 
-    <h1>Fzf for the Win
+    <h1>Quick Guide to SUID, SGID and Sticky Bit
 </h1>
 
     <div class="metas">
 <small>
   <i class="fa fa-calendar"></i>
-  <time datetime="2019-02-27">27 Feb, 2019</time>
+  <time datetime="2020-09-11">11 Sep, 2020</time>
 </small>
 
 
@@ -155,25 +151,25 @@
     &middot; by Victor Mendonça
   
   &middot; Read in about 2 min
-  &middot; (231 words)
+  &middot; (382 words)
   &middot; 
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f27%2ffzf-for-the-win%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f09%2f11%2fquick-guide-to-suig-sgid-and-sticky-bit%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=Fzf%20for%20the%20Win&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f27%2ffzf-for-the-win%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=Quick%20Guide%20to%20SUID%2c%20SGID%20and%20Sticky%20Bit&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f09%2f11%2fquick-guide-to-suig-sgid-and-sticky-bit%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f27%2ffzf-for-the-win%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f09%2f11%2fquick-guide-to-suig-sgid-and-sticky-bit%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f27%2ffzf-for-the-win%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f09%2f11%2fquick-guide-to-suig-sgid-and-sticky-bit%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f27%2ffzf-for-the-win%2f&amp;title=Fzf%20for%20the%20Win" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f09%2f11%2fquick-guide-to-suig-sgid-and-sticky-bit%2f&amp;title=Quick%20Guide%20to%20SUID%2c%20SGID%20and%20Sticky%20Bit" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=Fzf%20for%20the%20Win&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f27%2ffzf-for-the-win%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=Quick%20Guide%20to%20SUID%2c%20SGID%20and%20Sticky%20Bit&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f09%2f11%2fquick-guide-to-suig-sgid-and-sticky-bit%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   </small>
@@ -182,10 +178,6 @@
   <i class="fa fa-tags"></i>
   
   <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
-  
-  <a href="https://blog.victormendonca.com/tags/fzf" class="label label-primary">fzf</a>
   
 
 
@@ -198,34 +190,116 @@
 </div>
 
       <div class="content">
-  <p><code>fzf</code> is a command line fuzzy finder that can be used to automatically filter a list of items. Think of it as an interactive search tool, where items get filtered as you type characters in your terminal.</p>
+  
 
-<p>The video below shows a basic interaction using a list or files from the <code>fd</code> search utility:</p>
+<p>This is a quick guide on how to configure and use SGID, SUID and the sticky bit on Linux. I will not get into a lot of details, but I will add comments and notes that might help you understand or overcome a few common issues.</p>
 
-<p><img src="https://blog.victormendonca.com/img/fzf-for-the-win/fzf.gif" alt="" /></p>
+<h3 id="suid-set-user-identification">SUID - Set-user Identification</h3>
 
-<p><code>fzf</code> can also be used with other Bash tasks, like history, ssh and even file/dir completion. The GitHub page has a lot documentation on how to implement auto completion.</p>
+<p>When a command or script with SUID bit set is run, its effective UID becomes that of the owner of the file, rather than of the user who is running it.</p>
 
-<p><img src="https://blog.victormendonca.com/img/fzf-for-the-win/history-and-ssh.gif" alt="" /></p>
-
-<p>You can also use the <code>--preview</code> option to output the current selection into a preview box, and even call a command to be used with that value. For example, we can preview all the files in a folder by searching for files (with <code>find</code> or <code>fd</code>), piping the output to <code>fzf</code>, and then using a program like <code>cat</code> (on the example below I&rsquo;m using <code>bat</code>, which is a clone of <code>cat</code> with the addition of syntax highlight and other cool things) to preview the files.</p>
-
-<pre><code>fd -d 1 -t f | fzf --preview 'bat --color &quot;always&quot; {}' --preview-window=right:60%
+<pre><code class="language-none">-rws-----
 </code></pre>
 
-<p><img src="https://blog.victormendonca.com/img/fzf-for-the-win/preview.gif" alt="" /></p>
+<p><strong>Note</strong>: <em>SUID does not work on scripts that start with a shebang (<code>#!</code>)</em></p>
 
-<p>I&rsquo;ve covered only the very basic usage for <code>fzf</code>, but it should give you an idea of how powerful this finder utility is. On future posts I&rsquo;m going to cover other use cases, like the git workflow that I use.</p>
+<pre><code class="language-none"># chmod u+s [file]
+-rwsr--r--. 1 root root 0 Mar 16 21:48 test
 
-<hr />
+# chmod 4744 [file]
+-rwsr--r--. 1 root root 0 Mar 16 21:48 test
+</code></pre>
 
-<p><strong>References:</strong></p>
+<p><strong>Note</strong>: <em>A capital &rsquo;S&rsquo; (-rw<strong>S</strong>r&ndash;r&ndash;) indicates that the execute bit is not set</em></p>
+
+<h3 id="sgid-set-group-identification">SGID - Set-group identification</h3>
+
+<p>SGID permission is similar to the SUID permission. The main difference is that when a script or command with SGID set is run, it runs as if it were a member of the same group in which the file is a member.</p>
+
+<pre><code class="language-none">-rwxr-sr--
+</code></pre>
+
+<p><strong>Setting SGID</strong></p>
+
+<pre><code class="language-none"># chmod g+s [file]
+-rwxr-sr--. 1 root root 0 Mar 16 21:48 test
+
+# chmod 2754 [file]
+-rwxr-sr--. 1 root root 0 Mar 16 21:48 test
+</code></pre>
+
+<p><strong>Note</strong>: <em>A capital &rsquo;S&rsquo; (-rwxr-<strong>S</strong>r&ndash;) indicates that the execute bit is not set</em></p>
+
+<h3 id="sticky-bit">Sticky bit</h3>
+
+<p>Anyone can write, but only the owner can delete the files (just like <code>/tmp</code>).</p>
+
+<pre><code class="language-none">drwxrwxrwt
+</code></pre>
+
+<p>Sticky bit is usually set on directories. Setting the sticky bit on a folder does nothing (on Linux).</p>
+
+<p><strong>Setting sticky bit</strong></p>
+
+<pre><code class="language-none"># chmod o+t [dir]
+-rwxr-r-t. 1 root root 0 Mar 16 21:48 test
+
+# chmod 1755 [dir]
+-rwxr-xr-t. 1 root root 0 Mar 16 21:48 test
+</code></pre>
+
+<p><strong>Notes</strong>:</p>
 
 <ul>
-<li>fzf - <a href="https://github.com/junegunn/fzf">https://github.com/junegunn/fzf</a></li>
-<li>fd  - <a href="https://github.com/sharkdp/fd">https://github.com/sharkdp/fd</a></li>
-<li>bat - <a href="https://github.com/sharkdp/bat">https://github.com/sharkdp/bat</a></li>
+<li><em>A capital &rsquo;T&rsquo; indicates that the execute bit is not set</em></li>
+<li><em>You should give write permission to make sure that the target users can write to the folder</em></li>
 </ul>
+
+<h3 id="additional-special-permissions">Additional Special Permissions</h3>
+
+<p>A <code>.</code> can represent special permissions (SELinux related).</p>
+
+<pre><code class="language-none">-rw-rw-rw-.  
+</code></pre>
+
+<p>A <code>+</code> indicates ACLs are applied.</p>
+
+<pre><code class="language-none">-rw-rw-rw-+
+</code></pre>
+
+<h3 id="cheat-table">Cheat Table</h3>
+
+<table>
+<thead>
+<tr>
+<th align="left">Mode</th>
+<th align="left">Octal</th>
+<th align="left">Symbolic</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">SUID</td>
+<td align="left">4755</td>
+<td align="left">u+s</td>
+</tr>
+
+<tr>
+<td align="left">SGID</td>
+<td align="left">2775</td>
+<td align="left">g+s</td>
+</tr>
+
+<tr>
+<td align="left">Sticky Bit</td>
+<td align="left">1777</td>
+<td align="left">o+t</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Note</strong>: <em>Octal mode is not an absolute translation to symbolic mode as symbolic changes only the specified permission set (user, group <strong>OR</strong> others), while octal overwrites all permission sets (user, group <strong>AND</strong> others)</em></p>
 
 </div>
 
@@ -233,22 +307,22 @@
       <footer>
   
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f27%2ffzf-for-the-win%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f09%2f11%2fquick-guide-to-suig-sgid-and-sticky-bit%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=Fzf%20for%20the%20Win&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f27%2ffzf-for-the-win%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=Quick%20Guide%20to%20SUID%2c%20SGID%20and%20Sticky%20Bit&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f09%2f11%2fquick-guide-to-suig-sgid-and-sticky-bit%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f27%2ffzf-for-the-win%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f09%2f11%2fquick-guide-to-suig-sgid-and-sticky-bit%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f27%2ffzf-for-the-win%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f09%2f11%2fquick-guide-to-suig-sgid-and-sticky-bit%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f27%2ffzf-for-the-win%2f&amp;title=Fzf%20for%20the%20Win" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f09%2f11%2fquick-guide-to-suig-sgid-and-sticky-bit%2f&amp;title=Quick%20Guide%20to%20SUID%2c%20SGID%20and%20Sticky%20Bit" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=Fzf%20for%20the%20Win&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f27%2ffzf-for-the-win%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=Quick%20Guide%20to%20SUID%2c%20SGID%20and%20Sticky%20Bit&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f09%2f11%2fquick-guide-to-suig-sgid-and-sticky-bit%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -257,18 +331,12 @@
     <nav><ul class="pager">
     
         <li class="previous">
-          <a href="https://blog.victormendonca.com/2019/02/11/bash-theme-powerline-2column/" title="Bash Theme Powerline 2column">
+          <a href="https://blog.victormendonca.com/2020/06/17/lenovo-p1-gen-tlp-on-arch/" title="TLP and CPUFreq on ThinkPad P1 Gen 2 (KDE Arch)">
             <span aria-hidden="true">&larr;</span>Previous
           </a>
         </li>
     
 
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2019/03/10/colorful-banners-with-figlet-and-lolcat/" title="Colorful Banners With figlet and lolcat">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
     
     </ul> </nav>
   
