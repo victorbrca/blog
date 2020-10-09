@@ -127,6 +127,128 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2018/07/05/how-to-change-config.json-for-docker-mattermost-preview/">How to Change config.json for Docker Mattermost Preview</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2018-07-05">5 Jul, 2018</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/docker" class="label label-primary">Docker</a>
+  
+  <a href="https://blog.victormendonca.com/tags/mattermost" class="label label-primary">Mattermost</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  <p>These instructions show you how to change the <code>config.json</code> file for a <a href="https://hub.docker.com/r/mattermost/mattermost-preview/">Docker Mattermost Preview</a>.</p>
+
+<p>a- As root (or if you enabled non root users to manipulate docker), let&rsquo;s open a shell in the docker container</p>
+
+<pre><code>docker exec -ti mattermost-preview /bin/bash
+</code></pre>
+
+<p>b. Update the APT db on the docker instance and install <code>vim</code> (needed to edit the file)</p>
+
+<pre><code>apt update
+apt install vim
+</code></pre>
+
+<p>c. Change <code>config_docker.json</code> as needed</p>
+
+<pre><code>cd /mm/mattermost/config
+
+vim config_docker.json
+</code></pre>
+
+<p>d. Restart the docker container</p>
+
+<pre><code>docker restart mattermost-preview
+</code></pre>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f05%2fhow-to-change-config.json-for-docker-mattermost-preview%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Change%20config.json%20for%20Docker%20Mattermost%20Preview&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f05%2fhow-to-change-config.json-for-docker-mattermost-preview%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f05%2fhow-to-change-config.json-for-docker-mattermost-preview%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f05%2fhow-to-change-config.json-for-docker-mattermost-preview%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f05%2fhow-to-change-config.json-for-docker-mattermost-preview%2f&amp;title=How%20to%20Change%20config.json%20for%20Docker%20Mattermost%20Preview" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20Change%20config.json%20for%20Docker%20Mattermost%20Preview&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f05%2fhow-to-change-config.json-for-docker-mattermost-preview%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2018/07/04/how-to-change-forgotten-password-on-wsl-bash-for-windows/" title="How to Change Forgotten Password on WSL (Bash for Windows)">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2018/07/19/how-to-create-a-timer-in-bash/" title="How to Create a Timer in Bash">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2018/07/04/how-to-change-forgotten-password-on-wsl-bash-for-windows/">How to Change Forgotten Password on WSL (Bash for Windows)</a>
 </h2>
 
@@ -698,247 +820,6 @@ WantedBy=default.target
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2018/02/09/how-to-scan-for-rtsp-urls/">How to Scan for RTSP Urls</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2018-02-09">9 Feb, 2018</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/shell" class="label label-primary">Shell</a>
-  
-  <a href="https://blog.victormendonca.com/tags/networking" class="label label-primary">Networking</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  <p>So you have a camera but can&rsquo;t figure out what the RTSP URL is? Here&rsquo;s the solution.</p>
-
-<p>Head over to <a href="https://nmap.org/nsedoc/scripts/rtsp-url-brute.html">nmap.org</a> and download their <a href="https://svn.nmap.org/nmap/scripts/rtsp-url-brute.nse">rtsp-url-brute</a> script to your computer. Then run it with nmap as:</p>
-
-<pre><code>nmap --script rtsp-url-brute -p 554 [IP]
-</code></pre>
-
-<p>You should see results similar to the ones below:</p>
-
-<pre><code>nmap --script rtsp-url-brute -p 554 192.168.1.15
-
-Starting Nmap 7.60 ( https://nmap.org ) at 2018-02-09 23:00 EST
-Nmap scan report for 192.168.1.15
-Host is up (0.0033s latency).
-
-PORT    STATE SERVICE
-554/tcp open  rtsp
-| rtsp-url-brute:
-|   errors:
-|     rtsp://192.168.1.15/media.amp
-|     rtsp://192.168.1.15/media/media.amp
-|     rtsp://192.168.1.15/media/video1
-|     rtsp://192.168.1.15/media/video2
-|     rtsp://192.168.1.15/media/video3
-|     rtsp://192.168.1.15/medias1
-|     rtsp://192.168.1.15/mjpeg.cgi
-|     rtsp://192.168.1.15/mjpeg/media.smp
-|     rtsp://192.168.1.15/media
-|     rtsp://192.168.1.15/mp4
-|   discovered:
-|     rtsp://192.168.1.15/
-|     rtsp://192.168.1.15/1
-|     rtsp://192.168.1.15/1.AMP
-|     rtsp://192.168.1.15/1/1:1/main
-|     rtsp://192.168.1.15/1/cif
-|     rtsp://192.168.1.15/1/stream1
-|     rtsp://192.168.1.15/11
-|     rtsp://192.168.1.15/12
-|   other responses:
-|     400:
-|       rtsp://192.168.1.15/0
-|       rtsp://192.168.1.15/0/video1
-|       rtsp://192.168.1.15/4
-|       rtsp://192.168.1.15/CAM_ID.password.mp2
-|       rtsp://192.168.1.15/CH001.sdp
-|       rtsp://192.168.1.15/GetData.cgi
-|       rtsp://192.168.1.15/H264
-|       rtsp://192.168.1.15/HighResolutionVideo
-|       rtsp://192.168.1.15/HighResolutionvideo
-|       rtsp://192.168.1.15/Image.jpg
-|       rtsp://192.168.1.15/LowResolutionVideo
-|       rtsp://192.168.1.15/MJPEG.cgi
-|       rtsp://192.168.1.15/MediaInput/h264
-|       rtsp://192.168.1.15/MediaInput/h264/stream_1
-|       rtsp://192.168.1.15/MediaInput/mpeg4
-|       rtsp://192.168.1.15/ONVIF/MediaInput
-|       rtsp://192.168.1.15/ONVIF/channel1
-|       rtsp://192.168.1.15/PSIA/Streaming/channels/0?videoCodecType=H.264
-|       rtsp://192.168.1.15/PSIA/Streaming/channels/1
-|       rtsp://192.168.1.15/PSIA/Streaming/channels/1?videoCodecType=MPEG4
-|       rtsp://192.168.1.15/PSIA/Streaming/channels/h264
-|       rtsp://192.168.1.15/Possible
-|       rtsp://192.168.1.15/ROH/channel/11
-|       rtsp://192.168.1.15/Streaming/Channels/1
-|       rtsp://192.168.1.15/Streaming/Channels/101
-|       rtsp://192.168.1.15/Streaming/Channels/102
-|       rtsp://192.168.1.15/Streaming/Channels/103
-|       rtsp://192.168.1.15/Streaming/Channels/2
-|       rtsp://192.168.1.15/Streaming/Unicast/channels/101
-|       rtsp://192.168.1.15/Streaming/channels/101
-|       rtsp://192.168.1.15/Video?Codec=MPEG4&amp;Width=720&amp;Height=576&amp;Fps=30
-|       rtsp://192.168.1.15/VideoInput/1/h264/1
-|       rtsp://192.168.1.15/access_code
-|       rtsp://192.168.1.15/access_name_for_stream_1_to_5
-|       rtsp://192.168.1.15/av0_0
-|       rtsp://192.168.1.15/av0_1
-|       rtsp://192.168.1.15/av2
-|       rtsp://192.168.1.15/avn=2
-|       rtsp://192.168.1.15/axis-media/media.amp
-|       rtsp://192.168.1.15/axis-media/media.amp?videocodec=h264&amp;resolution=640x480
-|       rtsp://192.168.1.15/cam
-|       rtsp://192.168.1.15/cam/realmonitor
-|       rtsp://192.168.1.15/cam/realmonitor?channel=1&amp;subtype=00
-|       rtsp://192.168.1.15/cam/realmonitor?channel=1&amp;subtype=01
-|       rtsp://192.168.1.15/cam/realmonitor?channel=1&amp;subtype=1
-|       rtsp://192.168.1.15/cam0_0
-|       rtsp://192.168.1.15/cam0_1
-|       rtsp://192.168.1.15/cam1/h264
-|       rtsp://192.168.1.15/cam1/h264/multicast
-|       rtsp://192.168.1.15/cam1/mjpeg
-|       rtsp://192.168.1.15/cam1/mpeg4
-|       rtsp://192.168.1.15/cam1/onvif-h264
-|       rtsp://192.168.1.15/cam4/mpeg4
-|       rtsp://192.168.1.15/camera.stm
-|       rtsp://192.168.1.15/cgi-bin/viewer/video.jpg?resolution=640x480
-|       rtsp://192.168.1.15/ch0
-|       rtsp://192.168.1.15/ch0.h264
-|       rtsp://192.168.1.15/ch001.sdp
-|       rtsp://192.168.1.15/ch01.264
-|       rtsp://192.168.1.15/ch0_0.h264
-|       rtsp://192.168.1.15/ch0_unicast_firststream
-|       rtsp://192.168.1.15/ch0_unicast_secondstream
-|       rtsp://192.168.1.15/channel1
-|       rtsp://192.168.1.15/dms.jpg
-|       rtsp://192.168.1.15/dms?nowprofileid=2
-|       rtsp://192.168.1.15/h264
-|       rtsp://192.168.1.15/h264.sdp
-|       rtsp://192.168.1.15/h264/ch1/sub/
-|       rtsp://192.168.1.15/h264/media.amp
-|       rtsp://192.168.1.15/h264Preview_01_main
-|       rtsp://192.168.1.15/h264Preview_01_sub
-|       rtsp://192.168.1.15/h264_vga.sdp
-|       rtsp://192.168.1.15/image.jpg
-|       rtsp://192.168.1.15/image.mpg
-|       rtsp://192.168.1.15/image/jpeg.cgi
-|       rtsp://192.168.1.15/img/media.sav
-|       rtsp://192.168.1.15/img/video.asf
-|       rtsp://192.168.1.15/img/video.sav
-|       rtsp://192.168.1.15/ioImage/1
-|       rtsp://192.168.1.15/ipcam.sdp
-|       rtsp://192.168.1.15/ipcam/stream.cgi?nowprofileid=2
-|       rtsp://192.168.1.15/ipcam_h264.sdp
-|       rtsp://192.168.1.15/jpg/image.jpg?size=3
-|       rtsp://192.168.1.15/live
-|       rtsp://192.168.1.15/live.sdp
-|       rtsp://192.168.1.15/live/av0
-|       rtsp://192.168.1.15/live/ch0
-|       rtsp://192.168.1.15/live/ch00_0
-|       rtsp://192.168.1.15/live/ch00_1
-|       rtsp://192.168.1.15/live/ch1
-|       rtsp://192.168.1.15/live/ch2
-|       rtsp://192.168.1.15/live/h264
-|       rtsp://192.168.1.15/live/mpeg4
-|       rtsp://192.168.1.15/live0.264
-|       rtsp://192.168.1.15/live1.264
-|       rtsp://192.168.1.15/live1.sdp
-|       rtsp://192.168.1.15/live2.sdp
-|       rtsp://192.168.1.15/live3.sdp
-|       rtsp://192.168.1.15/live_h264.sdp
-|       rtsp://192.168.1.15/live_mpeg4.sdp
-|       rtsp://192.168.1.15/livestream
-|_      rtsp://192.168.1.15/livestream/
-</code></pre>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Scan%20for%20RTSP%20Urls&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f&amp;title=How%20to%20Scan%20for%20RTSP%20Urls" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=How%20to%20Scan%20for%20RTSP%20Urls&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2017/12/25/custom-standup-desk-build/" title="Custom Stand-up Desk Build">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2018/05/14/creating-a-simple-systemd-user-service/" title="Creating a Simple Systemd User Service">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1017,6 +898,12 @@ PORT    STATE SERVICE
     </a>
 </li>
 
+<li >
+  <a href="https://blog.victormendonca.com//page/11/">
+    11
+    </a>
+</li>
+
 
 <li >
   <a aria-label="Next" href="https://blog.victormendonca.com//page/8/">
@@ -1024,7 +911,7 @@ PORT    STATE SERVICE
     </a>
 </li>
 <li >
-  <a aria-label="Last" href="https://blog.victormendonca.com//page/10/">
+  <a aria-label="Last" href="https://blog.victormendonca.com//page/11/">
     <span aria-hidden="true">&raquo;&raquo;</span>
   </a>
 </li>
@@ -1082,6 +969,10 @@ PORT    STATE SERVICE
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2020/10/09/how-to-show-progress-for-dd/">How to Show Progress for dd</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2020/09/11/quick-guide-to-suig-sgid-and-sticky-bit/">Quick Guide to SUID, SGID and Sticky Bit</a>
           </li>
         
@@ -1103,10 +994,6 @@ PORT    STATE SERVICE
         
           <li>
           <a href="https://blog.victormendonca.com/2020/04/17/how-to-install-macos-catalina-in-virtual-box/">How to Install macOS Catalina in Virtual Box</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2020/04/02/how-to-install-chrome-remote-desktop-on-arch/">How to Install chrome-remote-desktop on Arch</a>
           </li>
         
         </ul>

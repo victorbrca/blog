@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Fri, 11 Sep 2020 16:00:00 -0400</lastBuildDate>
+    <lastBuildDate>Fri, 09 Oct 2020 11:28:28 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How to Show Progress for dd</title>
+      <link>https://blog.victormendonca.com/2020/10/09/how-to-show-progress-for-dd/</link>
+      <pubDate>Fri, 09 Oct 2020 11:28:28 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2020/10/09/how-to-show-progress-for-dd/</guid>
+      <description>If you have reached this page I expect that you already know what dd is. But you if you don&amp;rsquo;t, dd is a command-line utility that is used to convert and copy files. It&amp;rsquo;s commonly found on various (Linux) distro help pages that show new users how to setup USB (or Micro SD) drives to install or run (like Raspberry Pi) the OS.
+One of the main problems is that when running the dd utility, it does not provide any information on the current status of the copy process.</description>
+    </item>
     
     <item>
       <title>Quick Guide to SUID, SGID and Sticky Bit</title>

@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.victormendonca.com/2020/10/09/how-to-show-progress-for-dd/</loc>
+    <lastmod>2020-10-09T11:28:28-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.victormendonca.com/2020/09/11/quick-guide-to-suig-sgid-and-sticky-bit/</loc>
     <lastmod>2020-09-11T16:00:00-04:00</lastmod>
   </url>
@@ -271,7 +276,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/bash/</loc>
-    <lastmod>2020-04-23T20:24:12-04:00</lastmod>
+    <lastmod>2020-10-09T11:28:28-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -307,7 +312,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/hardware/</loc>
-    <lastmod>2020-06-17T20:00:36-04:00</lastmod>
+    <lastmod>2020-10-09T11:28:28-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -319,7 +324,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/linux/</loc>
-    <lastmod>2020-09-11T16:00:00-04:00</lastmod>
+    <lastmod>2020-10-09T11:28:28-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -361,7 +366,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/post/</loc>
-    <lastmod>2020-09-11T16:00:00-04:00</lastmod>
+    <lastmod>2020-10-09T11:28:28-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -420,7 +425,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/</loc>
-    <lastmod>2020-09-11T16:00:00-04:00</lastmod>
+    <lastmod>2020-10-09T11:28:28-04:00</lastmod>
     <priority>0</priority>
   </url>
   
