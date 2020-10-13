@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Fri, 09 Oct 2020 11:28:28 -0400</lastBuildDate>
+    <lastBuildDate>Tue, 13 Oct 2020 14:45:00 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/tags/hardware/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How to Install Waveshare 3.5&#34; LCD on Ubuntu 20.04</title>
+      <link>https://blog.victormendonca.com/2020/10/13/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/</link>
+      <pubDate>Tue, 13 Oct 2020 14:45:00 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2020/10/13/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/</guid>
+      <description>Following the steps of an older post (Installing Kuman 3), I find myself trying to configure the same Waveshare 3.5&amp;raquo; LCD touch screen on my Raspberry Pi 3B, but now with Ubuntu 20.04 64.bit.
+As usual the LCDs from Waveshare are not that easy to configure. While researching online I could not find any working instructions on how to configure the screen with Ubuntu 20.04. I found a few Git repos (Wavesahre and LCD Wiki), but they all failed to get me with a working config.</description>
+    </item>
     
     <item>
       <title>How to Show Progress for dd</title>

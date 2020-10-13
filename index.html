@@ -127,6 +127,229 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2020/10/13/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/">How to Install Waveshare 3.5&#34; LCD on Ubuntu 20.04</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2020-10-13">13 Oct, 2020</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/hardware" class="label label-primary">Hardware</a>
+  
+  <a href="https://blog.victormendonca.com/tags/raspberry-pi" class="label label-primary">Raspberry Pi</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>Following the steps of an older post (<a href="https://blog.victormendonca.com/2018/06/26/installing-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b/">Installing Kuman 3</a>), I find myself trying to configure the same Waveshare 3.5&raquo; LCD touch screen on my Raspberry Pi 3B, but now with Ubuntu 20.04 64.bit.</p>
+
+<p>As usual the LCDs from Waveshare are not that easy to configure. While researching online I could not find any working instructions on how to configure the screen with Ubuntu 20.04. I found a few Git repos (<a href="https://github.com/waveshare/LCD-show">Wavesahre</a> and <a href="https://github.com/lcdwiki/LCD-show-ubuntu">LCD Wiki</a>), but they all failed to get me with a working config.</p>
+
+<p>After spending a lot of time I was able to get it to work using some of the files and instructions from Waveshare&rsquo;s official Git Repo (as well as LCD Wiki).</p>
+
+<p>If you want to save yourself sometime, just use my Ansible repo to get your RPI3B configured. Otherwise, the manual instructions are bellow.</p>
+
+<p><a href="https://github.com/victorbrca/waveshare35-rpi3b-ubuntu-20.04-64">GitHub: waveshare35-rpi3b-ubuntu-20.04-64</a></p>
+
+<h2 id="instructions">Instructions</h2>
+
+<p>a. Download Ubuntu 20.04 64-bit for RPI3 and setup your SD card</p>
+
+<p><a href="https://ubuntu.com/download/raspberry-pi">https://ubuntu.com/download/raspberry-pi</a></p>
+
+<p><img src="img/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/download-ubuntu.png" alt="" /></p>
+
+<p>Make sure to check the downloaded file</p>
+
+<p><img src="img/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/verify-download.png" alt="" /></p>
+
+<p>b. Power the Pi on, login (SSH or HDMI), change the password and update</p>
+
+<pre><code class="language-none"># apt-get update apt-get upgrade
+</code></pre>
+
+<p>c. Install Xubuntu and evdev</p>
+
+<p><em><strong>Note:</strong> you could just install X instead of Xubuntu and there&rsquo;s a chance the instructions will work</em></p>
+
+<pre><code class="language-none"># apt-get install xubuntu-desktop xserver-xorg-input-evdev
+</code></pre>
+
+<p>d. Backup the files we are going to modify</p>
+
+<p><em>We are not modifying <code>config.txt</code>, but we are backing it up just in case</em></p>
+
+<pre><code class="language-none"># cd /boot/firmware
+
+# cp cmdline.txt cmdline.txt.orig
+# cp usercfg.txt usercfg.txt.orig
+# cp config.txt config.txt.orig
+</code></pre>
+
+<p>e. Add the following lines to <code>/boot/firmware/usercfg.txt</code></p>
+
+<pre><code class="language-none">dtparam=i2c_arm=on
+dtparam=audio=on
+dtparam=spi=on
+enable_uart=1
+dtoverlay=waveshare35a
+hdmi_drive=2
+disable_overscan=1
+</code></pre>
+
+<p>f. Make changes to <code>/boot/firmware/cmdline.txt</code></p>
+
+<ul>
+<li>Modify
+
+<ul>
+<li>console=ttyAMA0,115200</li>
+</ul></li>
+<li>Add
+
+<ul>
+<li>fbcon=map:10</li>
+<li>fbcon=font:ProFont6x11</li>
+</ul></li>
+</ul>
+
+<pre><code class="language-none">net.ifnames=0 dwc_otg.lpm_enable=0 console=ttyAMA0,115200 console=tty1 root=LABEL=writable rootfstype=ext4 elevator=deadline rootwait fixrtc fbcon=map:10 fbcon=font:ProFont6x11
+</code></pre>
+
+<p>g. Create the directory <code>/etc/X11/xorg.conf.d</code></p>
+
+<pre><code class="language-none"># mkdir -p /etc/X11/xorg.conf.d
+</code></pre>
+
+<p>h. Create the file <code>/etc/X11/xorg.conf.d/99-calibration.conf</code></p>
+
+<pre><code class="language-none">Section &quot;InputClass&quot;
+    Identifier &quot;calibration&quot;
+    MatchProduct &quot;ADS7846 Touchscreen&quot;
+    Option &quot;Calibration&quot; &quot;3932 300 294 3801&quot;
+    Option &quot;SwapAxes&quot; &quot;1&quot;
+    Option &quot;EmulateThirdButton&quot; &quot;1&quot;
+    Option &quot;EmulateThirdButtonTimeout&quot; &quot;750&quot;
+    Option &quot;EmulateThirdButtonMoveThreshold&quot; &quot;30&quot;
+EndSection
+</code></pre>
+
+<p>i. Create the file <code>/usr/share/X11/xorg.conf.d/99-fbturbo.conf</code></p>
+
+<pre><code class="language-none">Section &quot;Device&quot;
+    Identifier &quot;Allwinner A10/A13 FBDEV&quot;
+    Driver &quot;fbturbo&quot;
+    Option &quot;fbdev&quot; &quot;/dev/fb2&quot;
+
+    Option &quot;SwapbuffersWait&quot; &quot;true&quot;
+EndSection
+</code></pre>
+
+<p>j. Copy <code>10-evdev.conf</code> to <code>45-evdev.conf</code></p>
+
+<pre><code class="language-none"># cd /usr/share/X11/xorg.conf.d/
+# cp 10-evdev.conf 45-evdev.conf
+</code></pre>
+
+<p>k. Clone <code>https://github.com/waveshare/LCD-show.git</code></p>
+
+<pre><code class="language-none"># mkdir /root/Git
+# cd /roo/Git
+
+# git clone https://github.com/waveshare/LCD-show.git
+
+# cd LCD-show
+</code></pre>
+
+<p>l. Copy <code>waveshare35a-overlay.dtb</code> to <code>/boot/firmware/overlays</code> as both <code>waveshare35a-overlay.dtb</code> and <code>waveshare35a-overlay.dtbo</code></p>
+
+<pre><code class="language-none"># cp waveshare35a-overlay.dtb /boot/firmware/overlays/waveshare35a-overlay.dtb
+# cp waveshare35a-overlay.dtb /boot/firmware/overlays/waveshare35a-overlay.dtbo
+</code></pre>
+
+<p>m. Reboot and enjoy</p>
+
+<p><img src="https://pbs.twimg.com/media/Ej7nEdZWAAIZ9f3?format=jpg&amp;name=medium" alt="" /></p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f13%2fhow-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Install%20Waveshare%203.5%22%20LCD%20on%20Ubuntu%2020.04&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f13%2fhow-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f13%2fhow-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f13%2fhow-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f13%2fhow-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04%2f&amp;title=How%20to%20Install%20Waveshare%203.5%22%20LCD%20on%20Ubuntu%2020.04" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20Install%20Waveshare%203.5%22%20LCD%20on%20Ubuntu%2020.04&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f13%2fhow-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2020/10/09/how-to-show-progress-for-dd/" title="How to Show Progress for dd">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2020/10/09/how-to-show-progress-for-dd/">How to Show Progress for dd</a>
 </h2>
 
@@ -295,6 +518,12 @@ Written by Paul Rubin, David MacKenzie, and Stuart Kemp.
         </li>
     
 
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2020/10/13/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/" title="How to Install Waveshare 3.5&#34; LCD on Ubuntu 20.04">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
     
     </ul> </nav>
   
@@ -945,249 +1174,6 @@ Written by Paul Rubin, David MacKenzie, and Stuart Kemp.
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2020/04/27/how-to-change-macos-key-bindings/">How to Change macOS Key Bindings</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2020-04-27">27 Apr, 2020</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/macos" class="label label-primary">macOS</a>
-  
-  <a href="https://blog.victormendonca.com/tags/virtualbox" class="label label-primary">VirtualBox</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<p>This post will show you how to change line movement and control key bindings in macOS to be similar to what we use in Linux (and windows).</p>
-
-<p>The following keyboard shortcuts will be added:</p>
-
-<table>
-<thead>
-<tr>
-<th align="center">Sequence</th>
-<th align="center">Command</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td align="center">Ctrl+Left</td>
-<td align="center">Back one word</td>
-</tr>
-
-<tr>
-<td align="center">Ctrl+Right</td>
-<td align="center">Forward one word</td>
-</tr>
-
-<tr>
-<td align="center">Ctrl+Shift+Left</td>
-<td align="center">Back one word and modify selection</td>
-</tr>
-
-<tr>
-<td align="center">Ctrl+Shift+Right</td>
-<td align="center">Forward one word and modify selection</td>
-</tr>
-
-<tr>
-<td align="center">Home</td>
-<td align="center">Beginning of the line</td>
-</tr>
-
-<tr>
-<td align="center">End</td>
-<td align="center">End of line</td>
-</tr>
-
-<tr>
-<td align="center">Shift+Home</td>
-<td align="center">Beginning of the line and modify selection</td>
-</tr>
-
-<tr>
-<td align="center">Shift+End</td>
-<td align="center">End of line and modify selection</td>
-</tr>
-
-<tr>
-<td align="center">Ctrl+Home</td>
-<td align="center">Top of page</td>
-</tr>
-
-<tr>
-<td align="center">Ctrl+End</td>
-<td align="center">End of page</td>
-</tr>
-
-<tr>
-<td align="center">Shift+Ctrl+Home</td>
-<td align="center">Top of page and modify selection</td>
-</tr>
-
-<tr>
-<td align="center">Shift+Ctrl+End</td>
-<td align="center">End of page and modify selection</td>
-</tr>
-</tbody>
-</table>
-
-<h3 id="instructions">Instructions</h3>
-
-<p>a. First create the folder <code>~/Library/KeyBindings/</code> and then the file <code>DefaultKeyBinding.Dict</code></p>
-
-<pre><code class="language-none">mkdir ~/Library/KeyBindings/
-vim DefaultKeyBinding.Dict
-</code></pre>
-
-<p>b. Add the contents below to the new file:</p>
-
-<pre><code class="language-none">{
-    /* Ctrl + Left */
-    /* &quot;^\UF702&quot;  = &quot;moveWordLeft:&quot;; */
-    &quot;@\UF702&quot;  = &quot;moveWordLeft:&quot;;
-
-    /* Ctrl + Right */
-    /* &quot;^\UF703&quot;  = &quot;moveWordRight:&quot;; */
-    &quot;@\UF703&quot;  = &quot;moveWordRight:&quot;;
-
-    /* Ctrl + Shift + Left */
-    /* &quot;^$\UF702&quot; = &quot;moveWordLeftAndModifySelection:&quot;;*/
-    &quot;@$\UF702&quot; = &quot;moveWordLeftAndModifySelection:&quot;;
-
-    /* Ctrl + Shift + Right */
-    /* &quot;^$\UF703&quot; = &quot;moveWordRightAndModifySelection:&quot;;*/
-    &quot;@$\UF703&quot; = &quot;moveWordRightAndModifySelection:&quot;;
-
-    /* Remap Home / End keys */
-    /* Home Button*/
-    &quot;\UF729&quot; = &quot;moveToBeginningOfLine:&quot;;
-    /* End Button */
-    &quot;\UF72B&quot; = &quot;moveToEndOfLine:&quot;;
-
-    /* Shift + Home Button */
-    &quot;$\UF729&quot; = &quot;moveToBeginningOfLineAndModifySelection:&quot;;
-
-    /* Shift + End Button */
-    &quot;$\UF72B&quot; = &quot;moveToEndOfLineAndModifySelection:&quot;;
-
-    /* Ctrl + Home Button */
-    /* &quot;^\UF729&quot; = &quot;moveToBeginningOfDocument:&quot;; */
-    &quot;@\UF729&quot; = &quot;moveToBeginningOfDocument:&quot;;
-
-    /* Ctrl + End Button */
-    /* &quot;^\UF72B&quot; = &quot;moveToEndOfDocument:&quot;; */
-    &quot;@\UF72B&quot; = &quot;moveToEndOfDocument:&quot;;
-
-    /* Shift + Ctrl + Home Button */
-    /* &quot;$^\UF729&quot; = &quot;moveToBeginningOfDocumentAndModifySelection:&quot;; */
-    &quot;$@\UF729&quot; = &quot;moveToBeginningOfDocumentAndModifySelection:&quot;;
-
-    /* Shift + Ctrl + End Button*/
-    /* &quot;$^\UF72B&quot; = &quot;moveToEndOfDocumentAndModifySelection:&quot;; */
-    &quot;$@\UF72B&quot; = &quot;moveToEndOfDocumentAndModifySelection:&quot;;
-}
-</code></pre>
-
-<p><em><strong>Note:</strong> The code above assumes you are have substituted the <code>Command Key</code> for the <code>Control Key</code> in &laquo;Keyboard =&gt; Modifier Keys&hellip;&raquo; (see screenshot below). If you haven&rsquo;t, you can try changing the comment between the commented and uncommented blocks.</em></p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-change-macos-key-bindings/screen2.png" alt="" /></p>
-
-<p>c. Restart the application you want to use</p>
-
-<hr />
-
-<p>Reference:</p>
-
-<ul>
-<li><a href="https://gist.github.com/trusktr/1e5e516df4e8032cbc3d">https://gist.github.com/trusktr/1e5e516df4e8032cbc3d</a></li>
-</ul>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f27%2fhow-to-change-macos-key-bindings%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Change%20macOS%20Key%20Bindings&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f27%2fhow-to-change-macos-key-bindings%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f27%2fhow-to-change-macos-key-bindings%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f27%2fhow-to-change-macos-key-bindings%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f27%2fhow-to-change-macos-key-bindings%2f&amp;title=How%20to%20Change%20macOS%20Key%20Bindings" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=How%20to%20Change%20macOS%20Key%20Bindings&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f27%2fhow-to-change-macos-key-bindings%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2020/04/23/how-to-share-wifi-via-terminal-generated-qr-code/" title="How to Share WiFi Credentials from Terminal">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2020/04/28/aws-routing-policies---visual-comparison/" title="AWS Routing Policies - Visual Comparison">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1337,6 +1323,10 @@ vim DefaultKeyBinding.Dict
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2020/10/13/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/">How to Install Waveshare 3.5&#34; LCD on Ubuntu 20.04</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2020/10/09/how-to-show-progress-for-dd/">How to Show Progress for dd</a>
           </li>
         
@@ -1358,10 +1348,6 @@ vim DefaultKeyBinding.Dict
         
           <li>
           <a href="https://blog.victormendonca.com/2020/04/23/how-to-share-wifi-via-terminal-generated-qr-code/">How to Share WiFi Credentials from Terminal</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2020/04/17/how-to-install-macos-catalina-in-virtual-box/">How to Install macOS Catalina in Virtual Box</a>
           </li>
         
         </ul>

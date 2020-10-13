@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.victormendonca.com/2020/10/13/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/</loc>
+    <lastmod>2020-10-13T14:45:00-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.victormendonca.com/2020/10/09/how-to-show-progress-for-dd/</loc>
     <lastmod>2020-10-09T11:28:28-04:00</lastmod>
   </url>
@@ -312,7 +317,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/hardware/</loc>
-    <lastmod>2020-10-09T11:28:28-04:00</lastmod>
+    <lastmod>2020-10-13T14:45:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -324,7 +329,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/linux/</loc>
-    <lastmod>2020-10-09T11:28:28-04:00</lastmod>
+    <lastmod>2020-10-13T14:45:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -366,7 +371,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/post/</loc>
-    <lastmod>2020-10-09T11:28:28-04:00</lastmod>
+    <lastmod>2020-10-13T14:45:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -379,6 +384,12 @@
   <url>
     <loc>https://blog.victormendonca.com/tags/python/</loc>
     <lastmod>2017-10-11T17:58:37-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.victormendonca.com/tags/raspberry-pi/</loc>
+    <lastmod>2020-10-13T14:45:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -425,7 +436,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/</loc>
-    <lastmod>2020-10-09T11:28:28-04:00</lastmod>
+    <lastmod>2020-10-13T14:45:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
