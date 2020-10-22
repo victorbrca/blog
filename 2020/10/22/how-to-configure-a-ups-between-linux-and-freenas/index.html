@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>How to Configure a UPS Between Linux and FreeNAS  &middot; Victor&#39;s Blog</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="Configure a UPS Between Linux and FreeNAS with NUT" />
+
+<meta name="keywords" content="Linux, Shell, Hardware, FreeNAS, ">
+
+
+<meta property="og:title" content="How to Configure a UPS Between Linux and FreeNAS  &middot; Victor&#39;s Blog ">
+<meta property="og:site_name" content="Victor&#39;s Blog"/>
+<meta property="og:url" content="https://blog.victormendonca.com/2020/10/22/how-to-configure-a-ups-between-linux-and-freenas/" />
+<meta property="og:locale" content="en">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content="Configure a UPS Between Linux and FreeNAS with NUT"/>
+<meta property="og:article:published_time" content="2020-10-22T11:00:00-04:00" />
+<meta property="og:article:modified_time" content="2020-10-22T11:00:00-04:00" />
+
+  
+    
+<meta property="og:article:tag" content="Linux">
+    
+<meta property="og:article:tag" content="Shell">
+    
+<meta property="og:article:tag" content="Hardware">
+    
+<meta property="og:article:tag" content="FreeNAS">
+    
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@18440926" />
+<meta name="twitter:creator" content="@18440926" />
+<meta name="twitter:title" content="How to Configure a UPS Between Linux and FreeNAS" />
+<meta name="twitter:description" content="Configure a UPS Between Linux and FreeNAS with NUT" />
+<meta name="twitter:url" content="https://blog.victormendonca.com/2020/10/22/how-to-configure-a-ups-between-linux-and-freenas/" />
+<meta name="twitter:domain" content="https://blog.victormendonca.com/">
+  
+
+  
+
+
+
+<link rel="canonical" href="https://blog.victormendonca.com/2020/10/22/how-to-configure-a-ups-between-linux-and-freenas/" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
+<link rel="icon" href="https://blog.victormendonca.com/favicon.png">
+<meta name="generator" content="Hugo 0.48" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+
+
+    <link rel="stylesheet" href="https://blog.victormendonca.com/css/bootswatch/default/bootstrap.min.css">
+
+
+<link rel="stylesheet" href="https://blog.victormendonca.com/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://blog.victormendonca.com/css/style.css">
+
+
+<link rel="stylesheet" href="https://blog.victormendonca.com/css/style_custom.css">
+
+
+
+  <link rel="stylesheet" href="https://blog.victormendonca.com/css/highlight/github.css">
+
+
+</head>
+<body class="map[name:default]" data-ng-app="myapp" data-ng-controller="MyController" data-ng-mouseleave="MouseLeave($event)">
+    <header id="main-header">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        
+        <a class="navbar-brand" href="https://blog.victormendonca.com/">
+          Victor&#39;s Blog
+          
+          
+          </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            
+            
+            <li class="">
+
+              <a href="https://blog.victormendonca.com/" >
+                
+                Home
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://blog.victormendonca.com/about/" >
+                
+                About
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://geekit.ca/" >
+                
+                Professional
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://manhattan.victormendonca.com/" >
+                
+                Manhattan Blog
+              </a>
+            </li>
+            
+            
+            
+          </ul>
+        </div>
+        
+      </div>
+    </nav>
+  </header>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <div class="text-center">
+
+    <h1>How to Configure a UPS Between Linux and FreeNAS
+</h1>
+
+    <div class="metas">
+<small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2020-10-22">22 Oct, 2020</time>
+</small>
+
+
+  <small>
+    &middot; by Victor Mendonça
+  
+  &middot; Read in about 9 min
+  &middot; (1719 words)
+  &middot; 
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f22%2fhow-to-configure-a-ups-between-linux-and-freenas%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Configure%20a%20UPS%20Between%20Linux%20and%20FreeNAS&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f22%2fhow-to-configure-a-ups-between-linux-and-freenas%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f22%2fhow-to-configure-a-ups-between-linux-and-freenas%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f22%2fhow-to-configure-a-ups-between-linux-and-freenas%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f22%2fhow-to-configure-a-ups-between-linux-and-freenas%2f&amp;title=How%20to%20Configure%20a%20UPS%20Between%20Linux%20and%20FreeNAS" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20Configure%20a%20UPS%20Between%20Linux%20and%20FreeNAS&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f22%2fhow-to-configure-a-ups-between-linux-and-freenas%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  </small>
+
+<div class="margin-10">
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/shell" class="label label-primary">Shell</a>
+  
+  <a href="https://blog.victormendonca.com/tags/hardware" class="label label-primary">Hardware</a>
+  
+  <a href="https://blog.victormendonca.com/tags/freenas" class="label label-primary">FreeNAS</a>
+  
+
+
+</div>
+
+<br>
+</div>
+
+  </div>
+</div>
+
+      <div class="content">
+  
+
+<p>After having bad memory modules due to power outages at home (on both my FreeNAS and my desktop) I knew I had to invest on a UPS. I will cover the details of the configuration, and as usual, I will try to go straight to the point.</p>
+
+<p>Keep in mind that I&rsquo;m running <strong>Arch</strong> on my desktop and <strong>FreeNAS-11.3-U1</strong>, and that the <strong>UPS is connected to my desktop</strong> (master) via USB.</p>
+
+<h2 id="instructions">Instructions</h2>
+
+<h3 id="hardware">Hardware</h3>
+
+<p>a. Connect the USB cable to your computer</p>
+
+<p>b. Make sure that you can see it with <code>lsusb</code></p>
+
+<pre><code class="language-none">➤ lsusb | grep -i ups
+Bus 002 Device 008: ID 0764:0501 Cyber Power System, Inc. CP1500 AVR UPS
+</code></pre>
+
+<h3 id="desktop">Desktop</h3>
+
+<h4 id="configuring-the-ups">Configuring the UPS</h4>
+
+<p>a. Start by installing <code>nut</code> and <code>nut-monitor</code> (if you want a nice GUI to view UPS status)</p>
+
+<pre><code class="language-none">local/nut 2.7.4-2
+    A collection of programs which provide a common interface for monitoring and administering UPS, PDU and SCD
+    hardware
+
+local/nut-monitor 2.7.4-3
+    GUI to manage devices connected a NUT server
+</code></pre>
+
+<p>b. Next run <code>nut-scanner</code> to see if identifies your UPS. This will give a start configuration that we can use for the UPS</p>
+
+<pre><code class="language-none">➤ sudo nut-scanner -U
+Scanning USB bus.
+[nutdev1]
+	driver = &quot;usbhid-ups&quot;
+	port = &quot;auto&quot;
+	vendorid = &quot;0764&quot;
+	productid = &quot;0501&quot;
+	product = &quot;SL Series&quot;
+	vendor = &quot;CPS&quot;
+	bus = &quot;002
+</code></pre>
+
+<p>c. Edit <code>/etc/nut/ups.conf</code> and add the output from the previous step. You can change the device name (between <code>[]</code>) to anything you like</p>
+
+<p><em><strong>Tip:</strong> If you only have one UPS keep the name simple so it&rsquo;s easy for your to remember and type it in the terminal.</em></p>
+
+<pre><code>[CyberPowerSL700U]
+	driver = &quot;usbhid-ups&quot;
+	port = &quot;auto&quot;
+	vendorid = &quot;0764&quot;
+	productid = &quot;0501&quot;
+	product = &quot;SL Series&quot;
+	vendor = &quot;CPS&quot;
+	bus = &quot;002&quot;
+</code></pre>
+
+<p>d. Start the USB driver</p>
+
+<pre><code class="language-none">➤ sudo upsdrvctl start
+</code></pre>
+
+<p><em>d.1.</em> If you get an error here you might need to setup a udev rule for your UPS. This can be done by creating the file <code>/etc/udev/rules.d/50-ups.rules</code> with the content below</p>
+
+<blockquote>
+<p><code>SUBSYSTEM==&quot;usb&quot;, ATTR{idVendor}==&quot;XXXX&quot;, ATTR{idProduct}==&quot;YYYY&quot;, SYMLINK+=&quot;ups0&quot;, GROUP=&quot;nut&quot;</code></p>
+</blockquote>
+
+<p>Make sure to add the vendor ID and product ID for the UPS (both <code>lsusb</code> and <code>nut-scanner -U</code> can provide that info). This what mine looks like:</p>
+
+<pre><code class="language-none">➤ cat /etc/udev/rules.d/50-ups.rules
+SUBSYSTEM==&quot;usb&quot;, ATTR{idVendor}==&quot;0764&quot;, ATTR{idProduct}==&quot;0501&quot;, SYMLINK+=&quot;ups0&quot;, GROUP=&quot;nut&quot;
+</code></pre>
+
+<p><em>d.2.</em> After that reload udev rules and try to start the UPS USB driver again</p>
+
+<pre><code class="language-none">➤ sudo udevadm control --reload-rules &amp;&amp; sudo udevadm trigger
+➤ sudo upsdrvctl start
+</code></pre>
+
+<p>e. Make sure that you can view the UPS status with <code>upsc</code></p>
+
+<pre><code class="language-none">➤ upsc CyberPowerSL700U
+battery.charge: 100
+battery.charge.low: 10
+battery.charge.warning: 20
+battery.mfr.date: CPS
+battery.runtime: 599
+battery.runtime.low: 300
+battery.type: PbAcid
+battery.voltage: 14.2
+battery.voltage.nominal: 12
+device.mfr: CPS
+device.model: SL Series
+device.type: ups
+driver.name: usbhid-ups
+driver.parameter.bus: 002
+driver.parameter.pollfreq: 30
+driver.parameter.pollinterval: 2
+driver.parameter.port: auto
+driver.parameter.product: SL Series
+driver.parameter.productid: 0501
+driver.parameter.synchronous: no
+driver.parameter.vendor: CPS
+driver.parameter.vendorid: 0764
+driver.version: 2.7.4
+driver.version.data: CyberPower HID 0.4
+driver.version.internal: 0.41
+input.transfer.high: 140
+input.transfer.low: 96
+input.voltage: 115.0
+input.voltage.nominal: 0
+output.voltage: 115.0
+ups.beeper.status: enabled
+ups.delay.shutdown: 20
+ups.delay.start: 30
+ups.load: 44
+ups.mfr: CPS
+ups.model: SL Series
+ups.productid: 0501
+ups.realpower.nominal: 375
+ups.status: OL
+ups.timer.shutdown: -60
+ups.timer.start: -60
+ups.vendorid: 0764
+</code></pre>
+
+<h4 id="configuring-the-nut-server">Configuring the NUT Server</h4>
+
+<p>We are going to configure it as the master (meaning that it will send the shutdown command to the listening clients when the battery is low).</p>
+
+<p><strong><em>Info:</em></strong> <em>If you want to know what the shutdown process looks like, take a look at the <a href="https://networkupstools.org/docs/user-manual.chunked/ar01s06.html#UPS_shutdown">Official NUT Document: Shutdown design</a></em></p>
+
+<p>a. Edit <code>/etc/nut/nut.conf</code> and set the <code>MODE</code> to <code>netserver</code></p>
+
+<pre><code class="language-none">MODE=netserver
+</code></pre>
+
+<p>b. Now let&rsquo;s configure the listening IP and port. Edit <code>/etc/nut/upsd.conf</code>, edit the<code>LISTEN</code> directive as below:</p>
+
+<pre><code class="language-none">LISTEN 0.0.0.0 3493
+</code></pre>
+
+<p>c. Configure the users in <code>/etc/nut/upsd.users</code></p>
+
+<p><em>Add passwords under <code>my_master_password</code> and <code>my_slave_password</code></em></p>
+
+<pre><code class="language-none">[upsmaster]
+  # Administrative user
+  password = my_master_password
+
+  # Allow changing values of certain variables in the UPS
+  actions = SET
+
+  # Allow setting the &quot;Forced Shutdown&quot; flag in the UPS
+  actions = fsd
+
+  # Allow all instant commands
+  upsmon master
+
+[upsremote]
+  password = my_slave_password
+  upsmon slave
+</code></pre>
+
+<p>d. Now let&rsquo;s tell <code>upsmon</code> to monitor the UPS. Edit <code>/etc/nut/upsmon.conf</code> with the lines below</p>
+
+<p><em>Make sure to change the UPS name (<code>ups_name</code>) and master password (<code>my_master_password</code>)</em></p>
+
+<pre><code class="language-none">MONITOR ups_name@localhost 1 [master user] [master password] master
+</code></pre>
+
+<p>e. Check the status of the NUT server with <code>systemctl status nut-server</code></p>
+
+<p><img src="img/how-to-configure-a-ups-between-linux-and-freenas/status.png" alt="" /></p>
+
+<p>f. Enable the NUT server and monitor</p>
+
+<pre><code class="language-none">➤ sudo systemctl enable --now nut-server.service
+➤ sudo systemctl enable --now nut-monitor.service
+</code></pre>
+
+<h4 id="timing">Timing</h4>
+
+<p>It&rsquo;s important that we understand how the shutdown process works, and how much time each of the slaves take to power down. At the end of the process the master node will send a shutdown command to the UPS, and the last thing we want is to cutoff power to one of our slaves.</p>
+
+<p>I have 3 devices connected to my UPS. I have timed their shutdown so I now how much time I need:</p>
+
+<ul>
+<li>Desktop - 30s</li>
+<li>FreeNAS - 60s (without drives)</li>
+<li>CentOS - 30s</li>
+</ul>
+
+<p>On top of that, I also need to take in consideration the UPS low battery run time (what the low battery threshold is and how long it can run), and what the shutdown delay should be.</p>
+
+<p><em>Oversimplified chronogram</em></p>
+
+<pre><code class="language-none">UPS       |####################### Low Battery Run Time ######################|
+          |                             ########### Shutdown Delay ###########|
+          |
+Master    |######### Shutdown ##########|
+(Desktop) |
+          |
+Slave1    |####################### Shutdown #########################|
+(FreeNAS) |
+          |
+Slave2    |########## Shutdown ##########|
+(Centos)  |
+          -------------------------------|---------------------------|--------|
+   Time                                 30s                         60s      90s  
+</code></pre>
+
+<h5 id="let-s-get-started"><strong>Let&rsquo;s get started</strong></h5>
+
+<p>a. Start by timing your device with a normal shutdown</p>
+
+<p>b. Now we can change our configuration, and that will vary with your device</p>
+
+<h5 id="option-1-use-upsrw">Option 1: Use <code>upsrw</code></h5>
+
+<p>You can use <code>upsrw</code> to set the variable, but that sometimes will not work as it only sets the value for the OS and doesn&rsquo;t write back to the UPS (which is the same for all 3 cases). The variables we are looking for are:</p>
+
+<ul>
+<li><code>battery.charge.low</code> - Threshold in battery percentage that the UPS should change it&rsquo;s status to LB (low battery)</li>
+<li><code>battery.runtime.low</code> - Threshold in battery run time (seconds) that the UPS should change it&rsquo;s status to LB (low battery)</li>
+<li><code>ups.delay.shutdown</code> - Additional delay after the Master has shutdown and the UPS will wait to cutoff power (the important one we just covered)</li>
+<li><code>ups.delay.start</code> - This is how long the UPS should wait to restore power. For home use I usually set this to high</li>
+</ul>
+
+<p>You can set them with <code>upsrw -s [variable=value] -u [UPS admin user] [ups name]</code>. For example:</p>
+
+<pre><code class="language-none">upsrw -s ups.delay.shutdown=60 -u upsmaster CyberPowerSL700U
+</code></pre>
+
+<blockquote>
+<p><strong>⚠️ WARNING:</strong> The main problem with this process is that it does not survive restarts.</p>
+</blockquote>
+
+<h5 id="option-2-use-the-override-directive">Option 2: Use the <code>override</code> directive</h5>
+
+<p>You can use the <code>override</code> directive in <code>/etc/nut/ups.conf</code> to override levels reported back from the UPS. Similar to the option above, this will only update the outside world (the master device and not the UPS itself). See <a href="https://networkupstools.org/docs/man/ups.conf.html">UPS.CONF(5)</a> for more info.</p>
+
+<h5 id="option-3-use-offdelay">Option 3: Use <code>offdelay</code></h5>
+
+<p>This is the method that worked the best for my battery model. I have configured the following 3 variables in <code>/etc/nut/ups.conf</code>.</p>
+
+<ul>
+<li><code>offdelay</code> - How long to wait to cut power - overrides <code>ups.delay.shutdown</code></li>
+<li><code>ondelay</code> - How long to wait before turning on devices again - <code>overrides ups.delay.start</code></li>
+<li><code>lowbatt</code> - Overrides <code>battery.charge.low</code></li>
+</ul>
+
+<p><em>Here&rsquo;s my updated <code>/etc/nut/ups.conf</code></em></p>
+
+<pre><code>[CyberPowerSL700U]
+	driver = &quot;usbhid-ups&quot;
+	port = &quot;auto&quot;
+	vendorid = &quot;0764&quot;
+	productid = &quot;0501&quot;
+	product = &quot;SL Series&quot;
+	vendor = &quot;CPS&quot;
+	bus = &quot;002&quot;
+  offdelay = &quot;90&quot; # How long to wait to cut power - overrides ups.delay.shutdown
+  ondelay = &quot;50&quot; # How long to wait before turning on devices again - overrides ups.delay.start
+  lowbatt = &quot;30&quot; # Overrides battery.charge.low
+
+</code></pre>
+
+<p>c. Restart <code>nut-server.service</code></p>
+
+<pre><code class="language-none">➤ sudo systemctl restart nut-server.Services
+</code></pre>
+
+<h3 id="configuring-freenas-as-the-client-slave">Configuring FreeNAS as the client/slave</h3>
+
+<p>a. Login to your FreeNAS and go to Services. Enable the UPS service, set it to start automatically and then click on the edit button</p>
+
+<p><img src="img/how-to-configure-a-ups-between-linux-and-freenas/freenas.1.png" alt="" /></p>
+
+<p>b. Make the following configuration</p>
+
+<ul>
+<li><strong>UPS Mode</strong> - Slave</li>
+<li><strong>Identifier</strong> - Name for the UPS</li>
+<li><strong>Remote Host</strong> - IP of the master</li>
+<li><strong>Remote Port</strong> - Port</li>
+<li><strong>Driver</strong> - Look for your UPS model. I could not find my model, so I typed in the driver that I&rsquo;m using on the master host (usbhid-ups) *</li>
+<li><strong>Port or Hostname</strong> - Hostname of the master host</li>
+</ul>
+
+<p><strong>⚠️ WARNING:</strong> <em>While this allowed me to save my configuration and the shutdown works, when I access the config page the driver field is blank. This is different than on older versions of FreeNAS where the driver option was only available in Master mode. Beware that it may create problems if you also decide to go this route.</em></p>
+
+<p><img src="img/how-to-configure-a-ups-between-linux-and-freenas/freenas.config.1.png" alt="" /></p>
+
+<ul>
+<li><strong>Shutdown Mode</strong> - I chose &lsquo;UPS reaches low battery&rsquo;</li>
+<li><strong>Shutdown Timer</strong> - 30 (default)</li>
+<li><strong>Shutdown Command</strong> - I&rsquo;m using <code>/sbin/shutdown -p now</code></li>
+<li><strong>No Communication Warning Time</strong> - 60 (default)</li>
+<li><strong>Monitor User</strong> - The slave user you configured in <code>ups.conf</code> on the master</li>
+<li><strong>Monitor Password</strong> - The slave password you configured in <code>ups.conf</code> on the master</li>
+</ul>
+
+<p><img src="img/how-to-configure-a-ups-between-linux-and-freenas/freenas.config.2.png" alt="" /></p>
+
+<p>Check the &lsquo;Send Email Status Updates&rsquo; if you&rsquo;d like to received emails (also add your email address). Click on save.</p>
+
+<p><img src="img/how-to-configure-a-ups-between-linux-and-freenas/freenas.config.3.png" alt="" /></p>
+
+<p>c. Check the connection to the UPS with the command below</p>
+
+<blockquote>
+<p><code>upsc ups_name@ip:port</code></p>
+</blockquote>
+
+<p><img src="img/how-to-configure-a-ups-between-linux-and-freenas/freenas.3.png" alt="" /></p>
+
+<p>d. Check that FreeNAS is actually monitoring the UPS (<code>/var/log/nut/ups.log</code>)</p>
+
+<blockquote>
+<p>OL - On line (no power failure)</p>
+
+<p>OB - On battery</p>
+
+<p>LB - Low battery</p>
+</blockquote>
+
+<p><img src="img/how-to-configure-a-ups-between-linux-and-freenas/freenas.4.png" alt="" /></p>
+
+<p>e. Log back to your master machine and confirm that you can see FreeNAS as a connected client (<code>upsc -c</code>)</p>
+
+<p><em>Assuming that my FreeNAS IP is <code>192.168.10.20</code></em></p>
+
+<pre><code class="language-none">$ upsc -c ups_name@localhost
+192.168.10.20
+</code></pre>
+
+<p><em><strong>Tip:</strong> You can also check the status of <code>nut-server.service</code> and it will show you the connected clients</em></p>
+
+<h2 id="bonus-setup-centos-as-client-slave">Bonus: Setup CentOS as client/slave</h2>
+
+<p>As I mentioned before, I also have a CentOS server that connects to this UPS. So here&rsquo;s how to configure it.</p>
+
+<p>a. Install <code>nut-client</code></p>
+
+<pre><code class="language-none"># yum install -y nut-client
+</code></pre>
+
+<p>b. Add the monitor line to <code>/etc/ups/upsmon.conf</code></p>
+
+<pre><code class="language-none">MONITOR CyberPowerSL700U@10.13.15.200 1 [slave user] [slave pass] slave
+</code></pre>
+
+<p>c. Enable and start the service</p>
+
+<pre><code class="language-none"># systemctl enable --now nut-monitor.service
+</code></pre>
+
+<p>d. Check that you can see the new client in the master (<code>upsc -c [ups name]</code>)</p>
+
+<pre><code class="language-none"># upsc -c CyberPowerSL700U
+127.0.0.1
+192.168.10.20  # FreeNAS
+192.168.10.21  # CentOS
+</code></pre>
+
+<h2 id="testing">Testing</h2>
+
+<p>Now let&rsquo;s test see if all works. Instead of pulling the cord we can instead run <code>upsmon -c fsd</code> on the master (this will save wear and tear on your battery). Hopefully we have configured our delay time properly and we should see all our devices powering off, and eventually the UPS as well.</p>
+
+<p><em><strong>Tip:</strong> Because I have quick removable drive bays on my FreeNAS server, I have removed all drives before testing (to be extra careful and to avoid any issues).</em></p>
+
+<pre><code class="language-none">➤ sudo upsmon -c fsd
+</code></pre>
+
+</div>
+
+
+      <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f22%2fhow-to-configure-a-ups-between-linux-and-freenas%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Configure%20a%20UPS%20Between%20Linux%20and%20FreeNAS&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f22%2fhow-to-configure-a-ups-between-linux-and-freenas%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f22%2fhow-to-configure-a-ups-between-linux-and-freenas%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f22%2fhow-to-configure-a-ups-between-linux-and-freenas%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f22%2fhow-to-configure-a-ups-between-linux-and-freenas%2f&amp;title=How%20to%20Configure%20a%20UPS%20Between%20Linux%20and%20FreeNAS" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20Configure%20a%20UPS%20Between%20Linux%20and%20FreeNAS&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f22%2fhow-to-configure-a-ups-between-linux-and-freenas%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2020/10/21/how-to-create-an-encrypted-usb-drive-on-kde-plasma/" title="How to Quickly Create an Encrypted USB Drive on KDE Plasma">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+    </div>
+    
+      <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+        <div>
+  
+
+   
+    <div class="section">
+      <header><div class="title"></div></header>
+      <div class="content">
+        <img style="float: center; padding-right: 5px;" src="https://blog.victormendonca.com/img/avatar.jpg" hspace="20" width="240"></img>
+        <br/>
+        <div class="social-icons" style="display:inline-block; text-align: center; width:100%;">
+        <a href="https://github.com/victorbrca" target="_blank"><i class="fa fa-github fa-2x" style="padding-right: 5px; padding-left: 5px" aria-hidden="true"></i></a>
+        <a href="https://twitter.com/victorbrca" target="_blank"><i class="fa fa-twitter fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <a href="http://www.linkedin.com/in/victormendonca" target="_blank"><i class="fa fa-linkedin-square fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <a href="https://www.facebook.com/victormendonca" target="_blank"><i class="fa fa-facebook-official fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <div>
+        <br/>
+      </div>
+    </div>
+
+    
+      
+      
+      <div class="section taxonomies">
+        <header><div class="title"><b>tags</b></div></header>
+
+        <div class="content1">
+          <ul>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/aws">aws</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/encryption">encryption</a></li><li><a href="https://blog.victormendonca.com/tags/fzf">fzf</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li><li><a href="https://blog.victormendonca.com/tags/gitlab">gitlab</a></li><li><a href="https://blog.victormendonca.com/tags/markdown">markdown</a></li>
+          </ul>
+        </div>
+      </div>
+      
+    
+      
+      
+    
+
+    <br />
+
+    <div class="section">
+      <header><div class="title"><b>Latest Posts</b></div></header>
+      <div class="content">
+        <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2020/10/22/how-to-configure-a-ups-between-linux-and-freenas/">How to Configure a UPS Between Linux and FreeNAS</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2020/10/21/how-to-create-an-encrypted-usb-drive-on-kde-plasma/">How to Quickly Create an Encrypted USB Drive on KDE Plasma</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2020/10/13/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/">How to Install Waveshare 3.5&#34; LCD on Ubuntu 20.04</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2020/10/09/how-to-show-progress-for-dd/">How to Show Progress for dd</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2020/09/11/quick-guide-to-suig-sgid-and-sticky-bit/">Quick Guide to SUID, SGID and Sticky Bit</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2020/06/17/lenovo-p1-gen-tlp-on-arch/">TLP and CPUFreq on ThinkPad P1 Gen 2 (KDE Arch)</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2020/04/28/aws-routing-policies---visual-comparison/">AWS Routing Policies - Visual Comparison</a>
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+
+    <br />
+
+    
+    <div class="section">
+    
+      
+      <div class="content" align="center" >
+        <a class="twitter-timeline" data-width="240" data-height="450" href="https://twitter.com/victorbrca">Tweets by victorbrca</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+    </div>
+
+</div>
+
+      </div>
+    
+  </div>
+</div>
+    
+<footer class="footer hidden-print">
+  <div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+           <div class="pull-left">
+  <a class="toplink" href="javascript:" id="return-to-top">back to top</a>
+</div>
+<div class="pull-right">
+
+</div>
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+              
+    
+<div class="container footline">
+    <small>
+  code with <i class='fa fa-linux'></i>
+
+</small>
+</div>
+
+
+    
+<div class="container copyright">
+    <small>
+  &copy; 2018 Copyright Victor Mendonça
+
+  </small>
+</div>
+
+
+
+        </div>
+    </div>
+  </div>
+</footer>
+
+    
+
+<script src="https://blog.victormendonca.com/js/jquery.min.js"></script>
+<script src="https://blog.victormendonca.com/js/bootstrap.min.js"></script>
+
+
+<script src="https://blog.victormendonca.com/js/highlight.pack.js"></script>
+<script src="https://blog.victormendonca.com/js/site.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script>
+  var _gaq=[['_setAccount','UA-113222099-1'],['_trackPageview']];
+  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+  g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+  s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+
+<script>
+var ENABLE_POPOVER =  false , 
+EXPIRE_COOKIE =  5 , 
+SHOW_MODAL_TIMEOUT =  10000 , 
+MOUSE_LEAVE =  true , 
+MODAL_SIZE = "", 
+POST_URL = "https://zapier.com/hooks/catch/1227563/", 
+SIGNUP_HEADER = "Join Our Newsletter",
+HEADER_IMAGE = "//placehold.it/1000x600",
+IMG_DESCRIPTION = "Placeholder image for this popover modal optin form",
+SIGNUP_TEXT = "Signup today for free and be the first to get notified on new updates.",
+INPUT_PLACEHOLDER = "Enter your email",
+SUBMIT_BUTTON = "Subscribe",
+SUCCESS_MESSAGE = "Thanks for your subscription!",
+ERROR_MESSAGE = "Submitting form failed!",
+OPTIN =  true ,
+COOKIE_NAME = "mycookie1",
+CONTENTLANGUAGE = ""; 
+</script>
+
+
+
+
+
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/config/TeX-AMS-MML_HTMLorMML.js"></script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    for(var all in MathJax.Hub.getAllJax()) {
+        all.SourceElement().parentNode.className += ' has-jax';
+
+    }
+});
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+
