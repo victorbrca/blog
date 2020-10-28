@@ -127,6 +127,204 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2020/10/28/how-to-setup-ups-on-pfsense/">How to Setup a USB UPS on pfSense</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2020-10-28">28 Oct, 2020</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/pfsense" class="label label-primary">pfSense</a>
+  
+  <a href="https://blog.victormendonca.com/tags/hardware" class="label label-primary">Hardware</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>So you need to configure pfSense with an UPS!? Well, good thing this post is called &laquo;<strong><em>How to Setup UPS on pfSense</em></strong>&raquo;.</p>
+
+<p>a. Start by plugging the USB cable to your pfSense and your UPS</p>
+
+<p>b. Now log in to the pfSense UI and go into &laquo;System =&gt; Package Manager&raquo;</p>
+
+<p><img src="./img/how-to-setup-ups-on-pfsense/menu-1.png" alt="" /></p>
+
+<p>b. Search for &lsquo;nut&rsquo; and click on &lsquo;Install&rsquo;</p>
+
+<p><img src="./img/how-to-setup-ups-on-pfsense/1.package.png" alt="" /></p>
+
+<p>c. Go to &laquo;Services =&gt; UPS =&gt; UPS Settings&raquo;, select &laquo;Local USB&raquo;, give the UPS a name and click on &laquo;Save&raquo;</p>
+
+<p><img src="./img/how-to-setup-ups-on-pfsense/ups-settings.png" alt="" /></p>
+
+<p>d. Go back to the &laquo;UPS Status&raquo; page. If you can see your UPS then you are pretty much done. Now all you have to do is configure any additional NUT settings (if you need).</p>
+
+<p><img src="./img/how-to-setup-ups-on-pfsense/ups-status.png" alt="" /></p>
+
+<hr />
+
+<h2 id="possible-issues">Possible Issues</h2>
+
+<h3 id="troubleshooting-1">Troubleshooting 1</h3>
+
+<p>If your UPS is not showing in the &laquo;UPS Settings&raquo; page, logon to pfSense via ssh and issue <code>usbconfig</code>. You should be able to see your UPS listed.</p>
+
+<pre><code class="language-none">[2.4.4-RELEASE][admin@pfSense.localdomain] usbconfig
+ugen0.1: &lt;0x8086 XHCI root HUB&gt; at usbus0, cfg=0 md=HOST spd=SUPER (5.0Gbps) pwr=SAVE (0mA)
+ugen1.1: &lt;Intel EHCI root HUB&gt; at usbus1, cfg=0 md=HOST spd=HIGH (480Mbps) pwr=SAVE (0mA)
+ugen0.2: &lt;Smart Smart Wireless Device&gt; at usbus0, cfg=0 md=HOST spd=FULL (12Mbps) pwr=ON (100mA)
+ugen1.2: &lt;vendor 0x8087 product 0x8000&gt; at usbus1, cfg=0 md=HOST spd=HIGH (480Mbps) pwr=SAVE (0mA)
+ugen0.3: &lt;American Power Conversion Back-UPS ES 750G FW908.W3 .D USB FWW3&gt; at usbus0, cfg=0 md=HOST spd=LOW (1.5Mbps) pwr=ON (2mA)
+</code></pre>
+
+<h4 id="solution">Solution:</h4>
+
+<p>If you can&rsquo;t see your UPS with <code>upsconfig</code> try using another USB cable.</p>
+
+<h3 id="troubleshooting-2">Troubleshooting 2</h3>
+
+<p>If you can see the UPS with <code>usbconfig</code>, try to restart the service from command line so you can view error messages on stdout.</p>
+
+<p>Browse to <code>/usr/local/etc/rc.d</code> and manually restart the NUT service with <code>./nut.sh restart</code>.</p>
+
+<pre><code class="language-none">[2.4.4-RELEASE][admin@pfSense.localdomain]/usr/local/etc/rc.d: ./nut.sh restart
+stopping NUT
+starting NUT
+Network UPS Tools upsmon 2.7.4
+kill: No such process
+UPS: BackUPSES750 (master) (power value 1)
+Using power down flag file /etc/killpower
+Network UPS Tools - UPS driver controller 2.7.4
+Network UPS Tools - Generic HID driver 0.41 (2.7.4)
+USB communication driver 0.33
+No matching HID UPS found
+Driver failed to start (exit status=1)
+Network UPS Tools upsd 2.7.4
+fopen /var/db/nut/upsd.pid: No such file or directory
+listening on ::1 port 3493
+listening on 127.0.0.1 port 3493
+Can't connect to UPS [BackUPSES750] (usbhid-ups-BackUPSES750): No such file or directory
+
+Broadcast Message from admin@pfSense.localdomain                               
+        (no tty) at 16:57 EDT...                                               
+
+Communications with UPS BackUPSES750 lost                                      
+
+
+Broadcast Message from admin@pfSense.localdomain                               
+        (no tty) at 16:57 EDT...                                               
+
+UPS BackUPSES750 is unavailable
+</code></pre>
+
+<blockquote>
+<p>💡 ERROR
+<code>Can't connect to UPS [BackUPSES750] (usbhid-ups-BackUPSES750): No such file or directory</code></p>
+</blockquote>
+
+<h4 id="solution-1">Solution:</h4>
+
+<p>Restart pfSense</p>
+
+<h3 id="troubleshooting-3">Troubleshooting 3</h3>
+
+<p>Try running <code>upsc [ups name]</code>.</p>
+
+<pre><code class="language-none">[2.4.4-RELEASE][admin@pfSense.localdomain] upsc BackUPSES750
+Error: Driver not connected
+
+Broadcast Message from admin@pfSense.localdomain                               
+        (no tty) at 17:02 EDT...                                               
+
+UPS BackUPSES750 is unavailable
+</code></pre>
+
+<blockquote>
+<p>💡 ERROR
+<code>Error: Driver not connected</code></p>
+</blockquote>
+
+<h4 id="solution-2">Solution:</h4>
+
+<p>Restart pfSense</p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-setup-ups-on-pfsense%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Setup%20a%20USB%20UPS%20on%20pfSense&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-setup-ups-on-pfsense%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-setup-ups-on-pfsense%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-setup-ups-on-pfsense%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-setup-ups-on-pfsense%2f&amp;title=How%20to%20Setup%20a%20USB%20UPS%20on%20pfSense" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20Setup%20a%20USB%20UPS%20on%20pfSense&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-setup-ups-on-pfsense%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2020/10/28/how-to-install-telegraf-on-freenas/" title="How to Install Telegraf on FreeNAS">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2020/10/28/how-to-install-telegraf-on-freenas/">How to Install Telegraf on FreeNAS</a>
 </h2>
 
@@ -277,6 +475,12 @@ run_rc_command &quot;$1&quot;
         </li>
     
 
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2020/10/28/how-to-setup-ups-on-pfsense/" title="How to Setup a USB UPS on pfSense">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
     
     </ul> </nav>
   
@@ -1157,211 +1361,6 @@ EndSection
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2020/10/09/how-to-show-progress-for-dd/">How to Show Progress for dd</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2020-10-09">9 Oct, 2020</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/hardware" class="label label-primary">Hardware</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<p>If you have reached this page I expect that you already know what <code>dd</code> is. But you if you don&rsquo;t, <code>dd</code> is a command-line utility that is used to convert and copy files. It&rsquo;s commonly found on various (Linux) distro help pages that show new users how to setup USB (or Micro SD) drives to install or run (like Raspberry Pi) the OS.</p>
-
-<p>One of the main problems is that when running the <code>dd</code> utility, it does not provide any information on the current status of the copy process. This can make users anxious not knowing if it&rsquo;s done or not.</p>
-
-<h2 id="the-solutions">The Solutions</h2>
-
-<h4 id="1-running-dd-with-the-status-option">1. Running <code>dd</code> with the <code>status</code> option</h4>
-
-<p>This requires you to be running <code>dd</code> version 8.24 and above. If you are running a modern Linux distro you are most likely covered.</p>
-
-<p>You can check your version with <code>dd --version</code>:</p>
-
-<pre><code class="language-none">➤ dd --version
-dd (coreutils) 8.32
-Copyright (C) 2020 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later &lt;https://gnu.org/licenses/gpl.html&gt;.
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
-
-Written by Paul Rubin, David MacKenzie, and Stuart Kemp.
-</code></pre>
-
-<p>We will also need to use <code>oflag=sync</code> to make sure that we are really syncing as data is being copied so we get a better sense of when it&rsquo;s done. Otherwise <code>dd</code> goes blank at the end as it&rsquo;s trying to sync.</p>
-
-<p><em><strong>Note:</strong> while using <code>oflag=sync</code> makes the copy slower, using a higher block size will help speed up the process (<code>bs=4M</code> instead of <code>bs=1M</code>)</em></p>
-
-<h5 id="the-command"><strong>The command:</strong></h5>
-
-<p><em><strong>Structure:</strong></em></p>
-
-<pre><code class="language-none">dd bs=4M if=/path/to/input of=/path/to/output status=progress oflag=sync
-</code></pre>
-
-<p><em><strong>Example:</strong> here are backing up the contents of <code>/dev/sdf</code> to a file (ubuntu-server-20.04.1-updated.iso)</em></p>
-
-<pre><code class="language-none">sudo dd bs=4M if=/dev/sdf of=ubuntu-server-20.04.1-updated.iso status=progress oflag=sync
-</code></pre>
-
-<p><em><strong>The output:</strong></em>
-<img src="img/how-to-show-progress-for-dd/dd-2.png" alt="" /></p>
-
-<h4 id="1-running-dd-with-pv">1. Running <code>dd</code> with <code>pv</code></h4>
-
-<p>In reality this should be option 1 as it gives a nicer output with a progress bar, ETA and other data. <code>pv</code> is a terminal-based tool for monitoring the progress of data through a pipeline. It can potentially be used with any pipe.</p>
-
-<h5 id="the-command-1"><strong>The command:</strong></h5>
-
-<p><em><strong>Structure:</strong></em></p>
-
-<pre><code class="language-none">pv -tpreb /path/to/input | sudo dd of=/path/to/output bs=4M oflag=sync
-</code></pre>
-
-<p>Options used:</p>
-
-<ul>
-<li><code>-t</code> - “Turn the timer on”</li>
-<li><code>-p</code> - “Turn the progress bar on”</li>
-<li><code>-r</code> - “Turn the rate counter on”</li>
-<li><code>-e</code> - “Turn the ETA timer on”</li>
-<li><code>-b</code> - “Turn the total byte counter on”</li>
-</ul>
-
-<p><em><strong>Example:</strong> Here we are copying the image file to <code>/dev/sdf</code></em></p>
-
-<pre><code class="language-none">pv -tpreb ubuntu-20.04.1-preinstalled-server-arm64+raspi.img | sudo dd of=/dev/sdf bs=4M oflag=sync
-</code></pre>
-
-<p><em><strong>The output:</strong></em>
-<img src="img/how-to-show-progress-for-dd/pv-with-sync.png" alt="" /></p>
-
-<hr />
-
-<h4 id="putting-all-in-a-bash-alias-for-re-use">Putting all in a Bash alias for re-use</h4>
-
-<p>Add the function below to your <code>~/.bash_aliases</code> and it will be available whenever you need. Call it with <code>dd_iso [image] [device]</code> and it will use <code>pv</code> if it&rsquo;s already installed in your syste.</p>
-
-<pre><code class="language-bash">dd_iso ()
-{
-    usage=&quot;usage: dd_iso [image] [device]&quot;;
-    if [[ $# -lt 2 ]]; then
-        echo &quot;$usage&quot;;
-        return 0;
-    else
-        if [[ $# -eq 2 ]]; then
-            iso=&quot;$1&quot;;
-            device=&quot;$2&quot;;
-        fi;
-    fi;
-    if [[ ${iso##*.} != iso &amp;&amp; ${iso##*.} != img ]]; then
-        echo &quot;The first parameter should be an iso&quot;;
-        return 1;
-    else
-        if [[ ! -b &quot;$device&quot; ]]; then
-            echo &quot;The second parameter needs to be a device&quot;;
-            return 1;
-        fi;
-    fi;
-    device_type=&quot;$(basename &quot;$(readlink -f &quot;/sys/class/block/${device##*/}/..&quot;)&quot;)&quot;;
-    if [[ &quot;$device_type&quot; != &quot;block&quot; ]]; then
-        echo &quot;Do not specify a parition as the device&quot;;
-        return 1;
-    fi;
-    sudo dd bs=4M if=&quot;$iso&quot; of=&quot;$device&quot; status=progress oflag=sync
-}
-</code></pre>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f09%2fhow-to-show-progress-for-dd%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Show%20Progress%20for%20dd&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f09%2fhow-to-show-progress-for-dd%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f09%2fhow-to-show-progress-for-dd%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f09%2fhow-to-show-progress-for-dd%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f09%2fhow-to-show-progress-for-dd%2f&amp;title=How%20to%20Show%20Progress%20for%20dd" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=How%20to%20Show%20Progress%20for%20dd&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f09%2fhow-to-show-progress-for-dd%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2020/09/11/quick-guide-to-suig-sgid-and-sticky-bit/" title="Quick Guide to SUID, SGID and Sticky Bit">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2020/10/13/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/" title="How to Install Waveshare 3.5&#34; LCD on Ubuntu 20.04">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1446,6 +1445,12 @@ Written by Paul Rubin, David MacKenzie, and Stuart Kemp.
     </a>
 </li>
 
+<li >
+  <a href="https://blog.victormendonca.com//page/12/">
+    12
+    </a>
+</li>
+
 
 <li >
   <a aria-label="Next" href="https://blog.victormendonca.com//page/2/">
@@ -1453,7 +1458,7 @@ Written by Paul Rubin, David MacKenzie, and Stuart Kemp.
     </a>
 </li>
 <li >
-  <a aria-label="Last" href="https://blog.victormendonca.com//page/11/">
+  <a aria-label="Last" href="https://blog.victormendonca.com//page/12/">
     <span aria-hidden="true">&raquo;&raquo;</span>
   </a>
 </li>
@@ -1511,6 +1516,10 @@ Written by Paul Rubin, David MacKenzie, and Stuart Kemp.
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2020/10/28/how-to-setup-ups-on-pfsense/">How to Setup a USB UPS on pfSense</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2020/10/28/how-to-install-telegraf-on-freenas/">How to Install Telegraf on FreeNAS</a>
           </li>
         
@@ -1532,10 +1541,6 @@ Written by Paul Rubin, David MacKenzie, and Stuart Kemp.
         
           <li>
           <a href="https://blog.victormendonca.com/2020/09/11/quick-guide-to-suig-sgid-and-sticky-bit/">Quick Guide to SUID, SGID and Sticky Bit</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2020/06/17/lenovo-p1-gen-tlp-on-arch/">TLP and CPUFreq on ThinkPad P1 Gen 2 (KDE Arch)</a>
           </li>
         
         </ul>

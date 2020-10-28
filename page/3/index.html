@@ -127,6 +127,119 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2020/04/23/how-to-share-wifi-via-terminal-generated-qr-code/">How to Share WiFi Credentials from Terminal</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2020-04-23">23 Apr, 2020</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/networking" class="label label-primary">Networking</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  <p>Now here&rsquo;s a cool and quick way to share your WiFi SSID and password from a terminal window with a guest.</p>
+
+<p>You can use <code>qrencode</code> to generate a QR code with the parameters below:</p>
+
+<pre><code class="language-none">WIFI:S:[Your SSID here];T:WPA;P:[Your Password Here];;
+</code></pre>
+
+<p>For example, let&rsquo;s pretend my SSID is <code>MySweetSSID</code> and my password is <code>mysecretpassword</code>. We can run:</p>
+
+<pre><code>qrencode -o - -t utf8 'WIFI:S:MySweetSSID;T:WPA;P:mysecretpassword;;'
+</code></pre>
+
+<p>To get:</p>
+
+<p><img src="https://blog.victormendonca.com/img/how-to-share-wifi-via-terminal-generated-qr-code/2020-04-23_20-18.png" alt="" /></p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f23%2fhow-to-share-wifi-via-terminal-generated-qr-code%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Share%20WiFi%20Credentials%20from%20Terminal&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f23%2fhow-to-share-wifi-via-terminal-generated-qr-code%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f23%2fhow-to-share-wifi-via-terminal-generated-qr-code%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f23%2fhow-to-share-wifi-via-terminal-generated-qr-code%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f23%2fhow-to-share-wifi-via-terminal-generated-qr-code%2f&amp;title=How%20to%20Share%20WiFi%20Credentials%20from%20Terminal" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20Share%20WiFi%20Credentials%20from%20Terminal&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f23%2fhow-to-share-wifi-via-terminal-generated-qr-code%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2020/04/17/how-to-install-macos-catalina-in-virtual-box/" title="How to Install macOS Catalina in Virtual Box">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2020/04/27/how-to-change-macos-key-bindings/" title="How to Change macOS Key Bindings">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2020/04/17/how-to-install-macos-catalina-in-virtual-box/">How to Install macOS Catalina in Virtual Box</a>
 </h2>
 
@@ -1060,278 +1173,6 @@ Complete!
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2020/03/14/rhsa-v8-configure-disk-compression/">RHCSA V8: Configure Disk Compression</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2020-03-14">14 Mar, 2020</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/redhat" class="label label-primary">RedHat</a>
-  
-  <a href="https://blog.victormendonca.com/tags/rhcsa" class="label label-primary">RHCSA</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<h4 id="disclaimer">Disclaimer</h4>
-
-<p>These are my study notes for the RHCSA exam on disk compression. There&rsquo;s most likely more information than what&rsquo;s needed for the exam, and I cannot guarantee that all information is correct.</p>
-
-<h2 id="definition">Definition</h2>
-
-<p>Virtual Data Optimizer (VDO) provides inline data reduction for Linux in the form of deduplication, compression, and thin provisioning. When you set up a VDO volume, you specify a block device on which to construct your VDO volume and the amount of logical storage you plan to present.</p>
-
-<blockquote>
-<p>In the Red Hat Enterprise Linux 7.5 Beta, we introduced virtual data optimizer (VDO). VDO is a kernel module that can save disk space and reduce replication bandwidth. VDO sits on top of any block storage device and provides zero-block elimination, deduplication of redundant blocks, and data compression.</p>
-</blockquote>
-
-<p>VDO can be applied to a block device, and then normal disk operations can be applied to that device. LVM for example, can sit on top of VDO.</p>
-
-<p><em>Physical disk -&gt; VDO -&gt; Volumegroup -&gt; Logical volume -&gt; file system</em></p>
-
-<p><img src="https://blog.victormendonca.com/img/rhsa-v8-configure-disk-compression/overview.png" alt="" /></p>
-
-<h2 id="requirements-and-recommendations">Requirements and Recommendations</h2>
-
-<h3 id="memory">Memory</h3>
-
-<p>Each VDO volume has two distinct memory requirements:</p>
-
-<h4 id="the-vdo-module">The VDO module</h4>
-
-<p>VDO requires 370 MB of RAM plus an additional 268 MB per each 1 TB of physical storage managed by the volume.</p>
-
-<h4 id="the-universal-deduplication-service-uds-index">The Universal Deduplication Service (UDS) index</h4>
-
-<p>UDS requires a minimum of 250 MB of RAM, which is also the default amount that deduplication uses.</p>
-
-<p>The memory required for the UDS index is determined by the index type and the required size of the deduplication window:</p>
-
-<p><img src="https://blog.victormendonca.com/img/rhsa-v8-configure-disk-compression/memory_requirements.png" alt="" /></p>
-
-<p><em><strong>Note:</strong> Sparse is the recommended configuration.</em></p>
-
-<h3 id="storage">Storage</h3>
-
-<h4 id="logical-size">Logical Size</h4>
-
-<p>Specifies the logical VDO volume size. The VDO Logical Size is how much storage we tell the OS that we have. Because of reduction and deduplication, this number will be bigger than the real physical size. This ratio will vary according to the type of data that is being stored (binary, video, audio, compressed data will have a very low ratio).</p>
-
-<h4 id="red-hat-s-recommendation">Red Hat&rsquo;s Recommendation</h4>
-
-<p><strong>For active VMs or container storage</strong></p>
-
-<p><em>Use logical size that is ten times the physical size of your block device. For example, if your block device is 1TB in size, use 10T here.</em></p>
-
-<p><strong>For object storage</strong></p>
-
-<p><em>Use logical size that is three times the physical size of your block device. For example, if your block device is 1TB in size, use 3T here.</em></p>
-
-<h4 id="slab-size"><strong>Slab Size</strong></h4>
-
-<p>Specifies the size of the increment by which a VDO is grown. All of the slabs for a given volume will be of the same size, which may be any power of 2 multiple of 128 MB up to 32 GB. At least one entire slab is reserved by VDO for metadata, and therefore cannot be used for storing user data.</p>
-
-<p>The default slab size is 2 GB in order to facilitate evaluating VDO on smaller test systems. A single VDO volume may have up to 8096 slabs. Therefore, in the default configuration with 2 GB slabs, the maximum allowed physical storage is 16 TB. When using 32 GB slabs, the maximum allowed physical storage is 256 TB.</p>
-
-<p><img src="https://blog.victormendonca.com/img/rhsa-v8-configure-disk-compression/vdo_slab_sizes.png" alt="" /></p>
-
-<p><em>The table above is from RHEL 7 documentation</em></p>
-
-<h4 id="examples-of-vdo-system-requirements-by-physical-volume-size"><strong>Examples of VDO System Requirements by Physical Volume Size</strong></h4>
-
-<p>The following tables provide approximate system requirements of VDO based on the size of the underlying physical volume. Each table lists requirements appropriate to the intended deployment, such as primary storage or backup storage.</p>
-
-<p><img src="https://blog.victormendonca.com/img/rhsa-v8-configure-disk-compression/primary_storage.png" alt="" /></p>
-
-<p><img src="https://blog.victormendonca.com/img/rhsa-v8-configure-disk-compression/backup_storage.png" alt="" /></p>
-
-<h3 id="deduplication-indexing-and-compression">Deduplication, Indexing and Compression</h3>
-
-<h4 id="deduplication-and-index">Deduplication and Index</h4>
-
-<p>VDO uses a high-performance de-duplication index called UDS to detect duplicate blocks of data as they are being stored. The UDS index provides the foundation of the VDO product. For each new piece of data, it quickly determines if that piece is identical to any previously stored piece of data. If the index finds match, the storage system can then internally reference the existing item to avoid storing the same information more than once.</p>
-
-<p>Deduplication is enabled by default.</p>
-
-<p>To disable deduplication during VDO block creation (so only compression is used), use the <code>--deduplication=disabled</code> option (you will not be able to use the <code>sparseIndex</code> option)</p>
-
-<pre><code># vdo create --name=[name] --device=/dev/[device] --vdoLogicalSize=[VDO logical size] --deduplication=disabled --vdoSlabSize=[slab size]
-</code></pre>
-
-<p>To enable/disable deduplication on an existing block</p>
-
-<pre><code># vdo enableDeduplication --name=my_vdo
-
-# vdo disableDeduplication --name=my_vdo
-</code></pre>
-
-<h4 id="compression">Compression</h4>
-
-<p>In addition to block-level deduplication, VDO also provides inline block-level compression using the HIOPS Compression™ technology.</p>
-
-<p>VDO volume compression is on by default.</p>
-
-<p>Compression operates on blocks that have not been identified as duplicates. When unique data is seen for the first time, it is compressed. Subsequent copies of data that have already been stored are deduplicated without requiring an additional compression step.</p>
-
-<h2 id="configuration-steps">Configuration Steps</h2>
-
-<p>Install <code>vdo</code> (and if not installed by default <code>kmod-vdo</code>)</p>
-
-<pre><code># yum install vdo
-</code></pre>
-
-<p>Start the service</p>
-
-<pre><code># systemctl start vdo.service
-</code></pre>
-
-<p>Create the volume</p>
-
-<pre><code># vdo create --name=[name] --device=/dev/[device] --vdoLogicalSize=[VDO logical size] --sparseIndex=enabled --vdoSlabSize=[slab size]
-</code></pre>
-
-<p><em>Note: Using <code>--sparseIndex=disabled</code> will enable &lsquo;dense&rsquo; indexing</em></p>
-
-<p>Optionally add LVM config, and/or create the file system (make sure to use the option to not discard blocks)</p>
-
-<pre><code># mkfs.ext4 -E nodiscard /dev/mapper/[name]
-
-# mkfs.xfs -K /dev/mapper/[name]
-</code></pre>
-
-<p>Update the system with the new device</p>
-
-<pre><code># udevadm settle
-</code></pre>
-
-<p>Mount the device</p>
-
-<pre><code># mount /dev/mapper/[name] /mount/point
-</code></pre>
-
-<p>To add it to <code>/etc/fstab</code>. You will need to add additional params so that systemd waits for VDO to start before mounting</p>
-
-<pre><code># /dev/mapper/vdo-device /mount/point [fstype] defaults,_netdev,x-systemd.device-timeout=0,x-systemd.requires=vdo.service 0 0
-</code></pre>
-
-<p>See man pages for <code>systemd.mount</code>:</p>
-
-<pre><code class="language-nothing">x-systemd.device-timeout=
-          Configure how long systemd should wait for a device to show up before
-          giving up on an entry from /etc/fstab. Specify a time in seconds or
-          explicitly append a unit such as &quot;s&quot;, &quot;min&quot;, &quot;h&quot;, &quot;ms&quot;.
-
-x-systemd.requires=
-          Configures a Requires= and an After= dependency between the created mount
-          unit and another systemd unit, such as a device or mount unit.
-</code></pre>
-
-<h2 id="administration">Administration</h2>
-
-<p>Check for real physical space usage</p>
-
-<pre><code class="language-nothing"># vdostats --human-readable
-
-Device              Size   Used   Available   Use%   Space Saving%
-/dev/mapper/my_vdo  1.8T  407.9G    1.4T       22%       21%
-</code></pre>
-
-<hr />
-
-<p><strong>References:</strong></p>
-
-<ul>
-<li><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/system_design_guide/deploying-vdo_system-design-guide">https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/system_design_guide/deploying-vdo_system-design-guide</a></li>
-<li><a href="https://www.linuxsysadmins.com/setting-up-virtual-data-optimizer-on-centos/">https://www.linuxsysadmins.com/setting-up-virtual-data-optimizer-on-centos/</a></li>
-<li><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/system_design_guide/deploying-vdo_system-design-guide">https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/system_design_guide/deploying-vdo_system-design-guide</a></li>
-</ul>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f14%2frhsa-v8-configure-disk-compression%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=RHCSA%20V8%3a%20Configure%20Disk%20Compression&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f14%2frhsa-v8-configure-disk-compression%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f14%2frhsa-v8-configure-disk-compression%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f14%2frhsa-v8-configure-disk-compression%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f14%2frhsa-v8-configure-disk-compression%2f&amp;title=RHCSA%20V8%3a%20Configure%20Disk%20Compression" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=RHCSA%20V8%3a%20Configure%20Disk%20Compression&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f14%2frhsa-v8-configure-disk-compression%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2020/03/14/rhcsa---whats-new/" title="RHCSA v8 - What&#39;s New">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2020/03/15/rhcsa-v8-work-with-package-module-streams/" title="RHCSA v8: Work with Package Module Streams">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1416,6 +1257,12 @@ Device              Size   Used   Available   Use%   Space Saving%
     </a>
 </li>
 
+<li >
+  <a href="https://blog.victormendonca.com//page/12/">
+    12
+    </a>
+</li>
+
 
 <li >
   <a aria-label="Next" href="https://blog.victormendonca.com//page/4/">
@@ -1423,7 +1270,7 @@ Device              Size   Used   Available   Use%   Space Saving%
     </a>
 </li>
 <li >
-  <a aria-label="Last" href="https://blog.victormendonca.com//page/11/">
+  <a aria-label="Last" href="https://blog.victormendonca.com//page/12/">
     <span aria-hidden="true">&raquo;&raquo;</span>
   </a>
 </li>
@@ -1481,6 +1328,10 @@ Device              Size   Used   Available   Use%   Space Saving%
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2020/10/28/how-to-setup-ups-on-pfsense/">How to Setup a USB UPS on pfSense</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2020/10/28/how-to-install-telegraf-on-freenas/">How to Install Telegraf on FreeNAS</a>
           </li>
         
@@ -1502,10 +1353,6 @@ Device              Size   Used   Available   Use%   Space Saving%
         
           <li>
           <a href="https://blog.victormendonca.com/2020/09/11/quick-guide-to-suig-sgid-and-sticky-bit/">Quick Guide to SUID, SGID and Sticky Bit</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2020/06/17/lenovo-p1-gen-tlp-on-arch/">TLP and CPUFreq on ThinkPad P1 Gen 2 (KDE Arch)</a>
           </li>
         
         </ul>

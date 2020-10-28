@@ -96,7 +96,7 @@
     <item>
       <title>Hardware</title>
       <link>https://blog.victormendonca.com/tags/hardware/</link>
-      <pubDate>Thu, 22 Oct 2020 11:00:00 -0400</pubDate>
+      <pubDate>Wed, 28 Oct 2020 16:16:10 -0400</pubDate>
       
       <guid>https://blog.victormendonca.com/tags/hardware/</guid>
       <description></description>
@@ -180,6 +180,15 @@
       <pubDate>Thu, 23 Apr 2020 20:24:12 -0400</pubDate>
       
       <guid>https://blog.victormendonca.com/tags/networking/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Pfsense</title>
+      <link>https://blog.victormendonca.com/tags/pfsense/</link>
+      <pubDate>Wed, 28 Oct 2020 16:16:10 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/tags/pfsense/</guid>
       <description></description>
     </item>
     

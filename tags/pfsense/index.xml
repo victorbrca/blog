@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pfsense on Victor&#39;s Blog</title>
+    <link>https://blog.victormendonca.com/tags/pfsense/</link>
+    <description>Recent content in Pfsense on Victor&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
+    <lastBuildDate>Wed, 28 Oct 2020 16:16:10 -0400</lastBuildDate>
+    
+	<atom:link href="https://blog.victormendonca.com/tags/pfsense/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How to Setup a USB UPS on pfSense</title>
+      <link>https://blog.victormendonca.com/2020/10/28/how-to-setup-ups-on-pfsense/</link>
+      <pubDate>Wed, 28 Oct 2020 16:16:10 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2020/10/28/how-to-setup-ups-on-pfsense/</guid>
+      <description>So you need to configure pfSense with an UPS!? Well, good thing this post is called &amp;laquo;How to Setup UPS on pfSense&amp;raquo;.
+a. Start by plugging the USB cable to your pfSense and your UPS
+b. Now log in to the pfSense UI and go into &amp;laquo;System =&amp;gt; Package Manager&amp;raquo;
+b. Search for &amp;lsquo;nut&amp;rsquo; and click on &amp;lsquo;Install&amp;rsquo;
+c. Go to &amp;laquo;Services =&amp;gt; UPS =&amp;gt; UPS Settings&amp;raquo;, select &amp;laquo;Local USB&amp;raquo;, give the UPS a name and click on &amp;laquo;Save&amp;raquo;</description>
+    </item>
+    
+  </channel>
+</rss>
