@@ -157,15 +157,15 @@
 
 <p>b. Now log in to the pfSense UI and go into &laquo;System =&gt; Package Manager&raquo;</p>
 
-<p><img src="img/how-to-setup-ups-on-pfsense/menu-1.png" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/how-to-setup-ups-on-pfsense/menu-1.png" alt="" /></p>
 
 <p>b. Search for &lsquo;nut&rsquo; and click on &lsquo;Install&rsquo;</p>
 
-<p><img src="img/how-to-setup-ups-on-pfsense/1.package.png" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/how-to-setup-ups-on-pfsense/1.package.png" alt="" /></p>
 
 <p>c. Go to &laquo;Services =&gt; UPS =&gt; UPS Settings&raquo;, select &laquo;Local USB&raquo;, give the UPS a name and click on &laquo;Save&raquo;</p>
 
-<p><img src="img/how-to-setup-ups-on-pfsense/ups-settings.png" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/how-to-setup-ups-on-pfsense/ups-settings.png" alt="" /></p>
 
 <p>d. Go back to the &laquo;UPS Status&raquo; page. If you can see your UPS then you are pretty much done. Now all you have to do is configure any additional NUT settings (if you need).</p>
 
@@ -429,7 +429,7 @@ run_rc_command &quot;$1&quot;
 <pre><code class="language-none">ln -s /mnt/Volume1/home/system/telegraf/telegraf.init /usr/local/etc/rc.d/telegraf ; service telegraf start
 </code></pre>
 
-<p><img src="img/how-to-install-telegraf-on-freenas/init.png" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/how-to-install-telegraf-on-freenas/init.png" alt="" /></p>
 
 <hr />
 
@@ -715,7 +715,7 @@ ups.vendorid: 0764
 
 <p>e. Check the status of the NUT server with <code>systemctl status nut-server</code></p>
 
-<p><img src="img/how-to-configure-a-ups-between-linux-and-freenas/status.png" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/how-to-configure-a-ups-between-linux-and-freenas/status.png" alt="" /></p>
 
 <p>f. Enable the NUT server and monitor</p>
 
@@ -819,7 +819,7 @@ Slave2    |########## Shutdown ##########|
 
 <p>a. Login to your FreeNAS and go to Services. Enable the UPS service, set it to start automatically and then click on the edit button</p>
 
-<p><img src="img/how-to-configure-a-ups-between-linux-and-freenas/freenas.1.png" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/how-to-configure-a-ups-between-linux-and-freenas/freenas.1.png" alt="" /></p>
 
 <p>b. Make the following configuration</p>
 
@@ -834,7 +834,7 @@ Slave2    |########## Shutdown ##########|
 
 <p><strong>⚠️ WARNING:</strong> <em>While this allowed me to save my configuration and the shutdown works, when I access the config page the driver field is blank. This is different than on older versions of FreeNAS where the driver option was only available in Master mode. Beware that it may create problems if you also decide to go this route.</em></p>
 
-<p><img src="img/how-to-configure-a-ups-between-linux-and-freenas/freenas.config.1.png" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/how-to-configure-a-ups-between-linux-and-freenas/freenas.config.1.png" alt="" /></p>
 
 <ul>
 <li><strong>Shutdown Mode</strong> - I chose &lsquo;UPS reaches low battery&rsquo;</li>
@@ -845,11 +845,11 @@ Slave2    |########## Shutdown ##########|
 <li><strong>Monitor Password</strong> - The slave password you configured in <code>ups.conf</code> on the master</li>
 </ul>
 
-<p><img src="img/how-to-configure-a-ups-between-linux-and-freenas/freenas.config.2.png" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/how-to-configure-a-ups-between-linux-and-freenas/freenas.config.2.png" alt="" /></p>
 
 <p>Check the &lsquo;Send Email Status Updates&rsquo; if you&rsquo;d like to received emails (also add your email address). Click on save.</p>
 
-<p><img src="img/how-to-configure-a-ups-between-linux-and-freenas/freenas.config.3.png" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/how-to-configure-a-ups-between-linux-and-freenas/freenas.config.3.png" alt="" /></p>
 
 <p>c. Check the connection to the UPS with the command below</p>
 
@@ -857,7 +857,7 @@ Slave2    |########## Shutdown ##########|
 <p><code>upsc ups_name@ip:port</code></p>
 </blockquote>
 
-<p><img src="img/how-to-configure-a-ups-between-linux-and-freenas/freenas.3.png" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/how-to-configure-a-ups-between-linux-and-freenas/freenas.3.png" alt="" /></p>
 
 <p>d. Check that FreeNAS is actually monitoring the UPS (<code>/var/log/nut/ups.log</code>)</p>
 
@@ -869,7 +869,7 @@ Slave2    |########## Shutdown ##########|
 <p>LB - Low battery</p>
 </blockquote>
 
-<p><img src="img/how-to-configure-a-ups-between-linux-and-freenas/freenas.4.png" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/how-to-configure-a-ups-between-linux-and-freenas/freenas.4.png" alt="" /></p>
 
 <p>e. Log back to your master machine and confirm that you can see FreeNAS as a connected client (<code>upsc -c</code>)</p>
 
@@ -1026,7 +1026,7 @@ Slave2    |########## Shutdown ##########|
 
 <p>b. Now launch <code>KDE Parition Manager</code> and type your password</p>
 
-<p><img src="img/how-to-create-an-encrypted-usb-drive-on-kde-plasma/admin-prompt.png" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/how-to-create-an-encrypted-usb-drive-on-kde-plasma/admin-prompt.png" alt="" /></p>
 
 <p>c. Select the USB drive and right click to delete the existing partition</p>
 
@@ -1034,15 +1034,15 @@ Slave2    |########## Shutdown ##########|
 <p><strong>⚠️ WARNING:</strong> remember, this will delete all your existing files)</p>
 </blockquote>
 
-<p><img src="img/how-to-create-an-encrypted-usb-drive-on-kde-plasma/delete.png" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/how-to-create-an-encrypted-usb-drive-on-kde-plasma/delete.png" alt="" /></p>
 
 <p>d. Right click to create a new partition</p>
 
-<p><img src="img/how-to-create-an-encrypted-usb-drive-on-kde-plasma/new.png" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/how-to-create-an-encrypted-usb-drive-on-kde-plasma/new.png" alt="" /></p>
 
 <p>e. Select your &laquo;File system&raquo; type, check &laquo;Encrypt with LUKS&raquo;, set the &laquo;Password&raquo; and &laquo;Label&raquo; and click on &laquo;Ok&raquo;</p>
 
-<p><img src="img/how-to-create-an-encrypted-usb-drive-on-kde-plasma/create.png" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/how-to-create-an-encrypted-usb-drive-on-kde-plasma/create.png" alt="" /></p>
 
 <p>f. Click on apply and you are done. Go grab a coffee because you worked really hard you deserve it</p>
 
@@ -1052,13 +1052,13 @@ Slave2    |########## Shutdown ##########|
 
 <p>a. Insert the USB drive and click on &laquo;Mount&raquo; under &laquo;Disk &amp; Device&raquo; on your system tray</p>
 
-<p><img src="img/how-to-create-an-encrypted-usb-drive-on-kde-plasma/mounting.png" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/how-to-create-an-encrypted-usb-drive-on-kde-plasma/mounting.png" alt="" /></p>
 
 <p>b. Type in your very secure password (mine is &laquo;password123&raquo;) and profit</p>
 
 <p><em><strong>Tip:</strong> You can set it to remember if you really trust your own machine</em></p>
 
-<p><img src="img/how-to-create-an-encrypted-usb-drive-on-kde-plasma/password.png" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/how-to-create-an-encrypted-usb-drive-on-kde-plasma/password.png" alt="" /></p>
 
 </div>
 
@@ -1175,11 +1175,11 @@ Slave2    |########## Shutdown ##########|
 
 <p><a href="https://ubuntu.com/download/raspberry-pi">https://ubuntu.com/download/raspberry-pi</a></p>
 
-<p><img src="img/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/download-ubuntu.png" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/download-ubuntu.png" alt="" /></p>
 
 <p>Make sure to check the downloaded file</p>
 
-<p><img src="img/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/verify-download.png" alt="" /></p>
+<p><img src="https://blog.victormendonca.com/img/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/verify-download.png" alt="" /></p>
 
 <p>b. Power the Pi on, login (SSH or HDMI), change the password and update</p>
 
