@@ -5,36 +5,34 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title>How to Install Waveshare 3.5&#34; LCD on Ubuntu 20.04  &middot; Victor&#39;s Blog</title>
+  <title>How to Install Telegraf on FreeNAS  &middot; Victor&#39;s Blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="description" content="Instructions on getting a 3.5&#34; TFT LCD working on a RPI3B with Ubuntu 20.04 64-bit" />
+<meta name="description" content="Istructions on how to install Telegraf collector agent on FreeNAS" />
 
-<meta name="keywords" content="Linux, Hardware, Raspberry Pi, ">
+<meta name="keywords" content="Monitoring, FreeNAS, ">
 
 
-<meta property="og:title" content="How to Install Waveshare 3.5&#34; LCD on Ubuntu 20.04  &middot; Victor&#39;s Blog ">
+<meta property="og:title" content="How to Install Telegraf on FreeNAS  &middot; Victor&#39;s Blog ">
 <meta property="og:site_name" content="Victor&#39;s Blog"/>
-<meta property="og:url" content="https://blog.victormendonca.com/2020/10/13/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/" />
+<meta property="og:url" content="https://blog.victormendonca.com/2020/10/28/how-to-install-telegraf-on-freenas/" />
 <meta property="og:locale" content="en">
 
 
 <meta property="og:type" content="article" />
-<meta property="og:description" content="Instructions on getting a 3.5&#34; TFT LCD working on a RPI3B with Ubuntu 20.04 64-bit"/>
-<meta property="og:article:published_time" content="2020-10-13T14:45:00-04:00" />
-<meta property="og:article:modified_time" content="2020-10-13T14:45:00-04:00" />
+<meta property="og:description" content="Istructions on how to install Telegraf collector agent on FreeNAS"/>
+<meta property="og:article:published_time" content="2020-10-28T11:49:16-04:00" />
+<meta property="og:article:modified_time" content="2020-10-28T11:49:16-04:00" />
 
   
     
-<meta property="og:article:tag" content="Linux">
+<meta property="og:article:tag" content="Monitoring">
     
-<meta property="og:article:tag" content="Hardware">
-    
-<meta property="og:article:tag" content="Raspberry Pi">
+<meta property="og:article:tag" content="FreeNAS">
     
   
 
@@ -42,9 +40,9 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@18440926" />
 <meta name="twitter:creator" content="@18440926" />
-<meta name="twitter:title" content="How to Install Waveshare 3.5&#34; LCD on Ubuntu 20.04" />
-<meta name="twitter:description" content="Instructions on getting a 3.5&#34; TFT LCD working on a RPI3B with Ubuntu 20.04 64-bit" />
-<meta name="twitter:url" content="https://blog.victormendonca.com/2020/10/13/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/" />
+<meta name="twitter:title" content="How to Install Telegraf on FreeNAS" />
+<meta name="twitter:description" content="Istructions on how to install Telegraf collector agent on FreeNAS" />
+<meta name="twitter:url" content="https://blog.victormendonca.com/2020/10/28/how-to-install-telegraf-on-freenas/" />
 <meta name="twitter:domain" content="https://blog.victormendonca.com/">
   
 
@@ -52,7 +50,7 @@
 
 
 
-<link rel="canonical" href="https://blog.victormendonca.com/2020/10/13/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/" />
+<link rel="canonical" href="https://blog.victormendonca.com/2020/10/28/how-to-install-telegraf-on-freenas/" />
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
 <link rel="icon" href="https://blog.victormendonca.com/favicon.png">
 <meta name="generator" content="Hugo 0.48" />
@@ -149,13 +147,13 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
   <div class="text-center">
 
-    <h1>How to Install Waveshare 3.5&#34; LCD on Ubuntu 20.04
+    <h1>How to Install Telegraf on FreeNAS
 </h1>
 
     <div class="metas">
 <small>
   <i class="fa fa-calendar"></i>
-  <time datetime="2020-10-13">13 Oct, 2020</time>
+  <time datetime="2020-10-28">28 Oct, 2020</time>
 </small>
 
 
@@ -163,25 +161,25 @@
     &middot; by Victor Mendonça
   
   &middot; Read in about 2 min
-  &middot; (392 words)
+  &middot; (262 words)
   &middot; 
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f13%2fhow-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Install%20Waveshare%203.5%22%20LCD%20on%20Ubuntu%2020.04&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f13%2fhow-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Install%20Telegraf%20on%20FreeNAS&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f13%2fhow-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f13%2fhow-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f13%2fhow-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04%2f&amp;title=How%20to%20Install%20Waveshare%203.5%22%20LCD%20on%20Ubuntu%2020.04" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f&amp;title=How%20to%20Install%20Telegraf%20on%20FreeNAS" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=How%20to%20Install%20Waveshare%203.5%22%20LCD%20on%20Ubuntu%2020.04&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f13%2fhow-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=How%20to%20Install%20Telegraf%20on%20FreeNAS&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   </small>
@@ -189,11 +187,9 @@
 <div class="margin-10">
   <i class="fa fa-tags"></i>
   
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  <a href="https://blog.victormendonca.com/tags/monitoring" class="label label-primary">Monitoring</a>
   
-  <a href="https://blog.victormendonca.com/tags/hardware" class="label label-primary">Hardware</a>
-  
-  <a href="https://blog.victormendonca.com/tags/raspberry-pi" class="label label-primary">Raspberry Pi</a>
+  <a href="https://blog.victormendonca.com/tags/freenas" class="label label-primary">FreeNAS</a>
   
 
 
@@ -206,137 +202,97 @@
 </div>
 
       <div class="content">
-  
+  <p>Quick and simple instructions on how to install Telegraf collector agent on FreeNAS.</p>
 
-<p>Following the steps of an older post (<a href="https://blog.victormendonca.com/2018/06/26/installing-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b/">Installing Kuman 3</a>), I find myself trying to configure the same Waveshare 3.5&raquo; LCD touch screen on my Raspberry Pi 3B, but now with Ubuntu 20.04 64.bit.</p>
+<p>a. Start by creating a folder for Telegraf on one of your pools. I have mine under <code>/mnt/Volume1/home/system/telegraf</code></p>
 
-<p>As usual the LCDs from Waveshare are not that easy to configure. While researching online I could not find any working instructions on how to configure the screen with Ubuntu 20.04. I found a few Git repos (<a href="https://github.com/waveshare/LCD-show">Wavesahre</a> and <a href="https://github.com/lcdwiki/LCD-show-ubuntu">LCD Wiki</a>), but they all failed to get me with a working config.</p>
-
-<p>After spending a lot of time I was able to get it to work using some of the files and instructions from Waveshare&rsquo;s official Git Repo (as well as LCD Wiki).</p>
-
-<p>If you want to save yourself sometime, just use my Ansible repo to get your RPI3B configured. Otherwise, the manual instructions are bellow.</p>
-
-<p><a href="https://github.com/victorbrca/waveshare35-rpi3b-ubuntu-20.04-64">GitHub: waveshare35-rpi3b-ubuntu-20.04-64</a></p>
-
-<h2 id="instructions">Instructions</h2>
-
-<p>a. Download Ubuntu 20.04 64-bit for RPI3 and setup your SD card</p>
-
-<p><a href="https://ubuntu.com/download/raspberry-pi">https://ubuntu.com/download/raspberry-pi</a></p>
-
-<p><img src="img/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/download-ubuntu.png" alt="" /></p>
-
-<p>Make sure to check the downloaded file</p>
-
-<p><img src="img/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/verify-download.png" alt="" /></p>
-
-<p>b. Power the Pi on, login (SSH or HDMI), change the password and update</p>
-
-<pre><code class="language-none"># apt-get update apt-get upgrade
-</code></pre>
-
-<p>c. Install Xubuntu and evdev</p>
-
-<p><em><strong>Note:</strong> you could just install X instead of Xubuntu and there&rsquo;s a chance the instructions will work</em></p>
-
-<pre><code class="language-none"># apt-get install xubuntu-desktop xserver-xorg-input-evdev
-</code></pre>
-
-<p>d. Backup the files we are going to modify</p>
-
-<p><em>We are not modifying <code>config.txt</code>, but we are backing it up just in case</em></p>
-
-<pre><code class="language-none"># cd /boot/firmware
-
-# cp cmdline.txt cmdline.txt.orig
-# cp usercfg.txt usercfg.txt.orig
-# cp config.txt config.txt.orig
-</code></pre>
-
-<p>e. Add the following lines to <code>/boot/firmware/usercfg.txt</code></p>
-
-<pre><code class="language-none">dtparam=i2c_arm=on
-dtparam=audio=on
-dtparam=spi=on
-enable_uart=1
-dtoverlay=waveshare35a
-hdmi_drive=2
-disable_overscan=1
-</code></pre>
-
-<p>f. Make changes to <code>/boot/firmware/cmdline.txt</code></p>
+<p>b. Download the Telegraf tar for FreeBSD (<a href="https://github.com/influxdata/telegraf/releases">here</a>), extract it and copy the binary and the <code>.conf</code> files to the folder we created in the previous step</p>
 
 <ul>
-<li>Modify
-
-<ul>
-<li>console=ttyAMA0,115200</li>
-</ul></li>
-<li>Add
-
-<ul>
-<li>fbcon=map:10</li>
-<li>fbcon=font:ProFont6x11</li>
-</ul></li>
+<li><code>./telegraf-[version]/usr/bin/telegraf</code></li>
+<li><code>./telegraf-[version]/etc/telegraf/telegraf.conf</code></li>
 </ul>
 
-<pre><code class="language-none">net.ifnames=0 dwc_otg.lpm_enable=0 console=ttyAMA0,115200 console=tty1 root=LABEL=writable rootfstype=ext4 elevator=deadline rootwait fixrtc fbcon=map:10 fbcon=font:ProFont6x11
+<p>c. Create <code>telegraf.init</code> in the same folder (make sure to modify the 2 lines with your path)</p>
+
+<pre><code class="language-none">26 : ${telegraf_conf:=&quot;/mnt/Volume1/home/system/telegraf/${name}.conf&quot;}
+
+32 command_args=&quot;-crP ${pidfile} /mnt/Volume1/home/system/telegraf/${name} ${telegraf_flags} -config=${telegraf_conf} &gt;&gt; /var/log/telegraf.log 2&gt;&amp;1&quot;
 </code></pre>
 
-<p>g. Create the directory <code>/etc/X11/xorg.conf.d</code></p>
+<pre><code>#!/bin/sh
+# $FreeBSD$
 
-<pre><code class="language-none"># mkdir -p /etc/X11/xorg.conf.d
+# PROVIDE: telegraf
+# REQUIRE: DAEMON NETWORKING
+# BEFORE: LOGIN
+# KEYWORD: shutdown
+
+# Add the following lines to /etc/rc.conf to enable telegrafb:
+# telegraf_enable=&quot;YES&quot;
+#
+# telegraf_enable (bool): Set to YES to enable telegraf
+# Default: NO
+# telegraf_conf (str): telegraf configuration file
+# Default: ${PREFIX}/etc/telegraf.conf
+# telegraf_flags (str): Extra flags passed to telegraf
+
+. /etc/rc.subr
+
+name=&quot;telegraf&quot;
+rcvar=telegraf_enable
+load_rc_config $name
+
+: ${telegraf_enable:=&quot;YES&quot;}
+: ${telegraf_flags:=&quot;-quiet&quot;}
+: ${telegraf_conf:=&quot;/mnt/Volume1/home/system/telegraf/${name}.conf&quot;}
+
+# daemon
+start_precmd=telegraf_prestart
+pidfile=&quot;/var/run/${name}.pid&quot;
+command=/usr/sbin/daemon
+command_args=&quot;-crP ${pidfile} /mnt/Volume1/home/system/telegraf/${name} ${telegraf_flags} -config=${telegraf_conf} &gt;&gt; /var/log/telegraf.log 2&gt;&amp;1&quot;
+
+telegraf_prestart() {
+# Have to empty rc_flags so they don't get passed to daemon(8)
+ rc_flags=&quot;&quot;
+}
+
+run_rc_command &quot;$1&quot;
 </code></pre>
 
-<p>h. Create the file <code>/etc/X11/xorg.conf.d/99-calibration.conf</code></p>
+<p>d. Edit the configuration file (<code>telegraf.conf</code>) according to your needs</p>
 
-<pre><code class="language-none">Section &quot;InputClass&quot;
-    Identifier &quot;calibration&quot;
-    MatchProduct &quot;ADS7846 Touchscreen&quot;
-    Option &quot;Calibration&quot; &quot;3932 300 294 3801&quot;
-    Option &quot;SwapAxes&quot; &quot;1&quot;
-    Option &quot;EmulateThirdButton&quot; &quot;1&quot;
-    Option &quot;EmulateThirdButtonTimeout&quot; &quot;750&quot;
-    Option &quot;EmulateThirdButtonMoveThreshold&quot; &quot;30&quot;
-EndSection
+<p>e. Create a link in <code>/usr/local/etc/rc.d</code> for telegraf</p>
+
+<pre><code class="language-none">ln -s /mnt/Volume1/home/system/telegraf/telegraf.init /usr/local/etc/rc.d/telegraf
 </code></pre>
 
-<p>i. Create the file <code>/usr/share/X11/xorg.conf.d/99-fbturbo.conf</code></p>
+<p>f. Start the service</p>
 
-<pre><code class="language-none">Section &quot;Device&quot;
-    Identifier &quot;Allwinner A10/A13 FBDEV&quot;
-    Driver &quot;fbturbo&quot;
-    Option &quot;fbdev&quot; &quot;/dev/fb2&quot;
-
-    Option &quot;SwapbuffersWait&quot; &quot;true&quot;
-EndSection
+<pre><code class="language-none">service telegraf start
 </code></pre>
 
-<p>j. Copy <code>10-evdev.conf</code> to <code>45-evdev.conf</code></p>
+<p>g. Check the output of the logs to make sure it&rsquo;s working</p>
 
-<pre><code class="language-none"># cd /usr/share/X11/xorg.conf.d/
-# cp 10-evdev.conf 45-evdev.conf
+<pre><code class="language-none"># tail /var/log/telegraf.log
+2020-10-25T17:34:33Z I! Starting Telegraf 1.16.0
 </code></pre>
 
-<p>k. Clone <code>https://github.com/waveshare/LCD-show.git</code></p>
+<p>h. Create an &laquo;Init/Shutdown Script&raquo; (change to reflect your path)</p>
 
-<pre><code class="language-none"># mkdir /root/Git
-# cd /roo/Git
-
-# git clone https://github.com/waveshare/LCD-show.git
-
-# cd LCD-show
+<pre><code class="language-none">ln -s /mnt/Volume1/home/system/telegraf/telegraf.init /usr/local/etc/rc.d/telegraf ; service telegraf start
 </code></pre>
 
-<p>l. Copy <code>waveshare35a-overlay.dtb</code> to <code>/boot/firmware/overlays</code> as both <code>waveshare35a-overlay.dtb</code> and <code>waveshare35a-overlay.dtbo</code></p>
+<p><img src="img/how-to-install-telegraf-on-freenas/init.png" alt="" /></p>
 
-<pre><code class="language-none"># cp waveshare35a-overlay.dtb /boot/firmware/overlays/waveshare35a-overlay.dtb
-# cp waveshare35a-overlay.dtb /boot/firmware/overlays/waveshare35a-overlay.dtbo
-</code></pre>
+<hr />
 
-<p>m. Reboot and enjoy</p>
+<p><strong>Credits:</strong></p>
 
-<p><img src="https://pbs.twimg.com/media/Ej7nEdZWAAIZ9f3?format=jpg&amp;name=medium" alt="" /></p>
+<ul>
+<li><a href="https://www.reddit.com/user/nDQ9UeOr/">u/nDQ9UeOr</a> - <a href="https://www.reddit.com/r/freenas/comments/81t2bw/can_i_install_telegraf_on_my_freenas_host/">Redit post</a></li>
+</ul>
 
 </div>
 
@@ -344,22 +300,22 @@ EndSection
       <footer>
   
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f13%2fhow-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Install%20Waveshare%203.5%22%20LCD%20on%20Ubuntu%2020.04&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f13%2fhow-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Install%20Telegraf%20on%20FreeNAS&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f13%2fhow-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f13%2fhow-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f13%2fhow-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04%2f&amp;title=How%20to%20Install%20Waveshare%203.5%22%20LCD%20on%20Ubuntu%2020.04" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f&amp;title=How%20to%20Install%20Telegraf%20on%20FreeNAS" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=How%20to%20Install%20Waveshare%203.5%22%20LCD%20on%20Ubuntu%2020.04&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f13%2fhow-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=How%20to%20Install%20Telegraf%20on%20FreeNAS&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -368,18 +324,12 @@ EndSection
     <nav><ul class="pager">
     
         <li class="previous">
-          <a href="https://blog.victormendonca.com/2020/10/09/how-to-show-progress-for-dd/" title="How to Show Progress for dd">
+          <a href="https://blog.victormendonca.com/2020/10/22/how-to-configure-a-ups-between-linux-and-freenas/" title="How to Configure a UPS Between Linux and FreeNAS">
             <span aria-hidden="true">&larr;</span>Previous
           </a>
         </li>
     
 
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2020/10/21/how-to-create-an-encrypted-usb-drive-on-kde-plasma/" title="How to Quickly Create an Encrypted USB Drive on KDE Plasma">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
     
     </ul> </nav>
   
