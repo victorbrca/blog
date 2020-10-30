@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Thu, 22 Oct 2020 11:00:00 -0400</lastBuildDate>
+    <lastBuildDate>Fri, 30 Oct 2020 12:00:00 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Overview of My Grafana Setup</title>
+      <link>https://blog.victormendonca.com/2020/10/30/my-grafana-setup/</link>
+      <pubDate>Fri, 30 Oct 2020 12:00:00 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2020/10/30/my-grafana-setup/</guid>
+      <description>For the past few weeks I have been working extensively on the devices in my LAN. My FreeNAS had crashed due to a power outage resulting on a burnt memory module and a data issue with my main pool that caused a kernel panic on boot. My remote backup solution had not been working for over a year, so I knew that it would also need a complete re-design.</description>
+    </item>
     
     <item>
       <title>How to Configure a UPS Between Linux and FreeNAS</title>

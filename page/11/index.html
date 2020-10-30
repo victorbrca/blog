@@ -127,6 +127,161 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2017/09/20/additional-status-for-vim-with-powerline/">Additional Status for Vim With Powerline</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2017-09-20">20 Sep, 2017</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/vim" class="label label-primary">vim</a>
+  
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">bash</a>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>Would you like to have more information displayed while reading files in VIM? <a href="https://powerline.readthedocs.io/en/latest/index.html">Powerline</a> is a great utility for that.</p>
+
+<p><img src="https://i.imgur.com/0vCK9an.png" alt="Imgur" /></p>
+
+<p>In it&rsquo;s default config, it displays:</p>
+
+<ul>
+<li>Current mode (normal, insert, visual)</li>
+<li>Git branch</li>
+<li>File name</li>
+<li>File encoding</li>
+<li>Script type</li>
+<li>File view percentage</li>
+<li>Line number</li>
+</ul>
+
+<h2 id="to-install-it">To install it</h2>
+
+<h3 id="arch">Arch:</h3>
+
+<pre><code class="language-bash">sudo pacman -Ss python-powerline powerline
+</code></pre>
+
+<p>Add the line below to your <code>~/.vimrc</code></p>
+
+<pre><code class="language-bash">set laststatus=2
+</code></pre>
+
+<hr />
+
+<p><strong>Note:</strong> If you get the error below</p>
+
+<pre><code>Traceback (most recent call last):
+  File &quot;&lt;string&gt;&quot;, line 9, in &lt;module&gt;
+ImportError: No module named powerline.vim
+An error occurred while importing powerline module.
+This could be caused by invalid sys.path setting,
+or by an incompatible Python version (powerline requires
+Python 2.6, 2.7 or 3.2 and later to work). Please consult
+the troubleshooting section in the documentation for
+possible solutions.
+If powerline on your system is installed for python 3 only you
+should set g:powerline_pycmd to &quot;py3&quot; to make it load correctly.
+Unable to import powerline, is it installed?
+Press ENTER or type command to continue
+</code></pre>
+
+<p>Modify either <code>~/.vimrc</code> (or <code>/etc/vimrc</code> if you want the fix available for multiple users) by adding the line below:</p>
+
+<pre><code class="language-vim">let g:powerline_pycmd = 'py3'
+</code></pre>
+
+<h3 id="ubuntu-16-04">Ubuntu 16.04</h3>
+
+<p>Use Python 3</p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Additional%20Status%20for%20Vim%20With%20Powerline&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f&amp;title=Additional%20Status%20for%20Vim%20With%20Powerline" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Additional%20Status%20for%20Vim%20With%20Powerline&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f20%2fadditional-status-for-vim-with-powerline%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2017/09/19/bash-parameter-expansion/" title="Bash: Parameter Expansion (Substitution)">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2017/09/23/gnome-touchpad-settings-missing-in-arch-xps-13/" title="Gnome Touchpad Settings Missing in Arch Xps 13">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2017/09/19/bash-parameter-expansion/">Bash: Parameter Expansion (Substitution)</a>
 </h2>
 
@@ -942,119 +1097,6 @@ set -x
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2016/11/02/how-to-record-and-share-a-terminal-session/">How to Record and Share a Terminal Session</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2016-11-02">2 Nov, 2016</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/shell" class="label label-primary">Shell</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  <p>A while ago I had shared instructions on <a href="http://wazem.blogspot.ca/2014/10/how-to-share-terminal-window-online.html">&laquo;How to Share a Terminal Window Online&raquo;</a>. This is great for live support.</p>
-
-<p>Today I&rsquo;m sharing instructions on how to record your teminal session, and not only share it, but also allow users to copy and paste text from the playback video.</p>
-
-<p>The installation could not be easier. And to show how great this utility is, I&rsquo;m showing the instructions using a &laquo;video&raquo; recorderd with &laquo;showterm&raquo;.</p>
-
-<iframe src="http://showterm.io/e01df02ef6011e200adfa" width="710" height="320"></iframe>
-
-<p>Now go ahead and try copying text from the video. Isn&rsquo;t that great!?</p>
-
-<hr />
-
-<p><strong>Reference:</strong></p>
-
-<p><a href="http://showterm.io/">http://showterm.io/</a></p>
-
-<p><a href="https://github.com/ConradIrwin/showterm">https://github.com/ConradIrwin/showterm</a></p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2016%2f11%2f02%2fhow-to-record-and-share-a-terminal-session%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Record%20and%20Share%20a%20Terminal%20Session&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f11%2f02%2fhow-to-record-and-share-a-terminal-session%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f11%2f02%2fhow-to-record-and-share-a-terminal-session%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f11%2f02%2fhow-to-record-and-share-a-terminal-session%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f11%2f02%2fhow-to-record-and-share-a-terminal-session%2f&amp;title=How%20to%20Record%20and%20Share%20a%20Terminal%20Session" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=How%20to%20Record%20and%20Share%20a%20Terminal%20Session&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2016%2f11%2f02%2fhow-to-record-and-share-a-terminal-session%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2016/10/19/how-to-create-a-prompt-with-timeout-in-bash/" title="How to Create a Prompt With Timeout in Bash">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2016/12/23/redirecting-bash-xtrace-to-a-separate-log/" title="Redirecting Bash Xtrace to a Separate Log">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1192,7 +1234,7 @@ set -x
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/aws">aws</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/encryption">encryption</a></li><li><a href="https://blog.victormendonca.com/tags/fzf">fzf</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/aws">aws</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/encryption">encryption</a></li><li><a href="https://blog.victormendonca.com/tags/fzf">fzf</a></li><li><a href="https://blog.victormendonca.com/tags/git">git</a></li>
           </ul>
         </div>
       </div>
@@ -1208,6 +1250,10 @@ set -x
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2020/10/30/my-grafana-setup/">Overview of My Grafana Setup</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2020/10/29/how-to-collect-ups-data-on-pfsense-with-telegraf/">How to Collect UPS Data on pfSense with Telegraf</a>
@@ -1231,10 +1277,6 @@ set -x
         
           <li>
           <a href="https://blog.victormendonca.com/2020/10/13/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/">How to Install Waveshare 3.5&#34; LCD on Ubuntu 20.04</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2020/10/09/how-to-show-progress-for-dd/">How to Show Progress for dd</a>
           </li>
         
         </ul>
