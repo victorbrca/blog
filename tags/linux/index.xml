@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Fri, 30 Oct 2020 12:00:00 -0400</lastBuildDate>
+    <lastBuildDate>Tue, 03 Nov 2020 16:30:00 -0500</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ZFS for Dummies</title>
+      <link>https://blog.victormendonca.com/2020/11/03/zfs-for-dummies/</link>
+      <pubDate>Tue, 03 Nov 2020 16:30:00 -0500</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2020/11/03/zfs-for-dummies/</guid>
+      <description>As mentioned on previous posts, I have spent the past few weeks dealing with a ZFS crash on my FreeNAS install. Because of that, not only was I forced to learn how to troubleshoot ZFS, but I also had to learn how to setup new volumes and come up with new backup strategies (between a few other things).
+This was a great opportunity for me to learn more about ZFS (because I new &amp;lsquo;nada&amp;rsquo; to start with).</description>
+    </item>
     
     <item>
       <title>Overview of My Grafana Setup</title>

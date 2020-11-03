@@ -58,6 +58,15 @@
     </item>
     
     <item>
+      <title>Freebsd</title>
+      <link>https://blog.victormendonca.com/tags/freebsd/</link>
+      <pubDate>Tue, 03 Nov 2020 16:30:00 -0500</pubDate>
+      
+      <guid>https://blog.victormendonca.com/tags/freebsd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Freenas</title>
       <link>https://blog.victormendonca.com/tags/freenas/</link>
       <pubDate>Wed, 28 Oct 2020 11:49:16 -0400</pubDate>
@@ -114,7 +123,7 @@
     <item>
       <title>Linux</title>
       <link>https://blog.victormendonca.com/tags/linux/</link>
-      <pubDate>Fri, 30 Oct 2020 12:00:00 -0400</pubDate>
+      <pubDate>Tue, 03 Nov 2020 16:30:00 -0500</pubDate>
       
       <guid>https://blog.victormendonca.com/tags/linux/</guid>
       <description></description>
@@ -288,6 +297,15 @@
       <pubDate>Wed, 04 Jul 2018 18:48:26 -0400</pubDate>
       
       <guid>https://blog.victormendonca.com/tags/windows/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Zfs</title>
+      <link>https://blog.victormendonca.com/tags/zfs/</link>
+      <pubDate>Tue, 03 Nov 2020 16:30:00 -0500</pubDate>
+      
+      <guid>https://blog.victormendonca.com/tags/zfs/</guid>
       <description></description>
     </item>
     
