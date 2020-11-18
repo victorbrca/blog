@@ -7,13 +7,24 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Sat, 14 Nov 2020 16:00:00 -0500</lastBuildDate>
+    <lastBuildDate>Wed, 18 Nov 2020 15:55:27 -0500</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>RHCSA8: Boot Targets, Systemd Targets and root Password Reset</title>
+      <title>RHCSA v8: Linux Logical Volume Manager</title>
+      <link>https://blog.victormendonca.com/2020/11/18/linux-logical-volume-manager/</link>
+      <pubDate>Wed, 18 Nov 2020 15:55:27 -0500</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2020/11/18/linux-logical-volume-manager/</guid>
+      <description>Disclaimer This blog post is essentially my study notes for the RHCSA v8 exam on Logical Volume Manager. It should be taken as a quick reference document (or a cheat sheet of some sorts).
+It covers the following exam subjects:
+ Configure local storage  Create and remove physical volumes Assign physical volumes to volume groups Create and delete logical volumes  Create and configure file systems  Extend existing logical volumes   Note: There could be additional information needed for the exam that is not covered here.</description>
+    </item>
+    
+    <item>
+      <title>RHCSA v8: Boot Targets, Systemd Targets and root Password Reset</title>
       <link>https://blog.victormendonca.com/2020/11/14/rhcsa8-boot-targets-system-targets-and-root-password-reset/</link>
       <pubDate>Sat, 14 Nov 2020 16:00:00 -0500</pubDate>
       
@@ -217,7 +228,7 @@ BaseOS Content in the BaseOS repository is intended to provide the core set of t
     </item>
     
     <item>
-      <title>RHCSA V8: Configure Disk Compression</title>
+      <title>RHCSA v8: Configure Disk Compression</title>
       <link>https://blog.victormendonca.com/2020/03/14/rhsa-v8-configure-disk-compression/</link>
       <pubDate>Sat, 14 Mar 2020 14:56:39 -0400</pubDate>
       
@@ -227,7 +238,7 @@ Definition Virtual Data Optimizer (VDO) provides inline data reduction for Linux
     </item>
     
     <item>
-      <title>RHCSA v8 - What&#39;s New</title>
+      <title>RHCSA v8: What&#39;s New</title>
       <link>https://blog.victormendonca.com/2020/03/14/rhcsa---whats-new/</link>
       <pubDate>Sat, 14 Mar 2020 11:31:56 -0400</pubDate>
       

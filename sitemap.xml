@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.victormendonca.com/2020/11/18/linux-logical-volume-manager/</loc>
+    <lastmod>2020-11-18T15:55:27-05:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.victormendonca.com/2020/11/14/rhcsa8-boot-targets-system-targets-and-root-password-reset/</loc>
     <lastmod>2020-11-14T16:00:00-05:00</lastmod>
   </url>
@@ -381,7 +386,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/linux/</loc>
-    <lastmod>2020-11-14T16:00:00-05:00</lastmod>
+    <lastmod>2020-11-18T15:55:27-05:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -435,7 +440,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/post/</loc>
-    <lastmod>2020-11-14T16:00:00-05:00</lastmod>
+    <lastmod>2020-11-18T15:55:27-05:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -459,13 +464,13 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/redhat/</loc>
-    <lastmod>2020-11-14T16:00:00-05:00</lastmod>
+    <lastmod>2020-11-18T15:55:27-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.victormendonca.com/tags/rhcsa/</loc>
-    <lastmod>2020-03-15T20:52:36-04:00</lastmod>
+    <lastmod>2020-11-18T15:55:27-05:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -500,7 +505,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/</loc>
-    <lastmod>2020-11-14T16:00:00-05:00</lastmod>
+    <lastmod>2020-11-18T15:55:27-05:00</lastmod>
     <priority>0</priority>
   </url>
   
