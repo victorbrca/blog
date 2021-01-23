@@ -5,36 +5,32 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title>How to Scan for RTSP Urls  &middot; Victor&#39;s Blog</title>
+  <title>How to Convert Standard Partition to Logical Volume  &middot; Victor&#39;s Blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="description" content="How to find the RTSP URL for a network camera" />
+<meta name="description" content="Converting standard partitions to Logical Volumes" />
 
-<meta name="keywords" content="Linux, Shell, Networking, ">
+<meta name="keywords" content="Linux, ">
 
 
-<meta property="og:title" content="How to Scan for RTSP Urls  &middot; Victor&#39;s Blog ">
+<meta property="og:title" content="How to Convert Standard Partition to Logical Volume  &middot; Victor&#39;s Blog ">
 <meta property="og:site_name" content="Victor&#39;s Blog"/>
-<meta property="og:url" content="https://blog.victormendonca.com/2018/02/09/how-to-scan-for-rtsp-urls/" />
+<meta property="og:url" content="https://blog.victormendonca.com/2021/01/23/how-to-convert-standard-partition-to-lvm/" />
 <meta property="og:locale" content="en">
 
 
 <meta property="og:type" content="article" />
-<meta property="og:description" content="How to find the RTSP URL for a network camera"/>
-<meta property="og:article:published_time" content="2018-02-09T23:04:40-05:00" />
-<meta property="og:article:modified_time" content="2018-02-09T23:04:40-05:00" />
+<meta property="og:description" content="Converting standard partitions to Logical Volumes"/>
+<meta property="og:article:published_time" content="2021-01-23T17:30:00-05:00" />
+<meta property="og:article:modified_time" content="2021-01-23T17:30:00-05:00" />
 
   
     
 <meta property="og:article:tag" content="Linux">
-    
-<meta property="og:article:tag" content="Shell">
-    
-<meta property="og:article:tag" content="Networking">
     
   
 
@@ -42,9 +38,9 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@18440926" />
 <meta name="twitter:creator" content="@18440926" />
-<meta name="twitter:title" content="How to Scan for RTSP Urls" />
-<meta name="twitter:description" content="How to find the RTSP URL for a network camera" />
-<meta name="twitter:url" content="https://blog.victormendonca.com/2018/02/09/how-to-scan-for-rtsp-urls/" />
+<meta name="twitter:title" content="How to Convert Standard Partition to Logical Volume" />
+<meta name="twitter:description" content="Converting standard partitions to Logical Volumes" />
+<meta name="twitter:url" content="https://blog.victormendonca.com/2021/01/23/how-to-convert-standard-partition-to-lvm/" />
 <meta name="twitter:domain" content="https://blog.victormendonca.com/">
   
 
@@ -52,7 +48,7 @@
 
 
 
-<link rel="canonical" href="https://blog.victormendonca.com/2018/02/09/how-to-scan-for-rtsp-urls/" />
+<link rel="canonical" href="https://blog.victormendonca.com/2021/01/23/how-to-convert-standard-partition-to-lvm/" />
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
 <link rel="icon" href="https://blog.victormendonca.com/favicon.png">
 <meta name="generator" content="Hugo 0.48" />
@@ -149,39 +145,39 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
   <div class="text-center">
 
-    <h1>How to Scan for RTSP Urls
+    <h1>How to Convert Standard Partition to Logical Volume
 </h1>
 
     <div class="metas">
 <small>
   <i class="fa fa-calendar"></i>
-  <time datetime="2018-02-09">9 Feb, 2018</time>
+  <time datetime="2021-01-23">23 Jan, 2021</time>
 </small>
 
 
   <small>
     &middot; by Victor Mendonça
   
-  &middot; Read in about 2 min
-  &middot; (333 words)
+  &middot; Read in about 5 min
+  &middot; (893 words)
   &middot; 
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2021%2f01%2f23%2fhow-to-convert-standard-partition-to-lvm%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Scan%20for%20RTSP%20Urls&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Convert%20Standard%20Partition%20to%20Logical%20Volume&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2021%2f01%2f23%2fhow-to-convert-standard-partition-to-lvm%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2021%2f01%2f23%2fhow-to-convert-standard-partition-to-lvm%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2021%2f01%2f23%2fhow-to-convert-standard-partition-to-lvm%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f&amp;title=How%20to%20Scan%20for%20RTSP%20Urls" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2021%2f01%2f23%2fhow-to-convert-standard-partition-to-lvm%2f&amp;title=How%20to%20Convert%20Standard%20Partition%20to%20Logical%20Volume" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=How%20to%20Scan%20for%20RTSP%20Urls&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=How%20to%20Convert%20Standard%20Partition%20to%20Logical%20Volume&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2021%2f01%2f23%2fhow-to-convert-standard-partition-to-lvm%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   </small>
@@ -190,10 +186,6 @@
   <i class="fa fa-tags"></i>
   
   <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/shell" class="label label-primary">Shell</a>
-  
-  <a href="https://blog.victormendonca.com/tags/networking" class="label label-primary">Networking</a>
   
 
 
@@ -206,149 +198,186 @@
 </div>
 
       <div class="content">
-  <p>So you have a camera but can&rsquo;t figure out what the RTSP URL is? Here&rsquo;s the solution.</p>
+  
 
-<p>Head over to <a href="https://nmap.org/nsedoc/scripts/rtsp-url-brute.html">nmap.org</a> and download their <a href="https://svn.nmap.org/nmap/scripts/rtsp-url-brute.nse">rtsp-url-brute</a> script to your computer. Then run it with nmap as:</p>
+<h2 id="preamble">Preamble</h2>
 
-<pre><code>nmap --script rtsp-url-brute -p 554 [IP]
+<p>When I bought my new and shinny Lenovo P1 at the beginning of the year I choose a configuration that had 2 NVMe drives; one of 500GB and the other of 256GB. Innocently I thought that this would be plenty. But since I started hogging my test VMs and creating videos with my GoPro and DaVinci Resolve (while we are here, check out my <a href="https://www.youtube.com/channel/UCWcwZKLVqBzxCSUuoPmZKMw">YouTube</a> channel), that storage space quickly became too small and I knew I had to update my storage!</p>
+
+<p>Taking advantage of a great Black Friday deal I scored a 1TB Samsung 970 Evo Plus NVMe drive for almost half the price.</p>
+
+<p><img src="https://blog.victormendonca.com/img/how-to-convert-standard-partition-to-lvm/how-to-convert-standard-partition-to-lvm-9d243.png" alt="" /></p>
+
+<h2 id="preparation">Preparation</h2>
+
+<p>I had my hard drives organized into partitions as follows:</p>
+
+<pre><code class="language-none">nvme0n1             259:0    0 476.9G  0 disk
+├─nvme0n1p1         259:1    0   250G  0 part /home
+└─nvme0n1p2         259:2    0 226.9G  0 part /mnt/storage2
+nvme1n1             259:3    0   256G  0 disk
+├─nvme1n1p1         259:4    0   512M  0 part /efi
+├─nvme1n1p2         259:6    0    32G  0 part [SWAP]
+├─nvme1n1p2         259:7    0   110G  0 part /
+└─nvme1n1p2         259:8    0    96G  0 part /mnt/storage1
 </code></pre>
 
-<p>You should see results similar to the ones below:</p>
+<p><em>The partitions &lsquo;storage1&rsquo; and &lsquo;storage2&rsquo; are used for video and virtual machine storage.</em></p>
 
-<pre><code>nmap --script rtsp-url-brute -p 554 192.168.1.15
+<p>My plan was to replace the smaller drive and copy my partitions to the new drive as LV. This is pretty straight forward, you just need some additional steps if your root partition will be in the LV. I&rsquo;m however leaving my EFI partition as a standard partition for simplicity and compatibility.</p>
 
-Starting Nmap 7.60 ( https://nmap.org ) at 2018-02-09 23:00 EST
-Nmap scan report for 192.168.1.15
-Host is up (0.0033s latency).
+<p>If you are using this post as a guide, please take the time to compare my configuration to yours and make sure that it will work for you. You will most likely need to tweak a few steps. Also note that I&rsquo;m running Arch, so my instructions will be directed to it.</p>
 
-PORT    STATE SERVICE
-554/tcp open  rtsp
-| rtsp-url-brute:
-|   errors:
-|     rtsp://192.168.1.15/media.amp
-|     rtsp://192.168.1.15/media/media.amp
-|     rtsp://192.168.1.15/media/video1
-|     rtsp://192.168.1.15/media/video2
-|     rtsp://192.168.1.15/media/video3
-|     rtsp://192.168.1.15/medias1
-|     rtsp://192.168.1.15/mjpeg.cgi
-|     rtsp://192.168.1.15/mjpeg/media.smp
-|     rtsp://192.168.1.15/media
-|     rtsp://192.168.1.15/mp4
-|   discovered:
-|     rtsp://192.168.1.15/
-|     rtsp://192.168.1.15/1
-|     rtsp://192.168.1.15/1.AMP
-|     rtsp://192.168.1.15/1/1:1/main
-|     rtsp://192.168.1.15/1/cif
-|     rtsp://192.168.1.15/1/stream1
-|     rtsp://192.168.1.15/11
-|     rtsp://192.168.1.15/12
-|   other responses:
-|     400:
-|       rtsp://192.168.1.15/0
-|       rtsp://192.168.1.15/0/video1
-|       rtsp://192.168.1.15/4
-|       rtsp://192.168.1.15/CAM_ID.password.mp2
-|       rtsp://192.168.1.15/CH001.sdp
-|       rtsp://192.168.1.15/GetData.cgi
-|       rtsp://192.168.1.15/H264
-|       rtsp://192.168.1.15/HighResolutionVideo
-|       rtsp://192.168.1.15/HighResolutionvideo
-|       rtsp://192.168.1.15/Image.jpg
-|       rtsp://192.168.1.15/LowResolutionVideo
-|       rtsp://192.168.1.15/MJPEG.cgi
-|       rtsp://192.168.1.15/MediaInput/h264
-|       rtsp://192.168.1.15/MediaInput/h264/stream_1
-|       rtsp://192.168.1.15/MediaInput/mpeg4
-|       rtsp://192.168.1.15/ONVIF/MediaInput
-|       rtsp://192.168.1.15/ONVIF/channel1
-|       rtsp://192.168.1.15/PSIA/Streaming/channels/0?videoCodecType=H.264
-|       rtsp://192.168.1.15/PSIA/Streaming/channels/1
-|       rtsp://192.168.1.15/PSIA/Streaming/channels/1?videoCodecType=MPEG4
-|       rtsp://192.168.1.15/PSIA/Streaming/channels/h264
-|       rtsp://192.168.1.15/Possible
-|       rtsp://192.168.1.15/ROH/channel/11
-|       rtsp://192.168.1.15/Streaming/Channels/1
-|       rtsp://192.168.1.15/Streaming/Channels/101
-|       rtsp://192.168.1.15/Streaming/Channels/102
-|       rtsp://192.168.1.15/Streaming/Channels/103
-|       rtsp://192.168.1.15/Streaming/Channels/2
-|       rtsp://192.168.1.15/Streaming/Unicast/channels/101
-|       rtsp://192.168.1.15/Streaming/channels/101
-|       rtsp://192.168.1.15/Video?Codec=MPEG4&amp;Width=720&amp;Height=576&amp;Fps=30
-|       rtsp://192.168.1.15/VideoInput/1/h264/1
-|       rtsp://192.168.1.15/access_code
-|       rtsp://192.168.1.15/access_name_for_stream_1_to_5
-|       rtsp://192.168.1.15/av0_0
-|       rtsp://192.168.1.15/av0_1
-|       rtsp://192.168.1.15/av2
-|       rtsp://192.168.1.15/avn=2
-|       rtsp://192.168.1.15/axis-media/media.amp
-|       rtsp://192.168.1.15/axis-media/media.amp?videocodec=h264&amp;resolution=640x480
-|       rtsp://192.168.1.15/cam
-|       rtsp://192.168.1.15/cam/realmonitor
-|       rtsp://192.168.1.15/cam/realmonitor?channel=1&amp;subtype=00
-|       rtsp://192.168.1.15/cam/realmonitor?channel=1&amp;subtype=01
-|       rtsp://192.168.1.15/cam/realmonitor?channel=1&amp;subtype=1
-|       rtsp://192.168.1.15/cam0_0
-|       rtsp://192.168.1.15/cam0_1
-|       rtsp://192.168.1.15/cam1/h264
-|       rtsp://192.168.1.15/cam1/h264/multicast
-|       rtsp://192.168.1.15/cam1/mjpeg
-|       rtsp://192.168.1.15/cam1/mpeg4
-|       rtsp://192.168.1.15/cam1/onvif-h264
-|       rtsp://192.168.1.15/cam4/mpeg4
-|       rtsp://192.168.1.15/camera.stm
-|       rtsp://192.168.1.15/cgi-bin/viewer/video.jpg?resolution=640x480
-|       rtsp://192.168.1.15/ch0
-|       rtsp://192.168.1.15/ch0.h264
-|       rtsp://192.168.1.15/ch001.sdp
-|       rtsp://192.168.1.15/ch01.264
-|       rtsp://192.168.1.15/ch0_0.h264
-|       rtsp://192.168.1.15/ch0_unicast_firststream
-|       rtsp://192.168.1.15/ch0_unicast_secondstream
-|       rtsp://192.168.1.15/channel1
-|       rtsp://192.168.1.15/dms.jpg
-|       rtsp://192.168.1.15/dms?nowprofileid=2
-|       rtsp://192.168.1.15/h264
-|       rtsp://192.168.1.15/h264.sdp
-|       rtsp://192.168.1.15/h264/ch1/sub/
-|       rtsp://192.168.1.15/h264/media.amp
-|       rtsp://192.168.1.15/h264Preview_01_main
-|       rtsp://192.168.1.15/h264Preview_01_sub
-|       rtsp://192.168.1.15/h264_vga.sdp
-|       rtsp://192.168.1.15/image.jpg
-|       rtsp://192.168.1.15/image.mpg
-|       rtsp://192.168.1.15/image/jpeg.cgi
-|       rtsp://192.168.1.15/img/media.sav
-|       rtsp://192.168.1.15/img/video.asf
-|       rtsp://192.168.1.15/img/video.sav
-|       rtsp://192.168.1.15/ioImage/1
-|       rtsp://192.168.1.15/ipcam.sdp
-|       rtsp://192.168.1.15/ipcam/stream.cgi?nowprofileid=2
-|       rtsp://192.168.1.15/ipcam_h264.sdp
-|       rtsp://192.168.1.15/jpg/image.jpg?size=3
-|       rtsp://192.168.1.15/live
-|       rtsp://192.168.1.15/live.sdp
-|       rtsp://192.168.1.15/live/av0
-|       rtsp://192.168.1.15/live/ch0
-|       rtsp://192.168.1.15/live/ch00_0
-|       rtsp://192.168.1.15/live/ch00_1
-|       rtsp://192.168.1.15/live/ch1
-|       rtsp://192.168.1.15/live/ch2
-|       rtsp://192.168.1.15/live/h264
-|       rtsp://192.168.1.15/live/mpeg4
-|       rtsp://192.168.1.15/live0.264
-|       rtsp://192.168.1.15/live1.264
-|       rtsp://192.168.1.15/live1.sdp
-|       rtsp://192.168.1.15/live2.sdp
-|       rtsp://192.168.1.15/live3.sdp
-|       rtsp://192.168.1.15/live_h264.sdp
-|       rtsp://192.168.1.15/live_mpeg4.sdp
-|       rtsp://192.168.1.15/livestream
-|_      rtsp://192.168.1.15/livestream/
+<p>And finally, if you are adding a new drive, don&rsquo;t forget to do it now. I installed the new drive and used a USB-C enclosure to access my old drive.</p>
+
+<p><strong>⚠️ WARNING:</strong> <em>We will be using <code>dd</code> to copy the old data. Make sure to select the right partition and more importatnly, the right direction because <code>dd</code> will erase all your data.</em></p>
+
+<p><em>New NVMe installed</em>
+<img src="https://blog.victormendonca.com/img/how-to-convert-standard-partition-to-lvm/how-to-convert-standard-partition-to-lvm-6f0d9.png" alt="" /></p>
+
+<h2 id="instructions">Instructions</h2>
+
+<h3 id="creating-the-lv-and-copying-the-data">Creating the LV and Copying the Data</h3>
+
+<p>a. <strong>Power off</strong> the machine and boot into an Arch install ISO</p>
+
+<p>b. Create an EFI and a LVM partition using gdisk (I&rsquo;m not getting in details on this, but there are plenty of tutorials online). Make sure the EFI partition is the same size as your old one</p>
+
+<p><em>Here&rsquo;s my layout. My the new drive shows as <code>/dev/nvme1n1</code></em></p>
+
+<pre><code class="language-none">Device           Start        End    Sectors  Size Type
+/dev/nvme1n1p1    2048    1050623    1048576  512M EFI System
+/dev/nvme1n1p2 1050624 1953525134 1952474511  931G Linux LVM
 </code></pre>
+
+<p>c. Copy the old EFI partition to the new EFI partition with dd (note that my old drive mounted via the USB-C enclosure now shows as <code>/dev/sdb</code>)</p>
+
+<pre><code class="language-none"># dd if=/dev/sdb1 of=/dev/nvme1n1p1 bs=4M
+</code></pre>
+
+<p>d. Create the PV/VG</p>
+
+<pre><code class="language-none"># vgcreate root_vg /dev/nvme1n1p2
+</code></pre>
+
+<p>e. Create the logical volumes. Make sure that they have the same size as the old partitions</p>
+
+<pre><code class="language-none"># lvcreate -n swap -L 32G root_vg
+# lvcreate -n root -L 110G root_vg
+# lvcreate -n storage -L 96G root_vg
+</code></pre>
+
+<p>f. Formart the swap partition (there&rsquo;s not need to copy it, so we just recreate it)</p>
+
+<pre><code class="language-none"># mkswap -L swap /dev/root_vg/swap
+</code></pre>
+
+<p>g. Copy the root partition</p>
+
+<pre><code class="language-none"># dd if=/dev/sdb3 of=/dev/root_vg/root bs=4M
+</code></pre>
+
+<p>h. Copy the storage partition (or any other partition if you had it)</p>
+
+<pre><code class="language-none"># dd if=/dev/sdb4 of=/dev/root_vg/storage bs=4M
+</code></pre>
+
+<p>i. Our new drive is now created and populated with the old data</p>
+
+<pre><code class="language-none"># lsblk
+nvme0n1             259:0    0 476.9G  0 disk
+├─nvme0n1p1         259:1    0   250G  0 part /home
+└─nvme0n1p2         259:2    0 226.9G  0 part /mnt/storage2
+nvme1n1             259:3    0 931.5G  0 disk
+├─nvme1n1p1         259:4    0   512M  0 part /efi
+└─nvme1n1p2         259:5    0   931G  0 part
+  ├─root_vg-swap    254:0    0    32G  0 lvm  [SWAP]
+  ├─root_vg-root    254:1    0   110G  0 lvm  /
+  └─root_vg-storage 254:2    0    96G  0 lvm  /mnt/storage1
+</code></pre>
+
+<h3 id="additional-configuration">Additional Configuration</h3>
+
+<p>We now need to fix our EFI and GRUB to make sure we can boot into our LV partition.</p>
+
+<p>a. Mount root</p>
+
+<pre><code class="language-none"># mkdir /mnt/root
+
+# mount /dev/root_vg/root /mnt/root
+</code></pre>
+
+<p>b. Enter chroot of our copied data</p>
+
+<pre><code class="language-none"># arch-chroot /mnt/root
+</code></pre>
+
+<p>c. Mount our EFI partition</p>
+
+<pre><code class="language-none"># mount /dev/nvme1n1p1 /efi
+</code></pre>
+
+<p>d. Fix fstab for the swap partition (because we did not copy our swap partition, a new UUID was generated. We need to change <code>/etc/fstab</code> with that new partition UUID)</p>
+
+<pre><code class="language-none">UUID=d9e1b4f1-40eb-4bb6-908c-33012c7c0902	none		swap		defaults	0 0
+</code></pre>
+
+<p>e. Edit <code>/etc/mkinitcpio.conf</code> and add <code>lvm2</code> to <code>HOOKS</code></p>
+
+<pre><code class="language-none">HOOKS=(base udev ... block lvm2 filesystems)
+</code></pre>
+
+<p>f. Generate the ramdisk environment to boot the kernel</p>
+
+<pre><code class="language-none"># mkinitcpio -P
+</code></pre>
+
+<p>g. Re-install GRUB</p>
+
+<pre><code class="language-none"># grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
+</code></pre>
+
+<p>h. Enable the LVM module for GRUB by editing <code>/etc/default/grub</code> and adding the <code>lvm</code> module to <code>GRUB_PRELOAD_MODULES</code></p>
+
+<pre><code class="language-none"># Preload both GPT and MBR modules so that they are not missed
+GRUB_PRELOAD_MODULES=&quot;part_gpt part_msdos lvm&quot;
+</code></pre>
+
+<p>i. Re-create GRUB config</p>
+
+<pre><code class="language-none"># grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre>
+
+<p>j. Unmount /efi</p>
+
+<pre><code class="language-none"># umount /efi
+</code></pre>
+
+<p>k. Exit chroot</p>
+
+<pre><code class="language-none"># exit
+</code></pre>
+
+<p>l. Unmount root</p>
+
+<pre><code class="language-none"># umount /mnt/root
+</code></pre>
+
+<p>m. Power off, remove the old drive and the Arch iso and reboot</p>
+
+<pre><code class="language-none"># poweroff
+</code></pre>
+
+<p>If everything was done correctly you should be able to boot your system normally. If something is not working don&rsquo;t panic. Your data should be safe and sound on your old drive. Review your steps, do additional research for anything specific to your configuration and try again.</p>
+
+<hr />
+
+<p><strong>Reference:</strong></p>
+
+<ul>
+<li><a href="https://wiki.archlinux.org/index.php/Install_Arch_Linux_on_LVM">Arch Wiki: Install Arch Linux on LVM</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/LVM#Getting_started">Arch Wiki: LVM</a></li>
+</ul>
 
 </div>
 
@@ -356,22 +385,22 @@ PORT    STATE SERVICE
       <footer>
   
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2021%2f01%2f23%2fhow-to-convert-standard-partition-to-lvm%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Scan%20for%20RTSP%20Urls&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Convert%20Standard%20Partition%20to%20Logical%20Volume&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2021%2f01%2f23%2fhow-to-convert-standard-partition-to-lvm%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2021%2f01%2f23%2fhow-to-convert-standard-partition-to-lvm%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2021%2f01%2f23%2fhow-to-convert-standard-partition-to-lvm%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f&amp;title=How%20to%20Scan%20for%20RTSP%20Urls" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2021%2f01%2f23%2fhow-to-convert-standard-partition-to-lvm%2f&amp;title=How%20to%20Convert%20Standard%20Partition%20to%20Logical%20Volume" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=How%20to%20Scan%20for%20RTSP%20Urls&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f02%2f09%2fhow-to-scan-for-rtsp-urls%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=How%20to%20Convert%20Standard%20Partition%20to%20Logical%20Volume&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2021%2f01%2f23%2fhow-to-convert-standard-partition-to-lvm%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -380,18 +409,12 @@ PORT    STATE SERVICE
     <nav><ul class="pager">
     
         <li class="previous">
-          <a href="https://blog.victormendonca.com/2017/12/25/custom-standup-desk-build/" title="Custom Stand-up Desk Build">
+          <a href="https://blog.victormendonca.com/2020/11/18/linux-logical-volume-manager/" title="RHCSA v8: Linux Logical Volume Manager">
             <span aria-hidden="true">&larr;</span>Previous
           </a>
         </li>
     
 
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2018/05/14/creating-a-simple-systemd-user-service/" title="Creating a Simple Systemd User Service">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
     
     </ul> </nav>
   

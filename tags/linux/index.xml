@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Wed, 18 Nov 2020 15:55:27 -0500</lastBuildDate>
+    <lastBuildDate>Sat, 23 Jan 2021 17:30:00 -0500</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How to Convert Standard Partition to Logical Volume</title>
+      <link>https://blog.victormendonca.com/2021/01/23/how-to-convert-standard-partition-to-lvm/</link>
+      <pubDate>Sat, 23 Jan 2021 17:30:00 -0500</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2021/01/23/how-to-convert-standard-partition-to-lvm/</guid>
+      <description>Preamble When I bought my new and shinny Lenovo P1 at the beginning of the year I choose a configuration that had 2 NVMe drives; one of 500GB and the other of 256GB. Innocently I thought that this would be plenty. But since I started hogging my test VMs and creating videos with my GoPro and DaVinci Resolve (while we are here, check out my YouTube channel), that storage space quickly became too small and I knew I had to update my storage!</description>
+    </item>
     
     <item>
       <title>RHCSA v8: Linux Logical Volume Manager</title>
