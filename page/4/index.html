@@ -127,6 +127,197 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2020/04/28/aws-routing-policies---visual-comparison/">AWS Routing Policies - Visual Comparison</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2020-04-28">28 Apr, 2020</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/aws" class="label label-primary">AWS</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>A quick explanation and visual overview of the AWS Route 53 policies (with the exception of Geoproximity Routing).</p>
+
+<h3 id="simple-routing-policy">Simple Routing Policy</h3>
+
+<p>Use for a single resource that performs a given function for your domain, for example, a web server that serves content for the example.com website.</p>
+
+<p><strong>Important points to remember:</strong></p>
+
+<ul>
+<li>Simplest routing policy</li>
+<li>Only one DNS record set</li>
+<li>Multiple IP address per record set can be used</li>
+<li>Values are returned to user in random order</li>
+<li>No health checks</li>
+</ul>
+
+<p><img src="https://blog.victormendonca.com/img/aws-routing-policies-visual-comparison/simple_routing.png" alt="" /></p>
+
+<h3 id="weighted-routing-policy">Weighted Routing Policy</h3>
+
+<p>Weighted Routing Policy controls the percentage of the requests that go to a specific endpoint.</p>
+
+<p><strong>Important points to remember:</strong></p>
+
+<ul>
+<li>Weighted routing sends user traffic based on the weight that you supply</li>
+<li>You can split traffic between different regions</li>
+<li>Multiple IP address per record set can be used</li>
+<li>Health checks can be used</li>
+</ul>
+
+<p><img src="https://blog.victormendonca.com/img/aws-routing-policies-visual-comparison/weighted_routing.png" alt="" /></p>
+
+<h3 id="latency-routing-policy">Latency Routing Policy</h3>
+
+<p>Use when you have resources in multiple AWS Regions and you want to route traffic to the region that provides the best latency.</p>
+
+<p><strong>Important points to remember:</strong></p>
+
+<ul>
+<li>Routing will be based on user to region latency</li>
+<li>Multiple IP address per record set can be used</li>
+<li>Health checks can be used</li>
+</ul>
+
+<p><img src="https://blog.victormendonca.com/img/aws-routing-policies-visual-comparison/latency_routing.png" alt="" /></p>
+
+<h3 id="failover-routing-policy">Failover Routing Policy</h3>
+
+<p>Use failover routing policy when you want to configure active-passive failover.</p>
+
+<p><strong>Important points to remember:</strong></p>
+
+<ul>
+<li>Use failover routing policy when you want to configure active-passive failover</li>
+<li>Health checks
+
+<ul>
+<li>You can&rsquo;t save the primary record without a health check</li>
+<li>The secondary record can be created without a health check</li>
+</ul></li>
+</ul>
+
+<p><img src="https://blog.victormendonca.com/img/aws-routing-policies-visual-comparison/failover_routing.png" alt="" /></p>
+
+<h3 id="geolocation-routing-policy">Geolocation Routing Policy</h3>
+
+<p>Geolocation routing lets you choose the resources that serve your traffic based on the geographic location of your users, meaning the location that DNS queries originate from.</p>
+
+<p><strong>Important points to remember:</strong></p>
+
+<ul>
+<li>This is routing based on user&rsquo;s location</li>
+<li>Multiple IP address per record set can be used</li>
+<li>Health checks can be used</li>
+</ul>
+
+<p><img src="https://blog.victormendonca.com/img/aws-routing-policies-visual-comparison/geolocation_routing.png" alt="" /></p>
+
+<h3 id="multivalue-answer-routing-policy">Multivalue Answer Routing policy</h3>
+
+<p>Use when you want Route 53 to respond to DNS queries with up to eight healthy records selected at random.</p>
+
+<p><strong>Important points to remember:</strong></p>
+
+<ul>
+<li>It&rsquo;s very similar to simple routing, but with two differences:
+
+<ul>
+<li>You can have multiple record sets</li>
+<li>You can have health checks</li>
+</ul></li>
+</ul>
+
+<p><img src="https://blog.victormendonca.com/img/aws-routing-policies-visual-comparison/multivalue_routing.png" alt="" /></p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f28%2faws-routing-policies---visual-comparison%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=AWS%20Routing%20Policies%20-%20Visual%20Comparison&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f28%2faws-routing-policies---visual-comparison%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f28%2faws-routing-policies---visual-comparison%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f28%2faws-routing-policies---visual-comparison%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f28%2faws-routing-policies---visual-comparison%2f&amp;title=AWS%20Routing%20Policies%20-%20Visual%20Comparison" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=AWS%20Routing%20Policies%20-%20Visual%20Comparison&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f28%2faws-routing-policies---visual-comparison%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2020/04/27/how-to-change-macos-key-bindings/" title="How to Change macOS Key Bindings">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2020/06/17/lenovo-p1-gen-tlp-on-arch/" title="TLP and CPUFreq on ThinkPad P1 Gen 2 (KDE Arch)">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2020/04/27/how-to-change-macos-key-bindings/">How to Change macOS Key Bindings</a>
 </h2>
 
@@ -966,172 +1157,6 @@ Log file: /tmp/chrome_remote_desktop_20200402_202207_2vtQSb
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2020/03/30/how-to-move-plex-installation-on-freenas/">How to Move Plex Installation on FreeNAS 11.3</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2020-03-30">30 Mar, 2020</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/freenas" class="label label-primary">FreeNAS</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<p>I had some free time this weekend and decided to upgrade my FreeNAS. I went from 11.1 to 11.3-UI and the upgrade installed without any issues. However, after the reboot I discovered that my jails and plugins were missing from the UI and that they were not running. I had read the manual (<a href="https://www.ixsystems.com/documentation/freenas/11.3-U1/freenas.html">FreeNAS® 11.3-U1 User Guide</a>) before the upgrade and and the instructions did not mention anything about the plugins, so I was little worried.</p>
-
-<p>After spending a lot of time researching I discovered that on FreeNAS 11.2 the project started to use the &lsquo;iocage&rsquo; jail method instead of &lsquo;warden&rsquo;. FreeNAS 11.2 had the option of migrating your jails, and it could even display then from the UI. But for 11.3-UI that was no longer an option.</p>
-
-<p>If you are on the same boat as me, the instructions below will help you quickly re-create a new Plex jail a move your old data to the new jail. If you have not upgraded to 11.3-UI you might want to convert your jail before upgrading. There are a lot of tutorials on-line on how to convert your jail that might be more useful to you.</p>
-
-<h3 id="instructions">Instructions</h3>
-
-<p>a. Create the <code>plex</code> user with UID <code>972</code> (this is the username and UID that is used by the project)</p>
-
-<p>b. If desired, create a new Dataset to have Plex data outside of the plugin Dataset. I won&rsquo;t go into details for this type of setup here as I keep my Plex data inside the Plex plugin Dataset</p>
-
-<p>c. Install the &lsquo;Plex Media Server&rsquo; plugin (<a href="https://support.plex.tv/articles/installing-plex-media-server-on-freenas/">official instructions</a>)</p>
-
-<p>d. Stop the plugin</p>
-
-<p>e. Go to &lsquo;Storage =&gt; Pools&rsquo; and edit the ACL for the Dataset where your media is saved. We want to give access to the &lsquo;plex&rsquo; user (in case the files are not owned by &lsquo;plex&rsquo;)</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-move-plex-installation-on-freenas/ACL.png" alt="" /></p>
-
-<p>f. With the plugin still stopped, copy the old installation data folder from the old plugin Dataset to the new plugin Dataset</p>
-
-<p><em><strong>Note:</strong> The <code>JAIL_ROOT</code> location will vary between different FreeNAS versions:</em></p>
-
-<ul>
-<li>FreeNAS 11.1 and bellow (warden) - <code>JAIL_ROOT=/mnt/[Volume]/jails/[JAIL_NAME]</code></li>
-<li>FreeNAS 11.2 and above (iocage) - <code>JAIL_ROOT=/mnt/[Volume]/iocage/jails/[JAIL_NAME]</code></li>
-</ul>
-
-<p><strong>Source for your old Plex plugin (warden)</strong></p>
-
-<p><em>If installed manually</em></p>
-
-<blockquote>
-<p><code>${JAIL_ROOT}/root/usr/local/plexdata/Plex Media Server/</code></p>
-</blockquote>
-
-<p><em>If installed via plugin</em></p>
-
-<blockquote>
-<p><code>${JAIL_ROOT}/var/db/plexdata/Plex Media Server/</code></p>
-</blockquote>
-
-<p><strong>Destination (iocage)</strong></p>
-
-<blockquote>
-<p><code>${JAIL_ROOT}/root/Plex Media Server/</code></p>
-</blockquote>
-
-<p>g. In the jails configuration menu, select the new Plex jail and add the mount point for the media folder. Try to keep the same path as the old jail so you won&rsquo;t have to edit your library. If you don&rsquo;t remember that the path was, you can access it by looking at the contents of <code>/mnt/[Volume]/jails/.[JAIL_NAME].meta/fstab</code></p>
-
-<pre><code class="language-none"># cat .plex.meta/fstab
-/mnt/Volume1/Movies /mnt/Volume1/jails/plex//mnt/Media nullfs rw 0 0
-</code></pre>
-
-<p>h. Start the plugin and try to access it via web</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-move-plex-installation-on-freenas/manage.png" alt="" /></p>
-
-<hr />
-
-<p>References:</p>
-
-<ul>
-<li><a href="https://support.plex.tv/articles/201370363-move-an-install-to-another-system/">Move an Install to Another System</a></li>
-<li><a href="https://support.plex.tv/articles/installing-plex-media-server-on-freenas/">Installing Plex Media Server on FreeNAS</a></li>
-<li><a href="https://support.plex.tv/articles/202915258-where-is-the-plex-media-server-data-directory-located/">Where is the Plex Media Server data directory located?</a></li>
-<li><a href="https://www.ixsystems.com/documentation/freenas/11.3-U1/freenas.html">FreeNAS® 11.3-U1 User Guide</a></li>
-<li><a href="https://www.ixsystems.com/blog/library/freenas-11-3-release/">FreeNAS 11.3-RELEASE</a></li>
-</ul>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Move%20Plex%20Installation%20on%20FreeNAS%2011.3&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f&amp;title=How%20to%20Move%20Plex%20Installation%20on%20FreeNAS%2011.3" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=How%20to%20Move%20Plex%20Installation%20on%20FreeNAS%2011.3&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f30%2fhow-to-move-plex-installation-on-freenas%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2020/03/15/rhcsa-v8-work-with-package-module-streams/" title="RHCSA v8: Work with Package Module Streams">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2020/04/02/how-to-install-chrome-remote-desktop-on-arch/" title="How to Install chrome-remote-desktop on Arch">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1275,7 +1300,7 @@ Log file: /tmp/chrome_remote_desktop_20200402_202207_2vtQSb
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/aws">aws</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/encryption">encryption</a></li><li><a href="https://blog.victormendonca.com/tags/freebsd">freebsd</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/aws">aws</a></li><li><a href="https://blog.victormendonca.com/tags/encryption">encryption</a></li>
           </ul>
         </div>
       </div>
@@ -1291,6 +1316,10 @@ Log file: /tmp/chrome_remote_desktop_20200402_202207_2vtQSb
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2021/02/28/getting-started-with-ansible-molecule/">Getting Started with Ansible Molecule</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2021/01/23/how-to-convert-standard-partition-to-lvm/">How to Convert Standard Partition to Logical Volume</a>
@@ -1314,10 +1343,6 @@ Log file: /tmp/chrome_remote_desktop_20200402_202207_2vtQSb
         
           <li>
           <a href="https://blog.victormendonca.com/2020/10/29/how-to-collect-ups-data-on-pfsense-with-telegraf/">How to Collect UPS Data on pfSense with Telegraf</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2020/10/28/how-to-setup-ups-on-pfsense/">How to Setup a USB UPS on pfSense</a>
           </li>
         
         </ul>

@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Sat, 23 Jan 2021 17:30:00 -0500</lastBuildDate>
+    <lastBuildDate>Sun, 28 Feb 2021 07:00:00 -0500</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Getting Started with Ansible Molecule</title>
+      <link>https://blog.victormendonca.com/2021/02/28/getting-started-with-ansible-molecule/</link>
+      <pubDate>Sun, 28 Feb 2021 07:00:00 -0500</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2021/02/28/getting-started-with-ansible-molecule/</guid>
+      <description>Overview If you haven&amp;rsquo;t heard about Ansible Molecule you came to the right place. I will cover what it is, it&amp;rsquo;s basic usage, and how to install it and get started.
+What it is Ansible Molecule is a project (tool) that can greatly improve your Ansible workflow. It allows you to automate your tasks (which is great for CI) by providing means of running different and idempotent tests against your roles.</description>
+    </item>
     
     <item>
       <title>How to Convert Standard Partition to Logical Volume</title>

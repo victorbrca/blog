@@ -127,6 +127,378 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2020/10/30/my-grafana-setup/">Overview of My Grafana Setup</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2020-10-30">30 Oct, 2020</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/monitoring" class="label label-primary">Monitoring</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>For the past few weeks I have been working extensively on the devices in my LAN. My FreeNAS had crashed due to a power outage resulting on a burnt memory module and a data issue with my main pool that caused a kernel panic on boot. My remote backup solution had not been working for over a year, so I knew that it would also need a complete re-design.</p>
+
+<p>I rebuilt my FreeNAS pools and setup a new remote backup solution using ZFS send (FreeNAS =&gt; Ubuntu 20.04), and got a couple of UPSs to protect from future power failures. I also created a better backup structure and jobs for my main devices (will post about that later), and configured additional alerts for device availability and job status. And to tie all down together, I thought what better than to revamp my Grafana dashboard to show all this new info.</p>
+
+<p>Here&rsquo;s the final result! I&rsquo;m quite happy with it.</p>
+
+<p><img src="https://blog.victormendonca.com/img/my-grafana-setup/main.png" alt="" /></p>
+
+<h2 id="how-everything-is-placed-together">How Everything is Placed Together</h2>
+
+<p>When I first started with Grafana, I was mainly using it with the Zabbix plugin and an imported <a href="https://grafana.com/grafana/dashboards/12023">pfSense dashboard</a>. I had one influx database that was used with pfSense, and a MariaDB for the imported Zabbix data. The dashboard gave me a basic overview of my network data usage (pfSense) as well as status for my LAN devices (Zabbix).</p>
+
+<p><em><strong>Old dashboard</strong></em>
+<img src="https://blog.victormendonca.com/img/my-grafana-setup/old-grafana.jpeg" alt="" /></p>
+
+<p>With the new configuration things got a bit more complex (as expected). I&rsquo;m now displaying data from 5 different servers, with 2 different OS types (FreeBSD and Linux) and 5 different distributions (pfSense, FreeNAS, Arch, CentOS and Ubuntu). My collector of choice is Telegraf (due to it&rsquo;s low resource and simplicity), and I have made an effort to stick to it throughout the different OSs in my design.</p>
+
+<h4 id="the-grafana-server">The Grafana Server</h4>
+
+<ul>
+<li><strong>OS:</strong> CentOS 7</li>
+<li><strong>Databases</strong>:
+
+<ul>
+<li>InfluxDB
+
+<ul>
+<li>DB1 - pfsense</li>
+<li>DB2 - Linux/FreeNAS</li>
+</ul></li>
+<li>MariaDB
+
+<ul>
+<li>zabbix</li>
+</ul></li>
+</ul></li>
+<li><strong>Plugins</strong>:
+
+<ul>
+<li>Zabbix - <a href="https://grafana.com/grafana/plugins/alexanderzobnin-zabbix-app">Zabbix plugin for Grafana | Grafana Labs</a></li>
+<li>worldPing - <a href="https://grafana.com/grafana/plugins/raintank-worldping-app">worldPing plugin for Grafana | Grafana Labs</a></li>
+<li>Pie Chart - <a href="https://grafana.com/grafana/plugins/grafana-piechart-panel">Pie Chart plugin for Grafana | Grafana Labs</a></li>
+<li>Status Panel - <a href="https://grafana.com/grafana/plugins/vonage-status-panel">Status Panel plugin for Grafana | Grafana Labs</a></li>
+</ul></li>
+<li><strong>Imported Dashboards</strong>:
+
+<ul>
+<li><a href="https://grafana.com/grafana/dashboards/12023">pfSense System Dashboard dashboard for Grafana | Grafana Labs</a></li>
+<li><a href="https://grafana.com/grafana/dashboards/928">Telegraf: system dashboard dashboard for Grafana | Grafana Labs</a></li>
+</ul></li>
+</ul>
+
+<h4 id="collectors">Collectors</h4>
+
+<ul>
+<li><strong>CentOS</strong> (also the Grafana server)
+
+<ul>
+<li>Zabbix =&gt; MariaDB
+
+<ul>
+<li>Collects LAN statistics</li>
+</ul></li>
+<li>telegraf =&gt; InfluxDB (DB2)
+
+<ul>
+<li>Collects server resources</li>
+</ul></li>
+</ul></li>
+<li><strong>pfSense</strong>
+
+<ul>
+<li>telegraf =&gt; InfluxDB (DB1)
+
+<ul>
+<li>Collects server resources, network usage and UPS status</li>
+</ul></li>
+</ul></li>
+<li><strong>Desktop (Arch)</strong>
+
+<ul>
+<li>telegraf =&gt; InfluxDB (DB2)
+
+<ul>
+<li>Collects server resources and UPS status</li>
+</ul></li>
+</ul></li>
+<li><strong>FreeNAS</strong>
+
+<ul>
+<li>telegraf =&gt; InfluxDB (DB2)
+
+<ul>
+<li>Collects server resources and ZPOOL status/usage</li>
+</ul></li>
+</ul></li>
+<li><strong>Ubuntu</strong>
+
+<ul>
+<li>telegraf =&gt; InfluxDB (DB2)
+
+<ul>
+<li>Collects server resources, VPN status, IP address and ZPOOL status/usage</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<h4 id="how-it-all-looks-together">How it all looks together</h4>
+
+<p>As the proverb that says that &laquo;A pictures is worth a thousand words&raquo;, if you are visual person like me the diagram below will help you have a better understanding of the setup I listed above.</p>
+
+<p><img src="https://blog.victormendonca.com/img/my-grafana-setup/Grafana-Diagram.png" alt="" /></p>
+
+<h2 id="breaking-it-down">Breaking it Down</h2>
+
+<p>Now let&rsquo;s dive a bit more into the current dashboard looking at what data is being displayed and from what data source.</p>
+
+<p>I have divided the dashboard into 8 sections and labeled it with numbers (they may be small, but they are there).</p>
+
+<p><img src="https://blog.victormendonca.com/img/my-grafana-setup/labelled.png" alt="" /></p>
+
+<h4 id="section-1-wan-ping">Section 1: WAN Ping</h4>
+
+<ul>
+<li><strong>Description:</strong> Displays ping status to 4 specific hosts</li>
+<li><strong>Information displayed:</strong>
+
+<ul>
+<li>Ping status to Google</li>
+<li>Ping status to Google DNS</li>
+<li>Ping status to Cludflare DNS</li>
+<li>Ping status to my ISP&rsquo;s gateway (Bell)</li>
+</ul></li>
+<li><strong>Data source:</strong> MariaDB (Zabbix)</li>
+</ul>
+
+<h4 id="section-2-pfsense-network-data">Section 2: pfSense Network Data</h4>
+
+<ul>
+<li><strong>Description:</strong> Diplays network related data from pfSense</li>
+<li><strong>Information displayed:</strong>
+
+<ul>
+<li>Monthly WAN data usage</li>
+<li>Daily WAN data usage</li>
+<li>Wan throughput</li>
+<li>LAN thorughput</li>
+</ul></li>
+<li><strong>Data source:</strong> InfluxDB (DB1)</li>
+</ul>
+
+<h4 id="section-3-pfsense-os-data">Section 3: pfSense OS Data</h4>
+
+<ul>
+<li><strong>Description:</strong> Displays system resource for pfSense</li>
+<li><strong>Information displayed:</strong>
+
+<ul>
+<li>Status (up/down)</li>
+<li>Uptime</li>
+<li>Active users</li>
+<li>CPU, memory, storage (ZFS) usage</li>
+<li>UPS information</li>
+</ul></li>
+<li><strong>Data source:</strong>
+
+<ul>
+<li>InfluxDB (DB1)</li>
+<li>Zabbix plugin</li>
+</ul></li>
+</ul>
+
+<h4 id="section-4-freenas">Section 4: FreeNAS</h4>
+
+<ul>
+<li><strong>Description:</strong> Displays system resource for FreeNAS</li>
+<li><strong>Information displayed:</strong>
+
+<ul>
+<li>Status (up/down)</li>
+<li>Plugin status (up/down)</li>
+<li>Uptime</li>
+<li>Active users</li>
+<li>CPU, memory, storage (ZFS) usage</li>
+</ul></li>
+<li><strong>Data source:</strong>
+
+<ul>
+<li>InfluxDB (DB2)</li>
+<li>Zabbix plugin</li>
+</ul></li>
+</ul>
+
+<h4 id="section-5-ubuntu">Section 5: Ubuntu</h4>
+
+<ul>
+<li><strong>Description:</strong> Displays system resource for Ubuntu</li>
+<li><strong>Information displayed:</strong>
+
+<ul>
+<li>Status (up/down)</li>
+<li>VPN status (up/down)</li>
+<li>IP address</li>
+<li>Uptime</li>
+<li>Active users</li>
+<li>CPU, memory, storage (ZFS) usage</li>
+</ul></li>
+<li><strong>Data source:</strong>
+
+<ul>
+<li>InfluxDB (DB2)</li>
+<li>Zabbix plugin</li>
+</ul></li>
+</ul>
+
+<h4 id="section-6-centos">Section 6: CentOS</h4>
+
+<ul>
+<li><strong>Description:</strong> Displays system resource for CentOS</li>
+<li><strong>Information displayed:</strong>
+
+<ul>
+<li>Status (up/down)</li>
+<li>Uptime</li>
+<li>Active users</li>
+<li>CPU, memory, storage usage</li>
+</ul></li>
+<li><strong>Data source:</strong>
+
+<ul>
+<li>InfluxDB (DB2)</li>
+<li>Zabbix plugin</li>
+</ul></li>
+</ul>
+
+<h4 id="section-7-arch">Section 7: Arch</h4>
+
+<ul>
+<li><strong>Description:</strong> Displays system resource for Arch</li>
+<li><strong>Information displayed:</strong>
+
+<ul>
+<li>Status (up/down)</li>
+<li>Uptime</li>
+<li>Active users</li>
+<li>CPU, memory, storage usage</li>
+<li>UPS information</li>
+</ul></li>
+<li><strong>Data source:</strong>
+
+<ul>
+<li>InfluxDB (DB2)</li>
+<li>Zabbix plugin</li>
+</ul></li>
+</ul>
+
+<h4 id="section-8-lan">Section 8: LAN</h4>
+
+<ul>
+<li><strong>Description:</strong> Diplays LAN related data</li>
+<li><strong>Information displayed:</strong>
+
+<ul>
+<li>ICMP ping history for LAN devices</li>
+<li>Current status of LAN device (up/down)</li>
+</ul></li>
+<li><strong>Data source:</strong></li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>While I&rsquo;m happy with this setup there is still some room for improvement (as there always is). At some point I would like to consolidate the two Influx databases, integrate Unifi Controller and SmartThings data, and possibly add a Plex dashboard as well.</p>
+
+<p>Got any comments or questions? Feel free to leave them in the comment section below.</p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f30%2fmy-grafana-setup%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Overview%20of%20My%20Grafana%20Setup&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f30%2fmy-grafana-setup%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f30%2fmy-grafana-setup%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f30%2fmy-grafana-setup%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f30%2fmy-grafana-setup%2f&amp;title=Overview%20of%20My%20Grafana%20Setup" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Overview%20of%20My%20Grafana%20Setup&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f30%2fmy-grafana-setup%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2020/10/29/how-to-collect-ups-data-on-pfsense-with-telegraf/" title="How to Collect UPS Data on pfSense with Telegraf">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2020/11/03/zfs-for-dummies/" title="ZFS for Dummies">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2020/10/29/how-to-collect-ups-data-on-pfsense-with-telegraf/">How to Collect UPS Data on pfSense with Telegraf</a>
 </h2>
 
@@ -1151,149 +1523,6 @@ Slave2    |########## Shutdown ##########|
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2020/10/21/how-to-create-an-encrypted-usb-drive-on-kde-plasma/">How to Quickly Create an Encrypted USB Drive on KDE Plasma</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2020-10-21">21 Oct, 2020</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/hardware" class="label label-primary">Hardware</a>
-  
-  <a href="https://blog.victormendonca.com/tags/encryption" class="label label-primary">Encryption</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<p>Need to create an encrypted USB drive? Are your running KDE Plasma?</p>
-
-<p>Then great! Here are 6 simple steps on how to quickly and painlessly create an encrypted USB drive with <a href="https://apps.kde.org/en/partitionmanager">KDE Partition Manager</a>.</p>
-
-<h3 id="let-s-start">Let&rsquo;s start</h3>
-
-<p>a. Start by inserting your USB drive</p>
-
-<p>b. Now launch <code>KDE Parition Manager</code> and type your password</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-create-an-encrypted-usb-drive-on-kde-plasma/admin-prompt.png" alt="" /></p>
-
-<p>c. Select the USB drive and right click to delete the existing partition</p>
-
-<blockquote>
-<p><strong>⚠️ WARNING:</strong> remember, this will delete all your existing files)</p>
-</blockquote>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-create-an-encrypted-usb-drive-on-kde-plasma/delete.png" alt="" /></p>
-
-<p>d. Right click to create a new partition</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-create-an-encrypted-usb-drive-on-kde-plasma/new.png" alt="" /></p>
-
-<p>e. Select your &laquo;File system&raquo; type, check &laquo;Encrypt with LUKS&raquo;, set the &laquo;Password&raquo; and &laquo;Label&raquo; and click on &laquo;Ok&raquo;</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-create-an-encrypted-usb-drive-on-kde-plasma/create.png" alt="" /></p>
-
-<p>f. Click on apply and you are done. Go grab a coffee because you worked really hard you deserve it</p>
-
-<h4 id="mounting-the-drive">Mounting the Drive</h4>
-
-<p>The mounting process should be as painless as setting up the USB drive.</p>
-
-<p>a. Insert the USB drive and click on &laquo;Mount&raquo; under &laquo;Disk &amp; Device&raquo; on your system tray</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-create-an-encrypted-usb-drive-on-kde-plasma/mounting.png" alt="" /></p>
-
-<p>b. Type in your very secure password (mine is &laquo;password123&raquo;) and profit</p>
-
-<p><em><strong>Tip:</strong> You can set it to remember if you really trust your own machine</em></p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-create-an-encrypted-usb-drive-on-kde-plasma/password.png" alt="" /></p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f21%2fhow-to-create-an-encrypted-usb-drive-on-kde-plasma%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Quickly%20Create%20an%20Encrypted%20USB%20Drive%20on%20KDE%20Plasma&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f21%2fhow-to-create-an-encrypted-usb-drive-on-kde-plasma%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f21%2fhow-to-create-an-encrypted-usb-drive-on-kde-plasma%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f21%2fhow-to-create-an-encrypted-usb-drive-on-kde-plasma%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f21%2fhow-to-create-an-encrypted-usb-drive-on-kde-plasma%2f&amp;title=How%20to%20Quickly%20Create%20an%20Encrypted%20USB%20Drive%20on%20KDE%20Plasma" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=How%20to%20Quickly%20Create%20an%20Encrypted%20USB%20Drive%20on%20KDE%20Plasma&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f21%2fhow-to-create-an-encrypted-usb-drive-on-kde-plasma%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2020/10/13/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/" title="How to Install Waveshare 3.5&#34; LCD on Ubuntu 20.04">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2020/10/22/how-to-configure-a-ups-between-linux-and-freenas/" title="How to Configure a UPS Between Linux and FreeNAS">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1437,7 +1666,7 @@ Slave2    |########## Shutdown ##########|
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/aws">aws</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/encryption">encryption</a></li><li><a href="https://blog.victormendonca.com/tags/freebsd">freebsd</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/aws">aws</a></li><li><a href="https://blog.victormendonca.com/tags/encryption">encryption</a></li>
           </ul>
         </div>
       </div>
@@ -1453,6 +1682,10 @@ Slave2    |########## Shutdown ##########|
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2021/02/28/getting-started-with-ansible-molecule/">Getting Started with Ansible Molecule</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2021/01/23/how-to-convert-standard-partition-to-lvm/">How to Convert Standard Partition to Logical Volume</a>
@@ -1476,10 +1709,6 @@ Slave2    |########## Shutdown ##########|
         
           <li>
           <a href="https://blog.victormendonca.com/2020/10/29/how-to-collect-ups-data-on-pfsense-with-telegraf/">How to Collect UPS Data on pfSense with Telegraf</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2020/10/28/how-to-setup-ups-on-pfsense/">How to Setup a USB UPS on pfSense</a>
           </li>
         
         </ul>
