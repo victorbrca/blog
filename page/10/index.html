@@ -127,6 +127,153 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2018/06/29/how-to-fix-sddm-on-multiple-screens/">How to Fix Sddm on Multiple Screens</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2018-06-29">29 Jun, 2018</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/kde" class="label label-primary">KDE</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  <p>When running multiple screens on KDE with SDDM, your configuration will not be loaded until you actually login to the KDE desktop, so you might end up having screens out of order, or enabled/disabled when they should not be. To fix this is simple, and here&rsquo;s how.</p>
+
+<p>Let&rsquo;s get a list of the devices name, size and position with <code>xrandr</code>:</p>
+
+<pre><code>$ xrandr | grep ' connected'
+
+DP-1 connected (normal left inverted right x axis y axis)
+DP-3 connected 1920x1080+1920+0 (normal left inverted right x axis y axis) 480mm x 270mm
+DP-5 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis) 598mm x 337mm
+</code></pre>
+
+<p>As you can see, on my computer I have 3x monitors:</p>
+
+<ul>
+<li>DP-1 - Connected on the first port but disabled</li>
+<li>DP-3 - My secondary monitor; Resolution 1920x1080; position 1920x0</li>
+<li>DP-5 - My main monitor; Resolution 1920x1080; position 0x0</li>
+</ul>
+
+<p>So we will start by adding the right configuration to <code>/usr/share/sddm/scripts/Xsetup</code></p>
+
+<pre><code>$ sudo vim /usr/share/sddm/scripts/Xsetup
+
+#!/bin/sh
+# Xsetup - run as root before the login dialog appears
+
+xrandr --output DP-1 --off
+xrandr --output DP-5 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-3 --mode 1920x1080 --pos 1920x0 --rotate normal
+</code></pre>
+
+<p><strong>Explanation</strong>:</p>
+
+<ul>
+<li>The first line disables the monitor connected to the first port <code>xrandr --output DP-1 --off</code></li>
+<li>The second line sets the right dimension and position for my other two monitors</li>
+</ul>
+
+<p>Now we need to add the config to SDDM:</p>
+
+<pre><code>$ sudo vim /etc/sddm.conf
+
+[XDisplay]
+# Xsetup script path
+# A script to execute when starting the display server
+DisplayCommand=/usr/share/sddm/scripts/Xsetup
+</code></pre>
+
+<p>And now a simple reboot will take care of the changes:</p>
+
+<pre><code>sudo reboot
+</code></pre>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f06%2f29%2fhow-to-fix-sddm-on-multiple-screens%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Fix%20Sddm%20on%20Multiple%20Screens&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f06%2f29%2fhow-to-fix-sddm-on-multiple-screens%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f06%2f29%2fhow-to-fix-sddm-on-multiple-screens%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f06%2f29%2fhow-to-fix-sddm-on-multiple-screens%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f06%2f29%2fhow-to-fix-sddm-on-multiple-screens%2f&amp;title=How%20to%20Fix%20Sddm%20on%20Multiple%20Screens" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20Fix%20Sddm%20on%20Multiple%20Screens&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f06%2f29%2fhow-to-fix-sddm-on-multiple-screens%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2018/06/26/installing-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b/" title="Installing Kuman 3">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2018/07/04/how-to-change-forgotten-password-on-wsl-bash-for-windows/" title="How to Change Forgotten Password on WSL (Bash for Windows)">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2018/06/26/installing-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b/">Installing Kuman 3</a>
 </h2>
 
@@ -854,175 +1001,6 @@ PORT    STATE SERVICE
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2017/10/11/how-to-create-a-quick-web-server/">How to Create a Quick Web Server</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2017-10-11">11 Oct, 2017</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/networking" class="label label-primary">Networking</a>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/netcat" class="label label-primary">Netcat</a>
-  
-  <a href="https://blog.victormendonca.com/tags/python" class="label label-primary">python</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<p>Have you ever had the need to create a web server to perform a test? Well, here are a few quick options on how to do this.</p>
-
-<h2 id="got-netcat">Got Netcat?</h2>
-
-<p>If you have Netcat on the server (which is pretty easy to get), then you can do this.</p>
-
-<p><strong>Example 1:</strong> Display the date and the text &laquo;It works&raquo;</p>
-
-<pre><code>nc -kl 10001 -c 'echo -e &quot;HTTPS/1.1 200 OK\r\n\r\n$(date)\r\n\r\nIt works&quot;'
-</code></pre>
-
-<p><strong>Example 2:</strong> Display an index.html file</p>
-
-<pre><code>nc -kl 10001 -c 'echo -e &quot;HTTPS/1.1 200 OK\r\n\r\n$(cat index.html)&quot;'
-</code></pre>
-
-<p><strong>Example 3:</strong> Using HTTPS</p>
-
-<p>a. First get a set of self-signed certificate and key (either generate or download here - <a href="http://www.selfsignedcertificate.com/">http://www.selfsignedcertificate.com/</a>)</p>
-
-<p>b. Add the certificate to the server and run netcate with the following parameters</p>
-
-<pre><code>nc -l -p 10001 -k --ssl --ssl-cert ca.crt --ssl-key ca.key -c 'echo -e &quot;HTTP/1.1 200 OK\r\n\r\n$(date)\r\n\r\nIt works&quot;'
-</code></pre>
-
-<h2 id="python">Python</h2>
-
-<p>This is the easiest one, as long as you have Python on that system. Just run the commands below and you are set. If you have an index file on that folder, Python will display, otherwise it will do a directory listing.</p>
-
-<pre><code>$ python -m SimpleHTTPServer 8888
-Serving HTTP on 0.0.0.0 port 8888 ...
-</code></pre>
-
-<h3 id="using-https-ssl">Using HTTPS/SSL</h3>
-
-<p>And you can also create aN SSL enabled listener with Python. For this test, you will need to have the certificate and key in <code>pem</code> format.</p>
-
-<p><strong>Pyton 3</strong></p>
-
-<pre><code class="language-python">from http.server import HTTPServer, BaseHTTPRequestHandler
-import ssl
-
-
-httpd = HTTPServer(('localhost', 4443), SimpleHTTPRequestHandler)
-
-httpd.socket = ssl.wrap_socket (httpd.socket,
-        keyfile=&quot;path/to/key.pem&quot;,
-        certfile='path/to/cert.pem', server_side=True)
-
-httpd.serve_forever()
-</code></pre>
-
-<p><strong>Python 2.x</strong></p>
-
-<pre><code class="language-python">import BaseHTTPServer, SimpleHTTPServer
-import ssl
-
-
-httpd = BaseHTTPServer.HTTPServer(('localhost', 4443),
-        SimpleHTTPServer.SimpleHTTPRequestHandler)
-
-httpd.socket = ssl.wrap_socket (httpd.socket,
-        keyfile=&quot;path/tp/key.pem&quot;,
-        certfile='path/to/cert.pem', server_side=True)
-
-httpd.serve_forever()
-</code></pre>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-create-a-quick-web-server%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Create%20a%20Quick%20Web%20Server&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-create-a-quick-web-server%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-create-a-quick-web-server%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-create-a-quick-web-server%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-create-a-quick-web-server%2f&amp;title=How%20to%20Create%20a%20Quick%20Web%20Server" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=How%20to%20Create%20a%20Quick%20Web%20Server&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-create-a-quick-web-server%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2017/10/11/how-to-load-gitlab-inside-an-iframe/" title="How to Load Gitlab Inside an Iframe">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2017/12/25/custom-standup-desk-build/" title="Custom Stand-up Desk Build">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1184,6 +1162,10 @@ httpd.serve_forever()
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2022/11/18/linux-find-command/">Linux find Command</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2021/02/28/getting-started-with-ansible-molecule/">Getting Started with Ansible Molecule</a>
           </li>
         
@@ -1205,10 +1187,6 @@ httpd.serve_forever()
         
           <li>
           <a href="https://blog.victormendonca.com/2020/10/30/my-grafana-setup/">Overview of My Grafana Setup</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2020/10/29/how-to-collect-ups-data-on-pfsense-with-telegraf/">How to Collect UPS Data on pfSense with Telegraf</a>
           </li>
         
         </ul>

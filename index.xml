@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Sun, 28 Feb 2021 07:00:00 -0500</lastBuildDate>
+    <lastBuildDate>Fri, 18 Nov 2022 00:21:34 -0500</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Linux find Command</title>
+      <link>https://blog.victormendonca.com/2022/11/18/linux-find-command/</link>
+      <pubDate>Fri, 18 Nov 2022 00:21:34 -0500</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2022/11/18/linux-find-command/</guid>
+      <description>The Linux find command is a very versatile tool in the pocket of any Linux administrator. It allows you to quickly search for files and take action based on the results.
+The basic construct of the command is:
+find [options] [path] [expression]  The options part of the command controls some basic functionality for find and I&amp;rsquo;m not going to cover it here. I will instead quickly look at the components for the expression part of the command, and provide some useful examples.</description>
+    </item>
     
     <item>
       <title>Getting Started with Ansible Molecule</title>

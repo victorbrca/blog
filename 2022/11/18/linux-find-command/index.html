@@ -5,34 +5,34 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title>Creating a Simple Systemd User Service  &middot; Victor&#39;s Blog</title>
+  <title>Linux find Command  &middot; Victor&#39;s Blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="description" content="Tutorial on creating a simple systemd service" />
+<meta name="description" content="A quick overview of the Linux find command" />
 
-<meta name="keywords" content="Linux, Systemd, ">
+<meta name="keywords" content="Linux, bash, ">
 
 
-<meta property="og:title" content="Creating a Simple Systemd User Service  &middot; Victor&#39;s Blog ">
+<meta property="og:title" content="Linux find Command  &middot; Victor&#39;s Blog ">
 <meta property="og:site_name" content="Victor&#39;s Blog"/>
-<meta property="og:url" content="https://blog.victormendonca.com/2018/05/14/creating-a-simple-systemd-user-service/" />
+<meta property="og:url" content="https://blog.victormendonca.com/2022/11/18/linux-find-command/" />
 <meta property="og:locale" content="en">
 
 
 <meta property="og:type" content="article" />
-<meta property="og:description" content="Tutorial on creating a simple systemd service"/>
-<meta property="og:article:published_time" content="2018-05-14T12:53:43-04:00" />
-<meta property="og:article:modified_time" content="2018-05-14T12:53:43-04:00" />
+<meta property="og:description" content="A quick overview of the Linux find command"/>
+<meta property="og:article:published_time" content="2022-11-18T00:21:34-05:00" />
+<meta property="og:article:modified_time" content="2022-11-18T00:21:34-05:00" />
 
   
     
 <meta property="og:article:tag" content="Linux">
     
-<meta property="og:article:tag" content="Systemd">
+<meta property="og:article:tag" content="bash">
     
   
 
@@ -40,9 +40,9 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@18440926" />
 <meta name="twitter:creator" content="@18440926" />
-<meta name="twitter:title" content="Creating a Simple Systemd User Service" />
-<meta name="twitter:description" content="Tutorial on creating a simple systemd service" />
-<meta name="twitter:url" content="https://blog.victormendonca.com/2018/05/14/creating-a-simple-systemd-user-service/" />
+<meta name="twitter:title" content="Linux find Command" />
+<meta name="twitter:description" content="A quick overview of the Linux find command" />
+<meta name="twitter:url" content="https://blog.victormendonca.com/2022/11/18/linux-find-command/" />
 <meta name="twitter:domain" content="https://blog.victormendonca.com/">
   
 
@@ -50,7 +50,7 @@
 
 
 
-<link rel="canonical" href="https://blog.victormendonca.com/2018/05/14/creating-a-simple-systemd-user-service/" />
+<link rel="canonical" href="https://blog.victormendonca.com/2022/11/18/linux-find-command/" />
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
 <link rel="icon" href="https://blog.victormendonca.com/favicon.png">
 <meta name="generator" content="Hugo 0.48" />
@@ -147,39 +147,39 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
   <div class="text-center">
 
-    <h1>Creating a Simple Systemd User Service
+    <h1>Linux find Command
 </h1>
 
     <div class="metas">
 <small>
   <i class="fa fa-calendar"></i>
-  <time datetime="2018-05-14">14 May, 2018</time>
+  <time datetime="2022-11-18">18 Nov, 2022</time>
 </small>
 
 
   <small>
     &middot; by Victor Mendonça
   
-  &middot; Read in about 1 min
-  &middot; (201 words)
+  &middot; Read in about 6 min
+  &middot; (1146 words)
   &middot; 
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2022%2f11%2f18%2flinux-find-command%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=Creating%20a%20Simple%20Systemd%20User%20Service&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=Linux%20find%20Command&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2022%2f11%2f18%2flinux-find-command%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2022%2f11%2f18%2flinux-find-command%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2022%2f11%2f18%2flinux-find-command%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f&amp;title=Creating%20a%20Simple%20Systemd%20User%20Service" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2022%2f11%2f18%2flinux-find-command%2f&amp;title=Linux%20find%20Command" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=Creating%20a%20Simple%20Systemd%20User%20Service&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=Linux%20find%20Command&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2022%2f11%2f18%2flinux-find-command%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   </small>
@@ -189,7 +189,7 @@
   
   <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
   
-  <a href="https://blog.victormendonca.com/tags/systemd" class="label label-primary">Systemd</a>
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">bash</a>
   
 
 
@@ -202,48 +202,246 @@
 </div>
 
       <div class="content">
-  <p>Quick instructions on how to create a simple systemd user service for a program or script.</p>
+  
 
-<p>1- Identify the script or program/binary that you will be using</p>
+<p>The Linux <code>find</code> command is a very versatile tool in the pocket of any Linux administrator. It allows you to quickly search for files and take action based on the results.</p>
 
-<p>2- Create a systemd unit file using the example below, give it a name that will make sense to you with a <code>.service</code> extension (like <code>[my_service].service</code>), and save it to <code>$USER/.config/systemd/user</code></p>
+<p>The basic construct of the command is:</p>
 
-<pre><code>[Unit]
-Description=[Service description]
-
-[Service]
-Type=simple
-StandardOutput=journal
-ExecStart=[script path]
-
-[Install]
-WantedBy=default.target
+<pre><code>find [options] [path] [expression]
 </code></pre>
 
-<p>For this example we used a service type simple, which allows systemd to take care of the most basic needs for us. The options used are:</p>
+<p>The <code>options</code> part of the command controls some basic functionality for <code>find</code> and I&rsquo;m not going to cover it here. I will instead quickly look at the components for the expression part of the command, and provide some useful examples.</p>
+
+<p>Expressions are composed of tests, actions, global options, positional options and operators:</p>
 
 <ul>
-<li><strong>Description</strong> = Description of your service. This will be shown when handling your service with <code>systemctl</code></li>
-<li><strong>Type</strong> = We will be using the simple type, and this could be left out</li>
-<li><strong>StandardOutput</strong> = We will be logging it to the system log (you can use <code>journalctl</code> to view it)</li>
-<li><strong>ExectStart</strong> = The script or program to be executed</li>
-<li><strong>WantedBy</strong> = Service will be run using the default target. You can find what the default.target is with <code>systemctl get-default</code></li>
+<li><strong>Test</strong> - returns true or false (e.g.: <code>-mtime</code>, <code>-name</code>, <code>-size</code>)</li>
+<li><strong>Actions</strong> - Acts on something (e.g.: <code>-exec</code>, <code>-delete</code>)</li>
+<li><strong>Global options</strong> - Affect the operations of tests and actions (e.g.:<code>-depth</code>, <code>-maxdepth</code>,)</li>
+<li><strong>Positional options</strong> - Modifies tests and actions (e.g.: <code>-follow</code>, <code>-regextype</code>)</li>
+<li><strong>Operators</strong> - Include, join and modify items (e.g.: <code>-a</code>, <code>-o</code>)</li>
 </ul>
 
-<p>3- Enable your service so it starts automatically</p>
+<h2 id="operators">Operators</h2>
 
-<pre><code>systemctl --user enable [my_service].service
+<p>Operators are the logical <code>OR</code> and <code>AND</code> of find, as well as negation and expression grouping.</p>
+
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>\( expr \)</code></td>
+<td>Force precedence</td>
+</tr>
+
+<tr>
+<td><code>!</code> or <code>-not</code></td>
+<td>Negate</td>
+</tr>
+
+<tr>
+<td><code>-a</code> or <code>-and</code></td>
+<td>Logical <code>AND</code>. If two expressions are given without <code>-a</code> find will take it as implied. expr2 is not evaluated if expr1 is false</td>
+</tr>
+
+<tr>
+<td><code>-o</code> of <code>-or</code></td>
+<td>Logical <code>OR</code>. expr2 is not evaluated if expr1 is true</td>
+</tr>
+
+<tr>
+<td><code>,</code></td>
+<td>Both  expr1  and expr2 are always evaluated.  The value of expr1 is discarded</td>
+</tr>
+</tbody>
+</table>
+
+<p>You can use the operators for repeated search options with different values.</p>
+
+<p><em><strong>Example 1:</strong> Find files with multiple file extensions</em></p>
+
+<pre><code class="language-bash">find ${jboss_dplymnt_dir} -type f -size -2k \( \
+  -name '*.deployed' -o -name '*.dodeploy' \
+  -o -name '*.skipdeploy' -o -name '*.isdeploying' \
+  -o -name '*.failed' -o -name '*.isundeploying' \
+  -o -name '*.pending' -o -name '*.undeployed' \
+\)
 </code></pre>
 
-<p>4- Start the service</p>
+<p><em><strong>Example 2:</strong> find MOV or MP4 files that do not have &lsquo;h265&rsquo; in the file name</em></p>
 
-<pre><code>systemctl --user start [my_service].service
+<pre><code class="language-bash">find . \( \
+  ! -name '*h265*' -a \( \
+    -name '*.mp4' -o -name '*.MP4' \
+    -o -name '*.mov' -o -name '*.MOV' \
+  \) \
+\)
 </code></pre>
 
-<p>4- Check that it&rsquo;s running</p>
+<p>Or to negate search options.</p>
 
-<pre><code>systemctl --user status [my_service].service
+<p><em><strong>Example 3:</strong> find files that don&rsquo;t finish with the &lsquo;.log&rsquo; extension</em></p>
+
+<pre><code class="language-bash">find . -type f -not -name '*.log'
 </code></pre>
+
+<p><em><strong>Example 4:</strong> Excludes everything in the folder named &lsquo;directory&rsquo;</em></p>
+
+<pre><code class="language-bash">find -name &quot;*.js&quot; -not -path &quot;./directory/*&quot;
+</code></pre>
+
+<h2 id="global-options">Global Options</h2>
+
+<p>Two very useful global options are <code>-maxdepth</code> and <code>-mindepth</code>.</p>
+
+<ul>
+<li><strong>maxdepth levels</strong>: Descend at most levels (a non-negative integer) levels of directories below the starting-points. <code>-maxdepth 0</code> means only apply the tests and actions to the starting-points themselves.</li>
+<li><strong>mindepth levels</strong>: Do not apply any tests or actions at levels less than levels (a non-negative integer). <code>-mindepth 1</code> means process all files except the starting-points.</li>
+</ul>
+
+<p><em><strong>Example 5:</strong> find all files with &lsquo;.txt&rsquo; extension on the current dir and <strong>do not descend into subdirectories</strong></em></p>
+
+<pre><code class="language-bash">find . -maxdepth 1 -name '*.txt'
+</code></pre>
+
+<h2 id="tests">Tests</h2>
+
+<p>This is where you can target specific properties about the files that you are searching for. Some of my preferred tests are:</p>
+
+<ul>
+<li><code>-iname</code> - Like <code>-name</code>, but the match is case insensitive</li>
+<li><code>-size</code> - Matches based on size (e.g.: <code>-size -2k</code>, <code>-size +1G</code>)</li>
+<li><code>-user</code> - File Belongs to username</li>
+<li><code>-newer</code> - File is newer than file. It can be a powerful option</li>
+</ul>
+
+<p><em><strong>Example 6:</strong> Find files for user</em></p>
+
+<pre><code class="language-bash">find . -type f -user linustorvalds
+</code></pre>
+
+<p><em><strong>Example 7:</strong> Find files larger than 1GB</em></p>
+
+<pre><code class="language-bash">find . -type f -size +1G
+</code></pre>
+
+<p><em><strong>Example 8:</strong> Here&rsquo;s a hidden gem! Let&rsquo;s say you need to find what files a program is creating. All you need to do is create a file, run the program, and then use <code>-newer</code> to find what files were created</em></p>
+
+<pre><code class="language-bash"># Create a file
+touch file_marker
+
+# Here I run the script or program
+./my_script.sh
+
+# Now I can use the file I created to find newer files that were created by the script
+find . -type f -newer 'file_marker'
+</code></pre>
+
+<h2 id="actions">Actions</h2>
+
+<p>Actions will execute the specified action against the matched filenames. Some useful actions are:</p>
+
+<ul>
+<li><code>-ls</code> - Lists matched files with <code>ls -dils</code></li>
+<li><code>-delete</code> - Deletes the matched files</li>
+<li><code>-exec</code> - Execute the specified command against the files</li>
+<li><code>-ok</code> - Prompts user for before executing command</li>
+<li><code>-print0</code> - Prints the full name of the matched files followed by a null character</li>
+</ul>
+
+<h2 id="real-life-scenarios">Real-life Scenarios</h2>
+
+<h4 id="get-a-confirmation-prompt">Get a confirmation prompt</h4>
+
+<p>Use <code>-ok</code> to get a confirmation prompt before executing the action on the matched files.</p>
+
+<pre><code class="language-bash">find . -type f -name '*.txt' -ok rm -rf {} \;
+&lt; rm ... ./file_10.txt &gt; ? y
+&lt; rm ... ./file_9.txt &gt; ? y
+&lt; rm ... ./file_8.txt &gt; ?
+</code></pre>
+
+<h4 id="deleting-files">Deleting files</h4>
+
+<p>Whenever possible, use <code>-delete</code> instead of <code>-exec rm -rf {} \;</code>.</p>
+
+<pre><code class="language-bash">find . -type f -name &quot;*.bak&quot; -exec rm -f {} \;
+</code></pre>
+
+<p>Instead use:</p>
+
+<pre><code class="language-bash">find . -type f -name &quot;*.bak&quot; -delete
+</code></pre>
+
+<h4 id="using-xargs-and">Using <code>xargs</code> and <code>{} +</code></h4>
+
+<p>The command bellow will run into a problem if files or directories with embedded spaces in their names are encountered. <code>xargs</code> will treat each part of that name as a separate argument:</p>
+
+<pre><code class="language-bash">find /usr/include -name &quot;*.h&quot; -type f | xargs grep &quot;#define UINT&quot;
+</code></pre>
+
+<p>There are two ways to avoid that. You could tell both <code>find</code> and <code>xargs</code> to use a <code>NUL</code> character as a separator:</p>
+
+<pre><code class="language-bash">find /usr/include -name &quot;*.h&quot; -type f -print0 | xargs -0 grep &quot;#define UINT&quot;
+</code></pre>
+
+<p>Or, you could avoid use of <code>xargs</code> altogether and let <code>find</code> invoke <code>grep</code> directly:</p>
+
+<pre><code class="language-bash">find /usr/include -name &quot;*.h&quot; -type f -exec grep &quot;#define UINT&quot; {} +
+</code></pre>
+
+<p>That final <code>+</code> tells <code>find</code> that <code>grep</code> will accept multiple file name arguments. Like <code>xargs</code>, <code>find</code> will put as many names as possible into each invocation of <code>grep</code>.</p>
+
+<h4 id="find-and-move">Find and Move</h4>
+
+<p>Find files and move them to a different location.</p>
+
+<ul>
+<li><code>-v</code> - For verbose</li>
+<li><code>-t</code> - Move all <code>SOURCE</code> arguments into <code>DIRECTORY</code></li>
+<li><code>-exec command {} +</code> - As we saw before, this variant of the <code>-exec</code> action runs the specified command on the selected files, but the command line is built by appending each selected file name at the end; the total number of invocations of the command will be much less than the number of matched files</li>
+</ul>
+
+<p>No need for <code>\;</code> at the end.</p>
+
+<pre><code class="language-bash">find . -maxdepth 1 -name 'sa-*' -exec mv -v -t rsa-todelete/ {} +
+</code></pre>
+
+<h4 id="search-pdf-content">Search PDF content</h4>
+
+<p>Here we search the contents of PDF files for specif text. Two options are shown below, each require the install of an additional package (<code>pdfgrep</code> and <code>ripgrep-all</code>).</p>
+
+<p>With <code>pdfgrep</code>:</p>
+
+<pre><code class="language-bash">find . -iname '*.pdf' -exec pdfgrep [pattern] {} +
+</code></pre>
+
+<p>With <code>ripgrep-all</code>:</p>
+
+<pre><code class="language-bash">find . -iname '*.pdf' | xargs rga -H PURGE_TRAN_LOG.sh
+</code></pre>
+
+<h4 id="check-if-files-exists">Check if files exists</h4>
+
+<p>One of the problems with <code>find</code> is that it doesn&rsquo;t return <code>true</code> or <code>false</code> based on search results. But we can still use it on our <code>if</code> condition by greping the result.</p>
+
+<pre><code class="language-bash">if find /var/log -name '*.log' | grep -q log ; then
+  echo &quot;File exists&quot;
+fi
+</code></pre>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>You should now have a better understanding of the <code>find</code> command, as well as some nifty use cases to impress you co-workers.</p>
+
+<p>If you found something useful or want to share an interesting use for <code>find</code>, please leave a comment below.</p>
 
 </div>
 
@@ -251,22 +449,22 @@ WantedBy=default.target
       <footer>
   
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2022%2f11%2f18%2flinux-find-command%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=Creating%20a%20Simple%20Systemd%20User%20Service&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=Linux%20find%20Command&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2022%2f11%2f18%2flinux-find-command%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2022%2f11%2f18%2flinux-find-command%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2022%2f11%2f18%2flinux-find-command%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f&amp;title=Creating%20a%20Simple%20Systemd%20User%20Service" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2022%2f11%2f18%2flinux-find-command%2f&amp;title=Linux%20find%20Command" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=Creating%20a%20Simple%20Systemd%20User%20Service&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f05%2f14%2fcreating-a-simple-systemd-user-service%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=Linux%20find%20Command&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2022%2f11%2f18%2flinux-find-command%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -275,18 +473,12 @@ WantedBy=default.target
     <nav><ul class="pager">
     
         <li class="previous">
-          <a href="https://blog.victormendonca.com/2018/02/09/how-to-scan-for-rtsp-urls/" title="How to Scan for RTSP Urls">
+          <a href="https://blog.victormendonca.com/2021/02/28/getting-started-with-ansible-molecule/" title="Getting Started with Ansible Molecule">
             <span aria-hidden="true">&larr;</span>Previous
           </a>
         </li>
     
 
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2018/06/26/installing-kuman-3.5-tft-lcd-on-raspberry-pi-3-model-b/" title="Installing Kuman 3">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
     
     </ul> </nav>
   

@@ -127,6 +127,190 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2019/12/16/bash-arrays-and-iterations/">Bash Arrays and Iterations</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2019-12-16">16 Dec, 2019</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  <p>Bash arrays can be great for iterating over a list of items.  I&rsquo;m giving a quick example below on a list of services. All you need is to list all values in different arrays and use an index to map them back together.</p>
+
+<p>Example:</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">#</th>
+<th align="center">Service</th>
+<th align="center">Path</th>
+<th align="center">Config File</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">1</td>
+<td align="center">CUPS</td>
+<td align="center">/etc/cups</td>
+<td align="center">cupsd.conf</td>
+</tr>
+
+<tr>
+<td align="center">2</td>
+<td align="center">MPD</td>
+<td align="center">/etc</td>
+<td align="center">mpd.conf</td>
+</tr>
+
+<tr>
+<td align="center">3</td>
+<td align="center">SSHD</td>
+<td align="center">/etc/ssh</td>
+<td align="center">sshd.conf</td>
+</tr>
+
+<tr>
+<td align="center">4</td>
+<td align="center">DHCPD</td>
+<td align="center">/etc</td>
+<td align="center">dhcpd.conf</td>
+</tr>
+</tbody>
+</table>
+
+<p>Let&rsquo;s break down our columns into arrays:</p>
+
+<pre><code class="language-bash">service_arr=(
+  CUPS
+  MPD
+  SSHD
+  DHCPD
+)
+
+path_arr=(
+  /etc/cups
+  /etc
+  /etc
+  /etc
+)
+
+config_file_arr=(
+  cupsd.conf
+  mpd.conf
+  sshd.conf
+  dhcpd.conf
+)
+</code></pre>
+
+<p>Now to iterate through our items, let&rsquo;s make sure we start at index 1 and add at each run:</p>
+
+<pre><code>cnt=1
+
+for i in ${!service_arr[@]} ; do
+  echo &quot;The configuration file for the service ${service_arr[$i]} is ${path_arr[$i]}/${config_file_arr[$i]}&quot;
+  let count+=1
+done
+</code></pre>
+
+<p>The result is:</p>
+
+<pre><code>The configuration file for the service CUPS is /etc/cups/cupsd.conf
+The configuration file for the service MPD is /etc/mpd.conf
+The configuration file for the service SSHD is /etc/sshd.conf
+The configuration file for the service DHCPD is /etc/dhcpd.conf
+</code></pre>
+
+<p>You can also use especial characters (like <code>*</code> when searching for files and using shell expansion). Just make sure to properly quote them.</p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2019%2f12%2f16%2fbash-arrays-and-iterations%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Bash%20Arrays%20and%20Iterations&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f12%2f16%2fbash-arrays-and-iterations%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f12%2f16%2fbash-arrays-and-iterations%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f12%2f16%2fbash-arrays-and-iterations%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f12%2f16%2fbash-arrays-and-iterations%2f&amp;title=Bash%20Arrays%20and%20Iterations" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Bash%20Arrays%20and%20Iterations&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2019%2f12%2f16%2fbash-arrays-and-iterations%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2019/04/15/touchpad-gestures-on-xps-13/" title="Touchpad Gestures on XPS 13">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2020/03/14/rhcsa---whats-new/" title="RHCSA v8: What&#39;s New">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2019/04/15/touchpad-gestures-on-xps-13/">Touchpad Gestures on XPS 13</a>
 </h2>
 
@@ -822,144 +1006,6 @@ shopt -s histappend
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2019/02/11/bash-theme-powerline-2column/">Bash Theme Powerline 2column</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2019-02-11">11 Feb, 2019</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  <p><strong>powerline-2column</strong> is a simple powerline like prompt for Bash that displays information in two columns.</p>
-
-<p><img src="https://blog.victormendonca.com/img/bash-theme-powerline-2column/prompt.png" alt="" /></p>
-
-<p>The prompt provides the following information:</p>
-
-<p><strong>Left Side</strong></p>
-
-<ul>
-<li>Folder icon for:
-
-<ul>
-<li>Git folder with provider icon</li>
-<li>Home folder</li>
-<li>Dropbox folder</li>
-</ul></li>
-<li>Username</li>
-<li>Hostname (when connecting via SSH)</li>
-<li>Current path</li>
-<li>Git status
-
-<ul>
-<li>untracked</li>
-<li>uncommited</li>
-<li>ahead/behind</li>
-</ul></li>
-</ul>
-
-<p><strong>Right Side</strong></p>
-
-<ul>
-<li>Previous exit code</li>
-<li>Battery status</li>
-<li>sudo cached credentials</li>
-<li>Time</li>
-</ul>
-
-<p>Check out some of the things it can do on the video below.</p>
-
-<p><img src="https://blog.victormendonca.com/img/bash-theme-powerline-2column/demo.gif" alt="" /></p>
-
-<p>You can download a copy from my GitHub repo - <a href="https://github.com/victorbrca/powerline-2column">https://github.com/victorbrca/powerline-2column</a></p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f11%2fbash-theme-powerline-2column%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Bash%20Theme%20Powerline%202column&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f11%2fbash-theme-powerline-2column%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f11%2fbash-theme-powerline-2column%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f11%2fbash-theme-powerline-2column%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f11%2fbash-theme-powerline-2column%2f&amp;title=Bash%20Theme%20Powerline%202column" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Bash%20Theme%20Powerline%202column&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2019%2f02%2f11%2fbash-theme-powerline-2column%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2019/01/15/count-lines-of-codes-with-cloc/" title="Count Lines of Codes With Cloc">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2019/02/27/fzf-for-the-win/" title="Fzf for the Win">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1121,6 +1167,10 @@ shopt -s histappend
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2022/11/18/linux-find-command/">Linux find Command</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2021/02/28/getting-started-with-ansible-molecule/">Getting Started with Ansible Molecule</a>
           </li>
         
@@ -1142,10 +1192,6 @@ shopt -s histappend
         
           <li>
           <a href="https://blog.victormendonca.com/2020/10/30/my-grafana-setup/">Overview of My Grafana Setup</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2020/10/29/how-to-collect-ups-data-on-pfsense-with-telegraf/">How to Collect UPS Data on pfSense with Telegraf</a>
           </li>
         
         </ul>
