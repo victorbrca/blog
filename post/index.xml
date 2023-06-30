@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Fri, 18 Nov 2022 00:21:34 -0500</lastBuildDate>
+    <lastBuildDate>Fri, 30 Jun 2023 15:55:26 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Understanding &#34;yum clean all&#34; and Stale Repos</title>
+      <link>https://blog.victormendonca.com/2023/06/30/undestanting-yum-clean-all-and-stale-repos/</link>
+      <pubDate>Fri, 30 Jun 2023 15:55:26 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2023/06/30/undestanting-yum-clean-all-and-stale-repos/</guid>
+      <description>When it comes to managing packages on a Linux system, the YUM (Yellowdog Updater Modified) package manager is widely used for its ease of use and robust features. One of the handy commands in YUM is yum clean all, which helps you keep your system clean and optimized. In this blog post, we will delve into the functionalities of yum clean all and explore how it can help you clear accumulated cache and improve system performance.</description>
+    </item>
     
     <item>
       <title>Linux find Command</title>

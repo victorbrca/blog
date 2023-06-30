@@ -127,6 +127,588 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2020/11/14/rhcsa8-boot-targets-system-targets-and-root-password-reset/">RHCSA v8: Boot Targets, Systemd Targets and root Password Reset</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2020-11-14">14 Nov, 2020</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/redhat" class="label label-primary">RedHat</a>
+  
+  <a href="https://blog.victormendonca.com/tags/rhcsa" class="label label-primary">RHCSA</a>
+  
+  <a href="https://blog.victormendonca.com/tags/systemd" class="label label-primary">Systemd</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>For quite a while the RHCSA exam has covered topics related to boot targets and the famous root password reset. However, with the introduction of systemd and other related changes this can sometimes become a bit confusing. The methods that were once used for RHEL 6/7 may no longer be available or may not be the &lsquo;official&rsquo; way of doing things anymore.</p>
+
+<p>I will try to clear some of the differences so we can have a better understanding of what&rsquo;s needed for the RHCSAv8 exam.</p>
+
+<h4 id="exam-topics-we-will-cover">Exam Topics we will cover</h4>
+
+<p><a href="https://www.redhat.com/en/services/training/ex200-red-hat-certified-system-administrator-rhcsa-exam?section=Objectives">Red Hat Certified System Administrator (RHCSA) exam objectives</a></p>
+
+<p><strong>Operate running systems</strong></p>
+
+<ul>
+<li>Boot systems into different targets manually</li>
+<li>Interrupt the boot process in order to gain access to a system</li>
+</ul>
+
+<h2 id="boot-targets">Boot Targets</h2>
+
+<p>On this section I will cover topics related to the &lsquo;<em>Boot systems into different targets manually</em>&rsquo; objective.</p>
+
+<h3 id="olders-sysv">Olders SysV</h3>
+
+<p>SysV is an older startup mechanism that was used by many Unix-like operating systems. It was replaced by Systemd and it&rsquo;s no longer used by Red Hat. However, you will sill find commands that references SysV and it&rsquo;s run levels.</p>
+
+<p><em>From Red Hat Enterprise Linux 3: Reference Guide</em></p>
+
+<blockquote>
+<p>The SysV init runlevel system provides a standard process for controlling which programs init launches or halts when initializing a runlevel. SysV init was chosen because it is easier to use and more flexible than the traditional BSD-style init process.</p>
+</blockquote>
+
+<p>The following runlevels are defined by default for Red Hat Enterprise Linux:</p>
+
+<pre><code class="language-none">0 — Halt
+1 — Single-user text mode
+2 — Not used (user-definable)
+3 — Full multi-user text mode
+4 — Not used (user-definable)
+5 — Full multi-user graphical mode (with an X-based login screen)
+6 — Reboot
+</code></pre>
+
+<h5 id="sysv-commands">SysV Commands</h5>
+
+<p>You can find what runlevel the system currently is by executing the command <code>runlevel</code></p>
+
+<pre><code class="language-none"># runlevel
+N 5
+</code></pre>
+
+<p>And you can change the system runlevel by running <code>telinit</code> with a runlevel number (0-6)</p>
+
+<pre><code class="language-none"># telini 6
+</code></pre>
+
+<p><strong>📝 NOTE:</strong> <em>You should not be using SysV commands to change the runlevels. You should use systemd commands instead.</em></p>
+
+<h3 id="systemd-targets">Systemd Targets</h3>
+
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_basic_system_settings/managing-services-with-systemd_configuring-basic-system-settings#working-with-systemd-targets_managing-services-with-systemd">RHEL 8 &gt; Configuring basic system settings &gt; Chapter 3. Managing services with systemd &gt; 3.3. Working with systemd targets</a></p>
+
+<p>Systemd targets are similar to SysV runlevels, and they are what you should use/reference from now on (including for the RHCSAv8 exam).</p>
+
+<p><em>From Arch Wiki</em></p>
+
+<blockquote>
+<p>systemd uses targets to group units together via dependencies and as standardized synchronization points. They serve a similar purpose as runlevels but act a little differently. Each target is named instead of numbered and is intended to serve a specific purpose with the possibility of having multiple ones active at the same time.</p>
+</blockquote>
+
+<h4 id="runlevels-and-systemd">Runlevels and Systemd</h4>
+
+<p>While runlevels are not used anymore, they are still referenced (by older codes and such). Systemd provides a compatibility layer to it&rsquo;s targets.</p>
+
+<p><em>From <code>runlevel</code> man page</em></p>
+
+<blockquote>
+<p>&laquo;Runlevels&raquo; are an obsolete way to start and stop groups of services used in SysV init. systemd
+ provides a compatibility layer that maps runlevels to targets, and associated binaries like
+ runlevel. Nevertheless, only one runlevel can be &laquo;active&raquo; at a given time, while systemd can
+ activate multiple targets concurrently, so the mapping to runlevels is confusing and only
+ approximate. Runlevels should not be used in new code, and are mostly useful as a shorthand way
+ to refer the matching systemd targets in kernel boot parameters.</p>
+</blockquote>
+
+<p><img src="https://blog.victormendonca.com/img/rhcsa8-boot-targets-system-targets-and-root-password-reset/runlevel-table.png" alt="" /></p>
+
+<h4 id="working-with-systemd-targets">Working with Systemd Targets</h4>
+
+<p>Let&rsquo;s go through the commands that will allow us to list, view and change the Systemd targets.</p>
+
+<p><strong>Listing the available targets</strong></p>
+
+<pre><code class="language-none"># systemctl list-units --type=target
+
+UNIT                   LOAD   ACTIVE SUB    DESCRIPTION                 
+basic.target           loaded active active Basic System                
+cryptsetup.target      loaded active active Local Encrypted Volumes     
+getty.target           loaded active active Login Prompts               
+graphical.target       loaded active active Graphical Interface         
+local-fs-pre.target    loaded active active Local File Systems (Pre)    
+local-fs.target        loaded active active Local File Systems          
+multi-user.target      loaded active active Multi-User System           
+network-online.target  loaded active active Network is Online           
+network-pre.target     loaded active active Network (Pre)               
+network.target         loaded active active Network                     
+nfs-client.target      loaded active active NFS client services         
+nss-user-lookup.target loaded active active User and Group Name Lookups
+paths.target           loaded active active Paths                       
+remote-fs-pre.target   loaded active active Remote File Systems (Pre)   
+remote-fs.target       loaded active active Remote File Systems         
+rpc_pipefs.target      loaded active active rpc_pipefs.target           
+rpcbind.target         loaded active active RPC Port Mapper             
+slices.target          loaded active active Slices                      
+sockets.target         loaded active active Sockets                     
+sound.target           loaded active active Sound Card                  
+sshd-keygen.target     loaded active active sshd-keygen.target          
+swap.target            loaded active active Swap                        
+sysinit.target         loaded active active System Initialization       
+timers.target          loaded active active Timers  
+</code></pre>
+
+<p><strong>Get the current target</strong></p>
+
+<pre><code class="language-none"># systemctl get-default
+graphical.target
+</code></pre>
+
+<p><strong>Set the Systemd target for next boot</strong></p>
+
+<pre><code class="language-none"># systemctl set-default [target]
+</code></pre>
+
+<p><strong>Change the Systemd target without reboot</strong></p>
+
+<pre><code class="language-none"># systemctl isolate [target]
+</code></pre>
+
+<p><strong>Change into rescue/emergency mode</strong></p>
+
+<p><em><strong>Note:</strong> This is related to the next session where we will cover rescue modes.</em></p>
+
+<pre><code class="language-none"># systemctl isolate [rescue|emergency]
+
+or
+
+# systemctl [rescue|emergency]
+</code></pre>
+
+<h2 id="rescue-modes">Rescue Modes</h2>
+
+<p><em>This section is related to the &lsquo;Interrupt the boot process in order to gain access to a system&rsquo; objective.</em></p>
+
+<p>Rescue and emergency modes allow you to boot the OS with very few services running and perform administrative tasks to attempt to resolve/repair/recover the system.</p>
+
+<p>There are different types of rescue and emergency modes:</p>
+
+<ul>
+<li>Legacy
+
+<ul>
+<li>Boot Parameters:
+
+<ul>
+<li><code>rescue</code></li>
+<li><code>emergency</code></li>
+</ul></li>
+</ul></li>
+<li>Systemd
+
+<ul>
+<li>Boot Parameters:
+
+<ul>
+<li><code>systemd.unit=rescue.target</code></li>
+<li><code>systemd.unit=emergency.target</code></li>
+</ul></li>
+</ul></li>
+<li>Installation program&rsquo;s (Anaconda) rescue mode
+
+<ul>
+<li>Requires install media</li>
+<li>Boot Parameters:
+
+<ul>
+<li><code>inst.rescue</code></li>
+</ul></li>
+</ul></li>
+</ul>
+
+<h3 id="rescue">rescue</h3>
+
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_basic_system_settings/managing-services-with-systemd_configuring-basic-system-settings#sect-Managing_Services_with_systemd-Targets-Rescue">RHEL 8 &gt; Configuring basic system settings &gt; Chapter 3. Managing services with systemd &gt; Chapter 3. Managing services with systemd &gt; 3.3. Working with systemd targets &gt; 3.3.5. Changing to rescue mode</a></p>
+
+<p>Rescue mode provides a convenient single-user environment and allows you to repair your system in situations when it is unable to complete a regular booting process. In rescue mode, the system attempts to mount all local file systems and start some important system services, but it does not activate network interfaces or allow more users to be logged into the system at the same time.</p>
+
+<p><em><strong>Note:</strong> Equivalent to the old single user mode, where some services are started and every disk is mounted.</em></p>
+
+<p><strong>Boot Parameter:</strong></p>
+
+<ul>
+<li>Legacy: <code>rescue</code></li>
+<li>Systemd: <code>systemd.unit=rescue.target</code></li>
+</ul>
+
+<p><strong>Summary:</strong></p>
+
+<ul>
+<li>Requires root password to enter this mode</li>
+<li>Mounts all local filesystems (RW)</li>
+<li>No network</li>
+<li>Starts important services<br /></li>
+<li>Single-user mode</li>
+</ul>
+
+<h4 id="instructions">Instructions</h4>
+
+<p>a. At boot, hit <code>e</code> to edit the boot parameters</p>
+
+<p>b. Add one of the boot parameters at the end of the line that starts with linux</p>
+
+<p>c. Press &lsquo;Ctrl + x&rsquo; to start</p>
+
+<h3 id="emergency">emergency</h3>
+
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_basic_system_settings/managing-services-with-systemd_configuring-basic-system-settings#sect-Managing_Services_with_systemd-Targets-Emergency">RHEL 8 &gt; Configuring basic system settings &gt; Chapter 3. Managing services with systemd &gt; Chapter 3. Managing services with systemd &gt; 3.3. Working with systemd targets &gt; 3.3.6. Changing to emergency mode</a></p>
+
+<p>Emergency mode provides the most minimal environment possible and allows you to repair your system even in situations when the system is unable to enter rescue mode. In emergency mode, the system mounts the root file system in read only mode, does not attempt to mount any other local file systems, does not activate network interfaces, and only starts a few essential services.</p>
+
+<p><strong>Boot Parameter:</strong></p>
+
+<ul>
+<li>Legacy: <code>emergency</code></li>
+<li>Systemd: <code>systemd.unit=emergency.target</code></li>
+</ul>
+
+<p><strong>Summary:</strong></p>
+
+<ul>
+<li>Requires root password to enter this mode</li>
+<li>Mounts the root filesystem only (RO)</li>
+<li>No network</li>
+<li>Only essential services are started</li>
+<li>The system does not load any init scripts</li>
+<li>Multi-user mode</li>
+</ul>
+
+<h4 id="instructions-1">Instructions</h4>
+
+<p>a. At boot, hit <code>e</code> to edit the boot parameters</p>
+
+<p>b. Add one of the boot parameters at the end of the line that starts with linux</p>
+
+<p>c. Press &lsquo;Ctrl + x&rsquo; to start</p>
+
+<h3 id="rd-break">rd.break</h3>
+
+<p>Breaks to an interactive shell while in the &lsquo;initrd&rsquo; allowing interaction before the system disk is mounted. The main &lsquo;/&rsquo; is available under &lsquo;/sysroot&rsquo;. Useful if you forgot root&rsquo;s password.</p>
+
+<p><strong>Boot Parameter:</strong></p>
+
+<ul>
+<li><code>rd.break</code></li>
+</ul>
+
+<h4 id="instructions-2">Instructions</h4>
+
+<p>a. At boot, hit <code>e</code> to edit the boot parameters</p>
+
+<p>b. Add <code>rd.break</code> option at the end of the line that starts with linux</p>
+
+<p>c. Press &lsquo;Ctrl + x&rsquo; to start</p>
+
+<h3 id="anaconda-rescue">Anaconda rescue</h3>
+
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/performing_a_standard_rhel_installation/installer-troubleshooting_installing-rhel#using-rescue-mode_troubleshooting-after-installation">RHEL 8 &gt; Performing a standard RHEL installation &gt; Appendix A. Troubleshooting &gt; A.3.8. Using rescue mode</a></p>
+
+<p>The installation program’s rescue mode is a minimal Linux environment that can be booted from the Red Hat Enterprise Linux DVD or other boot media. It contains command-line utilities for repairing a wide variety of issues. Rescue mode can be accessed from the Troubleshooting menu of the boot menu. In this mode, you can mount file systems as read-only, blacklist or add a driver provided on a driver disc, install or upgrade system packages, or manage partitions.</p>
+
+<h4 id="instructions-3">Instructions</h4>
+
+<p>a. Boot the system from either minimal boot media, or a full installation DVD or USB drive, and wait for the boot menu to be displayed.</p>
+
+<p>b. From the boot menu, either select Troubleshooting &gt; Rescue a Red Hat Enterprise Linux system option, or append the <code>inst.rescue</code> option to the boot command line. To enter the boot command line, press the Tab key on BIOS-based systems or the <code>e</code> key on UEFI-based systems.</p>
+
+<h2 id="password-reset">Password Reset</h2>
+
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_basic_system_settings/changing-and-resetting-the-root-password-from-the-command-line_configuring-basic-system-settings#resetting-the-forgotten-root-password-on-boot_changing-and-resetting-the-root-password-from-the-command-line">RHEL 8 &gt; Configuring basic system settings &gt; Chapter 9. Changing and resetting the root password &gt; 9.3. Resetting the forgotten root password on boot</a></p>
+
+<p>I will now cover different methods on how to change the root password if you forgot it. This is a common question for the RHCSA exams (or so I&rsquo;ve heard as I have yet to take mine).</p>
+
+<h3 id="method-1-fixing-selinux-context-before-reboot">Method 1: Fixing SELinux context before reboot</h3>
+
+<p>This is not the &laquo;official&raquo; method, but it&rsquo;s the one I like the most. It saves a bit of time from having to relabel the whole system for SELinux context.</p>
+
+<p>a. Boot into <code>rd.break</code> mode</p>
+
+<p>b. Re-mount sysroot in RW</p>
+
+<pre><code class="language-none">switch_root:/# mount -o rw,remount /sysroot
+</code></pre>
+
+<p>c. Chroot into sysroot</p>
+
+<pre><code class="language-none">switch_root:/# chroot /sysroot
+</code></pre>
+
+<p>d. Change the password for root</p>
+
+<pre><code class="language-none">sh-4.4# passwd
+</code></pre>
+
+<p>e. Load the SELinux policies</p>
+
+<pre><code class="language-none">sh-4.4# load_policy -i
+</code></pre>
+
+<p>f. Fix the policy for <code>/etc/shadow</code></p>
+
+<pre><code class="language-none">sh-4.4# restorecon -v /etc/shadow
+</code></pre>
+
+<p>g. Exit chroot</p>
+
+<pre><code class="language-none">sh-4.4# exit
+</code></pre>
+
+<p>h. Remount as RO</p>
+
+<pre><code class="language-none">switch_root:/# mount -o ro,remount /sysroot
+</code></pre>
+
+<p>i. Reboot</p>
+
+<pre><code class="language-none">switch_root:/# reboot
+</code></pre>
+
+<h3 id="method-2-setting-autorelabel-on-reboot">Method 2: Setting autorelabel on reboot</h3>
+
+<p>This is the most common method that you will find online for the RHCSA exam. It&rsquo;s also the method shown in Red Hat&rsquo;s <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_basic_system_settings/changing-and-resetting-the-root-password-from-the-command-line_configuring-basic-system-settings#resetting-the-forgotten-root-password-on-boot_changing-and-resetting-the-root-password-from-the-command-line">official documentation for RHEL 8</a>.</p>
+
+<p>a. Boot into <code>rd.break</code> mode</p>
+
+<p>b. Re-mount sysroot in RW</p>
+
+<pre><code class="language-none">switch_root:/# mount -o rw,remount /sysroot
+</code></pre>
+
+<p>c. Chroot into sysroot</p>
+
+<pre><code class="language-none">switch_root:/# chroot /sysroot
+</code></pre>
+
+<p>d. Change the password for root</p>
+
+<pre><code class="language-none">sh-4.4# passwd
+</code></pre>
+
+<p>e. Force the relabel of SELinux context for the filesystem</p>
+
+<pre><code class="language-none">sh-4.4# touch /.autorelabel
+</code></pre>
+
+<p>f. Exit chroot</p>
+
+<pre><code class="language-none">sh-4.4# exit
+</code></pre>
+
+<p>g. Remount as RO</p>
+
+<pre><code class="language-none">switch_root:/# mount -o ro,remount /sysroot
+</code></pre>
+
+<p>h. Reboot</p>
+
+<pre><code class="language-none">switch_root:/# reboot
+</code></pre>
+
+<p><em><strong>Note:</strong> It takes a while for the system to relabel all the files with SELinux context.</em></p>
+
+<h3 id="method-3-setting-selinux-to-permissive-and-manually-fixing-the-context">Method 3: Setting SELinux to permissive and manually fixing the context</h3>
+
+<p><em><strong>Links:</strong></em> <a href="https://learn.redhat.com/t5/Platform-Linux/Crack-root-password/td-p/4161/page/2">Red Hat Learning Community</a> - <a href="https://docs.fedoraproject.org/en-US/Fedora/26/html/System_Administrators_Guide/sec-Changing_and_Resetting_the_Root_Password.html">Fedora Documentation</a></p>
+
+<p>With this method we temporarily set SELinux to permissive mode, make our password changes, reload the SELinux context for the shadow file, and then re-enable SELinux.</p>
+
+<p><strong>⚠️ WARNING:</strong> <em>While this initially worked for me on RHEL 8 (you will get a lot of SELinux errors, which is expected), after a while my VM would hang and I could no longer login as any user or restart it.</em></p>
+
+<p>a. Boot into <code>rd.break</code> mode by adding <code>rd.break enforcing=0</code> to the boot line</p>
+
+<p>b. Re-mount sysroot in RW</p>
+
+<pre><code class="language-none">switch_root:/# mount -o rw,remount /sysroot
+</code></pre>
+
+<p>c. Chroot into sysroot</p>
+
+<pre><code class="language-none">switch_root:/# chroot /sysroot
+</code></pre>
+
+<p>d. Change the password for root</p>
+
+<pre><code class="language-none">sh-4.4# passwd
+</code></pre>
+
+<p>e. Exit chroot</p>
+
+<pre><code class="language-none">sh-4.4# exit
+</code></pre>
+
+<p>f. Remount as RO</p>
+
+<pre><code class="language-none">switch_root:/# mount -o ro,remount /sysroot
+</code></pre>
+
+<p>g. Exit switch_root and wait for the system to finish booting</p>
+
+<pre><code class="language-none">switch_root:/# exit
+</code></pre>
+
+<p>h. As root, fix SELinux context for <code>/etc/shadow</code></p>
+
+<pre><code class="language-none">[root@localhost ~]# restorecon -v /etc/shadow
+</code></pre>
+
+<p>i. Set SELinux to enforcing mode</p>
+
+<pre><code class="language-none">[root@localhost ~]# setenforce 1
+</code></pre>
+
+<h3 id="method-4-disabling-selinux-and-manually-fixing-the-context">Method 4: Disabling SELinux and manually fixing the context</h3>
+
+<p>This is very similar to method 3, however we are completely disabling SELinux.</p>
+
+<p><strong>⚠️ WARNING:</strong> <em>This method did not work for me. My VM did not finish booting after making the changes.</em></p>
+
+<p>a. Boot into <code>rd.break</code> mode by adding <code>rd.break selinux=0</code> to the boot line</p>
+
+<p>b. Re-mount sysroot in RW</p>
+
+<pre><code class="language-none">switch_root:/# mount -o rw,remount /sysroot
+</code></pre>
+
+<p>c. Chroot into sysroot</p>
+
+<pre><code class="language-none">switch_root:/# chroot /sysroot
+</code></pre>
+
+<p>d. Change the password for root</p>
+
+<pre><code class="language-none">sh-4.4# passwd
+</code></pre>
+
+<p>e. Exit chroot</p>
+
+<pre><code class="language-none">sh-4.4# exit
+</code></pre>
+
+<p>f. Remount as RO</p>
+
+<pre><code class="language-none">switch_root:/# mount -o ro,remount /sysroot
+</code></pre>
+
+<p>g. Exit switch_root and wait for the system to finish booting</p>
+
+<pre><code class="language-none">switch_root:/# exit
+</code></pre>
+
+<p>h. As root, fix SELinux context for <code>/etc/shadow</code></p>
+
+<pre><code class="language-none">[root@localhost ~]# restorecon -v /etc/shadow
+</code></pre>
+
+<p>i. Re-enable SELinux</p>
+
+<pre><code class="language-none">[root@localhost ~]# setenforce 1
+</code></pre>
+
+<hr />
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>I hope I helped you make a bit more sense from all of the different options and info around this topic. If you have any comments, corrections or addition, please leave them below. I would love to hear from you.</p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f11%2f14%2frhcsa8-boot-targets-system-targets-and-root-password-reset%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=RHCSA%20v8%3a%20Boot%20Targets%2c%20Systemd%20Targets%20and%20root%20Password%20Reset&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f11%2f14%2frhcsa8-boot-targets-system-targets-and-root-password-reset%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f11%2f14%2frhcsa8-boot-targets-system-targets-and-root-password-reset%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f11%2f14%2frhcsa8-boot-targets-system-targets-and-root-password-reset%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f11%2f14%2frhcsa8-boot-targets-system-targets-and-root-password-reset%2f&amp;title=RHCSA%20v8%3a%20Boot%20Targets%2c%20Systemd%20Targets%20and%20root%20Password%20Reset" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=RHCSA%20v8%3a%20Boot%20Targets%2c%20Systemd%20Targets%20and%20root%20Password%20Reset&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f11%2f14%2frhcsa8-boot-targets-system-targets-and-root-password-reset%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2020/11/03/zfs-for-dummies/" title="ZFS for Dummies">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2020/11/18/linux-logical-volume-manager/" title="RHCSA v8: Linux Logical Volume Manager">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2020/11/03/zfs-for-dummies/">ZFS for Dummies</a>
 </h2>
 
@@ -1710,193 +2292,6 @@ UPS BackUPSES750 is unavailable
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2020/10/28/how-to-install-telegraf-on-freenas/">How to Install Telegraf on FreeNAS</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2020-10-28">28 Oct, 2020</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/monitoring" class="label label-primary">Monitoring</a>
-  
-  <a href="https://blog.victormendonca.com/tags/freenas" class="label label-primary">FreeNAS</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  <p>Quick and simple instructions on how to install Telegraf collector agent on FreeNAS.</p>
-
-<p>a. Start by creating a folder for Telegraf on one of your pools. I have mine under <code>/mnt/Volume1/home/system/telegraf</code></p>
-
-<p>b. Download the Telegraf tar for FreeBSD (<a href="https://github.com/influxdata/telegraf/releases">here</a>), extract it and copy the binary and the <code>.conf</code> files to the folder we created in the previous step</p>
-
-<ul>
-<li><code>./telegraf-[version]/usr/bin/telegraf</code></li>
-<li><code>./telegraf-[version]/etc/telegraf/telegraf.conf</code></li>
-</ul>
-
-<p>c. Create <code>telegraf.init</code> in the same folder (make sure to modify the 2 lines with your path)</p>
-
-<pre><code class="language-none">26 : ${telegraf_conf:=&quot;/mnt/Volume1/home/system/telegraf/${name}.conf&quot;}
-
-32 command_args=&quot;-crP ${pidfile} /mnt/Volume1/home/system/telegraf/${name} ${telegraf_flags} -config=${telegraf_conf} &gt;&gt; /var/log/telegraf.log 2&gt;&amp;1&quot;
-</code></pre>
-
-<pre><code>#!/bin/sh
-# $FreeBSD$
-
-# PROVIDE: telegraf
-# REQUIRE: DAEMON NETWORKING
-# BEFORE: LOGIN
-# KEYWORD: shutdown
-
-# Add the following lines to /etc/rc.conf to enable telegrafb:
-# telegraf_enable=&quot;YES&quot;
-#
-# telegraf_enable (bool): Set to YES to enable telegraf
-# Default: NO
-# telegraf_conf (str): telegraf configuration file
-# Default: ${PREFIX}/etc/telegraf.conf
-# telegraf_flags (str): Extra flags passed to telegraf
-
-. /etc/rc.subr
-
-name=&quot;telegraf&quot;
-rcvar=telegraf_enable
-load_rc_config $name
-
-: ${telegraf_enable:=&quot;YES&quot;}
-: ${telegraf_flags:=&quot;-quiet&quot;}
-: ${telegraf_conf:=&quot;/mnt/Volume1/home/system/telegraf/${name}.conf&quot;}
-
-# daemon
-start_precmd=telegraf_prestart
-pidfile=&quot;/var/run/${name}.pid&quot;
-command=/usr/sbin/daemon
-command_args=&quot;-crP ${pidfile} /mnt/Volume1/home/system/telegraf/${name} ${telegraf_flags} -config=${telegraf_conf} &gt;&gt; /var/log/telegraf.log 2&gt;&amp;1&quot;
-
-telegraf_prestart() {
-# Have to empty rc_flags so they don't get passed to daemon(8)
- rc_flags=&quot;&quot;
-}
-
-run_rc_command &quot;$1&quot;
-</code></pre>
-
-<p>d. Edit the configuration file (<code>telegraf.conf</code>) according to your needs</p>
-
-<p>e. Create a link in <code>/usr/local/etc/rc.d</code> for telegraf</p>
-
-<pre><code class="language-none">ln -s /mnt/Volume1/home/system/telegraf/telegraf.init /usr/local/etc/rc.d/telegraf
-</code></pre>
-
-<p>f. Start the service</p>
-
-<pre><code class="language-none">service telegraf start
-</code></pre>
-
-<p>g. Check the output of the logs to make sure it&rsquo;s working</p>
-
-<pre><code class="language-none"># tail /var/log/telegraf.log
-2020-10-25T17:34:33Z I! Starting Telegraf 1.16.0
-</code></pre>
-
-<p>h. Create an &laquo;Init/Shutdown Script&raquo; (change to reflect your path)</p>
-
-<pre><code class="language-none">ln -s /mnt/Volume1/home/system/telegraf/telegraf.init /usr/local/etc/rc.d/telegraf ; service telegraf start
-</code></pre>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-install-telegraf-on-freenas/init.png" alt="" /></p>
-
-<hr />
-
-<p><strong>Credits:</strong></p>
-
-<ul>
-<li><a href="https://www.reddit.com/user/nDQ9UeOr/">u/nDQ9UeOr</a> - <a href="https://www.reddit.com/r/freenas/comments/81t2bw/can_i_install_telegraf_on_my_freenas_host/">Redit post</a></li>
-</ul>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Install%20Telegraf%20on%20FreeNAS&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f&amp;title=How%20to%20Install%20Telegraf%20on%20FreeNAS" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=How%20to%20Install%20Telegraf%20on%20FreeNAS&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2020/10/22/how-to-configure-a-ups-between-linux-and-freenas/" title="How to Configure a UPS Between Linux and FreeNAS">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2020/10/28/how-to-setup-ups-on-pfsense/" title="How to Setup a USB UPS on pfSense">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -2058,6 +2453,10 @@ run_rc_command &quot;$1&quot;
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2023/06/30/undestanting-yum-clean-all-and-stale-repos/">Understanding &#34;yum clean all&#34; and Stale Repos</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2022/11/18/linux-find-command/">Linux find Command</a>
           </li>
         
@@ -2079,10 +2478,6 @@ run_rc_command &quot;$1&quot;
         
           <li>
           <a href="https://blog.victormendonca.com/2020/11/03/zfs-for-dummies/">ZFS for Dummies</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2020/10/30/my-grafana-setup/">Overview of My Grafana Setup</a>
           </li>
         
         </ul>
