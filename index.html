@@ -127,6 +127,258 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/">How to Migrate Local Users and Grops</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2023-07-20">20 Jul, 2023</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<h3 id="introduction">Introduction</h3>
+
+<p>Migrating users from one Linux system to another can be a complex task, but with the right steps and careful planning, it can be accomplished smoothly. In this guide, we will walk you through the process of migrating users, their passwords, groups, and home folders from one Linux system to another. We&rsquo;ll be using bash scripts to automate the backup and restore process, ensuring a seamless transition.</p>
+
+<p>The following items will not be covered by our instructions:</p>
+
+<ul>
+<li>User limits</li>
+<li>Mail</li>
+<li>Group password</li>
+</ul>
+
+<h3 id="step-1-backup-user-information-on-the-source-server">Step 1: Backup User Information on the Source Server</h3>
+
+<p>First, log in to the source Linux system and open a terminal. Use the following command to get a list of all users:</p>
+
+<pre><code class="language-bash">lslogins -o &quot;USER,UID,GECOS,HOMEDIR,SHELL,GROUP,GID,SUPP-GROUPS,SUPP-GIDS&quot;
+</code></pre>
+
+<p>Next, identify the users you want to migrate and add their names to the <code>users_to_backup</code> variable in the provided script:</p>
+
+<pre><code class="language-bash">backup_password_file=&quot;etc-passwd-bak&quot;
+backup_group_file=&quot;etc-group-bak&quot;
+backup_shadow_file=&quot;etc-shadow-bak&quot;
+# Add more users separated by spaces if needed
+users_to_backup=&quot;linus lennart&quot;
+
+for user in $users_to_backup ; do
+  curuser=$user
+  echo -e &quot;\n=&gt; User is $curuser&quot;
+  curid=$(id -u &quot;$curuser&quot;)
+  curgid=$(id -g &quot;$curuser&quot;)
+  cursupgit=$(id -G &quot;$curuser&quot;)
+  echo &quot;User id is $curid&quot;
+  echo &quot;User group id is $curgid&quot;
+  echo &quot;User supplementary groups are $cursupgit&quot;
+  echo &quot;Backing up /etc/passwd for $curuser&quot;
+  grep -E &quot;^${curuser}:.:${curid}&quot; /etc/passwd &gt;&gt; &quot;$backup_password_file&quot;
+
+  echo &quot;Backing up primary group for $curuser&quot;
+  if [ -f &quot;$backup_group_file&quot; ] ; then
+    if grep -q &quot;:${curid}:&quot; &quot;$backup_group_file&quot; ; then
+      echo &quot;Group already backed up&quot;
+    else
+      grep &quot;:${curid}:&quot; /etc/group &gt;&gt; &quot;$backup_group_file&quot;
+    fi
+  else
+    grep &quot;:${curid}:&quot; /etc/group &gt;&gt; &quot;$backup_group_file&quot;
+  fi
+
+  echo &quot;Backing up secondary groups for $curuser&quot;
+  for groupid in $cursupgit ; do
+    if grep -q &quot;:${groupid}:&quot; &quot;$backup_group_file&quot; ; then
+      echo &quot;Group already backed up&quot;
+    else
+      grep &quot;:${groupid}:&quot; /etc/group &gt;&gt; &quot;$backup_group_file&quot;
+    fi
+  done
+
+  echo &quot;Backing up /etc/shadow for $curuser&quot;
+  sudo grep -E &quot;^$curuser&quot; /etc/shadow &gt;&gt; &quot;$backup_shadow_file&quot;
+done
+</code></pre>
+
+<p>Save the script to a file, e.g., <code>user_backup_script.sh</code>, and make it executable:</p>
+
+<pre><code class="language-bash">chmod +x user_backup_script.sh
+</code></pre>
+
+<p>Execute the script as root:</p>
+
+<pre><code class="language-bash">sudo ./user_backup_script.sh
+</code></pre>
+
+<p>The script will back up user information, including passwords and group data, to the specified backup files.</p>
+
+<h3 id="step-2-copy-backup-files-to-the-destination-server">Step 2: Copy Backup Files to the Destination Server</h3>
+
+<p>Next, copy the three backup files (<em>etc-passwd-bak</em>, <em>etc-group-bak</em>, and <em>etc-shadow-bak</em>) from the source server to the destination server using the scp command or any preferred method.</p>
+
+<pre><code class="language-bash"># Example using scp
+scp etc-*-bak user@destination_server:/path/to/backup_files/
+</code></pre>
+
+<h3 id="step-3-restore-users-on-the-destination-server">Step 3: Restore Users on the Destination Server</h3>
+
+<p>Log in to the destination Linux system and open a terminal. Navigate to the directory where the backup files are located and run the provided restore script as root:</p>
+
+<pre><code class="language-bash">backup_password_file=&quot;etc-passwd-bak&quot;
+backup_group_file=&quot;etc-group-bak&quot;
+backup_shadow_file=&quot;etc-shadow-bak&quot;
+
+echo -e &quot;\n=&gt; Backing up the system files&quot;
+for file in /etc/{passwd,group,shadow} ; do
+  cp -v &quot;$file&quot; &quot;${file}_$(date -I)&quot;
+done
+
+echo -e &quot;\n=&gt; Restoring users&quot;
+cat &quot;$backup_password_file&quot; | while read -r line ; do
+  userid=&quot;$(echo &quot;$line&quot; | awk -F&quot;:&quot; '{print $3}')&quot;
+  username=&quot;$(echo &quot;$line&quot; | awk -F&quot;:&quot; '{print $1}')&quot;
+  echo &quot;-&gt; Restoring user $username&quot;
+  if grep -Eq &quot;^${username}:.:${userid}&quot; /etc/passwd ; then
+    echo &quot;  ERROR: User ID already exists. Manual intervention is needed&quot;
+  else
+    echo &quot;$line&quot; &gt;&gt; /etc/passwd
+    if grep -qE &quot;^${username}:&quot; /etc/shadow ; then
+      echo &quot;  ERROR: User password already exists. Manual intervention is needed&quot;
+    else
+      grep -E &quot;^${username}:&quot; &quot;$backup_shadow_file&quot; &gt;&gt; /etc/shadow
+    fi
+  fi
+done
+
+echo -e &quot;\n=&gt; Restoring groups&quot;
+cat &quot;$backup_group_file&quot; | while read -r line ; do
+  groupid=&quot;$(echo &quot;$line&quot; | awk -F&quot;:&quot; '{print $3}')&quot;
+  groupname=&quot;$(echo &quot;$line&quot; | awk -F&quot;:&quot; '{print $1}')&quot;
+  echo &quot;-&gt; Restoring group $groupname&quot;
+  if grep -qE &quot;^${groupname}:.:${groupid}&quot; /etc/group ; then
+    echo &quot;  ERROR: Group already exists. Manual intervention may be needed&quot;
+  else
+    echo &quot;$line&quot; &gt;&gt; /etc/group
+  fi
+done
+</code></pre>
+
+<p>Run the restore script:</p>
+
+<pre><code class="language-bash">sudo ./user_restore_script.sh
+</code></pre>
+
+<p>The script will restore the users and their passwords, taking care to avoid conflicts with existing user IDs. Pay close attention to error messages and take action if needed. If there are any error messages related to system group creation, it might be acceptable as the groups may already exist on the new system.</p>
+
+<h3 id="step-4-copy-home-folders-and-set-permissions">Step 4: Copy Home Folders and Set Permissions</h3>
+
+<p>Finally, to complete the migration, copy the home folders for the desired users from the source server to the destination server using rsync:</p>
+
+<pre><code class="language-bash"># Replace 'user1,user2,user3' with appropriate values
+# Replace 'destination_server' with appropriate values
+rsync -avzh -e ssh /home/{user1,user2,user3} user@destination_server:/home/
+</code></pre>
+
+<p>Ensure that the permissions and ownership are set correctly for the home folder of each user on the destination server:</p>
+
+<pre><code class="language-bash"># Replace user and primary_group with appropriate values
+sudo chown -R user:primary_group /home/user
+</code></pre>
+
+<p><strong>Note:</strong> <em>For SFTP users that use CHROOT, the user&rsquo;s home folder needs to be owned by &lsquo;root&rsquo;</em></p>
+
+<h3 id="conclusion">Conclusion:</h3>
+
+<p>Migrating users from one Linux system to another involves a series of crucial steps, including backup, restoration, and copying of home folders. By using the provided scripts and following this step-by-step guide, you can ensure a smooth and successful user migration process. Always exercise caution during the migration and verify the results to ensure everything is functioning as expected on the destination system.</p>
+
+<p><strong>Additional reading:</strong></p>
+
+<ul>
+<li><a href="https://access.redhat.com/solutions/179753">https://access.redhat.com/solutions/179753</a></li>
+</ul>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Migrate%20Local%20Users%20and%20Grops&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f&amp;title=How%20to%20Migrate%20Local%20Users%20and%20Grops" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20Migrate%20Local%20Users%20and%20Grops&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2023/06/30/undestanting-yum-clean-all-and-stale-repos/" title="Understanding &#34;yum clean all&#34; and Stale Repos">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2023/06/30/undestanting-yum-clean-all-and-stale-repos/">Understanding &#34;yum clean all&#34; and Stale Repos</a>
 </h2>
 
@@ -278,6 +530,12 @@ Disk usage under /var/cache/yum/*/* after cleanup:
         </li>
     
 
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/" title="How to Migrate Local Users and Grops">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
     
     </ul> </nav>
   
@@ -1382,534 +1640,6 @@ GRUB_PRELOAD_MODULES=&quot;part_gpt part_msdos lvm&quot;
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2020/11/18/linux-logical-volume-manager/">RHCSA v8: Linux Logical Volume Manager</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2020-11-18">18 Nov, 2020</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/redhat" class="label label-primary">RedHat</a>
-  
-  <a href="https://blog.victormendonca.com/tags/rhcsa" class="label label-primary">RHCSA</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<h4 id="disclaimer">Disclaimer</h4>
-
-<p>This blog post is essentially my study notes for the RHCSA v8 exam on Logical Volume Manager. It should be taken as a quick reference document (or a cheat sheet of some sorts).</p>
-
-<p>It covers the following exam subjects:</p>
-
-<ul>
-<li><strong>Configure local storage</strong>
-
-<ul>
-<li>Create and remove physical volumes</li>
-<li>Assign physical volumes to volume groups</li>
-<li>Create and delete logical volumes</li>
-</ul></li>
-<li><strong>Create and configure file systems</strong>
-
-<ul>
-<li>Extend existing logical volumes</li>
-</ul></li>
-</ul>
-
-<p><em><strong>Note:</strong> There could be additional information needed for the exam that is not covered here.</em></p>
-
-<h2 id="overview">Overview</h2>
-
-<p>Logical Volume Manager (LVM) is a device mapper target that provides logical volume management for the Linux kernel. LVM allows a pool of space to manage storage.</p>
-
-<p><img src="https://blog.victormendonca.com/img/linux-logical-volume-manager/lvm.png" alt="" /></p>
-
-<p><strong>PV</strong> - Physical Volumes are directly related to hard drives or partitions</p>
-
-<p><strong>VG</strong> - A Volume Group can have multiple physical Volumes</p>
-
-<p><strong>LV</strong> - A Logical Volume sits inside a Volume Group and it&rsquo;s what is assigned to a file system.</p>
-
-<p>The filesystem sits on top of the logical volume and it will be formatted to a specifc fs type (vfat, xfs, ext4) and mounted (/root, /home, /mnt/*, etc).</p>
-
-<p>When a physical disk is setup for LVM, metadata is written at the beginning of the disk for normal usage, and at the end of the disk for backup usage.</p>
-
-<h3 id="overview-of-creating-a-physical-volume">Overview of Creating a Physical Volume</h3>
-
-<p>First create initialize the disks to be used by LVM with <code>pvcreate</code> (Initialize physical volume(s) for use by LVM)</p>
-
-<pre><code># pvcreate /dev/device /dev/device2 /dev/device3
-</code></pre>
-
-<p>Then we create a volume group with <code>vgcreate</code> (Create a volume group)</p>
-
-<pre><code># vgcreate [vg name] /dev/device /dev/device2 /dev/device3
-</code></pre>
-
-<p><em>Optionally use the <code>-s</code> switch to set the Physical Extent size (for LVM2, the only effect this flag has is that when using too many physical volumes, the LVM tools will perform better)</em></p>
-
-<p>Create the Logical Volume (4GB)</p>
-
-<pre><code># lvcreate -L 4g [vg name] -n [lv name]
-</code></pre>
-
-<p>Flags:</p>
-
-<ul>
-<li><code>-n</code>  - set the Logical Volume name</li>
-<li><code>-l</code> - use extents rather than a specified size</li>
-</ul>
-
-<p>And finally create the file system</p>
-
-<pre><code># mkfs.xfs /dev/[vgname]/[lvname]
-</code></pre>
-
-<hr />
-
-<h2 id="working-with-lvm">Working With LVM</h2>
-
-<h3 id="physical-volumes">Physical Volumes</h3>
-
-<p><strong>Commands reference:</strong></p>
-
-<ul>
-<li>lvm (8)                  - LVM2 tools</li>
-<li>pvcreate (8)         - Initialize physical volume(s) for use by LVM</li>
-<li>pvdisplay (8)        - Display various attributes of physical volume(s)</li>
-<li>pvremove (8)         - Remove LVM label(s) from physical volume(s)</li>
-<li>pvs (8)                  - Display information about physical volumes</li>
-</ul>
-
-<h4 id="creating-physical-volumes">Creating Physical Volumes</h4>
-
-<p>Physical volumes can be created using full disks or partitions.</p>
-
-<pre><code># pvcreate /dev/part1 /dev/part2
-</code></pre>
-
-<p>Or</p>
-
-<pre><code># pvcreate /dev/sdb /dev/sdc
-</code></pre>
-
-<h4 id="deleting-physical-volumes">Deleting Physical Volumes</h4>
-
-<p><code>pvremove</code> wipes the label on a device so that LVM will no longer recognize it as a PV. A PV cannot be removed from a VG while it is used by an active LV.</p>
-
-<p>Removing a PV</p>
-
-<pre><code class="language-none"># pvremove /dev/sdb /dev/sdc
-  Labels on physical volume &quot;/dev/sdb&quot; successfully wiped.
-  Labels on physical volume &quot;/dev/sdc&quot; successfully wiped.
-</code></pre>
-
-<p>Trying to remove a PV that has a VG and LV</p>
-
-<pre><code class="language-none"># pvremove /dev/sdb /dev/sdc
-  PV /dev/sdb is used by VG testvg so please use vgreduce first.
-  (If you are certain you need pvremove, then confirm by using --force twice.)
-  /dev/sdb: physical volume label not removed.
-  PV /dev/sdc is used by VG testvg so please use vgreduce first.
-  (If you are certain you need pvremove, then confirm by using --force twice.)
-  /dev/sdc: physical volume label not removed.
-</code></pre>
-
-<p>You can try to force remove with <code>-ff</code></p>
-
-<pre><code class="language-none"># pvremove -ff /dev/sdb /dev/sdc
-  WARNING: PV /dev/sdb is used by VG testvg.
-Really WIPE LABELS from physical volume &quot;/dev/sdb&quot; of volume group &quot;testvg&quot; [y/n]? y
-  WARNING: Wiping physical volume label from /dev/sdb of volume group &quot;testvg&quot;.
-  WARNING: PV /dev/sdc is used by VG testvg.
-  Really WIPE LABELS from physical volume &quot;/dev/sdc&quot; of volume group &quot;testvg&quot; [y/n]? y
-  WARNING: Wiping physical volume label from /dev/sdc of volume group &quot;testvg&quot;.
-</code></pre>
-
-<h3 id="volume-groups">Volume Groups</h3>
-
-<p><strong>Commands reference:</strong></p>
-
-<ul>
-<li>lvm (8)                  - LVM2 tools</li>
-<li>vgcreate (8)         - Create a volume group</li>
-<li>vgdisplay (8)        - Display volume group information</li>
-<li>vgextend (8)        - Add physical volumes to a volume group</li>
-<li>vgreduce (8)        - Remove physical volume(s) from a volume group</li>
-<li>vgremove (8)      - Remove volume group(s)</li>
-<li>vgs (8)                  - Display information about volume groups</li>
-</ul>
-
-<h4 id="creating-a-volume-group">Creating a Volume Group</h4>
-
-<p><code>vgcreate</code> creates a new VG on block devices. If the devices were not previously intialized as PVs with <code>pvcreate</code>, <code>vgcreate</code> will inititialize them, making them PVs. The <code>pvcreate</code> options for initializing devices are also available with <code>vgcreate</code>.</p>
-
-<p>We create a volume group with <code>vgcreate</code></p>
-
-<pre><code># vgcreate [vg name] /dev/device /dev/device2 /dev/device3
-</code></pre>
-
-<p><em>For example:</em></p>
-
-<pre><code class="language-none"># vgcreate vg1 /dev/sdb /dev/sdc
-  Volume group &quot;vg1&quot; successfully created
-</code></pre>
-
-<h4 id="listing-the-volume-group">Listing the volume group</h4>
-
-<pre><code class="language-none"># vgs vg1
-  VG   #PV #LV #SN Attr   VSize   VFree
-  vg1    2   0   0 wz--n-   5.99g 5.99g
-</code></pre>
-
-<p>Or with more details</p>
-
-<pre><code class="language-none"># vgdisplay vg1
-  --- Volume group ---
-  VG Name               vg1
-  System ID              
-  Format                lvm2
-  Metadata Areas        2
-  Metadata Sequence No  1
-  VG Access             read/write
-  VG Status             resizable
-  MAX LV                0
-  Cur LV                0
-  Open LV               0
-  Max PV                0
-  Cur PV                2
-  Act PV                2
-  VG Size               5.99 GiB
-  PE Size               4.00 MiB
-  Total PE              1534
-  Alloc PE / Size       0 / 0    
-  Free  PE / Size       1534 / 5.99 GiB
-  VG UUID               uvHpRZ-BdPH-Nzxy-Lp15-VMps-fzPZ-A1bebc
-</code></pre>
-
-<p>You can also create a PV with <code>vgcreate</code> (bypassing the need to run <code>pvcreate</code>)</p>
-
-<pre><code class="language-none"># vgcreate vg2 /dev/sdd
-  Physical volume &quot;/dev/sdd&quot; successfully created.
-  Volume group &quot;vg2&quot; successfully created
-</code></pre>
-
-<h4 id="extending-a-volume-group">Extending a Volume Group</h4>
-
-<p>You can use <code>vgextend</code> to extend volume groups by adding physical volumes to it.</p>
-
-<p>Initialize the new drive as a physical volume with <code>pvcreate</code></p>
-
-<pre><code class="language-none"># pvcreate /dev/sde
-  Physical volume &quot;/dev/sde&quot; successfully created.
-</code></pre>
-
-<p>Then Add the new physical volume to the volume group</p>
-
-<pre><code class="language-none"># vgextend vg1 /dev/sde
-  Volume group &quot;vg1&quot; successfully extended
-</code></pre>
-
-<h4 id="reducing-a-volume-group">Reducing a Volume Group</h4>
-
-<p><code>vgreduce</code> removes one or more unused PVs from a VG.</p>
-
-<p>List the volume group (note it has 8.99GB of space)</p>
-
-<pre><code class="language-none"># vgs vg1
-  VG  #PV #LV #SN Attr   VSize  VFree  
-  vg1   3   0   0 wz--n- &lt;8.99g &lt;8.99g
-</code></pre>
-
-<p>Remove one of the physical volumes</p>
-
-<pre><code class="language-none"># vgreduce vg1 /dev/sde
-  Removed &quot;/dev/sde&quot; from volume group &quot;vg1&quot;
-</code></pre>
-
-<p>List the volume group again (now it has 5.99GB)</p>
-
-<pre><code class="language-none"># vgs vg1
-  VG  #PV #LV #SN Attr   VSize VFree
-  vg1   2   0   0 wz--n- 5.99g 5.99g
-</code></pre>
-
-<h4 id="deleting-removing-a-volume-group">Deleting/Removing a Volume Group</h4>
-
-<p><code>vgremove</code> removes one or more VGs. If LVs exist in the VG, a prompt is used to confirm LV removal.</p>
-
-<pre><code class="language-none"># vgremove vg1
-  Volume group &quot;vg1&quot; successfully removed
-</code></pre>
-
-<h3 id="logical-volumes">Logical Volumes</h3>
-
-<p><strong>Commands reference:</strong></p>
-
-<ul>
-<li>lvm (8)                  - LVM2 tools</li>
-<li>lvcreate (8)          - Create a logical volume</li>
-<li>lvdisplay (8)         - Display information about a logical volume</li>
-<li>lvextend (8)         - Add space to a logical volume</li>
-<li>lvresize (8)           - Resize a logical volume</li>
-<li>lvreduce (8)         - Reduce the size of a logical volume</li>
-<li>lvremove (8)         - Remove logical volume(s) from the system</li>
-<li>lvs (8)                   - Display information about logical volumes</li>
-</ul>
-
-<h4 id="creating-a-logical-volume">Creating a Logical Volume</h4>
-
-<pre><code># lvcreate -L 4g [vg name] -n [lv name]
-</code></pre>
-
-<p><strong>Flags:</strong></p>
-
-<ul>
-<li><code>-n</code>  - set the Logical Volume name</li>
-<li><code>-l</code> - use extents rather than a specified size</li>
-</ul>
-
-<h5 id="example">Example</h5>
-
-<p>Create the LV</p>
-
-<pre><code class="language-none"># lvcreate -L 4g vg1 -n lv1
-WARNING: ext4 signature detected on /dev/vg1/lv1 at offset 1080. Wipe it? [y/n]: y
-  Wiping ext4 signature on /dev/vg1/lv1.
-  Logical volume &quot;lv1&quot; created.
-</code></pre>
-
-<p>Display simple information about the LV</p>
-
-<pre><code class="language-none"># lvs vg1
-  LV   VG  Attr       LSize Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
-  lv1  vg1 -wi-a----- 4.00g   
-</code></pre>
-
-<p>Simple information with verbose</p>
-
-<pre><code class="language-none"># lvs -v vg1
-  LV   VG  #Seg Attr       LSize Maj Min KMaj KMin Pool Origin Data%  Meta%  Move Cpy%Sync Log Convert LV UUID                                LProfile
-  lv1  vg1    2 -wi-a----- 4.00g  -1  -1  253    2                                                     ADUPcG-YAuo-5vDC-7FEB-Cas9-4Gt0-hR1kVD  
-</code></pre>
-
-<p>Detailed information</p>
-
-<pre><code class="language-none"># lvdisplay vg1
-  --- Logical volume ---
-  LV Path                /dev/vg1/lv1
-  LV Name                lv1
-  VG Name                vg1
-  LV UUID                ADUPcG-YAuo-5vDC-7FEB-Cas9-4Gt0-hR1kVD
-  LV Write Access        read/write
-  LV Creation host, time localhost.localdomain, 2020-11-18 08:07:29 -0500
-  LV Status              available
-  # open                 0
-  LV Size                4.00 GiB
-  Current LE             1024
-  Segments               2
-  Allocation             inherit
-  Read ahead sectors     auto
-  - currently set to     8192
-  Block device           253:2
-</code></pre>
-
-<h4 id="extending-a-logical-volume">Extending a Logical Volume</h4>
-
-<p><code>lvextend</code> adds space to a logical volume. The space needs to be available in the volume group.</p>
-
-<p>When extending Logical Volumes, you do not need to unmount the partition (however you will need to extend the file system afterwards, or if the filesystems supports, use the &lsquo;-r&rsquo; flag to automatically resize the filesystem).</p>
-
-<h5 id="checking-for-available-space">Checking for available space</h5>
-
-<p>Use <code>vgs</code> to see the available space of the volume group</p>
-
-<pre><code class="language-none"># vgs vg1
-  VG  #PV #LV #SN Attr   VSize  VFree  
-  vg1   3   1   0 wz--n- &lt;8.99g &lt;4.99g
-                           |      |- Available VG space (not allocated to a LV)
-                           |- Total size of VG
-</code></pre>
-
-<p>You can use <code>lvs</code> to confirm that the LV is using the difference of the previous values</p>
-
-<pre><code class="language-none"># lvs vg1
-  LV   VG  Attr       LSize Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
-  lv1  vg1 -wi-a----- 4.00g  
-</code></pre>
-
-<p>Or just use <code>vgdisplay</code> and check the PE sizes</p>
-
-<pre><code class="language-none"># vgdisplay vg1 | grep 'PE /'
-  Alloc PE / Size       1024 / 4.00 GiB
-  Free  PE / Size       1277 / &lt;4.99 GiB
-</code></pre>
-
-<h5 id="extending-the-logical-volume">Extending the Logical Volume</h5>
-
-<p>Extend volume to specified size (k/m/g)</p>
-
-<pre><code class="language-none"># lvextend -L6G /dev/vg1/lv1
-  Size of logical volume vg1/lv1 changed from 5.39 GiB (1381 extents) to 6.00 GiB (1536 extents).
-  Logical volume vg1/lv1 successfully resized.
-</code></pre>
-
-<p>Extend the volume by 1GB</p>
-
-<pre><code class="language-none"># lvextend -L+1G /dev/vg1/lv1
-  Size of logical volume vg1/lv1 changed from 6.00 GiB (1536 extents) to 7.00 GiB (1792 extents).
-  Logical volume vg1/lv1 successfully resized.
-</code></pre>
-
-<p>Extend for the full available space in the VG</p>
-
-<pre><code class="language-none"># lvextend -l +100%FREE /dev/vg1/lv1
-  Size of logical volume vg1/lv1 changed from 7.00 GiB (1792 extents) to &lt;8.99 GiB (2301 extents).
-  Logical volume vg1/lv1 successfully resized.
-</code></pre>
-
-<p><em>Note that <code>lvextend -l 100%FREE /dev/vg1/lv1</code> (without the plus size) will not work</em></p>
-
-<p>Extend to the percentage of the VG (60% or 8.99 = 5.394)</p>
-
-<pre><code class="language-none"># lvextend -l 60%VG /dev/vg1/lv1
-  Size of logical volume vg1/lv1 changed from 4.00 GiB (1024 extents) to 5.39 GiB (1381 extents).
-  Logical volume vg1/lv1 successfully resized.
-</code></pre>
-
-<p>You can also use the &lsquo;PE&rsquo; size</p>
-
-<pre><code class="language-none"># lvextend -l +1740 /dev/RHCSA/pinehead  
-  Size of logical volume RHCSA/pinehead changed from &lt;3.20 GiB (818 extents) to 9.99 GiB (2558 extents).
-  Logical volume RHCSA/pinehead successfully resized.
-</code></pre>
-
-<h4 id="shrinking-a-logical-volume">Shrinking a Logical Volume</h4>
-
-<p>Be careful when reducing an LV&rsquo;s size, because data in the reduced area is lost. Ensure that any file system on the LV is resized before running <code>lvreduce</code> so that the removed extents are not in use by the file system.</p>
-
-<p>You can use two commands to shrink a logical volume:</p>
-
-<ul>
-<li><strong>lvreduce</strong> reduces the size of an LV. The freed logical extents are returned to the VG to be used by other LVs.</li>
-<li><strong>lvresize</strong>  resizes  an  LV  in  the same way as <code>lvextend</code> and <code>lvreduce</code>.</li>
-</ul>
-
-<p>Shrink a logical volume by 2GB</p>
-
-<pre><code class="language-none"># lvresize -L-2G /dev/vg1/lv1
-  WARNING: Reducing active logical volume to &lt;6.99 GiB.
-  THIS MAY DESTROY YOUR DATA (filesystem etc.)
-Do you really want to reduce vg1/lv1? [y/n]: y
-  Size of logical volume vg1/lv1 changed from &lt;8.99 GiB (2301 extents) to &lt;6.99 GiB (1789 extents).
-  Logical volume vg1/lv1 successfully resized.
-</code></pre>
-
-<p>Shrink a logical volume to 30% of the volume group size</p>
-
-<pre><code class="language-none"># lvreduce -l 30%VG  /dev/vg1/lv1
-  WARNING: Reducing active logical volume to &lt;2.70 GiB.
-  THIS MAY DESTROY YOUR DATA (filesystem etc.)
-Do you really want to reduce vg1/lv1? [y/n]: y
-  Size of logical volume vg1/lv1 changed from &lt;6.99 GiB (1789 extents) to &lt;2.70 GiB (691 extents).
-  Logical volume vg1/lv1 successfully resized.
-</code></pre>
-
-<h4 id="deleting-removing-a-logical-volume">Deleting/Removing a Logical Volume</h4>
-
-<p><code>lvremove</code>  removes one or more LVs. For standard LVs, this returns the logical extents that were used by the LV to the VG for use by other LVs.</p>
-
-<pre><code class="language-none"># lvremove /dev/vg1/lv1
-Do you really want to remove active logical volume vg1/lv1? [y/n]: y
-  Logical volume &quot;lv1&quot; successfully removed
-</code></pre>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f11%2f18%2flinux-logical-volume-manager%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=RHCSA%20v8%3a%20Linux%20Logical%20Volume%20Manager&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f11%2f18%2flinux-logical-volume-manager%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f11%2f18%2flinux-logical-volume-manager%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f11%2f18%2flinux-logical-volume-manager%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f11%2f18%2flinux-logical-volume-manager%2f&amp;title=RHCSA%20v8%3a%20Linux%20Logical%20Volume%20Manager" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=RHCSA%20v8%3a%20Linux%20Logical%20Volume%20Manager&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f11%2f18%2flinux-logical-volume-manager%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2020/11/14/rhcsa8-boot-targets-system-targets-and-root-password-reset/" title="RHCSA v8: Boot Targets, Systemd Targets and root Password Reset">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2021/01/23/how-to-convert-standard-partition-to-lvm/" title="How to Convert Standard Partition to Logical Volume">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -2006,6 +1736,12 @@ Do you really want to remove active logical volume vg1/lv1? [y/n]: y
     </a>
 </li>
 
+<li >
+  <a href="https://blog.victormendonca.com//page/14/">
+    14
+    </a>
+</li>
+
 
 <li >
   <a aria-label="Next" href="https://blog.victormendonca.com//page/2/">
@@ -2013,7 +1749,7 @@ Do you really want to remove active logical volume vg1/lv1? [y/n]: y
     </a>
 </li>
 <li >
-  <a aria-label="Last" href="https://blog.victormendonca.com//page/13/">
+  <a aria-label="Last" href="https://blog.victormendonca.com//page/14/">
     <span aria-hidden="true">&raquo;&raquo;</span>
   </a>
 </li>
@@ -2071,6 +1807,10 @@ Do you really want to remove active logical volume vg1/lv1? [y/n]: y
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/">How to Migrate Local Users and Grops</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2023/06/30/undestanting-yum-clean-all-and-stale-repos/">Understanding &#34;yum clean all&#34; and Stale Repos</a>
           </li>
         
@@ -2092,10 +1832,6 @@ Do you really want to remove active logical volume vg1/lv1? [y/n]: y
         
           <li>
           <a href="https://blog.victormendonca.com/2020/11/14/rhcsa8-boot-targets-system-targets-and-root-password-reset/">RHCSA v8: Boot Targets, Systemd Targets and root Password Reset</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2020/11/03/zfs-for-dummies/">ZFS for Dummies</a>
           </li>
         
         </ul>

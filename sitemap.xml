@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/</loc>
+    <lastmod>2023-07-20T16:45:00-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.victormendonca.com/2023/06/30/undestanting-yum-clean-all-and-stale-repos/</loc>
     <lastmod>2023-06-30T15:55:26-04:00</lastmod>
   </url>
@@ -352,7 +357,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/bash/</loc>
-    <lastmod>2022-11-18T00:21:34-05:00</lastmod>
+    <lastmod>2023-07-20T16:45:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -412,7 +417,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/linux/</loc>
-    <lastmod>2023-06-30T15:55:26-04:00</lastmod>
+    <lastmod>2023-07-20T16:45:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -466,7 +471,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/post/</loc>
-    <lastmod>2023-06-30T15:55:26-04:00</lastmod>
+    <lastmod>2023-07-20T16:45:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -531,7 +536,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/</loc>
-    <lastmod>2023-06-30T15:55:26-04:00</lastmod>
+    <lastmod>2023-07-20T16:45:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   

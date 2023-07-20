@@ -127,6 +127,127 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2018/09/18/special-characters-and-symbols-in-bash/">Special Characters and Symbols in Bash</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2018-09-18">18 Sep, 2018</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<h2 id="character-recognition">Character Recognition</h2>
+
+<h4 id="shapecatcher">Shapecatcher</h4>
+
+<p>You can use <a href="http://shapecatcher.com/">Shapecatcher</a> to draw a character and try to recognize it.</p>
+
+<p>Other usefull sites are <a href="http://www.amp-what.com/">&amp;what</a> and <a href="https://unicode-table.com/en/">Unicode® character table</a>.</p>
+
+<h4 id="in-bash">In Bash</h4>
+
+<p>If you can paste the character in Bash, you can dump the character in hex with <code>hexdump</code></p>
+
+<pre><code>$ echo &quot;✰&quot; | hexdump -C
+00000000  e2 9c b0 0a                                       |....|
+00000004
+
+</code></pre>
+
+<p>Use the hex value to recreate the character:</p>
+
+<pre><code>$ echo -e &quot;\xe2\x9c\xb0&quot;
+✰
+</code></pre>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f18%2fspecial-characters-and-symbols-in-bash%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Special%20Characters%20and%20Symbols%20in%20Bash&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f18%2fspecial-characters-and-symbols-in-bash%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f18%2fspecial-characters-and-symbols-in-bash%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f18%2fspecial-characters-and-symbols-in-bash%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f18%2fspecial-characters-and-symbols-in-bash%2f&amp;title=Special%20Characters%20and%20Symbols%20in%20Bash" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Special%20Characters%20and%20Symbols%20in%20Bash&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f18%2fspecial-characters-and-symbols-in-bash%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2018/09/17/how-to-create-an-init-like-script/" title="How to Create an Init Like Script">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2018/09/19/uncomment-multiple-lines-in-vim/" title="Editing Multiple Lines in Vim">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2018/09/17/how-to-create-an-init-like-script/">How to Create an Init Like Script</a>
 </h2>
 
@@ -616,128 +737,6 @@ exit 0
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2018/07/05/how-to-change-config.json-for-docker-mattermost-preview/">How to Change config.json for Docker Mattermost Preview</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2018-07-05">5 Jul, 2018</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/docker" class="label label-primary">Docker</a>
-  
-  <a href="https://blog.victormendonca.com/tags/mattermost" class="label label-primary">Mattermost</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  <p>These instructions show you how to change the <code>config.json</code> file for a <a href="https://hub.docker.com/r/mattermost/mattermost-preview/">Docker Mattermost Preview</a>.</p>
-
-<p>a- As root (or if you enabled non root users to manipulate docker), let&rsquo;s open a shell in the docker container</p>
-
-<pre><code>docker exec -ti mattermost-preview /bin/bash
-</code></pre>
-
-<p>b. Update the APT db on the docker instance and install <code>vim</code> (needed to edit the file)</p>
-
-<pre><code>apt update
-apt install vim
-</code></pre>
-
-<p>c. Change <code>config_docker.json</code> as needed</p>
-
-<pre><code>cd /mm/mattermost/config
-
-vim config_docker.json
-</code></pre>
-
-<p>d. Restart the docker container</p>
-
-<pre><code>docker restart mattermost-preview
-</code></pre>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f05%2fhow-to-change-config.json-for-docker-mattermost-preview%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Change%20config.json%20for%20Docker%20Mattermost%20Preview&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f05%2fhow-to-change-config.json-for-docker-mattermost-preview%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f05%2fhow-to-change-config.json-for-docker-mattermost-preview%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f05%2fhow-to-change-config.json-for-docker-mattermost-preview%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f05%2fhow-to-change-config.json-for-docker-mattermost-preview%2f&amp;title=How%20to%20Change%20config.json%20for%20Docker%20Mattermost%20Preview" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=How%20to%20Change%20config.json%20for%20Docker%20Mattermost%20Preview&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f07%2f05%2fhow-to-change-config.json-for-docker-mattermost-preview%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2018/07/04/how-to-change-forgotten-password-on-wsl-bash-for-windows/" title="How to Change Forgotten Password on WSL (Bash for Windows)">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2018/07/19/how-to-create-a-timer-in-bash/" title="How to Create a Timer in Bash">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -834,6 +833,12 @@ vim config_docker.json
     </a>
 </li>
 
+<li >
+  <a href="https://blog.victormendonca.com//page/14/">
+    14
+    </a>
+</li>
+
 
 <li >
   <a aria-label="Next" href="https://blog.victormendonca.com//page/10/">
@@ -841,7 +846,7 @@ vim config_docker.json
     </a>
 </li>
 <li >
-  <a aria-label="Last" href="https://blog.victormendonca.com//page/13/">
+  <a aria-label="Last" href="https://blog.victormendonca.com//page/14/">
     <span aria-hidden="true">&raquo;&raquo;</span>
   </a>
 </li>
@@ -899,6 +904,10 @@ vim config_docker.json
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/">How to Migrate Local Users and Grops</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2023/06/30/undestanting-yum-clean-all-and-stale-repos/">Understanding &#34;yum clean all&#34; and Stale Repos</a>
           </li>
         
@@ -920,10 +929,6 @@ vim config_docker.json
         
           <li>
           <a href="https://blog.victormendonca.com/2020/11/14/rhcsa8-boot-targets-system-targets-and-root-password-reset/">RHCSA v8: Boot Targets, Systemd Targets and root Password Reset</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2020/11/03/zfs-for-dummies/">ZFS for Dummies</a>
           </li>
         
         </ul>

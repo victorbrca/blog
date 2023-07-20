@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>How to Migrate Local Users and Grops  &middot; Victor&#39;s Blog</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="How to migrate local users and groups from one Linux system to another" />
+
+<meta name="keywords" content="Bash, Linux, ">
+
+
+<meta property="og:title" content="How to Migrate Local Users and Grops  &middot; Victor&#39;s Blog ">
+<meta property="og:site_name" content="Victor&#39;s Blog"/>
+<meta property="og:url" content="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/" />
+<meta property="og:locale" content="en">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content="How to migrate local users and groups from one Linux system to another"/>
+<meta property="og:article:published_time" content="2023-07-20T16:45:00-04:00" />
+<meta property="og:article:modified_time" content="2023-07-20T16:45:00-04:00" />
+
+  
+    
+<meta property="og:article:tag" content="Bash">
+    
+<meta property="og:article:tag" content="Linux">
+    
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@18440926" />
+<meta name="twitter:creator" content="@18440926" />
+<meta name="twitter:title" content="How to Migrate Local Users and Grops" />
+<meta name="twitter:description" content="How to migrate local users and groups from one Linux system to another" />
+<meta name="twitter:url" content="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/" />
+<meta name="twitter:domain" content="https://blog.victormendonca.com/">
+  
+
+  
+
+
+
+<link rel="canonical" href="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
+<link rel="icon" href="https://blog.victormendonca.com/favicon.png">
+<meta name="generator" content="Hugo 0.48" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+
+
+    <link rel="stylesheet" href="https://blog.victormendonca.com/css/bootswatch/default/bootstrap.min.css">
+
+
+<link rel="stylesheet" href="https://blog.victormendonca.com/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://blog.victormendonca.com/css/style.css">
+
+
+<link rel="stylesheet" href="https://blog.victormendonca.com/css/style_custom.css">
+
+
+
+  <link rel="stylesheet" href="https://blog.victormendonca.com/css/highlight/github.css">
+
+
+</head>
+<body class="map[name:default]" data-ng-app="myapp" data-ng-controller="MyController" data-ng-mouseleave="MouseLeave($event)">
+    <header id="main-header">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        
+        <a class="navbar-brand" href="https://blog.victormendonca.com/">
+          Victor&#39;s Blog
+          
+          
+          </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            
+            
+            <li class="">
+
+              <a href="https://blog.victormendonca.com/" >
+                
+                Home
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://blog.victormendonca.com/about/" >
+                
+                About
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://geekit.ca/" >
+                
+                Professional
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://manhattan.victormendonca.com/" >
+                
+                Manhattan Blog
+              </a>
+            </li>
+            
+            
+            
+          </ul>
+        </div>
+        
+      </div>
+    </nav>
+  </header>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <div class="text-center">
+
+    <h1>How to Migrate Local Users and Grops
+</h1>
+
+    <div class="metas">
+<small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2023-07-20">20 Jul, 2023</time>
+</small>
+
+
+  <small>
+    &middot; by Victor Mendonça
+  
+  &middot; Read in about 4 min
+  &middot; (799 words)
+  &middot; 
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Migrate%20Local%20Users%20and%20Grops&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f&amp;title=How%20to%20Migrate%20Local%20Users%20and%20Grops" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20Migrate%20Local%20Users%20and%20Grops&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  </small>
+
+<div class="margin-10">
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+
+
+</div>
+
+<br>
+</div>
+
+  </div>
+</div>
+
+      <div class="content">
+  
+
+<h3 id="introduction">Introduction</h3>
+
+<p>Migrating users from one Linux system to another can be a complex task, but with the right steps and careful planning, it can be accomplished smoothly. In this guide, we will walk you through the process of migrating users, their passwords, groups, and home folders from one Linux system to another. We&rsquo;ll be using bash scripts to automate the backup and restore process, ensuring a seamless transition.</p>
+
+<p>The following items will not be covered by our instructions:</p>
+
+<ul>
+<li>User limits</li>
+<li>Mail</li>
+<li>Group password</li>
+</ul>
+
+<h3 id="step-1-backup-user-information-on-the-source-server">Step 1: Backup User Information on the Source Server</h3>
+
+<p>First, log in to the source Linux system and open a terminal. Use the following command to get a list of all users:</p>
+
+<pre><code class="language-bash">lslogins -o &quot;USER,UID,GECOS,HOMEDIR,SHELL,GROUP,GID,SUPP-GROUPS,SUPP-GIDS&quot;
+</code></pre>
+
+<p>Next, identify the users you want to migrate and add their names to the <code>users_to_backup</code> variable in the provided script:</p>
+
+<pre><code class="language-bash">backup_password_file=&quot;etc-passwd-bak&quot;
+backup_group_file=&quot;etc-group-bak&quot;
+backup_shadow_file=&quot;etc-shadow-bak&quot;
+# Add more users separated by spaces if needed
+users_to_backup=&quot;linus lennart&quot;
+
+for user in $users_to_backup ; do
+  curuser=$user
+  echo -e &quot;\n=&gt; User is $curuser&quot;
+  curid=$(id -u &quot;$curuser&quot;)
+  curgid=$(id -g &quot;$curuser&quot;)
+  cursupgit=$(id -G &quot;$curuser&quot;)
+  echo &quot;User id is $curid&quot;
+  echo &quot;User group id is $curgid&quot;
+  echo &quot;User supplementary groups are $cursupgit&quot;
+  echo &quot;Backing up /etc/passwd for $curuser&quot;
+  grep -E &quot;^${curuser}:.:${curid}&quot; /etc/passwd &gt;&gt; &quot;$backup_password_file&quot;
+
+  echo &quot;Backing up primary group for $curuser&quot;
+  if [ -f &quot;$backup_group_file&quot; ] ; then
+    if grep -q &quot;:${curid}:&quot; &quot;$backup_group_file&quot; ; then
+      echo &quot;Group already backed up&quot;
+    else
+      grep &quot;:${curid}:&quot; /etc/group &gt;&gt; &quot;$backup_group_file&quot;
+    fi
+  else
+    grep &quot;:${curid}:&quot; /etc/group &gt;&gt; &quot;$backup_group_file&quot;
+  fi
+
+  echo &quot;Backing up secondary groups for $curuser&quot;
+  for groupid in $cursupgit ; do
+    if grep -q &quot;:${groupid}:&quot; &quot;$backup_group_file&quot; ; then
+      echo &quot;Group already backed up&quot;
+    else
+      grep &quot;:${groupid}:&quot; /etc/group &gt;&gt; &quot;$backup_group_file&quot;
+    fi
+  done
+
+  echo &quot;Backing up /etc/shadow for $curuser&quot;
+  sudo grep -E &quot;^$curuser&quot; /etc/shadow &gt;&gt; &quot;$backup_shadow_file&quot;
+done
+</code></pre>
+
+<p>Save the script to a file, e.g., <code>user_backup_script.sh</code>, and make it executable:</p>
+
+<pre><code class="language-bash">chmod +x user_backup_script.sh
+</code></pre>
+
+<p>Execute the script as root:</p>
+
+<pre><code class="language-bash">sudo ./user_backup_script.sh
+</code></pre>
+
+<p>The script will back up user information, including passwords and group data, to the specified backup files.</p>
+
+<h3 id="step-2-copy-backup-files-to-the-destination-server">Step 2: Copy Backup Files to the Destination Server</h3>
+
+<p>Next, copy the three backup files (<em>etc-passwd-bak</em>, <em>etc-group-bak</em>, and <em>etc-shadow-bak</em>) from the source server to the destination server using the scp command or any preferred method.</p>
+
+<pre><code class="language-bash"># Example using scp
+scp etc-*-bak user@destination_server:/path/to/backup_files/
+</code></pre>
+
+<h3 id="step-3-restore-users-on-the-destination-server">Step 3: Restore Users on the Destination Server</h3>
+
+<p>Log in to the destination Linux system and open a terminal. Navigate to the directory where the backup files are located and run the provided restore script as root:</p>
+
+<pre><code class="language-bash">backup_password_file=&quot;etc-passwd-bak&quot;
+backup_group_file=&quot;etc-group-bak&quot;
+backup_shadow_file=&quot;etc-shadow-bak&quot;
+
+echo -e &quot;\n=&gt; Backing up the system files&quot;
+for file in /etc/{passwd,group,shadow} ; do
+  cp -v &quot;$file&quot; &quot;${file}_$(date -I)&quot;
+done
+
+echo -e &quot;\n=&gt; Restoring users&quot;
+cat &quot;$backup_password_file&quot; | while read -r line ; do
+  userid=&quot;$(echo &quot;$line&quot; | awk -F&quot;:&quot; '{print $3}')&quot;
+  username=&quot;$(echo &quot;$line&quot; | awk -F&quot;:&quot; '{print $1}')&quot;
+  echo &quot;-&gt; Restoring user $username&quot;
+  if grep -Eq &quot;^${username}:.:${userid}&quot; /etc/passwd ; then
+    echo &quot;  ERROR: User ID already exists. Manual intervention is needed&quot;
+  else
+    echo &quot;$line&quot; &gt;&gt; /etc/passwd
+    if grep -qE &quot;^${username}:&quot; /etc/shadow ; then
+      echo &quot;  ERROR: User password already exists. Manual intervention is needed&quot;
+    else
+      grep -E &quot;^${username}:&quot; &quot;$backup_shadow_file&quot; &gt;&gt; /etc/shadow
+    fi
+  fi
+done
+
+echo -e &quot;\n=&gt; Restoring groups&quot;
+cat &quot;$backup_group_file&quot; | while read -r line ; do
+  groupid=&quot;$(echo &quot;$line&quot; | awk -F&quot;:&quot; '{print $3}')&quot;
+  groupname=&quot;$(echo &quot;$line&quot; | awk -F&quot;:&quot; '{print $1}')&quot;
+  echo &quot;-&gt; Restoring group $groupname&quot;
+  if grep -qE &quot;^${groupname}:.:${groupid}&quot; /etc/group ; then
+    echo &quot;  ERROR: Group already exists. Manual intervention may be needed&quot;
+  else
+    echo &quot;$line&quot; &gt;&gt; /etc/group
+  fi
+done
+</code></pre>
+
+<p>Run the restore script:</p>
+
+<pre><code class="language-bash">sudo ./user_restore_script.sh
+</code></pre>
+
+<p>The script will restore the users and their passwords, taking care to avoid conflicts with existing user IDs. Pay close attention to error messages and take action if needed. If there are any error messages related to system group creation, it might be acceptable as the groups may already exist on the new system.</p>
+
+<h3 id="step-4-copy-home-folders-and-set-permissions">Step 4: Copy Home Folders and Set Permissions</h3>
+
+<p>Finally, to complete the migration, copy the home folders for the desired users from the source server to the destination server using rsync:</p>
+
+<pre><code class="language-bash"># Replace 'user1,user2,user3' with appropriate values
+# Replace 'destination_server' with appropriate values
+rsync -avzh -e ssh /home/{user1,user2,user3} user@destination_server:/home/
+</code></pre>
+
+<p>Ensure that the permissions and ownership are set correctly for the home folder of each user on the destination server:</p>
+
+<pre><code class="language-bash"># Replace user and primary_group with appropriate values
+sudo chown -R user:primary_group /home/user
+</code></pre>
+
+<p><strong>Note:</strong> <em>For SFTP users that use CHROOT, the user&rsquo;s home folder needs to be owned by &lsquo;root&rsquo;</em></p>
+
+<h3 id="conclusion">Conclusion:</h3>
+
+<p>Migrating users from one Linux system to another involves a series of crucial steps, including backup, restoration, and copying of home folders. By using the provided scripts and following this step-by-step guide, you can ensure a smooth and successful user migration process. Always exercise caution during the migration and verify the results to ensure everything is functioning as expected on the destination system.</p>
+
+<p><strong>Additional reading:</strong></p>
+
+<ul>
+<li><a href="https://access.redhat.com/solutions/179753">https://access.redhat.com/solutions/179753</a></li>
+</ul>
+
+</div>
+
+
+      <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Migrate%20Local%20Users%20and%20Grops&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f&amp;title=How%20to%20Migrate%20Local%20Users%20and%20Grops" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20Migrate%20Local%20Users%20and%20Grops&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2023/06/30/undestanting-yum-clean-all-and-stale-repos/" title="Understanding &#34;yum clean all&#34; and Stale Repos">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+    </div>
+    
+      <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+        <div>
+  
+
+   
+    <div class="section">
+      <header><div class="title"></div></header>
+      <div class="content">
+        <img style="float: center; padding-right: 5px;" src="https://blog.victormendonca.com/img/avatar.jpg" hspace="20" width="240"></img>
+        <br/>
+        <div class="social-icons" style="display:inline-block; text-align: center; width:100%;">
+        <a href="https://github.com/victorbrca" target="_blank"><i class="fa fa-github fa-2x" style="padding-right: 5px; padding-left: 5px" aria-hidden="true"></i></a>
+        <a href="https://twitter.com/victorbrca" target="_blank"><i class="fa fa-twitter fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <a href="http://www.linkedin.com/in/victormendonca" target="_blank"><i class="fa fa-linkedin-square fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <a href="https://www.facebook.com/victormendonca" target="_blank"><i class="fa fa-facebook-official fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <div>
+        <br/>
+      </div>
+    </div>
+
+    
+      
+      
+      <div class="section taxonomies">
+        <header><div class="title"><b>tags</b></div></header>
+
+        <div class="content1">
+          <ul>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/aws">aws</a></li><li><a href="https://blog.victormendonca.com/tags/encryption">encryption</a></li>
+          </ul>
+        </div>
+      </div>
+      
+    
+      
+      
+    
+
+    <br />
+
+    <div class="section">
+      <header><div class="title"><b>Latest Posts</b></div></header>
+      <div class="content">
+        <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/">How to Migrate Local Users and Grops</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2023/06/30/undestanting-yum-clean-all-and-stale-repos/">Understanding &#34;yum clean all&#34; and Stale Repos</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2022/11/18/linux-find-command/">Linux find Command</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2021/02/28/getting-started-with-ansible-molecule/">Getting Started with Ansible Molecule</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2021/01/23/how-to-convert-standard-partition-to-lvm/">How to Convert Standard Partition to Logical Volume</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2020/11/18/linux-logical-volume-manager/">RHCSA v8: Linux Logical Volume Manager</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2020/11/14/rhcsa8-boot-targets-system-targets-and-root-password-reset/">RHCSA v8: Boot Targets, Systemd Targets and root Password Reset</a>
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+
+    <br />
+
+    
+    <div class="section">
+    
+      
+      <div class="content" align="center" >
+        <a class="twitter-timeline" data-width="240" data-height="450" href="https://twitter.com/victorbrca">Tweets by victorbrca</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+    </div>
+
+</div>
+
+      </div>
+    
+  </div>
+</div>
+    
+<footer class="footer hidden-print">
+  <div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+           <div class="pull-left">
+  <a class="toplink" href="javascript:" id="return-to-top">back to top</a>
+</div>
+<div class="pull-right">
+
+</div>
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+              
+    
+<div class="container footline">
+    <small>
+  code with <i class='fa fa-linux'></i>
+
+</small>
+</div>
+
+
+    
+<div class="container copyright">
+    <small>
+  &copy; 2018 Copyright Victor Mendonça
+
+  </small>
+</div>
+
+
+
+        </div>
+    </div>
+  </div>
+</footer>
+
+    
+
+<script src="https://blog.victormendonca.com/js/jquery.min.js"></script>
+<script src="https://blog.victormendonca.com/js/bootstrap.min.js"></script>
+
+
+<script src="https://blog.victormendonca.com/js/highlight.pack.js"></script>
+<script src="https://blog.victormendonca.com/js/site.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script>
+  var _gaq=[['_setAccount','UA-113222099-1'],['_trackPageview']];
+  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+  g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+  s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+
+<script>
+var ENABLE_POPOVER =  false , 
+EXPIRE_COOKIE =  5 , 
+SHOW_MODAL_TIMEOUT =  10000 , 
+MOUSE_LEAVE =  true , 
+MODAL_SIZE = "", 
+POST_URL = "https://zapier.com/hooks/catch/1227563/", 
+SIGNUP_HEADER = "Join Our Newsletter",
+HEADER_IMAGE = "//placehold.it/1000x600",
+IMG_DESCRIPTION = "Placeholder image for this popover modal optin form",
+SIGNUP_TEXT = "Signup today for free and be the first to get notified on new updates.",
+INPUT_PLACEHOLDER = "Enter your email",
+SUBMIT_BUTTON = "Subscribe",
+SUCCESS_MESSAGE = "Thanks for your subscription!",
+ERROR_MESSAGE = "Submitting form failed!",
+OPTIN =  true ,
+COOKIE_NAME = "mycookie1",
+CONTENTLANGUAGE = ""; 
+</script>
+
+
+
+
+
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/config/TeX-AMS-MML_HTMLorMML.js"></script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    for(var all in MathJax.Hub.getAllJax()) {
+        all.SourceElement().parentNode.className += ' has-jax';
+
+    }
+});
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+

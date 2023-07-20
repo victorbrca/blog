@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Fri, 30 Jun 2023 15:55:26 -0400</lastBuildDate>
+    <lastBuildDate>Thu, 20 Jul 2023 16:45:00 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How to Migrate Local Users and Grops</title>
+      <link>https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/</link>
+      <pubDate>Thu, 20 Jul 2023 16:45:00 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/</guid>
+      <description>Introduction Migrating users from one Linux system to another can be a complex task, but with the right steps and careful planning, it can be accomplished smoothly. In this guide, we will walk you through the process of migrating users, their passwords, groups, and home folders from one Linux system to another. We&amp;rsquo;ll be using bash scripts to automate the backup and restore process, ensuring a seamless transition.
+The following items will not be covered by our instructions:</description>
+    </item>
     
     <item>
       <title>Understanding &#34;yum clean all&#34; and Stale Repos</title>
