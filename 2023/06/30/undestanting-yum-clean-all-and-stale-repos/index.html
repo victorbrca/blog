@@ -160,8 +160,8 @@
   <small>
     &middot; by Victor Mendonça
   
-  &middot; Read in about 3 min
-  &middot; (613 words)
+  &middot; Read in about 4 min
+  &middot; (760 words)
   &middot; 
 <span class="share-box">Share this on:
     <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2023%2f06%2f30%2fundestanting-yum-clean-all-and-stale-repos%2f" onclick="window.open(this.href, 'mywin',
@@ -287,6 +287,51 @@ Disk usage under /var/cache/yum/*/* after cleanup:
 <p>After performing the cleanup, you can verify the reduced cache usage. Use the <code>df</code> command again to check the cache size:</p>
 
 <pre><code class="language-bash">$ df -hT /var/cache/yum/
+</code></pre>
+
+<h3 id="doing-it-all-with-ansible">Doing it all with Ansible</h3>
+
+<p>And if you want to, you can use the Ansible playbook below to automate the YUM cache purge and re-creation:</p>
+
+<pre><code class="language-yaml">---
+- name: Delete yum cache and run yum check-update
+  # Add your hosts accordingly below
+  hosts: webserver
+  become: yes
+  tasks:
+
+    - name: Check /var usage with df command
+      shell: |
+        df -hT /var | awk '{print $6}' | tail -1 | tr -d '%'
+      register: var_usage_output
+
+    - name: Display /var usage information
+      debug:
+        var: var_usage_output.stdout
+
+    ##-- Block starts --------------------------------------------------------------
+    - when: var_usage_output.stdout|int &gt; 55
+      block:
+
+      - name: Delete yum cache directory
+        file:
+          path: /var/cache/yum
+          state: absent
+
+      - name: Update YUM cache
+        yum:
+          name: ''
+          update_cache: yes
+
+      - name: Check /var usage with df command
+        shell: |
+          df -hT /var | awk '{print $6}' | tail -1
+        register: var_usage_after_cleanup_output
+
+      - name: Display /var usage information
+        debug:
+          var: var_usage_after_cleanup_output.stdout
+    ##-- block ends ----------------------------------------------------------------
 </code></pre>
 
 <h3 id="conclusion">Conclusion</h3>
