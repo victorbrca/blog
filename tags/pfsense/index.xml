@@ -19,7 +19,7 @@
       
       <guid>https://blog.victormendonca.com/2020/10/29/how-to-collect-ups-data-on-pfsense-with-telegraf/</guid>
       <description>If you are running Grafana at home to monitor your devices, and you also have pfSense running off a UPS (if you don&amp;rsquo;t, check out my previous article on How to Setup a USB UPS on pfSense), you may want to pull UPS related data from pfSense.
-My Grafana pfSense config Instructions a. Start by logging into your pfSense, go into &amp;laquo;System =&amp;gt; Package Manager = Available Packages&amp;raquo; and install Telegraf</description>
+My Grafana pfSense config Instructions a. Start by logging into your pfSense, go into &amp;ldquo;System =&amp;gt; Package Manager = Available Packages&amp;rdquo; and install Telegraf</description>
     </item>
     
     <item>
@@ -28,11 +28,11 @@ My Grafana pfSense config Instructions a. Start by logging into your pfSense, go
       <pubDate>Wed, 28 Oct 2020 16:16:10 -0400</pubDate>
       
       <guid>https://blog.victormendonca.com/2020/10/28/how-to-setup-ups-on-pfsense/</guid>
-      <description>So you need to configure pfSense with an UPS!? Well, good thing this post is called &amp;laquo;How to Setup UPS on pfSense&amp;raquo;.
+      <description>So you need to configure pfSense with an UPS!? Well, good thing this post is called &amp;ldquo;How to Setup UPS on pfSense&amp;rdquo;.
 a. Start by plugging the USB cable to your pfSense and your UPS
-b. Now log in to the pfSense UI and go into &amp;laquo;System =&amp;gt; Package Manager&amp;raquo;
+b. Now log in to the pfSense UI and go into &amp;ldquo;System =&amp;gt; Package Manager&amp;rdquo;
 b. Search for &amp;lsquo;nut&amp;rsquo; and click on &amp;lsquo;Install&amp;rsquo;
-c. Go to &amp;laquo;Services =&amp;gt; UPS =&amp;gt; UPS Settings&amp;raquo;, select &amp;laquo;Local USB&amp;raquo;, give the UPS a name and click on &amp;laquo;Save&amp;raquo;</description>
+c. Go to &amp;ldquo;Services =&amp;gt; UPS =&amp;gt; UPS Settings&amp;rdquo;, select &amp;ldquo;Local USB&amp;rdquo;, give the UPS a name and click on &amp;ldquo;Save&amp;rdquo;</description>
     </item>
     
   </channel>

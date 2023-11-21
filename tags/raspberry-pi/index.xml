@@ -18,7 +18,7 @@
       <pubDate>Tue, 13 Oct 2020 14:45:00 -0400</pubDate>
       
       <guid>https://blog.victormendonca.com/2020/10/13/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/</guid>
-      <description>Following the steps of an older post (Installing Kuman 3), I find myself trying to configure the same Waveshare 3.5&amp;raquo; LCD touch screen on my Raspberry Pi 3B, but now with Ubuntu 20.04 64.bit.
+      <description>Following the steps of an older post (Installing Kuman 3), I find myself trying to configure the same Waveshare 3.5&amp;rdquo; LCD touch screen on my Raspberry Pi 3B, but now with Ubuntu 20.04 64.bit.
 As usual the LCDs from Waveshare are not that easy to configure. While researching online I could not find any working instructions on how to configure the screen with Ubuntu 20.04. I found a few Git repos (Wavesahre and LCD Wiki), but they all failed to get me with a working config.</description>
     </item>
     

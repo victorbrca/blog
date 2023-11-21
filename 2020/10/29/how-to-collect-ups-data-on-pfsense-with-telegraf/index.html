@@ -213,7 +213,7 @@
 
 <h2 id="instructions">Instructions</h2>
 
-<p>a. Start by logging into your pfSense, go into &laquo;System =&gt; Package Manager = Available Packages&raquo; and install Telegraf</p>
+<p>a. Start by logging into your pfSense, go into &ldquo;System =&gt; Package Manager = Available Packages&rdquo; and install Telegraf</p>
 
 <p>b. Now login to pfSense via ssh, and create a file in <code>/usr/local/bin/getUpsData.py</code> with the content below</p>
 
@@ -251,9 +251,9 @@ print(output)
 <pre><code class="language-none">ups,ups.name=BackUPSES750 battery.charge=100,battery.runtime=18405,ups.status=&quot;OL&quot;
 </code></pre>
 
-<p>c. Go back to pfSense UI and go into &laquo;Services =&gt; Telegraf&raquo;</p>
+<p>c. Go back to pfSense UI and go into &ldquo;Services =&gt; Telegraf&rdquo;</p>
 
-<p>d. Configure Telegraf as your usually would, and under &laquo;Additional configuration for Telegraf&raquo; add the configuration below:</p>
+<p>d. Configure Telegraf as your usually would, and under &ldquo;Additional configuration for Telegraf&rdquo; add the configuration below:</p>
 
 <pre><code class="language-none">[[inputs.exec]]
   commands = [&quot;python2.7 /usr/local/etc/getUpsData.py&quot;]
@@ -382,6 +382,10 @@ print(output)
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/">Testing New Hard Drives</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/">How to Migrate Local Users and Grops</a>
           </li>
         
@@ -403,10 +407,6 @@ print(output)
         
           <li>
           <a href="https://blog.victormendonca.com/2020/11/18/linux-logical-volume-manager/">RHCSA v8: Linux Logical Volume Manager</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2020/11/14/rhcsa8-boot-targets-system-targets-and-root-password-reset/">RHCSA v8: Boot Targets, Systemd Targets and root Password Reset</a>
           </li>
         
         </ul>

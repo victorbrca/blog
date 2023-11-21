@@ -253,7 +253,7 @@ local/virtualbox-host-modules-arch 6.1.6-1
 
 <p><img src="https://blog.victormendonca.com/img/how-to-install-macos-catalina-in-virtual-box/6.create.machine.png" alt="" /></p>
 
-<p>Edit the machine, go into &laquo;System =&gt; Motherboard&raquo; and disable floppy boot and change the chipset to <code>PIIX3</code></p>
+<p>Edit the machine, go into &ldquo;System =&gt; Motherboard&rdquo; and disable floppy boot and change the chipset to <code>PIIX3</code></p>
 
 <p><img src="https://blog.victormendonca.com/img/how-to-install-macos-catalina-in-virtual-box/7.system.settings.png" alt="" /></p>
 
@@ -261,7 +261,7 @@ local/virtualbox-host-modules-arch 6.1.6-1
 
 <p><img src="https://blog.victormendonca.com/img/how-to-install-macos-catalina-in-virtual-box/8.system.settings.png" alt="" /></p>
 
-<p>In &laquo;Display =&gt; Screen&raquo; increase the video memory to 128MB and enable 3D acceleration</p>
+<p>In &ldquo;Display =&gt; Screen&rdquo; increase the video memory to 128MB and enable 3D acceleration</p>
 
 <p><img src="https://blog.victormendonca.com/img/how-to-install-macos-catalina-in-virtual-box/9.video.settings.png" alt="" /></p>
 
@@ -279,7 +279,7 @@ local/virtualbox-host-modules-arch 6.1.6-1
 
 <p>Now we need to run a few <code>vboxmanage</code> commands for additional settings. Either run the lines with <code>vboxmanage</code> from the script below (add your virtual machine name under <code>$vm_name</code>), or save the full script and run it.</p>
 
-<p><em><strong>Note:</strong> the default resolution is set to &laquo;1280x1024&raquo;. You can change it in the last line of the update code. Make sure to keep it to “640x480, 800x600, 1280x1024, 1440x900, 1900x1200“</em></p>
+<p><em><strong>Note:</strong> the default resolution is set to &ldquo;1280x1024&rdquo;. You can change it in the last line of the update code. Make sure to keep it to “640x480, 800x600, 1280x1024, 1440x900, 1900x1200“</em></p>
 
 <pre><code class="language-bash">#!/bin/bash
 
@@ -356,7 +356,7 @@ vboxmanage setextradata &quot;$vm_name&quot; &quot;VBoxInternal2/EfiGraphicsReso
 sudo reboot
 </code></pre>
 
-<p>Once it has rebooted into recovery mode, on the top click on &laquo;Utilities =&gt; Termminal&raquo;</p>
+<p>Once it has rebooted into recovery mode, on the top click on &ldquo;Utilities =&gt; Termminal&rdquo;</p>
 
 <p><img src="https://blog.victormendonca.com/img/how-to-install-macos-catalina-in-virtual-box/recovery_open_terminal.png" alt="" /></p>
 
@@ -497,6 +497,10 @@ reboot
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/">Testing New Hard Drives</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/">How to Migrate Local Users and Grops</a>
           </li>
         
@@ -518,10 +522,6 @@ reboot
         
           <li>
           <a href="https://blog.victormendonca.com/2020/11/18/linux-logical-volume-manager/">RHCSA v8: Linux Logical Volume Manager</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2020/11/14/rhcsa8-boot-targets-system-targets-and-root-password-reset/">RHCSA v8: Boot Targets, Systemd Targets and root Password Reset</a>
           </li>
         
         </ul>

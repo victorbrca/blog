@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Thu, 20 Jul 2023 16:45:00 -0400</lastBuildDate>
+    <lastBuildDate>Tue, 21 Nov 2023 14:21:40 -0500</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Testing New Hard Drives</title>
+      <link>https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/</link>
+      <pubDate>Tue, 21 Nov 2023 14:21:40 -0500</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/</guid>
+      <description>So you got a spanking new hard drive for your NAS and you are ready to install it&amp;hellip; but wait! What if the drive is bad?
+This is not something that most people would think of, but that shiny new drive could already have come with defects (a.k.a extra features) from the factory. Or maybe it was part of a fun game of &amp;ldquo;throw the client&amp;rsquo;s package&amp;rdquo; that some delivery man like to play (as my preferred social media likes to show me).</description>
+    </item>
     
     <item>
       <title>How to Migrate Local Users and Grops</title>
@@ -108,7 +118,7 @@ This was a great opportunity for me to learn more about ZFS (because I new &amp;
       
       <guid>https://blog.victormendonca.com/2020/10/29/how-to-collect-ups-data-on-pfsense-with-telegraf/</guid>
       <description>If you are running Grafana at home to monitor your devices, and you also have pfSense running off a UPS (if you don&amp;rsquo;t, check out my previous article on How to Setup a USB UPS on pfSense), you may want to pull UPS related data from pfSense.
-My Grafana pfSense config Instructions a. Start by logging into your pfSense, go into &amp;laquo;System =&amp;gt; Package Manager = Available Packages&amp;raquo; and install Telegraf</description>
+My Grafana pfSense config Instructions a. Start by logging into your pfSense, go into &amp;ldquo;System =&amp;gt; Package Manager = Available Packages&amp;rdquo; and install Telegraf</description>
     </item>
     
     <item>
@@ -117,11 +127,11 @@ My Grafana pfSense config Instructions a. Start by logging into your pfSense, go
       <pubDate>Wed, 28 Oct 2020 16:16:10 -0400</pubDate>
       
       <guid>https://blog.victormendonca.com/2020/10/28/how-to-setup-ups-on-pfsense/</guid>
-      <description>So you need to configure pfSense with an UPS!? Well, good thing this post is called &amp;laquo;How to Setup UPS on pfSense&amp;raquo;.
+      <description>So you need to configure pfSense with an UPS!? Well, good thing this post is called &amp;ldquo;How to Setup UPS on pfSense&amp;rdquo;.
 a. Start by plugging the USB cable to your pfSense and your UPS
-b. Now log in to the pfSense UI and go into &amp;laquo;System =&amp;gt; Package Manager&amp;raquo;
+b. Now log in to the pfSense UI and go into &amp;ldquo;System =&amp;gt; Package Manager&amp;rdquo;
 b. Search for &amp;lsquo;nut&amp;rsquo; and click on &amp;lsquo;Install&amp;rsquo;
-c. Go to &amp;laquo;Services =&amp;gt; UPS =&amp;gt; UPS Settings&amp;raquo;, select &amp;laquo;Local USB&amp;raquo;, give the UPS a name and click on &amp;laquo;Save&amp;raquo;</description>
+c. Go to &amp;ldquo;Services =&amp;gt; UPS =&amp;gt; UPS Settings&amp;rdquo;, select &amp;ldquo;Local USB&amp;rdquo;, give the UPS a name and click on &amp;ldquo;Save&amp;rdquo;</description>
     </item>
     
     <item>
@@ -166,7 +176,7 @@ c. Select the USB drive and right click to delete the existing partition
       <pubDate>Tue, 13 Oct 2020 14:45:00 -0400</pubDate>
       
       <guid>https://blog.victormendonca.com/2020/10/13/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/</guid>
-      <description>Following the steps of an older post (Installing Kuman 3), I find myself trying to configure the same Waveshare 3.5&amp;raquo; LCD touch screen on my Raspberry Pi 3B, but now with Ubuntu 20.04 64.bit.
+      <description>Following the steps of an older post (Installing Kuman 3), I find myself trying to configure the same Waveshare 3.5&amp;rdquo; LCD touch screen on my Raspberry Pi 3B, but now with Ubuntu 20.04 64.bit.
 As usual the LCDs from Waveshare are not that easy to configure. While researching online I could not find any working instructions on how to configure the screen with Ubuntu 20.04. I found a few Git repos (Wavesahre and LCD Wiki), but they all failed to get me with a working config.</description>
     </item>
     
@@ -371,7 +381,7 @@ Left Side
       
       <guid>https://blog.victormendonca.com/2019/01/15/count-lines-of-codes-with-cloc/</guid>
       <description>Have you ever had the nead to count the lines of code in a project or a folder? If you did, or want to, cloc is a neat utility that can help with just that.
-As per it&amp;rsquo;s description on the GitHub page, &amp;laquo;cloc counts blank lines, comment lines, and physical lines of source code in many programming languages&amp;raquo;. It displays a summary of file types and counted files, and then it breaks down a list of lines of code per language.</description>
+As per it&amp;rsquo;s description on the GitHub page, &amp;ldquo;cloc counts blank lines, comment lines, and physical lines of source code in many programming languages&amp;rdquo;. It displays a summary of file types and counted files, and then it breaks down a list of lines of code per language.</description>
     </item>
     
     <item>
@@ -404,7 +414,7 @@ aur/vim-plug 0.10.0-1 [installed] (19) (0.05) A vim plugin manager  b. Configure
       <pubDate>Thu, 18 Oct 2018 12:10:00 -0400</pubDate>
       
       <guid>https://blog.victormendonca.com/2018/10/18/using-latte-as-a-dock-in-kde/</guid>
-      <description>Latte is a great &amp;laquo;newish&amp;raquo; dock for KDE that can be used as launching/task dock, or even completely replace your plasma panels. The dock is fast stable with a good &amp;laquo;feel&amp;raquo;, and it fully supports plasma widgets.
+      <description>Latte is a great &amp;ldquo;newish&amp;rdquo; dock for KDE that can be used as launching/task dock, or even completely replace your plasma panels. The dock is fast stable with a good &amp;ldquo;feel&amp;rdquo;, and it fully supports plasma widgets.
 I myself do not like the Apple like task docks. I prefer using docks for app launching and let my panels do the task management. I was looking for a fast dock for my Arch VM at work, and Latte was one of the best options.</description>
     </item>
     
@@ -482,7 +492,7 @@ The prompt displays the following information:
       <pubDate>Mon, 20 Aug 2018 12:54:35 -0400</pubDate>
       
       <guid>https://blog.victormendonca.com/2018/08/20/kde-win7-volume-mixer/</guid>
-      <description>It&amp;rsquo;s not often that we see Linux using something inspired by Microsoft, and this is one of those cases. If you are running KDE as your default DE, you should definitely take a look at &amp;laquo;Win7 Volume Mixer&amp;raquo; as an alternative to the default volume mixer. It adds a great visual and a more user friendly interface.
+      <description>It&amp;rsquo;s not often that we see Linux using something inspired by Microsoft, and this is one of those cases. If you are running KDE as your default DE, you should definitely take a look at &amp;ldquo;Win7 Volume Mixer&amp;rdquo; as an alternative to the default volume mixer. It adds a great visual and a more user friendly interface.
 Here&amp;rsquo;s a quick visual comparison:
 Default Mixer
 Win7 Volume Mixer</description>
@@ -494,7 +504,7 @@ Win7 Volume Mixer</description>
       <pubDate>Thu, 19 Jul 2018 09:45:45 -0400</pubDate>
       
       <guid>https://blog.victormendonca.com/2018/07/19/how-to-create-a-timer-in-bash/</guid>
-      <description>Following my previous post on &amp;laquo;How to Create a Prompt With Timeout in Bash &amp;raquo;, we will now see how to create a timer (countdown) in Bash using the built-in $SECONDS variable.
+      <description>Following my previous post on &amp;ldquo;How to Create a Prompt With Timeout in Bash &amp;rdquo;, we will now see how to create a timer (countdown) in Bash using the built-in $SECONDS variable.
 The $SECONDS variable holds in the number of seconds the script has been running. So it can easily be used to create a timer inside your script in Bash.
 $ bash -c &#39;while true ; do echo -en &amp;quot;\r${SECONDS}s elapsed&amp;quot; ; sleep 1 ; done&#39; 203s elapsed  </description>
     </item>
@@ -586,7 +596,7 @@ nmap --script rtsp-url-brute -p 554 192.168.1.15 Starting Nmap 7.60 ( https://nm
       <guid>https://blog.victormendonca.com/2017/10/11/how-to-create-a-quick-web-server/</guid>
       <description>Have you ever had the need to create a web server to perform a test? Well, here are a few quick options on how to do this.
 Got Netcat? If you have Netcat on the server (which is pretty easy to get), then you can do this.
-Example 1: Display the date and the text &amp;laquo;It works&amp;raquo;
+Example 1: Display the date and the text &amp;ldquo;It works&amp;rdquo;
 nc -kl 10001 -c &#39;echo -e &amp;quot;HTTPS/1.1 200 OK\r\n\r\n$(date)\r\n\r\nIt works&amp;quot;&#39;  Example 2: Display an index.</description>
     </item>
     
@@ -713,9 +723,9 @@ For example, I like to use Bash&amp;rsquo;s color to display failure or success 
       <pubDate>Wed, 02 Nov 2016 17:52:10 -0400</pubDate>
       
       <guid>https://blog.victormendonca.com/2016/11/02/how-to-record-and-share-a-terminal-session/</guid>
-      <description>A while ago I had shared instructions on &amp;laquo;How to Share a Terminal Window Online&amp;raquo;. This is great for live support.
+      <description>A while ago I had shared instructions on &amp;ldquo;How to Share a Terminal Window Online&amp;rdquo;. This is great for live support.
 Today I&amp;rsquo;m sharing instructions on how to record your teminal session, and not only share it, but also allow users to copy and paste text from the playback video.
-The installation could not be easier. And to show how great this utility is, I&amp;rsquo;m showing the instructions using a &amp;laquo;video&amp;raquo; recorderd with &amp;laquo;showterm&amp;raquo;.</description>
+The installation could not be easier. And to show how great this utility is, I&amp;rsquo;m showing the instructions using a &amp;ldquo;video&amp;rdquo; recorderd with &amp;ldquo;showterm&amp;rdquo;.</description>
     </item>
     
     <item>
@@ -734,7 +744,7 @@ _myCountdownFunction () { echo -e &amp;quot;Hit \&amp;quot;Ctrl+c\&amp;quot; to 
       <pubDate>Fri, 18 Dec 2015 18:10:57 -0400</pubDate>
       
       <guid>https://blog.victormendonca.com/2015/12/18/bash-scripting---best-practices/</guid>
-      <description>Bash Scripting - Best Practices 1 - Readability 1.1 - Indentation There are 3 commonly used indentation practices for Bash (I prefer the first method, however all 3 are &amp;laquo;accepted&amp;raquo;):
+      <description>Bash Scripting - Best Practices 1 - Readability 1.1 - Indentation There are 3 commonly used indentation practices for Bash (I prefer the first method, however all 3 are &amp;ldquo;accepted&amp;rdquo;):
  2 spaces 4 spaces tabs (usually 8 spaces)
   All examples will be shown using the first indentation method, however for reference here&amp;rsquo;s a comparison between all 3.
 Example:

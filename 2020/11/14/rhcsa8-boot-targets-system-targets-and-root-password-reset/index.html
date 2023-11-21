@@ -286,9 +286,9 @@ N 5
 <p><em>From <code>runlevel</code> man page</em></p>
 
 <blockquote>
-<p>&laquo;Runlevels&raquo; are an obsolete way to start and stop groups of services used in SysV init. systemd
+<p>&ldquo;Runlevels&rdquo; are an obsolete way to start and stop groups of services used in SysV init. systemd
  provides a compatibility layer that maps runlevels to targets, and associated binaries like
- runlevel. Nevertheless, only one runlevel can be &laquo;active&raquo; at a given time, while systemd can
+ runlevel. Nevertheless, only one runlevel can be &ldquo;active&rdquo; at a given time, while systemd can
  activate multiple targets concurrently, so the mapping to runlevels is confusing and only
  approximate. Runlevels should not be used in new code, and are mostly useful as a shorthand way
  to refer the matching systemd targets in kernel boot parameters.</p>
@@ -502,7 +502,7 @@ or
 
 <h3 id="method-1-fixing-selinux-context-before-reboot">Method 1: Fixing SELinux context before reboot</h3>
 
-<p>This is not the &laquo;official&raquo; method, but it&rsquo;s the one I like the most. It saves a bit of time from having to relabel the whole system for SELinux context.</p>
+<p>This is not the &ldquo;official&rdquo; method, but it&rsquo;s the one I like the most. It saves a bit of time from having to relabel the whole system for SELinux context.</p>
 
 <p>a. Boot into <code>rd.break</code> mode</p>
 
@@ -812,6 +812,10 @@ or
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/">Testing New Hard Drives</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/">How to Migrate Local Users and Grops</a>
           </li>
         
@@ -833,10 +837,6 @@ or
         
           <li>
           <a href="https://blog.victormendonca.com/2020/11/18/linux-logical-volume-manager/">RHCSA v8: Linux Logical Volume Manager</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2020/11/14/rhcsa8-boot-targets-system-targets-and-root-password-reset/">RHCSA v8: Boot Targets, Systemd Targets and root Password Reset</a>
           </li>
         
         </ul>

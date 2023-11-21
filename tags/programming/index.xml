@@ -19,7 +19,7 @@
       
       <guid>https://blog.victormendonca.com/2019/01/15/count-lines-of-codes-with-cloc/</guid>
       <description>Have you ever had the nead to count the lines of code in a project or a folder? If you did, or want to, cloc is a neat utility that can help with just that.
-As per it&amp;rsquo;s description on the GitHub page, &amp;laquo;cloc counts blank lines, comment lines, and physical lines of source code in many programming languages&amp;raquo;. It displays a summary of file types and counted files, and then it breaks down a list of lines of code per language.</description>
+As per it&amp;rsquo;s description on the GitHub page, &amp;ldquo;cloc counts blank lines, comment lines, and physical lines of source code in many programming languages&amp;rdquo;. It displays a summary of file types and counted files, and then it breaks down a list of lines of code per language.</description>
     </item>
     
   </channel>

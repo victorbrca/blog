@@ -127,6 +127,290 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2020/03/15/rhcsa-v8-work-with-package-module-streams/">RHCSA v8: Work with Package Module Streams</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2020-03-15">15 Mar, 2020</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/redhat" class="label label-primary">RedHat</a>
+  
+  <a href="https://blog.victormendonca.com/tags/rhcsa" class="label label-primary">RHCSA</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<h4 id="disclaimer">Disclaimer</h4>
+
+<p>These are my study notes for the RHCSA exam on YUM modules. There&rsquo;s most likely more information than what&rsquo;s needed for the exam, and I cannot guarantee that all information is correct.</p>
+
+<h2 id="definition">Definition</h2>
+
+<p>RHEL 8 content is distributed through two main repositories: BaseOS and AppStream.</p>
+
+<h4 id="baseos"><strong>BaseOS</strong></h4>
+
+<p>Content in the BaseOS repository is intended to provide the core set of the underlying OS functionality that provides the foundation for all installations. This content is available in the RPM format and is subject to support terms similar to those in previous releases of Red Hat Enterprise Linux.</p>
+
+<h4 id="appstream"><strong>AppStream</strong></h4>
+
+<p>Content in the AppStream repository includes additional user-space applications, runtime languages, and databases in support of the varied workloads and use cases. Content in AppStream is available in one of two formats - the familiar RPM format and an extension to the RPM format called modules.</p>
+
+<p>Components made available as Application Streams can be packaged as modules or RPM packages and are delivered through the AppStream repository in Red Hat Enterprise Linux 8. Each AppStream component has a given life cycle.</p>
+
+<h3 id="modules">Modules</h3>
+
+<p>Modules allow you to install a specific version and/or type of an application in your system. For example, for &lsquo;postgresql&rsquo; you can choose to install from multiple versions (stream), and client or server type (profile).</p>
+
+<p><img src="https://blog.victormendonca.com/img/rhsa-v8-work-with-package-module-streams/postgresql.png" alt="" /></p>
+
+<pre><code class="language-nothing"># yum module list postgresql
+
+Last metadata expiration check: 0:20:44 ago on Sat 14 Mar 2020 08:59:58 PM UTC.
+CentOS-8 - AppStream
+Name                     Stream              Profiles                        Summary
+postgresql               9.6           client, server [d]              PostgreSQL server and client module
+postgresql               10 [d]        client, server [d]              PostgreSQL server and client module
+postgresql               12            client, server                  PostgreSQL server and client module
+
+Hint: [d]efault, [e]nabled, [x]disabled, [i]nstalled
+</code></pre>
+
+<p>For httpd on Centos8, currently only one stream (version) is available, and profiles are the package type (common, minimal, development)</p>
+
+<p><img src="https://blog.victormendonca.com/img/rhsa-v8-work-with-package-module-streams/httpd.png" alt="" /></p>
+
+<pre><code class="language-nothing"># yum module list httpd
+
+Last metadata expiration check: 0:21:46 ago on Sat 14 Mar 2020 08:59:58 PM UTC.
+CentOS-8 - AppStream
+Name                  Stream               Profiles                              Summary
+httpd                 2.4 [d][e]           common [d], devel, minimal            Apache HTTP Server
+
+Hint: [d]efault, [e]nabled, [x]disabled, [i]nstalled
+</code></pre>
+
+<h2 id="working-with-modules">Working with Modules</h2>
+
+<h3 id="getting-information-on-modules">Getting Information on Modules</h3>
+
+<p>Listing all modules</p>
+
+<pre><code># yum module list
+</code></pre>
+
+<p>Listing module summary for one module with <code>yum module list [module]</code></p>
+
+<pre><code class="language-nothing"># yum module list httpd
+
+Last metadata expiration check: 0:21:46 ago on Sat 14 Mar 2020 08:59:58 PM UTC.
+CentOS-8 - AppStream
+Name                  Stream               Profiles                              Summary
+httpd                 2.4 [d][e]           common [d], devel, minimal            Apache HTTP Server
+</code></pre>
+
+<p>Listing info on a module with <code>yum module info [module]</code></p>
+
+<pre><code class="language-nothing"># yum module info httpd
+
+Last metadata expiration check: 0:35:45 ago on Sat 14 Mar 2020 08:59:58 PM UTC.
+Name             : httpd
+Stream           : 2.4 [d][e][a]
+Version          : 8010020191223202455
+Context          : cdc1202b
+Architecture     : x86_64
+Profiles         : common [d], devel, minimal
+Default profiles : common
+Repo             : AppStream
+Summary          : Apache HTTP Server
+Description      : Apache httpd is a powerful, efficient, and extensible HTTP server.
+Artifacts        : httpd-0:2.4.37-16.module_el8.1.0+256+ae790463.src
+                 : httpd-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : httpd-debuginfo-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : httpd-debugsource-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : httpd-devel-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : httpd-filesystem-0:2.4.37-16.module_el8.1.0+256+ae790463.noarch
+                 : httpd-manual-0:2.4.37-16.module_el8.1.0+256+ae790463.noarch
+                 : httpd-tools-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : httpd-tools-debuginfo-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : mod_http2-0:1.11.3-3.module_el8.1.0+213+acce2796.src
+                 : mod_http2-0:1.11.3-3.module_el8.1.0+213+acce2796.x86_64
+                 : mod_http2-debuginfo-0:1.11.3-3.module_el8.1.0+213+acce2796.x86_64
+                 : mod_http2-debugsource-0:1.11.3-3.module_el8.1.0+213+acce2796.x86_64
+                 : mod_ldap-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : mod_ldap-debuginfo-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : mod_md-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : mod_md-debuginfo-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : mod_proxy_html-1:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : mod_proxy_html-debuginfo-1:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : mod_session-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : mod_session-debuginfo-0:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : mod_ssl-1:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+                 : mod_ssl-debuginfo-1:2.4.37-16.module_el8.1.0+256+ae790463.x86_64
+</code></pre>
+
+<p>Listing profiles with <code>yum module info --profile [module]</code></p>
+
+<pre><code class="language-nothing"># yum module info --profile httpd
+
+Last metadata expiration check: 0:36:28 ago on Sat 14 Mar 2020 08:59:58 PM UTC.
+Name    : httpd:2.4:8010020191223202455:cdc1202b:x86_64
+common  : httpd
+        : httpd-filesystem
+        : httpd-tools
+        : mod_http2
+        : mod_ssl
+devel   : httpd
+        : httpd-devel
+        : httpd-filesystem
+        : httpd-tools
+minimal : httpd
+</code></pre>
+
+<p>You can also filter the information with <code>[module_name]:[stream]</code></p>
+
+<pre><code># yum module info --profile php:7.3
+</code></pre>
+
+<h3 id="enabling-stream">Enabling Stream</h3>
+
+<p>Note that switching module streams will not alter installed packages. You will need to remove a package, enable the stream and then install the package.</p>
+
+<p>Enable the stream for &lsquo;postgresql&rsquo; v9.6</p>
+
+<pre><code class="language-nothing"># yum module enable postgresql:9.6
+</code></pre>
+
+<p>Enable the httpd devel profile</p>
+
+<pre><code class="language-nothing"># yum module enable --profile httpd:2.4/devel
+
+Last metadata expiration check: 0:47:51 ago on Sat 14 Mar 2020 08:59:58 PM UTC.
+Ignoring unnecessary profile: 'httpd/devel'
+Dependencies resolved.
+Nothing to do.
+Complete!
+</code></pre>
+
+<p>Then install the package</p>
+
+<pre><code># yum install postgresql httpd  
+</code></pre>
+
+<p>To change a module stream again, you will need to run <code>yum module reset [module name]</code>, and then enable the new module.</p>
+
+<pre><code class="language-nothing"># yum module enable postgresql:10
+
+Last metadata expiration check: 0:06:07 ago on Sat 14 Mar 2020 09:57:50 PM UTC.
+Dependencies resolved.
+The operation would result in switching of module 'postgresql' stream '9.6' to stream '10'
+Error: It is not possible to switch enabled streams of a module.
+It is recommended to remove all installed content from the module, and reset the module using 'dnf module reset &lt;module_name&gt;' command. After you reset the module, you can install the other stream.
+</code></pre>
+
+<pre><code class="language-nothing"># yum module reset postgresql
+
+Last metadata expiration check: 0:06:15 ago on Sat 14 Mar 2020 09:57:50 PM UTC.
+Dependencies resolved.
+=================================================================================================
+Package               Architecture         Version                  Repository             Size
+=================================================================================================
+Resetting modules:
+postgresql                                                                                
+
+Transaction Summary
+=================================================================================================
+
+Is this ok [y/N]: y
+Complete!
+</code></pre>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f15%2frhcsa-v8-work-with-package-module-streams%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=RHCSA%20v8%3a%20Work%20with%20Package%20Module%20Streams&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f15%2frhcsa-v8-work-with-package-module-streams%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f15%2frhcsa-v8-work-with-package-module-streams%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f15%2frhcsa-v8-work-with-package-module-streams%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f15%2frhcsa-v8-work-with-package-module-streams%2f&amp;title=RHCSA%20v8%3a%20Work%20with%20Package%20Module%20Streams" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=RHCSA%20v8%3a%20Work%20with%20Package%20Module%20Streams&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f03%2f15%2frhcsa-v8-work-with-package-module-streams%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2020/03/14/rhsa-v8-configure-disk-compression/" title="RHCSA v8: Configure Disk Compression">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2020/03/30/how-to-move-plex-installation-on-freenas/" title="How to Move Plex Installation on FreeNAS 11.3">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2020/03/14/rhsa-v8-configure-disk-compression/">RHCSA v8: Configure Disk Compression</a>
 </h2>
 
@@ -459,7 +743,7 @@ Device              Size   Used   Available   Use%   Space Saving%
 <li>Create and manage Access Control Lists (ACLs).
 
 <ul>
-<li>Looks like this is still in the exam, but under &laquo;Manage Security =&gt; Create and use file access control lists&raquo;</li>
+<li>Looks like this is still in the exam, but under &ldquo;Manage Security =&gt; Create and use file access control lists&rdquo;</li>
 </ul></li>
 </ul>
 
@@ -962,240 +1246,6 @@ libinput-gestures started.
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2019/03/11/bash-tips-history/">Bash Tips: History</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2019-03-11">11 Mar, 2019</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<p>Bash keeps a history of the commands you type in and saves them to <code>~/.bash_history</code>. These commands can be accessed in many ways and there are a lot of configuration related on how they are saved. I&rsquo;ll cover some basic functionality here.</p>
-
-<h2 id="event-designators">Event Designators (<code>!</code>, <code>!!</code>, <code>!*</code>)</h2>
-
-<p><strong>From MAN Pages</strong></p>
-
-<blockquote>
-<p>An event designator is a reference to a command  line  entry  in  the  history  list. Unless  the reference is absolute, events are relative to the current position in the history list.</p>
-</blockquote>
-
-<p>For the different examples below, assume we are running it against the same command (<code>netstat -an | grep ':22'</code>). This is to help you visualize the differences between each of the event designators.</p>
-
-<h3 id="repeating-the-last-command-that-starts-with-string"><strong>Repeating the last command that starts with <code>!string</code></strong></h3>
-
-<p>You can run the most recent command starting with <code>string</code> by using <code>!string</code>.</p>
-
-<pre><code class="language-none">$ !netstat
-netstat -an | grep ':22'
-tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN     
-tcp6       0      0 :::22000                :::*                    LISTEN     
-tcp6       0      0 :::22
-</code></pre>
-
-<p><em><strong>Another example:</strong></em></p>
-
-<pre><code class="language-none">$ ls my_file.txt
-.rw-r--r--     0 victor users 18 Oct 11:35  my_file.txt
-
-$ ls my_folder
-drwxr-xr-x     - victor users 18 Oct 11:35  my_folder
-
-$ !ls
-ls my_folder
-drwxr-xr-x     - victor users 18 Oct 11:35  my_folder
-</code></pre>
-
-<p><strong><em>Tip:</em></strong> <em>you can use the <code>:p</code> option to print the command instead of running it</em></p>
-
-<pre><code class="language-none">$ !netstat:p
-netstat -an | grep ':22'
-</code></pre>
-
-<h3 id="repeating-the-same-command-with"><strong>Repeating the same command with <code>!!</code></strong></h3>
-
-<p>As you may already know, the <code>!!</code> can be used for repeating the same command.</p>
-
-<pre><code class="language-none">$ echo !!
-echo netstat -an | grep ':22'
-</code></pre>
-
-<p>This is useful when you forget to use <code>sudo</code> on a command that requires sudo access.</p>
-
-<p><em><strong>For example:</strong></em></p>
-
-<pre><code class="language-none">$ systemctl daemon-reload
-Failed to reload daemon: Access denied
-
-$ sudo !!
-sudo systemctl daemon-reload
-[sudo] password for victor:
-</code></pre>
-
-<h3 id="re-using-the-last-argument-with"><strong>Re-using the last argument with <code>!$</code></strong></h3>
-
-<p>Another very useful option is the <code>!$</code>, which provides quick access to the last argument in a command.</p>
-
-<pre><code class="language-none">$ echo !$
-echo ':22'
-</code></pre>
-
-<p>This can come in handy if you need to repeat the last argument with another command.</p>
-
-<pre><code class="language-none">$ touch my_new_script.sh
-
-$ vim !$
-vim my_new_script.sh
-</code></pre>
-
-<p><em><strong>Another example:</strong></em></p>
-
-<pre><code class="language-none">$ mkdir myfolder
-
-$ cd !$
-</code></pre>
-
-<h2 id="the-fc-command">The <code>fc</code> command</h2>
-
-<p>The command <code>fc</code> allows you to open commands in your history with an editor, modify the commands and then execute the modified version. It will use your default editor (as per <code>$EDITOR</code>), so make sure that is set.</p>
-
-<p>Some common usage for <code>fc</code>:</p>
-
-<ul>
-<li><code>fc -l</code> - List your last commands</li>
-<li><code>fc n</code> - Edit the <em>n</em> command</li>
-<li><code>fc -1</code> - Edit the last command</li>
-<li><code>fc 20 22</code> - Edit commands 20 to 22</li>
-</ul>
-
-<h2 id="history-settings">History Settings</h2>
-
-<p>On this section we talk a little bit about some of the configuration available for your Bash history.</p>
-
-<h3 id="adds-time-to-each-command-in-history"><strong>Adds time to each command in history</strong></h3>
-
-<pre><code class="language-bash"># Sets up time for history
-export HISTTIMEFORMAT=&quot;+%Y/%m/%d %T &quot;
-</code></pre>
-
-<p><em><strong>For example:</strong></em></p>
-
-<pre><code class="language-none">$ history | tail -n 10
-  949  +2019/03/11 00:32:53 ssh seedbox
-  950  +2019/03/11 16:05:53 cd .config/polybar
-  951  +2019/03/11 16:05:56 ./launch.sh
-  952  +2019/03/11 17:49:38 lolbanner victor
-  953  +2019/03/11 17:53:10 lolbanner test
-  954  +2019/03/11 17:53:11 psg checkupdates
-  955  +2019/03/11 17:53:11 clear
-  956  +2019/03/11 17:53:11 echo hello 1
-  957  +2019/03/11 17:53:11 history
-  958  +2019/03/11 18:10:01 history | tail -n 10
-</code></pre>
-
-<h3 id="avoid-duplicate-entries"><strong>Avoid duplicate entries</strong></h3>
-
-<pre><code class="language-bash"># Avoid duplicates
-export HISTCONTROL=ignoredups:erasedups
-</code></pre>
-
-<h3 id="append-entries"><strong>Append entries</strong></h3>
-
-<p>This comes in handy if you run multiple terminal emulators simultaneously. By default, the latest closed terminal emulator will overwrite history from the other windows. With this setting, changes are appended making sure all commands are saved to history.</p>
-
-<pre><code class="language-bash"># When the shell exits, append to the history file instead of overwriting it
-shopt -s histappend
-</code></pre>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2019%2f03%2f11%2fbash-tips-history%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Bash%20Tips%3a%20History&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f03%2f11%2fbash-tips-history%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f03%2f11%2fbash-tips-history%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f03%2f11%2fbash-tips-history%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f03%2f11%2fbash-tips-history%2f&amp;title=Bash%20Tips%3a%20History" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Bash%20Tips%3a%20History&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2019%2f03%2f11%2fbash-tips-history%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2019/03/10/colorful-banners-with-figlet-and-lolcat/" title="Colorful Banners With figlet and lolcat">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2019/04/15/touchpad-gestures-on-xps-13/" title="Touchpad Gestures on XPS 13">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1363,6 +1413,10 @@ shopt -s histappend
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/">Testing New Hard Drives</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/">How to Migrate Local Users and Grops</a>
           </li>
         
@@ -1384,10 +1438,6 @@ shopt -s histappend
         
           <li>
           <a href="https://blog.victormendonca.com/2020/11/18/linux-logical-volume-manager/">RHCSA v8: Linux Logical Volume Manager</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2020/11/14/rhcsa8-boot-targets-system-targets-and-root-password-reset/">RHCSA v8: Boot Targets, Systemd Targets and root Password Reset</a>
           </li>
         
         </ul>

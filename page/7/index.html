@@ -127,6 +127,240 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2019/03/11/bash-tips-history/">Bash Tips: History</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2019-03-11">11 Mar, 2019</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>Bash keeps a history of the commands you type in and saves them to <code>~/.bash_history</code>. These commands can be accessed in many ways and there are a lot of configuration related on how they are saved. I&rsquo;ll cover some basic functionality here.</p>
+
+<h2 id="event-designators">Event Designators (<code>!</code>, <code>!!</code>, <code>!*</code>)</h2>
+
+<p><strong>From MAN Pages</strong></p>
+
+<blockquote>
+<p>An event designator is a reference to a command  line  entry  in  the  history  list. Unless  the reference is absolute, events are relative to the current position in the history list.</p>
+</blockquote>
+
+<p>For the different examples below, assume we are running it against the same command (<code>netstat -an | grep ':22'</code>). This is to help you visualize the differences between each of the event designators.</p>
+
+<h3 id="repeating-the-last-command-that-starts-with-string"><strong>Repeating the last command that starts with <code>!string</code></strong></h3>
+
+<p>You can run the most recent command starting with <code>string</code> by using <code>!string</code>.</p>
+
+<pre><code class="language-none">$ !netstat
+netstat -an | grep ':22'
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN     
+tcp6       0      0 :::22000                :::*                    LISTEN     
+tcp6       0      0 :::22
+</code></pre>
+
+<p><em><strong>Another example:</strong></em></p>
+
+<pre><code class="language-none">$ ls my_file.txt
+.rw-r--r--     0 victor users 18 Oct 11:35  my_file.txt
+
+$ ls my_folder
+drwxr-xr-x     - victor users 18 Oct 11:35  my_folder
+
+$ !ls
+ls my_folder
+drwxr-xr-x     - victor users 18 Oct 11:35  my_folder
+</code></pre>
+
+<p><strong><em>Tip:</em></strong> <em>you can use the <code>:p</code> option to print the command instead of running it</em></p>
+
+<pre><code class="language-none">$ !netstat:p
+netstat -an | grep ':22'
+</code></pre>
+
+<h3 id="repeating-the-same-command-with"><strong>Repeating the same command with <code>!!</code></strong></h3>
+
+<p>As you may already know, the <code>!!</code> can be used for repeating the same command.</p>
+
+<pre><code class="language-none">$ echo !!
+echo netstat -an | grep ':22'
+</code></pre>
+
+<p>This is useful when you forget to use <code>sudo</code> on a command that requires sudo access.</p>
+
+<p><em><strong>For example:</strong></em></p>
+
+<pre><code class="language-none">$ systemctl daemon-reload
+Failed to reload daemon: Access denied
+
+$ sudo !!
+sudo systemctl daemon-reload
+[sudo] password for victor:
+</code></pre>
+
+<h3 id="re-using-the-last-argument-with"><strong>Re-using the last argument with <code>!$</code></strong></h3>
+
+<p>Another very useful option is the <code>!$</code>, which provides quick access to the last argument in a command.</p>
+
+<pre><code class="language-none">$ echo !$
+echo ':22'
+</code></pre>
+
+<p>This can come in handy if you need to repeat the last argument with another command.</p>
+
+<pre><code class="language-none">$ touch my_new_script.sh
+
+$ vim !$
+vim my_new_script.sh
+</code></pre>
+
+<p><em><strong>Another example:</strong></em></p>
+
+<pre><code class="language-none">$ mkdir myfolder
+
+$ cd !$
+</code></pre>
+
+<h2 id="the-fc-command">The <code>fc</code> command</h2>
+
+<p>The command <code>fc</code> allows you to open commands in your history with an editor, modify the commands and then execute the modified version. It will use your default editor (as per <code>$EDITOR</code>), so make sure that is set.</p>
+
+<p>Some common usage for <code>fc</code>:</p>
+
+<ul>
+<li><code>fc -l</code> - List your last commands</li>
+<li><code>fc n</code> - Edit the <em>n</em> command</li>
+<li><code>fc -1</code> - Edit the last command</li>
+<li><code>fc 20 22</code> - Edit commands 20 to 22</li>
+</ul>
+
+<h2 id="history-settings">History Settings</h2>
+
+<p>On this section we talk a little bit about some of the configuration available for your Bash history.</p>
+
+<h3 id="adds-time-to-each-command-in-history"><strong>Adds time to each command in history</strong></h3>
+
+<pre><code class="language-bash"># Sets up time for history
+export HISTTIMEFORMAT=&quot;+%Y/%m/%d %T &quot;
+</code></pre>
+
+<p><em><strong>For example:</strong></em></p>
+
+<pre><code class="language-none">$ history | tail -n 10
+  949  +2019/03/11 00:32:53 ssh seedbox
+  950  +2019/03/11 16:05:53 cd .config/polybar
+  951  +2019/03/11 16:05:56 ./launch.sh
+  952  +2019/03/11 17:49:38 lolbanner victor
+  953  +2019/03/11 17:53:10 lolbanner test
+  954  +2019/03/11 17:53:11 psg checkupdates
+  955  +2019/03/11 17:53:11 clear
+  956  +2019/03/11 17:53:11 echo hello 1
+  957  +2019/03/11 17:53:11 history
+  958  +2019/03/11 18:10:01 history | tail -n 10
+</code></pre>
+
+<h3 id="avoid-duplicate-entries"><strong>Avoid duplicate entries</strong></h3>
+
+<pre><code class="language-bash"># Avoid duplicates
+export HISTCONTROL=ignoredups:erasedups
+</code></pre>
+
+<h3 id="append-entries"><strong>Append entries</strong></h3>
+
+<p>This comes in handy if you run multiple terminal emulators simultaneously. By default, the latest closed terminal emulator will overwrite history from the other windows. With this setting, changes are appended making sure all commands are saved to history.</p>
+
+<pre><code class="language-bash"># When the shell exits, append to the history file instead of overwriting it
+shopt -s histappend
+</code></pre>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2019%2f03%2f11%2fbash-tips-history%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Bash%20Tips%3a%20History&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f03%2f11%2fbash-tips-history%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f03%2f11%2fbash-tips-history%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f03%2f11%2fbash-tips-history%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f03%2f11%2fbash-tips-history%2f&amp;title=Bash%20Tips%3a%20History" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Bash%20Tips%3a%20History&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2019%2f03%2f11%2fbash-tips-history%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2019/03/10/colorful-banners-with-figlet-and-lolcat/" title="Colorful Banners With figlet and lolcat">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2019/04/15/touchpad-gestures-on-xps-13/" title="Touchpad Gestures on XPS 13">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2019/03/10/colorful-banners-with-figlet-and-lolcat/">Colorful Banners With figlet and lolcat</a>
 </h2>
 
@@ -202,7 +436,7 @@
 
 <h3 id="putting-it-all-together">Putting it all together</h3>
 
-<p>Use the same <code>figlet</code> command we used before to print out &laquo;Hello World&raquo; and pipe it through <code>lolcat</code> to get the result below:</p>
+<p>Use the same <code>figlet</code> command we used before to print out &ldquo;Hello World&rdquo; and pipe it through <code>lolcat</code> to get the result below:</p>
 
 <p><img src="https://blog.victormendonca.com/img/colorful-banners-with-figlet-and-lolcat/lolbanner.png" alt="" /></p>
 
@@ -581,7 +815,7 @@
           <div class="content">
   <p>Have you ever had the nead to count the lines of code in a project or a folder? If you did, or want to, <code>cloc</code> is a neat utility that can help with just that.</p>
 
-<p>As per it&rsquo;s description on the <a href="https://github.com/AlDanial/cloc">GitHub</a> page, &laquo;<em>cloc counts blank lines, comment lines, and physical lines of source code in many programming languages</em>&raquo;. It displays a summary of file types and counted files, and then it breaks down a list of lines of code per language.</p>
+<p>As per it&rsquo;s description on the <a href="https://github.com/AlDanial/cloc">GitHub</a> page, &ldquo;<em>cloc counts blank lines, comment lines, and physical lines of source code in many programming languages</em>&rdquo;. It displays a summary of file types and counted files, and then it breaks down a list of lines of code per language.</p>
 
 <p>Here&rsquo;s the output from my <a href="https://github.com/victorbrca/bash-config">bash-config</a> project:</p>
 
@@ -686,124 +920,6 @@ scoop install cloc                     # Windows with Scoop
     
       <li class="next">
         <a href="https://blog.victormendonca.com/2019/02/11/bash-theme-powerline-2column/" title="Bash Theme Powerline 2column">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2019/01/14/how-to-migrate-unifi-controller/">How to Migrate Unifi Controller</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2019-01-14">14 Jan, 2019</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/networking" class="label label-primary">Networking</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  <p>Quick instructions on how to migrate a Unifi controller on Linux. Note that it requires SSH access to the AP and a bit of downtime.</p>
-
-<p>a. Logon to your old Unifi controller, go to <code>Settings=&gt;Auto Backup</code> and download a backup</p>
-
-<p><strong>Note:</strong> <em>Force a new backup if you have new changes</em></p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-migrate-unifi-controller/img1.png" alt="" /></p>
-
-<p>b. Browse to your AP, write down the IP address</p>
-
-<p>c. Select the AP, go to <code>Config=&gt;Manage Device=&gt;Forget this device</code> and click on <code>Forget</code> (click ok on the alert)</p>
-
-<p>d. Login to the new controller and on the first screen restore the backup you saved on step <code>a</code></p>
-
-<p>e. Once the controller is back up, SSH into the AP with the default user (<code>ubnt:ubnt</code> or <code>root:ubnt</code>) and run the following command (change <code>[controler_ip]</code> for the IP of your controller)</p>
-
-<pre><code>set-inform http://[controller-ip]:8080/inform
-</code></pre>
-
-<p>f. On the new controller, under devices, the AP should be showing for &lsquo;adoption&rsquo;. Click on <code>ADOPT</code></p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-migrate-unifi-controller/img2.png" alt="" /></p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2019%2f01%2f14%2fhow-to-migrate-unifi-controller%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Migrate%20Unifi%20Controller&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f01%2f14%2fhow-to-migrate-unifi-controller%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f01%2f14%2fhow-to-migrate-unifi-controller%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f01%2f14%2fhow-to-migrate-unifi-controller%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2019%2f01%2f14%2fhow-to-migrate-unifi-controller%2f&amp;title=How%20to%20Migrate%20Unifi%20Controller" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=How%20to%20Migrate%20Unifi%20Controller&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2019%2f01%2f14%2fhow-to-migrate-unifi-controller%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2018/12/31/how-to-install-and-configure-vim-plug/" title="How to Install and Configure Vim Plug">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2019/01/15/count-lines-of-codes-with-cloc/" title="Count Lines of Codes With Cloc">
             Next <span aria-hidden="true">&rarr;</span>
         </a>
       </li>
@@ -1004,6 +1120,10 @@ scoop install cloc                     # Windows with Scoop
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/">Testing New Hard Drives</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/">How to Migrate Local Users and Grops</a>
           </li>
         
@@ -1025,10 +1145,6 @@ scoop install cloc                     # Windows with Scoop
         
           <li>
           <a href="https://blog.victormendonca.com/2020/11/18/linux-logical-volume-manager/">RHCSA v8: Linux Logical Volume Manager</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2020/11/14/rhcsa8-boot-targets-system-targets-and-root-password-reset/">RHCSA v8: Boot Targets, Systemd Targets and root Password Reset</a>
           </li>
         
         </ul>

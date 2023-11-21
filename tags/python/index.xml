@@ -20,7 +20,7 @@
       <guid>https://blog.victormendonca.com/2017/10/11/how-to-create-a-quick-web-server/</guid>
       <description>Have you ever had the need to create a web server to perform a test? Well, here are a few quick options on how to do this.
 Got Netcat? If you have Netcat on the server (which is pretty easy to get), then you can do this.
-Example 1: Display the date and the text &amp;laquo;It works&amp;raquo;
+Example 1: Display the date and the text &amp;ldquo;It works&amp;rdquo;
 nc -kl 10001 -c &#39;echo -e &amp;quot;HTTPS/1.1 200 OK\r\n\r\n$(date)\r\n\r\nIt works&amp;quot;&#39;  Example 2: Display an index.</description>
     </item>
     

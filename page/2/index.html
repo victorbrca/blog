@@ -127,6 +127,280 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2021/01/23/how-to-convert-standard-partition-to-lvm/">How to Convert Standard Partition to Logical Volume</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2021-01-23">23 Jan, 2021</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<h2 id="preamble">Preamble</h2>
+
+<p>When I bought my new and shinny Lenovo P1 at the beginning of the year I choose a configuration that had 2 NVMe drives; one of 500GB and the other of 256GB. Innocently I thought that this would be plenty. But since I started hogging my test VMs and creating videos with my GoPro and DaVinci Resolve (while we are here, check out my <a href="https://www.youtube.com/channel/UCWcwZKLVqBzxCSUuoPmZKMw">YouTube</a> channel), that storage space quickly became too small and I knew I had to update my storage!</p>
+
+<p>Taking advantage of a great Black Friday deal I scored a 1TB Samsung 970 Evo Plus NVMe drive for almost half the price.</p>
+
+<p><img src="https://blog.victormendonca.com/img/how-to-convert-standard-partition-to-lvm/how-to-convert-standard-partition-to-lvm-9d243.png" alt="" /></p>
+
+<h2 id="preparation">Preparation</h2>
+
+<p>I had my hard drives organized into partitions as follows:</p>
+
+<pre><code class="language-none">nvme0n1             259:0    0 476.9G  0 disk
+├─nvme0n1p1         259:1    0   250G  0 part /home
+└─nvme0n1p2         259:2    0 226.9G  0 part /mnt/storage2
+nvme1n1             259:3    0   256G  0 disk
+├─nvme1n1p1         259:4    0   512M  0 part /efi
+├─nvme1n1p2         259:6    0    32G  0 part [SWAP]
+├─nvme1n1p2         259:7    0   110G  0 part /
+└─nvme1n1p2         259:8    0    96G  0 part /mnt/storage1
+</code></pre>
+
+<p><em>The partitions &lsquo;storage1&rsquo; and &lsquo;storage2&rsquo; are used for video and virtual machine storage.</em></p>
+
+<p>My plan was to replace the smaller drive and copy my partitions to the new drive as LV. This is pretty straight forward, you just need some additional steps if your root partition will be in the LV. I&rsquo;m however leaving my EFI partition as a standard partition for simplicity and compatibility.</p>
+
+<p>If you are using this post as a guide, please take the time to compare my configuration to yours and make sure that it will work for you. You will most likely need to tweak a few steps. Also note that I&rsquo;m running Arch, so my instructions will be directed to it.</p>
+
+<p>And finally, if you are adding a new drive, don&rsquo;t forget to do it now. I installed the new drive and used a USB-C enclosure to access my old drive.</p>
+
+<p><strong>⚠️ WARNING:</strong> <em>We will be using <code>dd</code> to copy the old data. Make sure to select the right partition and more importatnly, the right direction because <code>dd</code> will erase all your data.</em></p>
+
+<p><em>New NVMe installed</em>
+<img src="https://blog.victormendonca.com/img/how-to-convert-standard-partition-to-lvm/how-to-convert-standard-partition-to-lvm-6f0d9.png" alt="" /></p>
+
+<h2 id="instructions">Instructions</h2>
+
+<h3 id="creating-the-lv-and-copying-the-data">Creating the LV and Copying the Data</h3>
+
+<p>a. <strong>Power off</strong> the machine and boot into an Arch install ISO</p>
+
+<p>b. Create an EFI and a LVM partition using gdisk (I&rsquo;m not getting in details on this, but there are plenty of tutorials online). Make sure the EFI partition is the same size as your old one</p>
+
+<p><em>Here&rsquo;s my layout. My the new drive shows as <code>/dev/nvme1n1</code></em></p>
+
+<pre><code class="language-none">Device           Start        End    Sectors  Size Type
+/dev/nvme1n1p1    2048    1050623    1048576  512M EFI System
+/dev/nvme1n1p2 1050624 1953525134 1952474511  931G Linux LVM
+</code></pre>
+
+<p>c. Copy the old EFI partition to the new EFI partition with dd (note that my old drive mounted via the USB-C enclosure now shows as <code>/dev/sdb</code>)</p>
+
+<pre><code class="language-none"># dd if=/dev/sdb1 of=/dev/nvme1n1p1 bs=4M
+</code></pre>
+
+<p>d. Create the PV/VG</p>
+
+<pre><code class="language-none"># vgcreate root_vg /dev/nvme1n1p2
+</code></pre>
+
+<p>e. Create the logical volumes. Make sure that they have the same size as the old partitions</p>
+
+<pre><code class="language-none"># lvcreate -n swap -L 32G root_vg
+# lvcreate -n root -L 110G root_vg
+# lvcreate -n storage -L 96G root_vg
+</code></pre>
+
+<p>f. Formart the swap partition (there&rsquo;s not need to copy it, so we just recreate it)</p>
+
+<pre><code class="language-none"># mkswap -L swap /dev/root_vg/swap
+</code></pre>
+
+<p>g. Copy the root partition</p>
+
+<pre><code class="language-none"># dd if=/dev/sdb3 of=/dev/root_vg/root bs=4M
+</code></pre>
+
+<p>h. Copy the storage partition (or any other partition if you had it)</p>
+
+<pre><code class="language-none"># dd if=/dev/sdb4 of=/dev/root_vg/storage bs=4M
+</code></pre>
+
+<p>i. Our new drive is now created and populated with the old data</p>
+
+<pre><code class="language-none"># lsblk
+nvme0n1             259:0    0 476.9G  0 disk
+├─nvme0n1p1         259:1    0   250G  0 part /home
+└─nvme0n1p2         259:2    0 226.9G  0 part /mnt/storage2
+nvme1n1             259:3    0 931.5G  0 disk
+├─nvme1n1p1         259:4    0   512M  0 part /efi
+└─nvme1n1p2         259:5    0   931G  0 part
+  ├─root_vg-swap    254:0    0    32G  0 lvm  [SWAP]
+  ├─root_vg-root    254:1    0   110G  0 lvm  /
+  └─root_vg-storage 254:2    0    96G  0 lvm  /mnt/storage1
+</code></pre>
+
+<h3 id="additional-configuration">Additional Configuration</h3>
+
+<p>We now need to fix our EFI and GRUB to make sure we can boot into our LV partition.</p>
+
+<p>a. Mount root</p>
+
+<pre><code class="language-none"># mkdir /mnt/root
+
+# mount /dev/root_vg/root /mnt/root
+</code></pre>
+
+<p>b. Enter chroot of our copied data</p>
+
+<pre><code class="language-none"># arch-chroot /mnt/root
+</code></pre>
+
+<p>c. Mount our EFI partition</p>
+
+<pre><code class="language-none"># mount /dev/nvme1n1p1 /efi
+</code></pre>
+
+<p>d. Fix fstab for the swap partition (because we did not copy our swap partition, a new UUID was generated. We need to change <code>/etc/fstab</code> with that new partition UUID)</p>
+
+<pre><code class="language-none">UUID=d9e1b4f1-40eb-4bb6-908c-33012c7c0902	none		swap		defaults	0 0
+</code></pre>
+
+<p>e. Edit <code>/etc/mkinitcpio.conf</code> and add <code>lvm2</code> to <code>HOOKS</code></p>
+
+<pre><code class="language-none">HOOKS=(base udev ... block lvm2 filesystems)
+</code></pre>
+
+<p>f. Generate the ramdisk environment to boot the kernel</p>
+
+<pre><code class="language-none"># mkinitcpio -P
+</code></pre>
+
+<p>g. Re-install GRUB</p>
+
+<pre><code class="language-none"># grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
+</code></pre>
+
+<p>h. Enable the LVM module for GRUB by editing <code>/etc/default/grub</code> and adding the <code>lvm</code> module to <code>GRUB_PRELOAD_MODULES</code></p>
+
+<pre><code class="language-none"># Preload both GPT and MBR modules so that they are not missed
+GRUB_PRELOAD_MODULES=&quot;part_gpt part_msdos lvm&quot;
+</code></pre>
+
+<p>i. Re-create GRUB config</p>
+
+<pre><code class="language-none"># grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre>
+
+<p>j. Unmount /efi</p>
+
+<pre><code class="language-none"># umount /efi
+</code></pre>
+
+<p>k. Exit chroot</p>
+
+<pre><code class="language-none"># exit
+</code></pre>
+
+<p>l. Unmount root</p>
+
+<pre><code class="language-none"># umount /mnt/root
+</code></pre>
+
+<p>m. Power off, remove the old drive and the Arch iso and reboot</p>
+
+<pre><code class="language-none"># poweroff
+</code></pre>
+
+<p>If everything was done correctly you should be able to boot your system normally. If something is not working don&rsquo;t panic. Your data should be safe and sound on your old drive. Review your steps, do additional research for anything specific to your configuration and try again.</p>
+
+<hr />
+
+<p><strong>Reference:</strong></p>
+
+<ul>
+<li><a href="https://wiki.archlinux.org/index.php/Install_Arch_Linux_on_LVM">Arch Wiki: Install Arch Linux on LVM</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/LVM#Getting_started">Arch Wiki: LVM</a></li>
+</ul>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2021%2f01%2f23%2fhow-to-convert-standard-partition-to-lvm%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Convert%20Standard%20Partition%20to%20Logical%20Volume&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2021%2f01%2f23%2fhow-to-convert-standard-partition-to-lvm%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2021%2f01%2f23%2fhow-to-convert-standard-partition-to-lvm%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2021%2f01%2f23%2fhow-to-convert-standard-partition-to-lvm%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2021%2f01%2f23%2fhow-to-convert-standard-partition-to-lvm%2f&amp;title=How%20to%20Convert%20Standard%20Partition%20to%20Logical%20Volume" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20Convert%20Standard%20Partition%20to%20Logical%20Volume&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2021%2f01%2f23%2fhow-to-convert-standard-partition-to-lvm%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2020/11/18/linux-logical-volume-manager/" title="RHCSA v8: Linux Logical Volume Manager">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2021/02/28/getting-started-with-ansible-molecule/" title="Getting Started with Ansible Molecule">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2020/11/18/linux-logical-volume-manager/">RHCSA v8: Linux Logical Volume Manager</a>
 </h2>
 
@@ -757,9 +1031,9 @@ N 5
 <p><em>From <code>runlevel</code> man page</em></p>
 
 <blockquote>
-<p>&laquo;Runlevels&raquo; are an obsolete way to start and stop groups of services used in SysV init. systemd
+<p>&ldquo;Runlevels&rdquo; are an obsolete way to start and stop groups of services used in SysV init. systemd
  provides a compatibility layer that maps runlevels to targets, and associated binaries like
- runlevel. Nevertheless, only one runlevel can be &laquo;active&raquo; at a given time, while systemd can
+ runlevel. Nevertheless, only one runlevel can be &ldquo;active&rdquo; at a given time, while systemd can
  activate multiple targets concurrently, so the mapping to runlevels is confusing and only
  approximate. Runlevels should not be used in new code, and are mostly useful as a shorthand way
  to refer the matching systemd targets in kernel boot parameters.</p>
@@ -973,7 +1247,7 @@ or
 
 <h3 id="method-1-fixing-selinux-context-before-reboot">Method 1: Fixing SELinux context before reboot</h3>
 
-<p>This is not the &laquo;official&raquo; method, but it&rsquo;s the one I like the most. It saves a bit of time from having to relabel the whole system for SELinux context.</p>
+<p>This is not the &ldquo;official&rdquo; method, but it&rsquo;s the one I like the most. It saves a bit of time from having to relabel the whole system for SELinux context.</p>
 
 <p>a. Boot into <code>rd.break</code> mode</p>
 
@@ -1842,7 +2116,7 @@ tank  compression  lz4       local
 
 <h4 id="2-5-creating-snapshots">2.5. Creating Snapshots</h4>
 
-<p>Snapshots allow you to save the state of a filesystem to a current point in time, without duplicating storage (files are not copied). It flags existing data as &laquo;read-only&raquo; while allowing new data to be added to the filesystem without affecting the existing data blocks that are protected by the snapshot (the whole process is a bit more complicated than this).</p>
+<p>Snapshots allow you to save the state of a filesystem to a current point in time, without duplicating storage (files are not copied). It flags existing data as &ldquo;read-only&rdquo; while allowing new data to be added to the filesystem without affecting the existing data blocks that are protected by the snapshot (the whole process is a bit more complicated than this).</p>
 
 <p>Let&rsquo;s take a look at the image below as an example. You have a filesystem with existing data (Data A) and you take a snapshot (snapshot 1). Then you make some changes, add new files (Data B) and take another snapshot (snapthot 2). After that you make even more changes (Data C).</p>
 
@@ -2222,7 +2496,7 @@ tank/Movies@2020-11-03_15-29       0B      -     1.50G  -
 
 <h4 id="how-it-all-looks-together">How it all looks together</h4>
 
-<p>As the proverb that says that &laquo;A pictures is worth a thousand words&raquo;, if you are visual person like me the diagram below will help you have a better understanding of the setup I listed above.</p>
+<p>As the proverb that says that &ldquo;A pictures is worth a thousand words&rdquo;, if you are visual person like me the diagram below will help you have a better understanding of the setup I listed above.</p>
 
 <p><img src="https://blog.victormendonca.com/img/my-grafana-setup/Grafana-Diagram.png" alt="" /></p>
 
@@ -2460,162 +2734,6 @@ tank/Movies@2020-11-03_15-29       0B      -     1.50G  -
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2020/10/29/how-to-collect-ups-data-on-pfsense-with-telegraf/">How to Collect UPS Data on pfSense with Telegraf</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2020-10-29">29 Oct, 2020</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/pfsense" class="label label-primary">pfSense</a>
-  
-  <a href="https://blog.victormendonca.com/tags/monitoring" class="label label-primary">Monitoring</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<p>If you are running Grafana at home to monitor your devices, and you also have pfSense running off a UPS (if you don&rsquo;t, check out my previous article on <a href="https://blog.victormendonca.com/2020/10/28/how-to-setup-ups-on-pfsense/">How to Setup a USB UPS on pfSense</a>), you may want to pull UPS related data from pfSense.</p>
-
-<p><em>My Grafana pfSense config</em>
-<img src="https://blog.victormendonca.com/img/how-to-collect-ups-data-on-pfsense-with-telegraf/screen1.png" alt="" /></p>
-
-<hr />
-
-<h2 id="instructions">Instructions</h2>
-
-<p>a. Start by logging into your pfSense, go into &laquo;System =&gt; Package Manager = Available Packages&raquo; and install Telegraf</p>
-
-<p>b. Now login to pfSense via ssh, and create a file in <code>/usr/local/bin/getUpsData.py</code> with the content below</p>
-
-<p><em><strong>Note:</strong> Make sure to change the UPS name in <code>cmd=&quot;upsc BackUPSES750&quot;</code></em></p>
-
-<pre><code class="language-python"># https://github.com/sa7mon/ups-telegraf
-from __future__ import print_function
-import subprocess
-
-cmd=&quot;upsc BackUPSES750&quot;
-output=&quot;&quot;
-string_measurements=[&quot;battery.charge&quot;,&quot;ups.status&quot;,&quot;battery.runtime&quot;]
-
-p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-
-for line in p.stdout.readlines(): #read and store result in log file
-    line = line.decode(&quot;utf-8&quot;).rstrip()
-    key = line[:line.find(&quot;:&quot;)]
-    value = line[line.find(&quot;:&quot;)+2:]
-
-    if key in string_measurements:
-        if value.isalpha():
-            value = '&quot;' + value + '&quot;'
-        measurement = key + &quot;=&quot; + value
-        if output != &quot;&quot;:
-            measurement = &quot;,&quot; + measurement
-        output += measurement
-
-output = &quot;ups,ups.name=BackUPSES750 &quot; + output.rstrip()
-print(output)
-</code></pre>
-
-<p>The output data will be as shown below. If you would like to format the output, refer to my instructions on my GitHub Repo - <a href="https://github.com/victorbrca/telegraf-plugins/tree/main/UPS">https://github.com/victorbrca/telegraf-plugins/tree/main/UPS</a></p>
-
-<pre><code class="language-none">ups,ups.name=BackUPSES750 battery.charge=100,battery.runtime=18405,ups.status=&quot;OL&quot;
-</code></pre>
-
-<p>c. Go back to pfSense UI and go into &laquo;Services =&gt; Telegraf&raquo;</p>
-
-<p>d. Configure Telegraf as your usually would, and under &laquo;Additional configuration for Telegraf&raquo; add the configuration below:</p>
-
-<pre><code class="language-none">[[inputs.exec]]
-  commands = [&quot;python2.7 /usr/local/etc/getUpsData.py&quot;]
-  timeout = &quot;5s&quot;
-  data_format = &quot;influx&quot;
-</code></pre>
-
-<p>e. Restart Telegraf and check your influxdb for the new data being populated</p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f29%2fhow-to-collect-ups-data-on-pfsense-with-telegraf%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Collect%20UPS%20Data%20on%20pfSense%20with%20Telegraf&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f29%2fhow-to-collect-ups-data-on-pfsense-with-telegraf%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f29%2fhow-to-collect-ups-data-on-pfsense-with-telegraf%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f29%2fhow-to-collect-ups-data-on-pfsense-with-telegraf%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f29%2fhow-to-collect-ups-data-on-pfsense-with-telegraf%2f&amp;title=How%20to%20Collect%20UPS%20Data%20on%20pfSense%20with%20Telegraf" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=How%20to%20Collect%20UPS%20Data%20on%20pfSense%20with%20Telegraf&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f29%2fhow-to-collect-ups-data-on-pfsense-with-telegraf%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2020/10/28/how-to-setup-ups-on-pfsense/" title="How to Setup a USB UPS on pfSense">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2020/10/30/my-grafana-setup/" title="Overview of My Grafana Setup">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -2783,6 +2901,10 @@ print(output)
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/">Testing New Hard Drives</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/">How to Migrate Local Users and Grops</a>
           </li>
         
@@ -2804,10 +2926,6 @@ print(output)
         
           <li>
           <a href="https://blog.victormendonca.com/2020/11/18/linux-logical-volume-manager/">RHCSA v8: Linux Logical Volume Manager</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2020/11/14/rhcsa8-boot-targets-system-targets-and-root-password-reset/">RHCSA v8: Boot Targets, Systemd Targets and root Password Reset</a>
           </li>
         
         </ul>

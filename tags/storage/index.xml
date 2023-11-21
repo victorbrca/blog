@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Storage on Victor&#39;s Blog</title>
+    <link>https://blog.victormendonca.com/tags/storage/</link>
+    <description>Recent content in Storage on Victor&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
+    <lastBuildDate>Tue, 21 Nov 2023 14:21:40 -0500</lastBuildDate>
+    
+	<atom:link href="https://blog.victormendonca.com/tags/storage/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Testing New Hard Drives</title>
+      <link>https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/</link>
+      <pubDate>Tue, 21 Nov 2023 14:21:40 -0500</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/</guid>
+      <description>So you got a spanking new hard drive for your NAS and you are ready to install it&amp;hellip; but wait! What if the drive is bad?
+This is not something that most people would think of, but that shiny new drive could already have come with defects (a.k.a extra features) from the factory. Or maybe it was part of a fun game of &amp;ldquo;throw the client&amp;rsquo;s package&amp;rdquo; that some delivery man like to play (as my preferred social media likes to show me).</description>
+    </item>
+    
+  </channel>
+</rss>
