@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Tue, 21 Nov 2023 14:21:40 -0500</lastBuildDate>
+    <lastBuildDate>Mon, 27 Nov 2023 17:20:38 -0500</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>RHCE v8 Practice Exam</title>
+      <link>https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/</link>
+      <pubDate>Mon, 27 Nov 2023 17:20:38 -0500</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/</guid>
+      <description>I created this practice exam as part of my preparation for the Red Hat RHCE exam (EX294V84K). It comprises 10 advanced-level tasks, with a focus on incorporating some of the most challenging RHCSA objectives.
+Answers will be included on my fork of the rdbreak/rhce8env, and hopefully merged into the main project soon .
+Pre-requisites  Setup the Vagrant/VirtualBox environment - victorbrca/rhce8env Register for a free Red Hat Developer subscription - instructions On the control node:  Register with you developer subscription.</description>
+    </item>
     
     <item>
       <title>Testing New Hard Drives</title>

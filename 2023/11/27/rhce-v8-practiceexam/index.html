@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>RHCE v8 Practice Exam  &middot; Victor&#39;s Blog</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="RHCE v8 Practice Exam" />
+
+<meta name="keywords" content="Linux, RedHat, RHCE, ">
+
+
+<meta property="og:title" content="RHCE v8 Practice Exam  &middot; Victor&#39;s Blog ">
+<meta property="og:site_name" content="Victor&#39;s Blog"/>
+<meta property="og:url" content="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/" />
+<meta property="og:locale" content="en">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content="RHCE v8 Practice Exam"/>
+<meta property="og:article:published_time" content="2023-11-27T17:20:38-05:00" />
+<meta property="og:article:modified_time" content="2023-11-27T17:20:38-05:00" />
+
+  
+    
+<meta property="og:article:tag" content="Linux">
+    
+<meta property="og:article:tag" content="RedHat">
+    
+<meta property="og:article:tag" content="RHCE">
+    
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@18440926" />
+<meta name="twitter:creator" content="@18440926" />
+<meta name="twitter:title" content="RHCE v8 Practice Exam" />
+<meta name="twitter:description" content="RHCE v8 Practice Exam" />
+<meta name="twitter:url" content="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/" />
+<meta name="twitter:domain" content="https://blog.victormendonca.com/">
+  
+
+  
+
+
+
+<link rel="canonical" href="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
+<link rel="icon" href="https://blog.victormendonca.com/favicon.png">
+<meta name="generator" content="Hugo 0.48" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+
+
+    <link rel="stylesheet" href="https://blog.victormendonca.com/css/bootswatch/default/bootstrap.min.css">
+
+
+<link rel="stylesheet" href="https://blog.victormendonca.com/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://blog.victormendonca.com/css/style.css">
+
+
+<link rel="stylesheet" href="https://blog.victormendonca.com/css/style_custom.css">
+
+
+
+  <link rel="stylesheet" href="https://blog.victormendonca.com/css/highlight/github.css">
+
+
+</head>
+<body class="map[name:default]" data-ng-app="myapp" data-ng-controller="MyController" data-ng-mouseleave="MouseLeave($event)">
+    <header id="main-header">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        
+        <a class="navbar-brand" href="https://blog.victormendonca.com/">
+          Victor&#39;s Blog
+          
+          
+          </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            
+            
+            <li class="">
+
+              <a href="https://blog.victormendonca.com/" >
+                
+                Home
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://blog.victormendonca.com/about/" >
+                
+                About
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://geekit.ca/" >
+                
+                Professional
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://manhattan.victormendonca.com/" >
+                
+                Manhattan Blog
+              </a>
+            </li>
+            
+            
+            
+          </ul>
+        </div>
+        
+      </div>
+    </nav>
+  </header>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <div class="text-center">
+
+    <h1>RHCE v8 Practice Exam
+</h1>
+
+    <div class="metas">
+<small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2023-11-27">27 Nov, 2023</time>
+</small>
+
+
+  <small>
+    &middot; by Victor Mendonça
+  
+  &middot; Read in about 10 min
+  &middot; (2028 words)
+  &middot; 
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f27%2frhce-v8-practiceexam%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=RHCE%20v8%20Practice%20Exam&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f27%2frhce-v8-practiceexam%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f27%2frhce-v8-practiceexam%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f27%2frhce-v8-practiceexam%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f27%2frhce-v8-practiceexam%2f&amp;title=RHCE%20v8%20Practice%20Exam" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=RHCE%20v8%20Practice%20Exam&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f27%2frhce-v8-practiceexam%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  </small>
+
+<div class="margin-10">
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/redhat" class="label label-primary">RedHat</a>
+  
+  <a href="https://blog.victormendonca.com/tags/rhce" class="label label-primary">RHCE</a>
+  
+
+
+</div>
+
+<br>
+</div>
+
+  </div>
+</div>
+
+      <div class="content">
+  
+
+<p>I created this practice exam as part of my preparation for the Red Hat RHCE exam (EX294V84K). It comprises 10 advanced-level tasks, with a focus on incorporating some of the most challenging RHCSA objectives.</p>
+
+<p>Answers will be included on my <a href="https://github.com/victorbrca/rhce8env">fork</a> of the <a href="https://github.com/rdbreak/rhce8env">rdbreak/rhce8env</a>, and hopefully merged into the main project soon .</p>
+
+<h2 id="pre-requisites">Pre-requisites</h2>
+
+<ul>
+<li>Setup the Vagrant/VirtualBox environment - <a href="https://github.com/victorbrca/rhce8env">victorbrca/rhce8env</a></li>
+<li>Register for a free Red Hat Developer subscription - <a href="https://developers.redhat.com/blog/2021/02/10/how-to-activate-your-no-cost-red-hat-enterprise-linux-subscription">instructions</a></li>
+<li>On the control node:
+
+<ul>
+<li>Register with you developer subscription. Set it to the 8.4 release</li>
+<li>Uninstall Ansible if installed</li>
+<li>Remove all EPEL repos</li>
+<li>Add the <code>ansible-2.9-for-rhel-8-x86_64-rpms</code> repo via subscription manager</li>
+</ul></li>
+<li>Add an additional 10GB disk to node4</li>
+<li>Increase memory on node4 to 1024M</li>
+</ul>
+
+<h2 id="objectives">Objectives</h2>
+
+<p>The following top-level objectives are covered on this exam, as per &lsquo;EX294V84K&rsquo;.</p>
+
+<ol>
+<li>Be able to perform all tasks expected of a Red Hat Certified System Administrator</li>
+<li>Understand core components of Ansible</li>
+<li>Install and configure an Ansible control node</li>
+<li>Configure Ansible managed nodes</li>
+<li>Script administration tasks</li>
+<li>Create and use static inventories to define groups of hosts</li>
+<li>Create Ansible plays and playbooks</li>
+<li>Use Ansible modules for system administration tasks that work with:</li>
+<li>Create and use templates to create customized configuration files</li>
+<li>Work with Ansible variables and facts</li>
+<li>Create and work with roles</li>
+<li>Download roles from an Ansible Galaxy and use them</li>
+<li>Use Ansible Vault in playbooks to protect sensitive data</li>
+<li>Use provided documentation to look up specific information about Ansible modules and commands</li>
+</ol>
+
+<h2 id="tasks">Tasks</h2>
+
+<h3 id="task-1">Task 1</h3>
+
+<h5 id="objectives-covered">Objectives covered:</h5>
+
+<ul>
+<li>2. Understand core components of Ansible</li>
+<li>3. Install and configure an Ansible control node</li>
+<li>4. Configure Ansible managed nodes</li>
+</ul>
+
+<h5 id="tasks-1">Tasks:</h5>
+
+<ul>
+<li>Install ansible on the control node</li>
+<li>Create a user called &lsquo;ansible&rsquo; on the control node</li>
+<li>Create the directory <code>/home/ansible/exam-files</code>. This is where all files will be saved
+
+<ul>
+<li>Create the following sub-directories:</li>
+<li>roles, vars, playbooks, scripts, files</li>
+<li>Create an ssh key for the &lsquo;ansible&rsquo; user in this folder</li>
+</ul></li>
+<li>Create an inventory file with the nodes:
+
+<ul>
+<li>node1</li>
+<li>node2</li>
+<li>node3</li>
+<li>node4</li>
+</ul></li>
+<li>Create an ansible config file as follows:
+
+<ul>
+<li>Roles path is set to <code>/home/ansible/exam-files/roles</code></li>
+<li>Inventory file is <code>/home/ansible/exam-files/inventory</code></li>
+<li>User to SSH to remote nodes is &lsquo;ansible&rsquo;</li>
+<li>Add the ssh key from the previous task</li>
+<li>Disable:</li>
+<li>Cow output</li>
+<li>Retry files</li>
+<li>Host key checking</li>
+</ul></li>
+<li>SSH to all nodes and create the &lsquo;ansible&rsquo; user. Give it a password</li>
+<li>Make so that the &lsquo;ansible&rsquo; user can elevate privileges without a password on all nodes</li>
+<li>Distribute the ssh key created to the nodes (use any method)</li>
+<li>Disable ssh password authentication for the &lsquo;ansible&rsquo; user on all nodes</li>
+<li>Create the ad-hoc script <code>/home/ansible/exam-files/scripts/check-connection.sh</code> that checks that the ssh connection works to all nodes</li>
+</ul>
+
+<h3 id="task-2">Task 2</h3>
+
+<h5 id="objectives-covered-1">Objectives covered:</h5>
+
+<ul>
+<li>5. Script administration tasks</li>
+</ul>
+
+<h5 id="tasks-2">Tasks:</h5>
+
+<ul>
+<li><p>Create the shell script <code>/home/ansible/exam-files/scripts/get-server-info.sh</code> that:</p>
+
+<ul>
+<li>Gets the hostname, OS name, OS version, tuned service status, and the tuned profile that is currently active. Output should look like:</li>
+</ul>
+
+<pre><code class="language-none">Hostname: control.ansi.example.com
+Name: &quot;Red Hat Enterprise Linux&quot;
+Version: &quot;8.0 (Ootpa)&quot;
+Tuned status: active
+Current active profile: virtual-guest
+</code></pre></li>
+
+<li><p>Create the ad-hoc script <code>/home/ansible/exam-files/scripts/task2.sh</code> that:</p>
+
+<ul>
+<li>Uploads &lsquo;get-server-info.sh&rsquo; to &lsquo;node1&rsquo; with:</li>
+<li>To <code>/usr/local/bin/get-server-info.sh</code></li>
+<li>Owned by &lsquo;root:root&rsquo;</li>
+<li>Permission is &lsquo;rwxr-xr-x&rsquo;</li>
+</ul></li>
+
+<li><p>Run the add-hoc script</p></li>
+</ul>
+
+<h3 id="task-3">Task 3</h3>
+
+<h5 id="objectives-covered-2">Objectives covered:</h5>
+
+<ul>
+<li>6. Create and use static inventories to define groups of hosts</li>
+</ul>
+
+<h5 id="tasks-3">Tasks:</h5>
+
+<ul>
+<li>Modify the inventory file to have the following groups
+
+<ul>
+<li>&lsquo;node1&rsquo; and &lsquo;node2&rsquo; are in the &lsquo;webservers&rsquo; group</li>
+<li>&lsquo;node3&rsquo; and &lsquo;node4&rsquo; are in the &lsquo;databases&rsquo; group</li>
+<li>&lsquo;node3&rsquo; is in the &lsquo;mysql&rsquo; group</li>
+<li>&lsquo;node4&rsquo; is in the &lsquo;postgresql&rsquo; group</li>
+<li>&lsquo;node1&rsquo; is in the &lsquo;version1&rsquo; group</li>
+<li>&lsquo;node2&rsquo; is in the &lsquo;version2&rsquo; group</li>
+</ul></li>
+</ul>
+
+<h3 id="task-4">Task 4</h3>
+
+<h5 id="objectives-covered-3">Objectives covered:</h5>
+
+<ul>
+<li>7. Create Ansible plays and playbooks</li>
+</ul>
+
+<h5 id="tasks-4">Tasks:</h5>
+
+<ul>
+<li>Create the playbook <code>/home/ansible/exam-files/playbooks/task4.yml</code>that:
+
+<ul>
+<li>Creates the folder <code>/data/backup</code> on the &lsquo;webservers&rsquo; group. The folder should have read and execute permission for group and others</li>
+<li>Creates the file <code>/etc/server_role</code> on all servers
+
+<ul>
+<li>The content of the file should be &lsquo;webservers&rsquo; or &lsquo;databases&rsquo; according to the inventory group</li>
+</ul></li>
+<li>Create a task that uses the <code>rpm</code> command to check if &lsquo;httpd&rsquo; is installed on the webservers and databases groups</li>
+<li>This task should only show as changed when it fails</li>
+<li>Ceate two tasks that display the following output based on the exit code from the <code>rpm</code> task. These tasks should run against the same groups as the <code>rpm</code> task:
+
+<ul>
+<li>&lsquo;HTTPD is installed&rsquo; if it&rsquo;s installed</li>
+<li>&lsquo;HTTPD is not installed&rsquo; if it&rsquo;s not installed</li>
+</ul></li>
+<li>Makes sure that the default system target is set to &lsquo;multi-user.target&rsquo;
+
+<ul>
+<li>Should only set the target if not already set</li>
+<li>Should show change on failure</li>
+<li>Should ignore errors</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<h3 id="task-5">Task 5</h3>
+
+<h5 id="objectives-covered-4">Objectives covered:</h5>
+
+<ul>
+<li>1. Be able to perform all tasks expected of a Red Hat Certified System Administrator</li>
+<li>8. Use Ansible modules for system administration tasks that work with</li>
+<li>10. Work with Ansible variables and facts</li>
+</ul>
+
+<h5 id="tasks-5">Tasks:</h5>
+
+<ul>
+<li>Create bash a script called <code>/home/ansible/exam-files/files/root_space_check.sh</code> that gets the used space percent for root (<code>/</code>) and:
+
+<ul>
+<li>Logs an info message to journald that looks like <code>root_space_check.sh[PID]: / usage is within threshold</code> when usage is below 70%</li>
+<li>Logs a warning message to journald with <code>root_space_check.sh[PID]: / usage is above 70% threshold</code> when usage is above 70%</li>
+</ul></li>
+<li>Create the playbook <code>/home/ansible/exam-files/playbooks/task5.yml</code> that
+
+<ul>
+<li>Uploads the <code>root_space_check.sh</code> script to <code>/usr/local/bin/</code> to all servers and set execute bit all accross (ugo)</li>
+<li>Adds an entry to root&rsquo;s crontab to execute the script every hour on all servers</li>
+<li>Does the following on the &lsquo;webservers&rsquo; group</li>
+<li>Installs &lsquo;httpd&rsquo;</li>
+<li>Enables and starts the &lsquo;httpd&rsquo; service</li>
+<li>Enables the &lsquo;http&rsquo; and &lsquo;httpd&rsquo; service on firewalld (runtime and permanent)</li>
+<li>Sets the <code>Listen</code> option in <code>/etc/httpd/conf/httpd.conf</code> to the internal IP. E.g.: <code>Listen 192.168.55.201:80</code>. Use facts variables for the internal IP</li>
+<li>Whenever <code>httpd.conf</code> is changed
+
+<ul>
+<li>Make sure that the &lsquo;httpd&rsquo; service is restarted</li>
+<li>Backs up an archived (zip) version of <code>httpd.conf</code> to <code>/data/backup/httpd.conf-[YYYYMMDD_HHMMSS].zip</code> (change <code>[YYYYMMDD_HHMMSS]</code> to a date string, e.g.: &lsquo;20231123_2400&rsquo;)</li>
+</ul></li>
+<li>Configures storage on the mysql group as follow:</li>
+<li>PV using /dev/sdb</li>
+<li>VG named &lsquo;databases_vg&rsquo;</li>
+<li>LV name &lsquo;databases_lv&rsquo;</li>
+<li>ext4 filesystem with the volume label of &lsquo;DATABASES&rsquo;</li>
+<li>Mounted on fstab under <code>/data/databases</code></li>
+<li>Enables SELinux on the databases group with targeted policy</li>
+</ul></li>
+</ul>
+
+<h3 id="task-6">Task 6</h3>
+
+<h5 id="objectives-covered-5">Objectives covered:</h5>
+
+<ul>
+<li>9. Create and use templates to create customized configuration files</li>
+<li>10. Work with Ansible variables and facts</li>
+<li>11. Create and work with roles</li>
+</ul>
+
+<h5 id="files">Files:</h5>
+
+<p><code>index.html</code></p>
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Server Information&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        div {
+            margin-bottom: 10px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Server Information&lt;/h1&gt;
+    
+    &lt;div&gt;
+        &lt;strong&gt;Hostname:&lt;/strong&gt; &lt;span id=&quot;hostname&quot;&gt;[HOSTNAME]&lt;/span&gt;
+    &lt;/div&gt;
+    
+    &lt;div&gt;
+        &lt;strong&gt;Node Group:&lt;/strong&gt; &lt;span id=&quot;group&quot;&gt;[NODE GROUP]&lt;/span&gt;
+    &lt;/div&gt;
+    
+    &lt;div&gt;
+        &lt;strong&gt;IP Address:&lt;/strong&gt; &lt;span id=&quot;ip&quot;&gt;[IP ADDRESS]&lt;/span&gt;
+    &lt;/div&gt;
+    
+    &lt;div&gt;
+        &lt;strong&gt;Timezone:&lt;/strong&gt; &lt;span id=&quot;timezone&quot;&gt;[TIMEZONE]&lt;/span&gt;
+    &lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h5 id="tasks-6">Tasks:</h5>
+
+<ul>
+<li>Create the role <code>/home/ansible/exam-files/roles/start-page</code>
+
+<ul>
+<li>Manually convert the index.html file into a jinja2 template that will set the following values and add it to the &lsquo;start-page&rsquo; role as a template:</li>
+</ul></li>
+</ul>
+
+<pre><code class="language-none">[HOSTNAME] - Should get the node FQDN value from an ansible fact variable
+[VERSION] - Version group from the inventory
+[IP ADDRESS] - Should get the node internal IP value from an ansible fact variable
+[TIMEZONE] - Should
+</code></pre>
+
+<ul>
+<li>Create the main task for this role to push the template</li>
+<li>Create the role <code>/home/ansible/exam-files/roles/journald-persistent</code>. This role should:
+
+<ul>
+<li>Enable persistent journald with all the required steps</li>
+<li>Set the max storage to 100M</li>
+<li>Reload the service when changes are made</li>
+</ul></li>
+<li>Create the playbook <code>/home/ansible/exam-files/playbooks/task6.yml</code> that applies the &lsquo;start-page&rsquo; role to the &lsquo;webservers&rsquo; group and the &lsquo;jounald-persistent&rsquo; role to all servers</li>
+</ul>
+
+<h3 id="task-7">Task 7</h3>
+
+<h5 id="objectives-covered-6">Objectives covered:</h5>
+
+<ol>
+<li>Work with Ansible variables and facts</li>
+</ol>
+
+<h5 id="tasks-7">Tasks:</h5>
+
+<ul>
+<li>Create the a custom fact for the &lsquo;webservers&rsquo; group with the structure below:
+
+<ul>
+<li><code>app_version</code> should be based on the version specified in the inventory file</li>
+</ul></li>
+</ul>
+
+<pre><code class="language-none">&quot;exam&quot;: {
+    &quot;server_info&quot;: {
+        &quot;group&quot;: &quot;webservers&quot;,
+        &quot;app_version&quot;: &quot;1&quot;
+    }
+}
+</code></pre>
+
+<blockquote>
+<p><strong>NOTE:</strong> This task can be done via a playbook or manually</p>
+</blockquote>
+
+<h3 id="task-8">Task 8</h3>
+
+<h5 id="objectives-covered-7">Objectives covered:</h5>
+
+<ul>
+<li>1. Be able to perform all tasks expected of a Red Hat Certified System Administrator</li>
+<li>11. Create and work with roles</li>
+</ul>
+
+<h5 id="tasks-8">Tasks:</h5>
+
+<p><em><strong>Before you start, remember you should have added a 10GB disk to node4 and increased it&rsquo;s memory to 1024M</strong></em></p>
+
+<ul>
+<li><p>Create the role <code>/home/ansible/exam-files/roles/postgresql</code> that does the following:</p>
+
+<ul>
+<li>Creates a VDO on the 10G disk with:
+
+<ul>
+<li>VDO name is &lsquo;databases_vdo&rsquo;</li>
+<li>20G logical size</li>
+<li>Deduplication disabled</li>
+<li>Auto write mode (write policy)
+<br /></li>
+</ul></li>
+</ul>
+
+<p><em><strong>Perform needed VDO steps, as per RHCSA</strong></em></p>
+
+<ul>
+<li>Create a logical volume with:
+
+<ul>
+<li>PV using the vdo device</li>
+<li>VG named &lsquo;databases_vg&rsquo;</li>
+<li>LV name &lsquo;databases_lv&rsquo;</li>
+</ul></li>
+<li>Format and mount with:
+
+<ul>
+<li>ext4 filesystem (using VDO requirements)</li>
+<li>Mounted on fstab under <code>/data/databases</code></li>
+</ul></li>
+</ul>
+
+<p><em><strong>Follow vdo mount requirements, as per RHCSA</strong></em></p>
+
+<ul>
+<li>Installs the postgresql package group - <code>@postgresql</code></li>
+<li>Modifies the value of <code>Environment=PGDATA=</code> in the systemd service for &lsquo;postgresql.service&rsquo; to have the value below (<em>remember the old path and make sure new value is reloaded</em>)
+<code>Environment=PGDATA=/data/databases/postgresql_data</code></li>
+<li>Creates the directory <code>/data/databases/postgresql_data</code></li>
+<li>Sets the ownership of <code>/data/databases/postgresql_data</code> to <code>postgres:postgres</code> with <code>rwx------</code></li>
+<li>Initializes the DB with <code>postgresql-setup --initdb</code>
+
+<ul>
+<li>Should only run during setup</li>
+</ul></li>
+<li>Enables the SELinux boolean <code>selinuxuser_postgresql_connect_enabled</code></li>
+<li>Enables and starts the service <code>postgresql.service</code>
+
+<ul>
+<li>The service should be restarted whenever the systemd unit file for <code>postgresql.service</code> is changed</li>
+</ul></li>
+</ul>
+
+<p><strong>See warning below</strong></p></li>
+
+<li><p>Create the playbook <code>/home/ansible/exam-files/playbooks/deploy-postgresql.yml</code> that pushes this role to the &lsquo;postgresql&rsquo; group</p></li>
+
+<li><p>Add the following to the same playbook as tasks:</p>
+
+<ul>
+<li>Creates the dir <code>/data/db_troubleshoot</code></li>
+<li>Sets the ownership of <code>/data/db_troubleshoot</code> to <code>postgres:postgres</code> with <code>rwx------</code></li>
+<li>Creates the group &lsquo;pgsqladmin&rsquo;</li>
+<li>Creates the user &lsquo;dbadmin&rsquo; with primary group of &lsquo;pgsqladmin&rsquo;</li>
+<li>Adds an ACL that gives the &lsquo;pgsqladmin&rsquo; group full access to <code>/data/db_troubleshoot</code>. This should also be the default ACL for new files</li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p><strong>WARNING</strong></p>
+
+<p>The postgresql service will fail to start. You will need to logon to the server and fix the issue. The solution/fix can be done manually, but it needs to be part of the playbook.</p>
+</blockquote>
+
+<hr />
+
+<blockquote>
+<p><strong>TIP</strong></p>
+
+<p>While creating the VDO device you may run into the error below:</p>
+
+<pre><code> fatal: [node4]: FAILED! =&gt; {
+     &quot;changed&quot;: false,
+     &quot;module_stderr&quot;: &quot;Shared connection to node4 closed.\r\n&quot;,
+     &quot;module_stdout&quot;: &quot;/tmp/ansible_vdo_payload_crp07req/ansible_vdo_payload.zip/ansible/modules/system/vdo.py:330: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.\r\n/bin/sh: line 1:  6280 Killed                  /usr/libexec/platform-python /home/ansible/.ansible/tmp/ansible-tmp-1701096243.3300107-7102-276967642935618/AnsiballZ_vdo.py\r\n&quot;,
+     &quot;msg&quot;: &quot;MODULE FAILURE\nSee stdout/stderr for the exact error&quot;,
+     &quot;rc&quot;: 137
+ }
+</code></pre>
+
+<p>If that&rsquo;s the case, fully remove the vdo device and then apply the patch below. While this is not part of the exam, it&rsquo;s a good skill to aquire.</p>
+
+<p><a href="https://github.com/ansible-collections/community.general/pull/5632/files">https://github.com/ansible-collections/community.general/pull/5632/files</a></p>
+
+<p>You can identify the path for the Ansible code with <code>ansible --version</code>. Then browse to the module shown in that commit message and modify the 2x lines. Note that the line number may not match, but should be pretty close.</p>
+</blockquote>
+
+<h3 id="task-9">Task 9</h3>
+
+<h5 id="objectives-covered-8">Objectives covered:</h5>
+
+<ul>
+<li>12. Download roles from an Ansible Galaxy and use them</li>
+<li>13. Use Ansible Vault in playbooks to protect sensitive data</li>
+</ul>
+
+<h5 id="tasks-9">Tasks:</h5>
+
+<ul>
+<li>Using <code>ansible-galaxy</code> search for and download the &lsquo;mysql&rsquo; role by &lsquo;geerlingguy&rsquo;</li>
+<li>Create a vault password file and add it to <code>ansible.cfg</code></li>
+<li>Create the variable file <code>/home/ansible/exam-files/vars/mysql.yml</code> and add the following variables:
+
+<ul>
+<li><code>mysql_root_username: root</code></li>
+<li><code>mysql_root_password: sqlrootpassword</code></li>
+</ul></li>
+<li>Encrypt the variable file with ansible vault</li>
+<li>Modify the role so that it:
+
+<ul>
+<li>Changes the root credentials</li>
+<li>Saves the root credentials to <code>~/.my.rc</code></li>
+</ul></li>
+<li>Create the playbook <code>/home/ansible/exam-files/playbooks/deploy-mysql.yml</code> that pushes the role to the mysql group</li>
+</ul>
+
+<h3 id="task-10">Task 10</h3>
+
+<h5 id="objectives-covered-9">Objectives covered:</h5>
+
+<ol>
+<li>Use provided documentation to look up specific information about Ansible modules and commands</li>
+</ol>
+
+<h5 id="tasks-10">Tasks:</h5>
+
+<ul>
+<li>Create the file <code>/home/ansible/exam-files/ansible.cfg.template</code> with a dump of all possible env and config values. For example:</li>
+</ul>
+
+<pre><code class="language-none">ACTION_WARNINGS:
+  default: true
+  description: [By default Ansible will issue a warning when received from a task
+      action (module or action plugin), These warnings can be silenced by adjusting
+      this setting to False.]
+  env:
+  - {name: ANSIBLE_ACTION_WARNINGS}
+  ini:
+  - {key: action_warnings, section: defaults}
+  name: Toggle action warnings
+  type: boolean
+  version_added: '2.5'
+</code></pre>
+
+<ul>
+<li>Create the file <code>/home/ansible/exam-files/ansible.cfg.dump</code> with all the current variables/settings. For example:</li>
+</ul>
+
+<pre><code class="language-none">ACTION_WARNINGS(default) = True
+AGNOSTIC_BECOME_PROMPT(default) = True
+ALLOW_WORLD_READABLE_TMPFILES(default) = False
+ANSIBLE_CONNECTION_PATH(default) = None
+ANSIBLE_COW_PATH(default) = None
+ANSIBLE_COW_SELECTION(default) = default
+ANSIBLE_COW_WHITELIST(default) = ['bud-frogs', 'bunny', 'cheese', 'daemon', 'default', 'dragon', 'elephant-in-snake', '&gt;
+ANSIBLE_FORCE_COLOR(default) = False
+ANSIBLE_NOCOLOR(default) = False
+ANSIBLE_NOCOWS(default) = False
+</code></pre>
+
+<ul>
+<li>Create the file <code>/home/ansible/exam-files/ansible-modules.txt</code> with a list of all the Ansible modules available on this system. For example:</li>
+</ul>
+
+<pre><code class="language-none">a10_server                                                    Manage A10 Networks AX/SoftAX/Thunder/vThunder device...
+a10_server_axapi3                                             Manage A10 Networks AX/SoftAX/Thunder/vThunder device...
+a10_service_group                                             Manage A10 Networks AX/SoftAX/Thunder/vThunder device...
+a10_virtual_server                                            Manage A10 Networks AX/SoftAX/Thunder/vThunder device...
+aci_aaa_user                                                  Manage AAA users (aaa:User)
+aci_aaa_user_certificate                                      Manage AAA user certificates (aaa:UserCert)
+aci_access_port_block_to_access_port                          Manage port blocks of Fabric interface policy leaf pr...
+aci_access_port_to_interface_policy_leaf_profile              Manage Fabric interface policy leaf profile interface...
+aci_access_sub_port_block_to_access_port                      Manage sub port blocks of Fabric interface policy lea...
+aci_aep                                                       Manage attachable Access Entity Profile (AEP) objects...
+aci_aep_to_domain                                             Bind AEPs to Physical or Virtual Domains (infra:RsDom...
+aci_ap                                                        Manage top level Application Profile (AP) objects (fv...
+aci_bd                                                        Manage Bridge Domains (BD) objects (fv:BD)
+</code></pre>
+
+<ul>
+<li>Install jinja2 html documentation</li>
+</ul>
+
+</div>
+
+
+      <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f27%2frhce-v8-practiceexam%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=RHCE%20v8%20Practice%20Exam&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f27%2frhce-v8-practiceexam%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f27%2frhce-v8-practiceexam%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f27%2frhce-v8-practiceexam%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f27%2frhce-v8-practiceexam%2f&amp;title=RHCE%20v8%20Practice%20Exam" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=RHCE%20v8%20Practice%20Exam&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f27%2frhce-v8-practiceexam%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/" title="Testing New Hard Drives">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+    </div>
+    
+      <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+        <div>
+  
+
+   
+    <div class="section">
+      <header><div class="title"></div></header>
+      <div class="content">
+        <img style="float: center; padding-right: 5px;" src="https://blog.victormendonca.com/img/avatar.jpg" hspace="20" width="240"></img>
+        <br/>
+        <div class="social-icons" style="display:inline-block; text-align: center; width:100%;">
+        <a href="https://github.com/victorbrca" target="_blank"><i class="fa fa-github fa-2x" style="padding-right: 5px; padding-left: 5px" aria-hidden="true"></i></a>
+        <a href="https://twitter.com/victorbrca" target="_blank"><i class="fa fa-twitter fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <a href="http://www.linkedin.com/in/victormendonca" target="_blank"><i class="fa fa-linkedin-square fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <a href="https://www.facebook.com/victormendonca" target="_blank"><i class="fa fa-facebook-official fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <div>
+        <br/>
+      </div>
+    </div>
+
+    
+      
+      
+      <div class="section taxonomies">
+        <header><div class="title"><b>tags</b></div></header>
+
+        <div class="content1">
+          <ul>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/aws">aws</a></li>
+          </ul>
+        </div>
+      </div>
+      
+    
+      
+      
+    
+
+    <br />
+
+    <div class="section">
+      <header><div class="title"><b>Latest Posts</b></div></header>
+      <div class="content">
+        <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/">RHCE v8 Practice Exam</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/">Testing New Hard Drives</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/">How to Migrate Local Users and Grops</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2023/06/30/undestanting-yum-clean-all-and-stale-repos/">Understanding &#34;yum clean all&#34; and Stale Repos</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2022/11/18/linux-find-command/">Linux find Command</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2021/02/28/getting-started-with-ansible-molecule/">Getting Started with Ansible Molecule</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2021/01/23/how-to-convert-standard-partition-to-lvm/">How to Convert Standard Partition to Logical Volume</a>
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+
+    <br />
+
+    
+    <div class="section">
+    
+      
+      <div class="content" align="center" >
+        <a class="twitter-timeline" data-width="240" data-height="450" href="https://twitter.com/victorbrca">Tweets by victorbrca</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+    </div>
+
+</div>
+
+      </div>
+    
+  </div>
+</div>
+    
+<footer class="footer hidden-print">
+  <div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+           <div class="pull-left">
+  <a class="toplink" href="javascript:" id="return-to-top">back to top</a>
+</div>
+<div class="pull-right">
+
+</div>
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+              
+    
+<div class="container footline">
+    <small>
+  code with <i class='fa fa-linux'></i>
+
+</small>
+</div>
+
+
+    
+<div class="container copyright">
+    <small>
+  &copy; 2018 Copyright Victor Mendonça
+
+  </small>
+</div>
+
+
+
+        </div>
+    </div>
+  </div>
+</footer>
+
+    
+
+<script src="https://blog.victormendonca.com/js/jquery.min.js"></script>
+<script src="https://blog.victormendonca.com/js/bootstrap.min.js"></script>
+
+
+<script src="https://blog.victormendonca.com/js/highlight.pack.js"></script>
+<script src="https://blog.victormendonca.com/js/site.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script>
+  var _gaq=[['_setAccount','UA-113222099-1'],['_trackPageview']];
+  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+  g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+  s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+
+<script>
+var ENABLE_POPOVER =  false , 
+EXPIRE_COOKIE =  5 , 
+SHOW_MODAL_TIMEOUT =  10000 , 
+MOUSE_LEAVE =  true , 
+MODAL_SIZE = "", 
+POST_URL = "https://zapier.com/hooks/catch/1227563/", 
+SIGNUP_HEADER = "Join Our Newsletter",
+HEADER_IMAGE = "//placehold.it/1000x600",
+IMG_DESCRIPTION = "Placeholder image for this popover modal optin form",
+SIGNUP_TEXT = "Signup today for free and be the first to get notified on new updates.",
+INPUT_PLACEHOLDER = "Enter your email",
+SUBMIT_BUTTON = "Subscribe",
+SUCCESS_MESSAGE = "Thanks for your subscription!",
+ERROR_MESSAGE = "Submitting form failed!",
+OPTIN =  true ,
+COOKIE_NAME = "mycookie1",
+CONTENTLANGUAGE = ""; 
+</script>
+
+
+
+
+
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/config/TeX-AMS-MML_HTMLorMML.js"></script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    for(var all in MathJax.Hub.getAllJax()) {
+        all.SourceElement().parentNode.className += ' has-jax';
+
+    }
+});
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+

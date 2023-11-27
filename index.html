@@ -127,6 +127,653 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/">RHCE v8 Practice Exam</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2023-11-27">27 Nov, 2023</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/redhat" class="label label-primary">RedHat</a>
+  
+  <a href="https://blog.victormendonca.com/tags/rhce" class="label label-primary">RHCE</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>I created this practice exam as part of my preparation for the Red Hat RHCE exam (EX294V84K). It comprises 10 advanced-level tasks, with a focus on incorporating some of the most challenging RHCSA objectives.</p>
+
+<p>Answers will be included on my <a href="https://github.com/victorbrca/rhce8env">fork</a> of the <a href="https://github.com/rdbreak/rhce8env">rdbreak/rhce8env</a>, and hopefully merged into the main project soon .</p>
+
+<h2 id="pre-requisites">Pre-requisites</h2>
+
+<ul>
+<li>Setup the Vagrant/VirtualBox environment - <a href="https://github.com/victorbrca/rhce8env">victorbrca/rhce8env</a></li>
+<li>Register for a free Red Hat Developer subscription - <a href="https://developers.redhat.com/blog/2021/02/10/how-to-activate-your-no-cost-red-hat-enterprise-linux-subscription">instructions</a></li>
+<li>On the control node:
+
+<ul>
+<li>Register with you developer subscription. Set it to the 8.4 release</li>
+<li>Uninstall Ansible if installed</li>
+<li>Remove all EPEL repos</li>
+<li>Add the <code>ansible-2.9-for-rhel-8-x86_64-rpms</code> repo via subscription manager</li>
+</ul></li>
+<li>Add an additional 10GB disk to node4</li>
+<li>Increase memory on node4 to 1024M</li>
+</ul>
+
+<h2 id="objectives">Objectives</h2>
+
+<p>The following top-level objectives are covered on this exam, as per &lsquo;EX294V84K&rsquo;.</p>
+
+<ol>
+<li>Be able to perform all tasks expected of a Red Hat Certified System Administrator</li>
+<li>Understand core components of Ansible</li>
+<li>Install and configure an Ansible control node</li>
+<li>Configure Ansible managed nodes</li>
+<li>Script administration tasks</li>
+<li>Create and use static inventories to define groups of hosts</li>
+<li>Create Ansible plays and playbooks</li>
+<li>Use Ansible modules for system administration tasks that work with:</li>
+<li>Create and use templates to create customized configuration files</li>
+<li>Work with Ansible variables and facts</li>
+<li>Create and work with roles</li>
+<li>Download roles from an Ansible Galaxy and use them</li>
+<li>Use Ansible Vault in playbooks to protect sensitive data</li>
+<li>Use provided documentation to look up specific information about Ansible modules and commands</li>
+</ol>
+
+<h2 id="tasks">Tasks</h2>
+
+<h3 id="task-1">Task 1</h3>
+
+<h5 id="objectives-covered">Objectives covered:</h5>
+
+<ul>
+<li>2. Understand core components of Ansible</li>
+<li>3. Install and configure an Ansible control node</li>
+<li>4. Configure Ansible managed nodes</li>
+</ul>
+
+<h5 id="tasks-1">Tasks:</h5>
+
+<ul>
+<li>Install ansible on the control node</li>
+<li>Create a user called &lsquo;ansible&rsquo; on the control node</li>
+<li>Create the directory <code>/home/ansible/exam-files</code>. This is where all files will be saved
+
+<ul>
+<li>Create the following sub-directories:</li>
+<li>roles, vars, playbooks, scripts, files</li>
+<li>Create an ssh key for the &lsquo;ansible&rsquo; user in this folder</li>
+</ul></li>
+<li>Create an inventory file with the nodes:
+
+<ul>
+<li>node1</li>
+<li>node2</li>
+<li>node3</li>
+<li>node4</li>
+</ul></li>
+<li>Create an ansible config file as follows:
+
+<ul>
+<li>Roles path is set to <code>/home/ansible/exam-files/roles</code></li>
+<li>Inventory file is <code>/home/ansible/exam-files/inventory</code></li>
+<li>User to SSH to remote nodes is &lsquo;ansible&rsquo;</li>
+<li>Add the ssh key from the previous task</li>
+<li>Disable:</li>
+<li>Cow output</li>
+<li>Retry files</li>
+<li>Host key checking</li>
+</ul></li>
+<li>SSH to all nodes and create the &lsquo;ansible&rsquo; user. Give it a password</li>
+<li>Make so that the &lsquo;ansible&rsquo; user can elevate privileges without a password on all nodes</li>
+<li>Distribute the ssh key created to the nodes (use any method)</li>
+<li>Disable ssh password authentication for the &lsquo;ansible&rsquo; user on all nodes</li>
+<li>Create the ad-hoc script <code>/home/ansible/exam-files/scripts/check-connection.sh</code> that checks that the ssh connection works to all nodes</li>
+</ul>
+
+<h3 id="task-2">Task 2</h3>
+
+<h5 id="objectives-covered-1">Objectives covered:</h5>
+
+<ul>
+<li>5. Script administration tasks</li>
+</ul>
+
+<h5 id="tasks-2">Tasks:</h5>
+
+<ul>
+<li><p>Create the shell script <code>/home/ansible/exam-files/scripts/get-server-info.sh</code> that:</p>
+
+<ul>
+<li>Gets the hostname, OS name, OS version, tuned service status, and the tuned profile that is currently active. Output should look like:</li>
+</ul>
+
+<pre><code class="language-none">Hostname: control.ansi.example.com
+Name: &quot;Red Hat Enterprise Linux&quot;
+Version: &quot;8.0 (Ootpa)&quot;
+Tuned status: active
+Current active profile: virtual-guest
+</code></pre></li>
+
+<li><p>Create the ad-hoc script <code>/home/ansible/exam-files/scripts/task2.sh</code> that:</p>
+
+<ul>
+<li>Uploads &lsquo;get-server-info.sh&rsquo; to &lsquo;node1&rsquo; with:</li>
+<li>To <code>/usr/local/bin/get-server-info.sh</code></li>
+<li>Owned by &lsquo;root:root&rsquo;</li>
+<li>Permission is &lsquo;rwxr-xr-x&rsquo;</li>
+</ul></li>
+
+<li><p>Run the add-hoc script</p></li>
+</ul>
+
+<h3 id="task-3">Task 3</h3>
+
+<h5 id="objectives-covered-2">Objectives covered:</h5>
+
+<ul>
+<li>6. Create and use static inventories to define groups of hosts</li>
+</ul>
+
+<h5 id="tasks-3">Tasks:</h5>
+
+<ul>
+<li>Modify the inventory file to have the following groups
+
+<ul>
+<li>&lsquo;node1&rsquo; and &lsquo;node2&rsquo; are in the &lsquo;webservers&rsquo; group</li>
+<li>&lsquo;node3&rsquo; and &lsquo;node4&rsquo; are in the &lsquo;databases&rsquo; group</li>
+<li>&lsquo;node3&rsquo; is in the &lsquo;mysql&rsquo; group</li>
+<li>&lsquo;node4&rsquo; is in the &lsquo;postgresql&rsquo; group</li>
+<li>&lsquo;node1&rsquo; is in the &lsquo;version1&rsquo; group</li>
+<li>&lsquo;node2&rsquo; is in the &lsquo;version2&rsquo; group</li>
+</ul></li>
+</ul>
+
+<h3 id="task-4">Task 4</h3>
+
+<h5 id="objectives-covered-3">Objectives covered:</h5>
+
+<ul>
+<li>7. Create Ansible plays and playbooks</li>
+</ul>
+
+<h5 id="tasks-4">Tasks:</h5>
+
+<ul>
+<li>Create the playbook <code>/home/ansible/exam-files/playbooks/task4.yml</code>that:
+
+<ul>
+<li>Creates the folder <code>/data/backup</code> on the &lsquo;webservers&rsquo; group. The folder should have read and execute permission for group and others</li>
+<li>Creates the file <code>/etc/server_role</code> on all servers
+
+<ul>
+<li>The content of the file should be &lsquo;webservers&rsquo; or &lsquo;databases&rsquo; according to the inventory group</li>
+</ul></li>
+<li>Create a task that uses the <code>rpm</code> command to check if &lsquo;httpd&rsquo; is installed on the webservers and databases groups</li>
+<li>This task should only show as changed when it fails</li>
+<li>Ceate two tasks that display the following output based on the exit code from the <code>rpm</code> task. These tasks should run against the same groups as the <code>rpm</code> task:
+
+<ul>
+<li>&lsquo;HTTPD is installed&rsquo; if it&rsquo;s installed</li>
+<li>&lsquo;HTTPD is not installed&rsquo; if it&rsquo;s not installed</li>
+</ul></li>
+<li>Makes sure that the default system target is set to &lsquo;multi-user.target&rsquo;
+
+<ul>
+<li>Should only set the target if not already set</li>
+<li>Should show change on failure</li>
+<li>Should ignore errors</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<h3 id="task-5">Task 5</h3>
+
+<h5 id="objectives-covered-4">Objectives covered:</h5>
+
+<ul>
+<li>1. Be able to perform all tasks expected of a Red Hat Certified System Administrator</li>
+<li>8. Use Ansible modules for system administration tasks that work with</li>
+<li>10. Work with Ansible variables and facts</li>
+</ul>
+
+<h5 id="tasks-5">Tasks:</h5>
+
+<ul>
+<li>Create bash a script called <code>/home/ansible/exam-files/files/root_space_check.sh</code> that gets the used space percent for root (<code>/</code>) and:
+
+<ul>
+<li>Logs an info message to journald that looks like <code>root_space_check.sh[PID]: / usage is within threshold</code> when usage is below 70%</li>
+<li>Logs a warning message to journald with <code>root_space_check.sh[PID]: / usage is above 70% threshold</code> when usage is above 70%</li>
+</ul></li>
+<li>Create the playbook <code>/home/ansible/exam-files/playbooks/task5.yml</code> that
+
+<ul>
+<li>Uploads the <code>root_space_check.sh</code> script to <code>/usr/local/bin/</code> to all servers and set execute bit all accross (ugo)</li>
+<li>Adds an entry to root&rsquo;s crontab to execute the script every hour on all servers</li>
+<li>Does the following on the &lsquo;webservers&rsquo; group</li>
+<li>Installs &lsquo;httpd&rsquo;</li>
+<li>Enables and starts the &lsquo;httpd&rsquo; service</li>
+<li>Enables the &lsquo;http&rsquo; and &lsquo;httpd&rsquo; service on firewalld (runtime and permanent)</li>
+<li>Sets the <code>Listen</code> option in <code>/etc/httpd/conf/httpd.conf</code> to the internal IP. E.g.: <code>Listen 192.168.55.201:80</code>. Use facts variables for the internal IP</li>
+<li>Whenever <code>httpd.conf</code> is changed
+
+<ul>
+<li>Make sure that the &lsquo;httpd&rsquo; service is restarted</li>
+<li>Backs up an archived (zip) version of <code>httpd.conf</code> to <code>/data/backup/httpd.conf-[YYYYMMDD_HHMMSS].zip</code> (change <code>[YYYYMMDD_HHMMSS]</code> to a date string, e.g.: &lsquo;20231123_2400&rsquo;)</li>
+</ul></li>
+<li>Configures storage on the mysql group as follow:</li>
+<li>PV using /dev/sdb</li>
+<li>VG named &lsquo;databases_vg&rsquo;</li>
+<li>LV name &lsquo;databases_lv&rsquo;</li>
+<li>ext4 filesystem with the volume label of &lsquo;DATABASES&rsquo;</li>
+<li>Mounted on fstab under <code>/data/databases</code></li>
+<li>Enables SELinux on the databases group with targeted policy</li>
+</ul></li>
+</ul>
+
+<h3 id="task-6">Task 6</h3>
+
+<h5 id="objectives-covered-5">Objectives covered:</h5>
+
+<ul>
+<li>9. Create and use templates to create customized configuration files</li>
+<li>10. Work with Ansible variables and facts</li>
+<li>11. Create and work with roles</li>
+</ul>
+
+<h5 id="files">Files:</h5>
+
+<p><code>index.html</code></p>
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Server Information&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        div {
+            margin-bottom: 10px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Server Information&lt;/h1&gt;
+    
+    &lt;div&gt;
+        &lt;strong&gt;Hostname:&lt;/strong&gt; &lt;span id=&quot;hostname&quot;&gt;[HOSTNAME]&lt;/span&gt;
+    &lt;/div&gt;
+    
+    &lt;div&gt;
+        &lt;strong&gt;Node Group:&lt;/strong&gt; &lt;span id=&quot;group&quot;&gt;[NODE GROUP]&lt;/span&gt;
+    &lt;/div&gt;
+    
+    &lt;div&gt;
+        &lt;strong&gt;IP Address:&lt;/strong&gt; &lt;span id=&quot;ip&quot;&gt;[IP ADDRESS]&lt;/span&gt;
+    &lt;/div&gt;
+    
+    &lt;div&gt;
+        &lt;strong&gt;Timezone:&lt;/strong&gt; &lt;span id=&quot;timezone&quot;&gt;[TIMEZONE]&lt;/span&gt;
+    &lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h5 id="tasks-6">Tasks:</h5>
+
+<ul>
+<li>Create the role <code>/home/ansible/exam-files/roles/start-page</code>
+
+<ul>
+<li>Manually convert the index.html file into a jinja2 template that will set the following values and add it to the &lsquo;start-page&rsquo; role as a template:</li>
+</ul></li>
+</ul>
+
+<pre><code class="language-none">[HOSTNAME] - Should get the node FQDN value from an ansible fact variable
+[VERSION] - Version group from the inventory
+[IP ADDRESS] - Should get the node internal IP value from an ansible fact variable
+[TIMEZONE] - Should
+</code></pre>
+
+<ul>
+<li>Create the main task for this role to push the template</li>
+<li>Create the role <code>/home/ansible/exam-files/roles/journald-persistent</code>. This role should:
+
+<ul>
+<li>Enable persistent journald with all the required steps</li>
+<li>Set the max storage to 100M</li>
+<li>Reload the service when changes are made</li>
+</ul></li>
+<li>Create the playbook <code>/home/ansible/exam-files/playbooks/task6.yml</code> that applies the &lsquo;start-page&rsquo; role to the &lsquo;webservers&rsquo; group and the &lsquo;jounald-persistent&rsquo; role to all servers</li>
+</ul>
+
+<h3 id="task-7">Task 7</h3>
+
+<h5 id="objectives-covered-6">Objectives covered:</h5>
+
+<ol>
+<li>Work with Ansible variables and facts</li>
+</ol>
+
+<h5 id="tasks-7">Tasks:</h5>
+
+<ul>
+<li>Create the a custom fact for the &lsquo;webservers&rsquo; group with the structure below:
+
+<ul>
+<li><code>app_version</code> should be based on the version specified in the inventory file</li>
+</ul></li>
+</ul>
+
+<pre><code class="language-none">&quot;exam&quot;: {
+    &quot;server_info&quot;: {
+        &quot;group&quot;: &quot;webservers&quot;,
+        &quot;app_version&quot;: &quot;1&quot;
+    }
+}
+</code></pre>
+
+<blockquote>
+<p><strong>NOTE:</strong> This task can be done via a playbook or manually</p>
+</blockquote>
+
+<h3 id="task-8">Task 8</h3>
+
+<h5 id="objectives-covered-7">Objectives covered:</h5>
+
+<ul>
+<li>1. Be able to perform all tasks expected of a Red Hat Certified System Administrator</li>
+<li>11. Create and work with roles</li>
+</ul>
+
+<h5 id="tasks-8">Tasks:</h5>
+
+<p><em><strong>Before you start, remember you should have added a 10GB disk to node4 and increased it&rsquo;s memory to 1024M</strong></em></p>
+
+<ul>
+<li><p>Create the role <code>/home/ansible/exam-files/roles/postgresql</code> that does the following:</p>
+
+<ul>
+<li>Creates a VDO on the 10G disk with:
+
+<ul>
+<li>VDO name is &lsquo;databases_vdo&rsquo;</li>
+<li>20G logical size</li>
+<li>Deduplication disabled</li>
+<li>Auto write mode (write policy)
+<br /></li>
+</ul></li>
+</ul>
+
+<p><em><strong>Perform needed VDO steps, as per RHCSA</strong></em></p>
+
+<ul>
+<li>Create a logical volume with:
+
+<ul>
+<li>PV using the vdo device</li>
+<li>VG named &lsquo;databases_vg&rsquo;</li>
+<li>LV name &lsquo;databases_lv&rsquo;</li>
+</ul></li>
+<li>Format and mount with:
+
+<ul>
+<li>ext4 filesystem (using VDO requirements)</li>
+<li>Mounted on fstab under <code>/data/databases</code></li>
+</ul></li>
+</ul>
+
+<p><em><strong>Follow vdo mount requirements, as per RHCSA</strong></em></p>
+
+<ul>
+<li>Installs the postgresql package group - <code>@postgresql</code></li>
+<li>Modifies the value of <code>Environment=PGDATA=</code> in the systemd service for &lsquo;postgresql.service&rsquo; to have the value below (<em>remember the old path and make sure new value is reloaded</em>)
+<code>Environment=PGDATA=/data/databases/postgresql_data</code></li>
+<li>Creates the directory <code>/data/databases/postgresql_data</code></li>
+<li>Sets the ownership of <code>/data/databases/postgresql_data</code> to <code>postgres:postgres</code> with <code>rwx------</code></li>
+<li>Initializes the DB with <code>postgresql-setup --initdb</code>
+
+<ul>
+<li>Should only run during setup</li>
+</ul></li>
+<li>Enables the SELinux boolean <code>selinuxuser_postgresql_connect_enabled</code></li>
+<li>Enables and starts the service <code>postgresql.service</code>
+
+<ul>
+<li>The service should be restarted whenever the systemd unit file for <code>postgresql.service</code> is changed</li>
+</ul></li>
+</ul>
+
+<p><strong>See warning below</strong></p></li>
+
+<li><p>Create the playbook <code>/home/ansible/exam-files/playbooks/deploy-postgresql.yml</code> that pushes this role to the &lsquo;postgresql&rsquo; group</p></li>
+
+<li><p>Add the following to the same playbook as tasks:</p>
+
+<ul>
+<li>Creates the dir <code>/data/db_troubleshoot</code></li>
+<li>Sets the ownership of <code>/data/db_troubleshoot</code> to <code>postgres:postgres</code> with <code>rwx------</code></li>
+<li>Creates the group &lsquo;pgsqladmin&rsquo;</li>
+<li>Creates the user &lsquo;dbadmin&rsquo; with primary group of &lsquo;pgsqladmin&rsquo;</li>
+<li>Adds an ACL that gives the &lsquo;pgsqladmin&rsquo; group full access to <code>/data/db_troubleshoot</code>. This should also be the default ACL for new files</li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p><strong>WARNING</strong></p>
+
+<p>The postgresql service will fail to start. You will need to logon to the server and fix the issue. The solution/fix can be done manually, but it needs to be part of the playbook.</p>
+</blockquote>
+
+<hr />
+
+<blockquote>
+<p><strong>TIP</strong></p>
+
+<p>While creating the VDO device you may run into the error below:</p>
+
+<pre><code> fatal: [node4]: FAILED! =&gt; {
+     &quot;changed&quot;: false,
+     &quot;module_stderr&quot;: &quot;Shared connection to node4 closed.\r\n&quot;,
+     &quot;module_stdout&quot;: &quot;/tmp/ansible_vdo_payload_crp07req/ansible_vdo_payload.zip/ansible/modules/system/vdo.py:330: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.\r\n/bin/sh: line 1:  6280 Killed                  /usr/libexec/platform-python /home/ansible/.ansible/tmp/ansible-tmp-1701096243.3300107-7102-276967642935618/AnsiballZ_vdo.py\r\n&quot;,
+     &quot;msg&quot;: &quot;MODULE FAILURE\nSee stdout/stderr for the exact error&quot;,
+     &quot;rc&quot;: 137
+ }
+</code></pre>
+
+<p>If that&rsquo;s the case, fully remove the vdo device and then apply the patch below. While this is not part of the exam, it&rsquo;s a good skill to aquire.</p>
+
+<p><a href="https://github.com/ansible-collections/community.general/pull/5632/files">https://github.com/ansible-collections/community.general/pull/5632/files</a></p>
+
+<p>You can identify the path for the Ansible code with <code>ansible --version</code>. Then browse to the module shown in that commit message and modify the 2x lines. Note that the line number may not match, but should be pretty close.</p>
+</blockquote>
+
+<h3 id="task-9">Task 9</h3>
+
+<h5 id="objectives-covered-8">Objectives covered:</h5>
+
+<ul>
+<li>12. Download roles from an Ansible Galaxy and use them</li>
+<li>13. Use Ansible Vault in playbooks to protect sensitive data</li>
+</ul>
+
+<h5 id="tasks-9">Tasks:</h5>
+
+<ul>
+<li>Using <code>ansible-galaxy</code> search for and download the &lsquo;mysql&rsquo; role by &lsquo;geerlingguy&rsquo;</li>
+<li>Create a vault password file and add it to <code>ansible.cfg</code></li>
+<li>Create the variable file <code>/home/ansible/exam-files/vars/mysql.yml</code> and add the following variables:
+
+<ul>
+<li><code>mysql_root_username: root</code></li>
+<li><code>mysql_root_password: sqlrootpassword</code></li>
+</ul></li>
+<li>Encrypt the variable file with ansible vault</li>
+<li>Modify the role so that it:
+
+<ul>
+<li>Changes the root credentials</li>
+<li>Saves the root credentials to <code>~/.my.rc</code></li>
+</ul></li>
+<li>Create the playbook <code>/home/ansible/exam-files/playbooks/deploy-mysql.yml</code> that pushes the role to the mysql group</li>
+</ul>
+
+<h3 id="task-10">Task 10</h3>
+
+<h5 id="objectives-covered-9">Objectives covered:</h5>
+
+<ol>
+<li>Use provided documentation to look up specific information about Ansible modules and commands</li>
+</ol>
+
+<h5 id="tasks-10">Tasks:</h5>
+
+<ul>
+<li>Create the file <code>/home/ansible/exam-files/ansible.cfg.template</code> with a dump of all possible env and config values. For example:</li>
+</ul>
+
+<pre><code class="language-none">ACTION_WARNINGS:
+  default: true
+  description: [By default Ansible will issue a warning when received from a task
+      action (module or action plugin), These warnings can be silenced by adjusting
+      this setting to False.]
+  env:
+  - {name: ANSIBLE_ACTION_WARNINGS}
+  ini:
+  - {key: action_warnings, section: defaults}
+  name: Toggle action warnings
+  type: boolean
+  version_added: '2.5'
+</code></pre>
+
+<ul>
+<li>Create the file <code>/home/ansible/exam-files/ansible.cfg.dump</code> with all the current variables/settings. For example:</li>
+</ul>
+
+<pre><code class="language-none">ACTION_WARNINGS(default) = True
+AGNOSTIC_BECOME_PROMPT(default) = True
+ALLOW_WORLD_READABLE_TMPFILES(default) = False
+ANSIBLE_CONNECTION_PATH(default) = None
+ANSIBLE_COW_PATH(default) = None
+ANSIBLE_COW_SELECTION(default) = default
+ANSIBLE_COW_WHITELIST(default) = ['bud-frogs', 'bunny', 'cheese', 'daemon', 'default', 'dragon', 'elephant-in-snake', '&gt;
+ANSIBLE_FORCE_COLOR(default) = False
+ANSIBLE_NOCOLOR(default) = False
+ANSIBLE_NOCOWS(default) = False
+</code></pre>
+
+<ul>
+<li>Create the file <code>/home/ansible/exam-files/ansible-modules.txt</code> with a list of all the Ansible modules available on this system. For example:</li>
+</ul>
+
+<pre><code class="language-none">a10_server                                                    Manage A10 Networks AX/SoftAX/Thunder/vThunder device...
+a10_server_axapi3                                             Manage A10 Networks AX/SoftAX/Thunder/vThunder device...
+a10_service_group                                             Manage A10 Networks AX/SoftAX/Thunder/vThunder device...
+a10_virtual_server                                            Manage A10 Networks AX/SoftAX/Thunder/vThunder device...
+aci_aaa_user                                                  Manage AAA users (aaa:User)
+aci_aaa_user_certificate                                      Manage AAA user certificates (aaa:UserCert)
+aci_access_port_block_to_access_port                          Manage port blocks of Fabric interface policy leaf pr...
+aci_access_port_to_interface_policy_leaf_profile              Manage Fabric interface policy leaf profile interface...
+aci_access_sub_port_block_to_access_port                      Manage sub port blocks of Fabric interface policy lea...
+aci_aep                                                       Manage attachable Access Entity Profile (AEP) objects...
+aci_aep_to_domain                                             Bind AEPs to Physical or Virtual Domains (infra:RsDom...
+aci_ap                                                        Manage top level Application Profile (AP) objects (fv...
+aci_bd                                                        Manage Bridge Domains (BD) objects (fv:BD)
+</code></pre>
+
+<ul>
+<li>Install jinja2 html documentation</li>
+</ul>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f27%2frhce-v8-practiceexam%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=RHCE%20v8%20Practice%20Exam&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f27%2frhce-v8-practiceexam%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f27%2frhce-v8-practiceexam%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f27%2frhce-v8-practiceexam%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f27%2frhce-v8-practiceexam%2f&amp;title=RHCE%20v8%20Practice%20Exam" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=RHCE%20v8%20Practice%20Exam&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f27%2frhce-v8-practiceexam%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/" title="Testing New Hard Drives">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/">Testing New Hard Drives</a>
 </h2>
 
@@ -410,6 +1057,12 @@ ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_
         </li>
     
 
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/" title="RHCE v8 Practice Exam">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
     
     </ul> </nav>
   
@@ -1267,470 +1920,6 @@ fi
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2021/02/28/getting-started-with-ansible-molecule/">Getting Started with Ansible Molecule</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2021-02-28">28 Feb, 2021</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/ansible" class="label label-primary">Ansible</a>
-  
-  <a href="https://blog.victormendonca.com/tags/docker" class="label label-primary">Docker</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<h2 id="overview">Overview</h2>
-
-<p>If you haven&rsquo;t heard about Ansible Molecule you came to the right place. I will cover what it is, it&rsquo;s basic usage, and how to install it and get started.</p>
-
-<h4 id="what-it-is">What it is</h4>
-
-<p><a href="https://molecule.readthedocs.io/en/latest/">Ansible Molecule</a> is a project (tool) that can greatly improve your Ansible workflow. It allows you to automate your tasks (which is great for CI) by providing means of running different and idempotent tests against your roles.</p>
-
-<p>And Molecule is based on Ansible, so you are essentially using Ansible to test Ansible. How cool is that!?</p>
-
-<h4 id="what-it-does">What it does</h4>
-
-<p>To put it in simple words, Molecule tests your code. With Molecule you can easily run multiple tests against your code and make sure it works before deploying to an environment.</p>
-
-<p>Some of the tests you can run are:</p>
-
-<ul>
-<li>Yaml lint</li>
-<li>Ansible lint</li>
-<li>Ansible syntax</li>
-<li>Run the Ansible role against a virtual machine</li>
-<li>Test idempotence (run the same Ansible role against the same virtual machine for the second time)</li>
-</ul>
-
-<h4 id="folder-structure">Folder Structure</h4>
-
-<p>When invoked Molecule creates a single role folder with the usual Ansible structure. Inside this role folder an additional <code>molecule</code> folder is created. This is where the main Molecule configuration lives.</p>
-
-<pre><code class="language-none">$ tree -d
-.
-├── defaults
-├── files
-├── handlers
-├── molecule
-│   └── default
-│       ├── converge.yml
-│       ├── molecule.yml
-│       └── verify.yml
-├── tasks
-├── templates
-├── tests
-└── vars
-</code></pre>
-
-<h4 id="test-types-and-scenarios">Test Types and Scenarios</h4>
-
-<p>Test scenarios can be configured inside the molecule folder and each scenario should have it&rsquo;s own folder.</p>
-
-<p>A &lsquo;default&rsquo; scenario is created automatically with the following tests enabled (you can change them according to your needs):</p>
-
-<ul>
-<li>lint</li>
-<li>destroy</li>
-<li>dependency</li>
-<li>syntax</li>
-<li>create</li>
-<li>prepare</li>
-<li>converge</li>
-<li>idempotence</li>
-<li>side_effect</li>
-<li>verify</li>
-<li>destroy</li>
-</ul>
-
-<h4 id="drivers">Drivers</h4>
-
-<p>Three different drivers (Vagrant, Docker, and OpenStack) can be used to create virtual machines. These virtual machines are used to test our roles.</p>
-
-<p><em>On this tutorial we will be using Docker as our driver.</em></p>
-
-<h2 id="installing-molecule">Installing Molecule</h2>
-
-<p>Molecule can be installed via pip or with distro packages (depending on your distro). You can mix and match and install Molecule via pip and specific components (like <code>ansible</code> or <code>ansible-lint</code>) via your distro&rsquo;s package manager.</p>
-
-<p><strong>Notes:</strong></p>
-
-<ul>
-<li><em>On Windows Molecule can only be installed via WSL</em></li>
-<li><em>I&rsquo;m assuming you already have Ansible installed and will not cover it here</em></li>
-</ul>
-
-<h3 id="windows-install-ubuntu-wsl">Windows Install (Ubuntu WSL)</h3>
-
-<p>On Ubuntu Molecule needs to be installed via pip. If perhaps you are running another distro in WSL, you can check if the packages are available with your package manager (if you choose to install that way).</p>
-
-<p>Install <code>python-pip</code>.</p>
-
-<pre><code class="language-none">$ sudo apt install -y python-pip
-</code></pre>
-
-<p>Create a python virtual environment for Molecule. The software we are going to install will reside in the virtual environment (we can use the environment many times).</p>
-
-<pre><code class="language-none">$ python3 -m venv molecule
-</code></pre>
-
-<p>Activate the environment (see that the prompt changes).</p>
-
-<pre><code class="language-none">$ source molecule/bin/activate
-(molecule-venv) $
-</code></pre>
-
-<p>Install the wheel package.</p>
-
-<pre><code class="language-none">(molecule-venv) $ python3 -m pip install wheel
-</code></pre>
-
-<p>Install ansible and ansible-lint. You can do this via Python/Molecule, or via the OS.</p>
-
-<p><em>OS</em></p>
-
-<pre><code class="language-none">$ apt install ansible ansible-lint
-</code></pre>
-
-<p><em>Via molecule</em></p>
-
-<pre><code class="language-none">(molecule-venv) $ python3 -m pip install &quot;molecule[ansible]&quot;  # or molecule[ansible-base]
-</code></pre>
-
-<p>Install molecule and docker.</p>
-
-<pre><code class="language-none">(molecule-venv) $ python3 -m pip install &quot;molecule[docker,lint]&quot;
-</code></pre>
-
-<h3 id="linux-install-arch">Linux Install (Arch)</h3>
-
-<p>If you are running Arch (I use Arch BTW) you can install everything with <code>pacman</code> (or with pip like we did for Windows WSL).</p>
-
-<pre><code class="language-none">$ sudo /usr/bin/pacman -S yamllint ansible-lint molecule molecule-docker
-</code></pre>
-
-<h2 id="getting-started">Getting Started</h2>
-
-<h3 id="creating-a-molecule-role">Creating a Molecule Role</h3>
-
-<p>We will now create and configure a role with Molecule using Docker as the driver.</p>
-
-<p>Run <code>molecule init role [role name] -d docker</code>:</p>
-
-<p><img src="https://blog.victormendonca.com/img/getting-started-with-ansible-molecule/getting-started-with-ansible-molecule-28a74.png" alt="" /></p>
-
-<p>This should have created a new role folder with the required molecule files inside.</p>
-
-<h4 id="molecule-yml">molecule.yml</h4>
-
-<p>Holds the default configuration for molecule.</p>
-
-<p><em><code>./myrole/molecule/default/molecule.yml</code></em></p>
-
-<pre><code class="language-yml">---
-dependency:
-  name: galaxy
-driver:
-  name: docker
-platforms:
-  - name: instance
-    image: docker.io/pycontribs/centos:8
-    pre_build_image: true
-provisioner:
-  name: ansible
-verifier:
-  name: ansible
-</code></pre>
-
-<h4 id="converge-yml">converge.yml</h4>
-
-<p>This is the playbook file that molecule will run.</p>
-
-<p><em><code>./myrole/molecule/default/converge.yml</code></em></p>
-
-<pre><code class="language-yml">---
-- name: Converge
-  hosts: all
-  tasks:
-    - name: &quot;Include myrole&quot;
-      include_role:
-        name: &quot;myrole&quot;
-</code></pre>
-
-<h2 id="running-a-simple-test">Running a Simple Test</h2>
-
-<p>Let&rsquo;s use the existing configuration in <code>molecule.yml</code> and <code>converge.yml</code> to run a simple test.</p>
-
-<p>Edit the tasks file (<code>myrole/tasks/main.yml</code>) and add a simple task (you can use the example below with the debug module):</p>
-
-<pre><code class="language-yml">---
-# tasks file for myrole
-
-- debug:
-    msg: &quot;System {{ inventory_hostname }} has uuid {{ ansible_product_uuid }}&quot;
-</code></pre>
-
-<p>Run <code>molecule converge</code> (from the role folder) to build the image and run the playbook.</p>
-
-<script id="asciicast-G8PAulZtu6nNtMobEbLypgLwK" src="https://asciinema.org/a/G8PAulZtu6nNtMobEbLypgLwK.js" async></script>
-
-<p>Now that we got the very basic stuff done, let&rsquo;s move into a bit more advanced steps so we can better understand Molecule and use it with our code.</p>
-
-<h2 id="additional-steps-and-configuration">Additional Steps and Configuration</h2>
-
-<h3 id="adding-lint">Adding Lint</h3>
-
-<p>Lint is not enabled by default, but that can be easily changed by editing <code>molecule.yml</code> and adding the <code>lint</code> key to it:</p>
-
-<pre><code class="language-yaml">dependency:
-  name: galaxy
-driver:
-  name: docker
-platforms:
-  - name: instance
-    image: docker.io/pycontribs/centos:8
-    pre_build_image: true
-provisioner:
-  name: ansible
-verifier:
-  name: ansible
-lint: |
-  set -e
-  yamllint .
-  ansible-lint .
-</code></pre>
-
-<p>Now run <code>molecule lint</code>. You should get a lot of warnings due to to information missing in the meta folder:</p>
-
-<p><img src="https://blog.victormendonca.com/img/getting-started-with-ansible-molecule/getting-started-with-ansible-molecule-d02b3.png" alt="" /></p>
-
-<p>As instructed by the output of the command, you can quiet or disable the messages by adding a <code>warn_list</code> or <code>skip_list</code> to <code>.ansible_lint</code></p>
-
-<p><em><strong>Tip:</strong> You can also fine tune yaml linting by editing <code>.yamllint</code></em></p>
-
-<h3 id="running-a-full-test">Running a Full Test</h3>
-
-<p>So far we have only run two tests:</p>
-
-<ul>
-<li>Converge (dependency, create, prepare converge)</li>
-<li>Lint (yaml lint and Ansible lint)</li>
-</ul>
-
-<p>Let&rsquo;s run a full test (default scenario) on our role. Remember, the full test will run dependency, lint, syntax, create, prepare, converge, idempotence, side_effect, verify, cleanup and destroy.</p>
-
-<p>Run <code>molecule test</code>.</p>
-
-<script id="asciicast-NYNnPRJaYkEHqUwG0mqxiaUli" src="https://asciinema.org/a/NYNnPRJaYkEHqUwG0mqxiaUli.js" async></script>
-
-<h2 id="running-roles-from-another-folder">Running Roles from Another Folder</h2>
-
-<p>You can also use Molecule to test roles from another folder (which makes molecule very flexible for testing).</p>
-
-<p>Let&rsquo;s say I have the following folder structure:</p>
-
-<pre><code class="language-none">.
-└── Ansible
-    ├── Molecule
-    └── web-project
-</code></pre>
-
-<p>Inside my <code>web-project</code> folder I have a role called &lsquo;apache&rsquo; that installs (guess what?) httpd.</p>
-
-<p><em><code>./Ansible/web-project/roles/apache/tasks/main.yml</code></em></p>
-
-<pre><code class="language-yml">---
-# tasks file for apache
-
-- name: Installs Apache
-  yum:
-     name: httpd
-     state: present
-</code></pre>
-
-<p>I can easily modify my existing <code>converge.yml</code> to include that role:</p>
-
-<p><em><code>./Ansible/Molecule/myrole/molecule/default/converge.yml</code></em></p>
-
-<pre><code class="language-yml">---
-- name: Converge
-  hosts: all
-  tasks:
-    - name: &quot;Include myrole&quot;
-      include_role:
-        name: &quot;../../web-project/roles/apache&quot;
-</code></pre>
-
-<p>Also edit <code>molecule.yml</code> so we are linting that external folder:</p>
-
-<p><em><code>./Ansible/Molecule/myrole/molecule/default/molecule.yml</code></em></p>
-
-<pre><code class="language-yml">lint: |
-  set -e
-  yamllint ../../web-project
-  ansible-lint ../../web-project
-</code></pre>
-
-<p>And then run <code>molecule converge</code> (from the Molecule role folder) to test. Because <code>molecule converge</code> does not include the <code>destroy</code> command, I can login to the container ( with <code>molecule login</code>) and check if httpd was installed:</p>
-
-<p><img src="https://blog.victormendonca.com/img/getting-started-with-ansible-molecule/getting-started-with-ansible-molecule-d229e.png" alt="" /></p>
-
-<p><em><strong>Tip:</strong></em></p>
-
-<ul>
-<li><em>When testing against multiple containers you can use <code>molecule login --host [container name]</code></em></li>
-<li><em>You can also use docker cli to connect to the container - <code>docker exec -ti [container name] /bin/bash</code></em></li>
-</ul>
-
-<p><em><strong>Note:</strong> On this example nothing other than the role is imported (e.g. variables and config from <code>ansible.cfg</code> are not imported)</em></p>
-
-<h3 id="additional-container-configuration">Additional Container Configuration</h3>
-
-<p>We can configure different options for our container in <code>molecule.yml</code> under the platforms key section. Configuration here is similar to a docker compose file.</p>
-
-<ul>
-<li><strong>name</strong> - Name of the container</li>
-<li><strong>image</strong> - Image for the container. Can be local or from a remote registry</li>
-<li><strong>pre_build_image</strong> - Instructs to use pre-build image (pull or local) instead of building from <code>molecule/default/Dockerfile.j2</code></li>
-<li><strong>privileged</strong> - Give extended privileges (a &ldquo;privileged&rdquo; container is given access to all devices)</li>
-<li><strong>capabilities</strong> - Same as <code>--cap-add=SYS_ADMIN</code>. Grants a smaller subset of capabilities to the container compared to the privileged option</li>
-<li><strong>command</strong> - Same as Dockerfile <code>RUN</code></li>
-<li><strong>groups</strong> - Assigns the container to one or more Ansible groups</li>
-</ul>
-
-<p>Example:</p>
-
-<pre><code class="language-yml">---
-dependency:
-  name: galaxy
-driver:
-  name: podman
-platforms:
-  - name: rhel8
-    image: registry.access.redhat.com/ubi8/ubi-init
-    tmpfs:
-      - /run
-      - /tmp
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    capabilities:
-      - SYS_ADMIN
-    command: &quot;/usr/sbin/init&quot;
-    pre_build_image: true
-  - name: ubuntu
-    image: geerlingguy/docker-ubuntu2004-ansible
-    tmpfs:
-      - /run
-      - /tmp
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    capabilities:
-      - SYS_ADMIN
-    command: &quot;/lib/systemd/systemd&quot;
-    pre_build_image: true
-provisioner:
-  name: ansible
-verifier:
-  name: ansible
-lint: |
-  set -e
-  yamllint .
-  ansible-lint .
-</code></pre>
-
-<hr />
-
-<h2 id="conclusion">Conclusion</h2>
-
-<p>I&rsquo;m hoping I was able to provide you with enough information on how to get started with Molecule. If you have any comments, suggestions or corrections, please leave them in the comment box below.</p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2021%2f02%2f28%2fgetting-started-with-ansible-molecule%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Getting%20Started%20with%20Ansible%20Molecule&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2021%2f02%2f28%2fgetting-started-with-ansible-molecule%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2021%2f02%2f28%2fgetting-started-with-ansible-molecule%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2021%2f02%2f28%2fgetting-started-with-ansible-molecule%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2021%2f02%2f28%2fgetting-started-with-ansible-molecule%2f&amp;title=Getting%20Started%20with%20Ansible%20Molecule" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Getting%20Started%20with%20Ansible%20Molecule&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2021%2f02%2f28%2fgetting-started-with-ansible-molecule%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2021/01/23/how-to-convert-standard-partition-to-lvm/" title="How to Convert Standard Partition to Logical Volume">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2022/11/18/linux-find-command/" title="Linux find Command">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1898,6 +2087,10 @@ lint: |
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/">RHCE v8 Practice Exam</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/">Testing New Hard Drives</a>
           </li>
         
@@ -1919,10 +2112,6 @@ lint: |
         
           <li>
           <a href="https://blog.victormendonca.com/2021/01/23/how-to-convert-standard-partition-to-lvm/">How to Convert Standard Partition to Logical Volume</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2020/11/18/linux-logical-volume-manager/">RHCSA v8: Linux Logical Volume Manager</a>
           </li>
         
         </ul>

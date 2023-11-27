@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/</loc>
+    <lastmod>2023-11-27T17:20:38-05:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/</loc>
     <lastmod>2023-11-21T14:21:40-05:00</lastmod>
   </url>
@@ -422,7 +427,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/linux/</loc>
-    <lastmod>2023-11-21T14:21:40-05:00</lastmod>
+    <lastmod>2023-11-27T17:20:38-05:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -476,7 +481,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/post/</loc>
-    <lastmod>2023-11-21T14:21:40-05:00</lastmod>
+    <lastmod>2023-11-27T17:20:38-05:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -500,7 +505,13 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/redhat/</loc>
-    <lastmod>2023-06-30T15:55:26-04:00</lastmod>
+    <lastmod>2023-11-27T17:20:38-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.victormendonca.com/tags/rhce/</loc>
+    <lastmod>2023-11-27T17:20:38-05:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -547,7 +558,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/</loc>
-    <lastmod>2023-11-21T14:21:40-05:00</lastmod>
+    <lastmod>2023-11-27T17:20:38-05:00</lastmod>
     <priority>0</priority>
   </url>
   
