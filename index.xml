@@ -19,7 +19,7 @@
       
       <guid>https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/</guid>
       <description>I created this practice exam as part of my preparation for the Red Hat RHCE exam (EX294V84K). It comprises 10 advanced-level tasks, with a focus on incorporating some of the most challenging RHCSA objectives.
-Answers will be included on my fork of the rdbreak/rhce8env, and hopefully merged into the main project soon .
+Answers are available on my practice environment at victorbrca/rhce8-practice-env.
 Pre-requisites  Setup the Vagrant/VirtualBox environment - victorbrca/rhce8env Register for a free Red Hat Developer subscription - instructions On the control node:  Register with you developer subscription.</description>
     </item>
     
@@ -734,7 +734,7 @@ For example, I like to use Bash&amp;rsquo;s color to display failure or success 
       <pubDate>Mon, 05 Dec 2016 14:41:00 +0100</pubDate>
       
       <guid>https://blog.victormendonca.com/about/</guid>
-      <description>Victor is a self-employed IT consultant. His company, GeekIT Consulting Inc., specializes in Linux, and for the past few years, in the deployment of an open systems supply chain solution by Manhattan Associates.
+      <description>Victor is a self-employed IT consultant. His company, GeekIT Consulting Inc., specializes in Linux, and for many years, in the deployment of an open systems supply chain solution by Manhattan Associates.
 Victor started using Linux in 2004 while working as a network support rep for 3Com. It quickly became a passion for him. His initial experience, like most Linux user enthusiast, was home based. He would spend hours and weekends building NAS, Apache and media servers, BSD firewalls and other &amp;ldquo;goodies&amp;rdquo;.</description>
     </item>
     
