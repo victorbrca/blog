@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Playing a Sound on Headless Server Boot  &middot; Victor&#39;s Blog</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="How to configure bootup sounds on Ubuntu" />
+
+<meta name="keywords" content="Linux, Ubuntu, ">
+
+
+<meta property="og:title" content="Playing a Sound on Headless Server Boot  &middot; Victor&#39;s Blog ">
+<meta property="og:site_name" content="Victor&#39;s Blog"/>
+<meta property="og:url" content="https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/" />
+<meta property="og:locale" content="en">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content="How to configure bootup sounds on Ubuntu"/>
+<meta property="og:article:published_time" content="2023-12-21T16:30:48-05:00" />
+<meta property="og:article:modified_time" content="2023-12-21T16:30:48-05:00" />
+
+  
+    
+<meta property="og:article:tag" content="Linux">
+    
+<meta property="og:article:tag" content="Ubuntu">
+    
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@18440926" />
+<meta name="twitter:creator" content="@18440926" />
+<meta name="twitter:title" content="Playing a Sound on Headless Server Boot" />
+<meta name="twitter:description" content="How to configure bootup sounds on Ubuntu" />
+<meta name="twitter:url" content="https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/" />
+<meta name="twitter:domain" content="https://blog.victormendonca.com/">
+  
+
+  
+
+
+
+<link rel="canonical" href="https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
+<link rel="icon" href="https://blog.victormendonca.com/favicon.png">
+<meta name="generator" content="Hugo 0.48" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+
+
+    <link rel="stylesheet" href="https://blog.victormendonca.com/css/bootswatch/default/bootstrap.min.css">
+
+
+<link rel="stylesheet" href="https://blog.victormendonca.com/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://blog.victormendonca.com/css/style.css">
+
+
+<link rel="stylesheet" href="https://blog.victormendonca.com/css/style_custom.css">
+
+
+
+  <link rel="stylesheet" href="https://blog.victormendonca.com/css/highlight/github.css">
+
+
+
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1P1YY6BDG2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+
+      gtag('config', 'G-1P1YY6BDG2');
+    </script>
+  
+
+</head>
+<body class="map[name:default]" data-ng-app="myapp" data-ng-controller="MyController" data-ng-mouseleave="MouseLeave($event)">
+    <header id="main-header">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        
+        <a class="navbar-brand" href="https://blog.victormendonca.com/">
+          Victor&#39;s Blog
+          
+          
+          </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            
+            
+            <li class="">
+
+              <a href="https://blog.victormendonca.com/" >
+                
+                Home
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://blog.victormendonca.com/about/" >
+                
+                About
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://geekit.ca/" >
+                
+                Professional
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://manhattan.victormendonca.com/" >
+                
+                Manhattan Blog
+              </a>
+            </li>
+            
+            
+            
+          </ul>
+        </div>
+        
+      </div>
+    </nav>
+  </header>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <div class="text-center">
+
+    <h1>Playing a Sound on Headless Server Boot
+</h1>
+
+    <div class="metas">
+<small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2023-12-21">21 Dec, 2023</time>
+</small>
+
+
+  <small>
+    &middot; by Victor Mendonça
+  
+  &middot; Read in about 3 min
+  &middot; (480 words)
+  &middot; 
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Playing%20a%20Sound%20on%20Headless%20Server%20Boot&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f&amp;title=Playing%20a%20Sound%20on%20Headless%20Server%20Boot" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Playing%20a%20Sound%20on%20Headless%20Server%20Boot&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  </small>
+
+<div class="margin-10">
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/ubuntu" class="label label-primary">Ubuntu</a>
+  
+
+
+</div>
+
+<br>
+</div>
+
+  </div>
+</div>
+
+      <div class="content">
+  
+
+<p>Beep is a versatile utility that transforms your computer speaker into a musical instrument reminiscent of early Nintendo-style sounds. You provide a frequency and length and beep will play the respective sound.</p>
+
+<p>I started using beep in the early 2000s with <a href="https://en.wikipedia.org/wiki/Smoothwall">Smoothwall</a> (think of a Linux predecessor to pfSense) to notify me when it had rebooted. That is still my main use for the utility (less the Smoothwall part), but it can be used for many other things.</p>
+
+<p>We&rsquo;ll go through a quick setup on Ubuntu using group permission, but you can refer to the main GitHub repo (<a href="https://github.com/spkr-beep/beep/blob/master/PERMISSIONS.md">Permission setup for beep</a>) for alternative setup instructions if you need something different.</p>
+
+<h3 id="configuration">Configuration</h3>
+
+<p>Let&rsquo;s start by installing beep:</p>
+
+<pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt install beep
+</code></pre>
+
+<p>Now create the <code>beep</code> system group. Any user member of this group will be able to run beep.</p>
+
+<pre><code class="language-bash">sudo addgroup --system beep
+</code></pre>
+
+<p>Add it as a secondary group for your user:</p>
+
+<pre><code class="language-bash">sudo usermod [user] -a -G beep
+</code></pre>
+
+<p>Create the udev rule to allow the group permission to the speaker:</p>
+
+<p><code>/usr/lib/udev/rules.d/90-pcspkr-beep.rules</code></p>
+
+<pre><code># Add write access to the PC speaker for the &quot;beep&quot; group
+ACTION==&quot;add&quot;, SUBSYSTEM==&quot;input&quot;, ATTRS{name}==&quot;PC Speaker&quot;, ENV{DEVNAME}!=&quot;&quot;, GROUP=&quot;beep&quot;, MODE=&quot;0620&quot;
+</code></pre>
+
+<p>Comment out the existing blacklist for &lsquo;pcspkr&rsquo; in <code>/etc/modprobe.d/blacklist.conf</code>:</p>
+
+<pre><code># ugly and loud noise, getting on everyone's nerves; this should be done by a
+# nice pulseaudio bing (Ubuntu: #77010)
+# blacklist pcspkr
+</code></pre>
+
+<p>Load the module:</p>
+
+<pre><code class="language-bash">sudo modprobe pcspkr
+</code></pre>
+
+<p>Now let&rsquo;s test to make sure that it works. You will need to logout and log back in, or simply ssh to your localhost (this is so the secondary group is loaded). And then run beep with the options below:</p>
+
+<pre><code class="language-bash">beep -f 587 -l 714
+</code></pre>
+
+<p><img src="https://blog.victormendonca.com/img/playing-a-sound-on-headless-server-boot/beep.jpg" alt="" /></p>
+
+<p>If that works then we have confirmed that we configured everything correctly. Just a reminder, your computer needs to have a speaker, otherwise beep wont work.</p>
+
+<p>Now let&rsquo;s create a sample script and the Systemd unit file for the service that will play beep after boot. Create the following script and give it execute permission:</p>
+
+<p><code>/usr/local/bin/star-trek.sh</code></p>
+
+<pre><code class="language-bash">#!/bin/bash
+beep -f 587 -l 714
+beep -f 784 -l 238
+beep -f 1046 -l 1428
+beep -f 987 -l 476
+beep -f 784 -l 357
+beep -f 659 -l 357
+beep -f 880 -l 357
+beep -f 1174 -l 952
+</code></pre>
+
+<pre><code class="language-bash">sudo chmod +x /usr/local/bin/star-trek.sh
+</code></pre>
+
+<p>Create  <code>/lib/systemd/system/beep-startup.service</code> with the following content. Note that you will need to change the <code>User=</code> property to be the username for your user:</p>
+
+<pre><code class="language-systemd"># /lib/systemd/system/beep-startup.service
+[Unit]
+Description=Plays startup audio
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/star-trek.sh
+User=[user]
+
+[Install]
+WantedBy=default.target
+</code></pre>
+
+<p>Let&rsquo;s enable and start the service, and it should play the Star Trek intro sound:</p>
+
+<pre><code class="language-bash">systemctl enable --now beep-startup.service
+</code></pre>
+
+<p><img src="https://blog.victormendonca.com/img/playing-a-sound-on-headless-server-boot/star-trek.jpg" alt="" /></p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>With these configurations, your machine will serenade you with the iconic Star Trek intro sound after establishing a network connection during boot. Dive into the world of beep, and if you&rsquo;re looking for more scripts, explore <a href="https://github.com/victorbrca/beep-scripts">GitHub - victorbrca/beep-scripts</a> for an extensive collection. Happy beeping!</p>
+
+</div>
+
+
+      <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Playing%20a%20Sound%20on%20Headless%20Server%20Boot&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f&amp;title=Playing%20a%20Sound%20on%20Headless%20Server%20Boot" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Playing%20a%20Sound%20on%20Headless%20Server%20Boot&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/" title="RHCE v8 Practice Exam">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+    </div>
+    
+      <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+        <div>
+  
+
+   
+    <div class="section">
+      <header><div class="title"></div></header>
+      <div class="content">
+        <img style="float: center; padding-right: 5px;" src="https://blog.victormendonca.com/img/avatar.jpg" hspace="20" width="240"></img>
+        <br/>
+        <div class="social-icons" style="display:inline-block; text-align: center; width:100%;">
+        <a href="https://github.com/victorbrca" target="_blank"><i class="fa fa-github fa-2x" style="padding-right: 5px; padding-left: 5px" aria-hidden="true"></i></a>
+        <a href="https://twitter.com/victorbrca" target="_blank"><i class="fa fa-twitter fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <a href="http://www.linkedin.com/in/victormendonca" target="_blank"><i class="fa fa-linkedin-square fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <a href="https://www.facebook.com/victormendonca" target="_blank"><i class="fa fa-facebook-official fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <div>
+        <br/>
+      </div>
+    </div>
+
+    
+      
+      
+      <div class="section taxonomies">
+        <header><div class="title"><b>tags</b></div></header>
+
+        <div class="content1">
+          <ul>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/aws">aws</a></li>
+          </ul>
+        </div>
+      </div>
+      
+    
+      
+      
+    
+
+    <br />
+
+    <div class="section">
+      <header><div class="title"><b>Latest Posts</b></div></header>
+      <div class="content">
+        <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/">Playing a Sound on Headless Server Boot</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/">RHCE v8 Practice Exam</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/">Testing New Hard Drives</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/">How to Migrate Local Users and Grops</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2023/06/30/undestanting-yum-clean-all-and-stale-repos/">Understanding &#34;yum clean all&#34; and Stale Repos</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2022/11/18/linux-find-command/">Linux find Command</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2021/02/28/getting-started-with-ansible-molecule/">Getting Started with Ansible Molecule</a>
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+
+    <br />
+
+    
+    <div class="section">
+    
+      
+      <div class="content" align="center" >
+        <a class="twitter-timeline" data-width="240" data-height="450" href="https://twitter.com/victorbrca">Tweets by victorbrca</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+    </div>
+
+</div>
+
+      </div>
+    
+  </div>
+</div>
+    
+<footer class="footer hidden-print">
+  <div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+           <div class="pull-left">
+  <a class="toplink" href="javascript:" id="return-to-top">back to top</a>
+</div>
+<div class="pull-right">
+
+</div>
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+              
+    
+<div class="container footline">
+    <small>
+  code with <i class='fa fa-linux'></i>
+
+</small>
+</div>
+
+
+    
+<div class="container copyright">
+    <small>
+  &copy; 2018 Copyright Victor Mendonça
+
+  </small>
+</div>
+
+
+
+        </div>
+    </div>
+  </div>
+</footer>
+
+    
+
+<script src="https://blog.victormendonca.com/js/jquery.min.js"></script>
+<script src="https://blog.victormendonca.com/js/bootstrap.min.js"></script>
+
+
+<script src="https://blog.victormendonca.com/js/highlight.pack.js"></script>
+<script src="https://blog.victormendonca.com/js/site.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+var ENABLE_POPOVER =  false , 
+EXPIRE_COOKIE =  5 , 
+SHOW_MODAL_TIMEOUT =  10000 , 
+MOUSE_LEAVE =  true , 
+MODAL_SIZE = "", 
+POST_URL = "https://zapier.com/hooks/catch/1227563/", 
+SIGNUP_HEADER = "Join Our Newsletter",
+HEADER_IMAGE = "//placehold.it/1000x600",
+IMG_DESCRIPTION = "Placeholder image for this popover modal optin form",
+SIGNUP_TEXT = "Signup today for free and be the first to get notified on new updates.",
+INPUT_PLACEHOLDER = "Enter your email",
+SUBMIT_BUTTON = "Subscribe",
+SUCCESS_MESSAGE = "Thanks for your subscription!",
+ERROR_MESSAGE = "Submitting form failed!",
+OPTIN =  true ,
+COOKIE_NAME = "mycookie1",
+CONTENTLANGUAGE = ""; 
+</script>
+
+
+
+
+
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/config/TeX-AMS-MML_HTMLorMML.js"></script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    for(var all in MathJax.Hub.getAllJax()) {
+        all.SourceElement().parentNode.className += ' has-jax';
+
+    }
+});
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+

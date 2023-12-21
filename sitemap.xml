@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/</loc>
+    <lastmod>2023-12-21T16:30:48-05:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/</loc>
     <lastmod>2023-11-27T17:20:38-05:00</lastmod>
   </url>
@@ -427,7 +432,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/linux/</loc>
-    <lastmod>2023-11-27T17:20:38-05:00</lastmod>
+    <lastmod>2023-12-21T16:30:48-05:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -481,7 +486,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/post/</loc>
-    <lastmod>2023-11-27T17:20:38-05:00</lastmod>
+    <lastmod>2023-12-21T16:30:48-05:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -557,8 +562,14 @@
   </url>
   
   <url>
+    <loc>https://blog.victormendonca.com/tags/ubuntu/</loc>
+    <lastmod>2023-12-21T16:30:48-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.victormendonca.com/</loc>
-    <lastmod>2023-11-27T17:20:38-05:00</lastmod>
+    <lastmod>2023-12-21T16:30:48-05:00</lastmod>
     <priority>0</priority>
   </url>
   

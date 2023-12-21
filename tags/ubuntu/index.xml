@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ubuntu on Victor&#39;s Blog</title>
+    <link>https://blog.victormendonca.com/tags/ubuntu/</link>
+    <description>Recent content in Ubuntu on Victor&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
+    <lastBuildDate>Thu, 21 Dec 2023 16:30:48 -0500</lastBuildDate>
+    
+	<atom:link href="https://blog.victormendonca.com/tags/ubuntu/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Playing a Sound on Headless Server Boot</title>
+      <link>https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/</link>
+      <pubDate>Thu, 21 Dec 2023 16:30:48 -0500</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/</guid>
+      <description>Beep is a versatile utility that transforms your computer speaker into a musical instrument reminiscent of early Nintendo-style sounds. You provide a frequency and length and beep will play the respective sound.
+I started using beep in the early 2000s with Smoothwall (think of a Linux predecessor to pfSense) to notify me when it had rebooted. That is still my main use for the utility (less the Smoothwall part), but it can be used for many other things.</description>
+    </item>
+    
+  </channel>
+</rss>

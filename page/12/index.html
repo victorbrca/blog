@@ -139,6 +139,175 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2017/10/11/how-to-create-a-quick-web-server/">How to Create a Quick Web Server</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2017-10-11">11 Oct, 2017</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/networking" class="label label-primary">Networking</a>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/netcat" class="label label-primary">Netcat</a>
+  
+  <a href="https://blog.victormendonca.com/tags/python" class="label label-primary">python</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>Have you ever had the need to create a web server to perform a test? Well, here are a few quick options on how to do this.</p>
+
+<h2 id="got-netcat">Got Netcat?</h2>
+
+<p>If you have Netcat on the server (which is pretty easy to get), then you can do this.</p>
+
+<p><strong>Example 1:</strong> Display the date and the text &ldquo;It works&rdquo;</p>
+
+<pre><code>nc -kl 10001 -c 'echo -e &quot;HTTPS/1.1 200 OK\r\n\r\n$(date)\r\n\r\nIt works&quot;'
+</code></pre>
+
+<p><strong>Example 2:</strong> Display an index.html file</p>
+
+<pre><code>nc -kl 10001 -c 'echo -e &quot;HTTPS/1.1 200 OK\r\n\r\n$(cat index.html)&quot;'
+</code></pre>
+
+<p><strong>Example 3:</strong> Using HTTPS</p>
+
+<p>a. First get a set of self-signed certificate and key (either generate or download here - <a href="http://www.selfsignedcertificate.com/">http://www.selfsignedcertificate.com/</a>)</p>
+
+<p>b. Add the certificate to the server and run netcate with the following parameters</p>
+
+<pre><code>nc -l -p 10001 -k --ssl --ssl-cert ca.crt --ssl-key ca.key -c 'echo -e &quot;HTTP/1.1 200 OK\r\n\r\n$(date)\r\n\r\nIt works&quot;'
+</code></pre>
+
+<h2 id="python">Python</h2>
+
+<p>This is the easiest one, as long as you have Python on that system. Just run the commands below and you are set. If you have an index file on that folder, Python will display, otherwise it will do a directory listing.</p>
+
+<pre><code>$ python -m SimpleHTTPServer 8888
+Serving HTTP on 0.0.0.0 port 8888 ...
+</code></pre>
+
+<h3 id="using-https-ssl">Using HTTPS/SSL</h3>
+
+<p>And you can also create aN SSL enabled listener with Python. For this test, you will need to have the certificate and key in <code>pem</code> format.</p>
+
+<p><strong>Pyton 3</strong></p>
+
+<pre><code class="language-python">from http.server import HTTPServer, BaseHTTPRequestHandler
+import ssl
+
+
+httpd = HTTPServer(('localhost', 4443), SimpleHTTPRequestHandler)
+
+httpd.socket = ssl.wrap_socket (httpd.socket,
+        keyfile=&quot;path/to/key.pem&quot;,
+        certfile='path/to/cert.pem', server_side=True)
+
+httpd.serve_forever()
+</code></pre>
+
+<p><strong>Python 2.x</strong></p>
+
+<pre><code class="language-python">import BaseHTTPServer, SimpleHTTPServer
+import ssl
+
+
+httpd = BaseHTTPServer.HTTPServer(('localhost', 4443),
+        SimpleHTTPServer.SimpleHTTPRequestHandler)
+
+httpd.socket = ssl.wrap_socket (httpd.socket,
+        keyfile=&quot;path/tp/key.pem&quot;,
+        certfile='path/to/cert.pem', server_side=True)
+
+httpd.serve_forever()
+</code></pre>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-create-a-quick-web-server%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Create%20a%20Quick%20Web%20Server&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-create-a-quick-web-server%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-create-a-quick-web-server%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-create-a-quick-web-server%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-create-a-quick-web-server%2f&amp;title=How%20to%20Create%20a%20Quick%20Web%20Server" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20Create%20a%20Quick%20Web%20Server&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f10%2f11%2fhow-to-create-a-quick-web-server%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2017/10/11/how-to-load-gitlab-inside-an-iframe/" title="How to Load Gitlab Inside an Iframe">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2017/12/25/custom-standup-desk-build/" title="Custom Stand-up Desk Build">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2017/10/11/how-to-load-gitlab-inside-an-iframe/">How to Load Gitlab Inside an Iframe</a>
 </h2>
 
@@ -808,123 +977,6 @@ done
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2017/09/23/gnome-touchpad-settings-missing-in-arch-xps-13/">Gnome Touchpad Settings Missing in Arch Xps 13</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2017-09-23">23 Sep, 2017</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/arch" class="label label-primary">Arch</a>
-  
-  <a href="https://blog.victormendonca.com/tags/hardware" class="label label-primary">Hardware</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  <p>I had an issue where the Gnome extension &lsquo;<a href="https://extensions.gnome.org/extension/131/touchpad-indicator/">Touchpad Indicator</a>&rsquo; stopped working on my xps 13 (Arch). After looking a bit further, it seems that the Gnome Touchpad settings had also stopped working. All I could see was the mouse settings, and the touchpad section was completelly gone.</p>
-
-<hr />
-
-<p><strong>Solution:</strong></p>
-
-<p>With Gnome 3.20, <code>xf86-input-synaptics</code> is not longer supported, and you should use <code>xf86-input-libinput</code> instead.</p>
-
-<p>You can check what is installed on your Arch system with <code>pacman -Q | grep input</code>. In my case, I had both packages installed:</p>
-
-<pre><code>$ pacman -Q | grep input
-inputproto 2.3.2-1
-libinput 1.8.2-1
-xf86-input-libinput 0.26.0-1
-xf86-input-synaptics 1.9.0-1
-xorg-xinput 1.6.2-1
-</code></pre>
-
-<p>Remove <code>xf86-input-synaptics</code> and any configuration file (like <code>/etc/X11/xorg.conf.d/50-synaptics.conf</code>), install <code>xf86-input-libinput</code> and reboot. That should get your configuration working again.</p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f23%2fgnome-touchpad-settings-missing-in-arch-xps-13%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Gnome%20Touchpad%20Settings%20Missing%20in%20Arch%20Xps%2013&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f23%2fgnome-touchpad-settings-missing-in-arch-xps-13%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f23%2fgnome-touchpad-settings-missing-in-arch-xps-13%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f23%2fgnome-touchpad-settings-missing-in-arch-xps-13%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f23%2fgnome-touchpad-settings-missing-in-arch-xps-13%2f&amp;title=Gnome%20Touchpad%20Settings%20Missing%20in%20Arch%20Xps%2013" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Gnome%20Touchpad%20Settings%20Missing%20in%20Arch%20Xps%2013&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2017%2f09%2f23%2fgnome-touchpad-settings-missing-in-arch-xps-13%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2017/09/20/additional-status-for-vim-with-powerline/" title="Additional Status for Vim With Powerline">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2017/09/24/atom-as-markdown-editor/" title="Atom as Markdown Editor">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1092,6 +1144,10 @@ xorg-xinput 1.6.2-1
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/">Playing a Sound on Headless Server Boot</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/">RHCE v8 Practice Exam</a>
           </li>
         
@@ -1113,10 +1169,6 @@ xorg-xinput 1.6.2-1
         
           <li>
           <a href="https://blog.victormendonca.com/2021/02/28/getting-started-with-ansible-molecule/">Getting Started with Ansible Molecule</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2021/01/23/how-to-convert-standard-partition-to-lvm/">How to Convert Standard Partition to Logical Volume</a>
           </li>
         
         </ul>

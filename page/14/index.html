@@ -139,6 +139,123 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2016/12/23/redirecting-bash-xtrace-to-a-separate-log/">Redirecting Bash Xtrace to a Separate Log</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2016-12-23">23 Dec, 2016</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  <p>So you have a Bash script that you want to troubleshoot, but you want to send stdout to a file, and stderr to another. Here&rsquo;s a solution.</p>
+
+<p>For example, I like to use Bash&rsquo;s color to display failure or success on checks, and echo&rsquo;s removal of new lines (<code>echo -e &quot;Wait for it...\c &quot;</code>) to wait for checks. For example, the screenshot below shows a script that check each step and report back.</p>
+
+<p><img src="https://i.imgur.com/H3Bm6s7.png" alt="terminal" /></p>
+
+<p>Errors are displayed in red, and success in green, and this same output is sent to the stdout and to a log file as well.</p>
+
+<p>Now I want to get error messages in a separate log file, so I can go back to my original log and match the time where it failed, with additional verbose from Bash&rsquo;s xtrace.</p>
+
+<p>The solution is very simple&hellip; I can just add the lines below to the top of my script:</p>
+
+<pre><code class="language-bash"># Debugging
+debug_log=&quot;${HOME}/bin/log/script.debug&quot;
+exec 2&gt;&gt;${debug_log}
+set -x
+</code></pre>
+
+<p>The first line setups my debug log, the second redirects stderr to my debug log, and the third enables xtrace (same as <code>bash -x [script]</code>).</p>
+
+<p>Note that doing this will disable any errors from being show in stdout.</p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f&amp;title=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Redirecting%20Bash%20Xtrace%20to%20a%20Separate%20Log&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2016%2f12%2f23%2fredirecting-bash-xtrace-to-a-separate-log%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2016/11/02/how-to-record-and-share-a-terminal-session/" title="How to Record and Share a Terminal Session">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2017/01/11/bash-command-substitution-subshell-and-codeblock/" title="Bash - Command Substitution, Subshell and Codeblock">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2016/11/02/how-to-record-and-share-a-terminal-session/">How to Record and Share a Terminal Session</a>
 </h2>
 
@@ -1023,6 +1140,10 @@ ls 123 &gt; /dev/null 2&gt;&amp;1
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/">Playing a Sound on Headless Server Boot</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/">RHCE v8 Practice Exam</a>
           </li>
         
@@ -1044,10 +1165,6 @@ ls 123 &gt; /dev/null 2&gt;&amp;1
         
           <li>
           <a href="https://blog.victormendonca.com/2021/02/28/getting-started-with-ansible-molecule/">Getting Started with Ansible Molecule</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2021/01/23/how-to-convert-standard-partition-to-lvm/">How to Convert Standard Partition to Logical Volume</a>
           </li>
         
         </ul>

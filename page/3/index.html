@@ -139,6 +139,858 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2020/11/03/zfs-for-dummies/">ZFS for Dummies</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2020-11-03">3 Nov, 2020</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/zfs" class="label label-primary">ZFS</a>
+  
+  <a href="https://blog.victormendonca.com/tags/freebsd" class="label label-primary">FreeBSD</a>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>As mentioned on previous posts, I have spent the past few weeks dealing with a ZFS crash on my FreeNAS install. Because of that, not only was I forced to learn how to troubleshoot ZFS, but I also had to learn how to setup new volumes and come up with new backup strategies (between a few other things).</p>
+
+<p>This was a great opportunity for me to learn more about ZFS (because I new &lsquo;nada&rsquo; to start with). And I&rsquo;m happy to share some of the knowledge that I gathered with you on this post.</p>
+
+<p>Please keep in mind that I don&rsquo;t consider myself an expert on ZFS (not even close), but I will try to make things simple and easy to understand for someone, who like me, is just getting started with ZFS.</p>
+
+<h1 id="about-zfs">About ZFS</h1>
+
+<h4 id="what-is-zfs-and-it-s-history">What is ZFS and It&rsquo;s History</h4>
+
+<p>ZFS is a local filesystem (i.e.: ext4, NTFS, exfat) and logical volume manager (i.e.: LVM on Linux) created by Sun Microsystems. ZFS was published under an open source license until Oracle bought Sun Microsystems and closed source the license. Because the source code was already in the open and ported to different OSs, eventually a project called &lsquo;OpenZFS&rsquo; was created, and that is the core code that is used on most Unix like systems today (Linux, FreeBSD, etc.).</p>
+
+<h3 id="zfs-components">ZFS Components</h3>
+
+<p><img src="https://blog.victormendonca.com/img/zfs-cheat-sheet-for-dummies/zfs -components.png" alt="" /></p>
+
+<h4 id="vdev">vdev</h4>
+
+<p>A vdev is composed of one or more physical drives (can also be of things other than hard drive, like files). They can be combined together in mirrors or RAIDZs.</p>
+
+<p><img src="https://blog.victormendonca.com/img/zfs-cheat-sheet-for-dummies/vdev.png" alt="" /></p>
+
+<p>💡 <em><strong>TIP:</strong> There are 7 different types of vdevs, and some of them (like host spare, L2ARC and ZIL) are very important.</em></p>
+
+<h4 id="pool">Pool</h4>
+
+<p>A pool is composed of one or more vdevs and they usually contain a volume or a dataset (which you create after creating the pool). You create/define your vdevs when you create a pool (with the <code>zpool</code> command which we&rsquo;ll see later). This allows you to mix vdev types together to achieve other RAIDZ levels (see example below):</p>
+
+<p><img src="https://blog.victormendonca.com/img/zfs-cheat-sheet-for-dummies/raid10.png" alt="" /></p>
+
+<h4 id="datasets">Datasets</h4>
+
+<p>Dataset is the filesystem part of ZFS (so far we&rsquo;ve seen the LVM components). Here you can define user access, quotas, compression, snapshots, etc&hellip;</p>
+
+<h4 id="volume">Volume</h4>
+
+<p>Volume is the brother of datasets but in a block device representation. It provides some of the features that datasets have, but not all. Volumes can be useful to run other filesystems on top of ZFS, or to export iSCSI extents.</p>
+
+<h3 id="raidz-types">RAIDZ Types</h3>
+
+<ul>
+<li>Dynamic/Simple Stripe (RAID0) - Distributes data without parity. Loosing a device means loosing all data</li>
+<li>MIRROR (RAID1) - Mirrored drives. Used with 2 to 4 disks (or more)</li>
+<li>RAIDZ-1 (RAID5) - Distributes parity along with the data and can lose one physical drive before a raid failure. RAIDZ requires at least 3 disks</li>
+<li>RAIDZ-2 (RAID6) - Distributes parity along with the data and can lose up to 2 physical drives. RAIDZ-2 requires at least 4 disks</li>
+<li>RAIDZ-3 - Distributes parity along with the data and can lose up to 3 physical drives. RAIDZ-3 requires at least 4, but should be used with no less than 5 disks</li>
+</ul>
+
+<p><img src="https://blog.victormendonca.com/img/zfs-cheat-sheet-for-dummies/raidz-comparisson.png" alt="" /></p>
+
+<hr />
+
+<h1 id="commands">Commands</h1>
+
+<p>Let&rsquo;s take a look at the most common commands for handling ZFS pools and filesystem. We&rsquo;ll use <code>/dev/sdx</code> to refer to device names, but keep in mind that using the device UUID is preferred in order to avoid boot issues due to device name changes.</p>
+
+<h3 id="1-zfs-pool-commands">1.ZFS Pool Commands</h3>
+
+<p>These are the commands related to creating vdevs and pools. We will be looking at:</p>
+
+<ul>
+<li><code>zpool create</code> - Create a pool (and vdevs)</li>
+<li><code>zpool status</code> - Displays pool status</li>
+<li><code>zpool list</code> - List pool and it&rsquo;s details</li>
+<li><code>zpool history</code> - Shows history of commands for zpool</li>
+<li><code>zpool import</code>- Imports and mounts pool</li>
+<li><code>zpool export</code> - Exports and unmounts pool</li>
+<li><code>zpool destroy</code> - Destroy pool and all filesystems</li>
+<li><code>zpool scrub</code> - Starts scrub of pool</li>
+</ul>
+
+<h4 id="1-1-creating-a-pool-and-vdevs">1.1.Creating a Pool (and vdevs)</h4>
+
+<p>To create a new pool we use the <code>zpool create</code> command. We specify the pool name and the device we want to use.</p>
+
+<p>It&rsquo;s basic usage is:</p>
+
+<pre><code class="language-none"># zpool create [pool] [devices]
+</code></pre>
+
+<p>Now let&rsquo;s look at different examples for this command.</p>
+
+<h5 id="create-a-pool-on-a-single-disk"><strong>Create a pool on a single disk</strong></h5>
+
+<p>The command below creates a pool on a single disk.</p>
+
+<pre><code class="language-none"># zpool create tank /dev/sdb  
+</code></pre>
+
+<h5 id="create-a-dynamic-stripe-pool-on-3-disks"><strong>Create a dynamic stripe pool on 3 disks</strong></h5>
+
+<p>Remember that dynamic stripe is the same as RAID0 and that it has no parity.</p>
+
+<pre><code class="language-none"># zpool create tank /dev/sdb /dev/sdc /dev/sdd
+</code></pre>
+
+<p>We can view the new pool with <code>zpool status</code></p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zpool status
+  pool: tank
+ state: ONLINE
+  scan: none requested
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	tank        ONLINE       0     0     0
+	  sdb       ONLINE       0     0     0
+	  sdc       ONLINE       0     0     0
+	  sdd       ONLINE       0     0     0
+
+errors: No known data errors
+</code></pre>
+
+<p>Note that the pool name is &lsquo;tank&rsquo; and the vdevs are &lsquo;sdb&rsquo;, &lsquo;sdc&rsquo; and &lsquo;sdd&rsquo;</p>
+
+<h5 id="create-a-mirrorred-pool-on-2-disks"><strong>Create a mirrorred pool on 2 disks</strong></h5>
+
+<pre><code class="language-none"># zpool create tank mirror sdb sdc
+</code></pre>
+
+<p>Note that I can omit <code>/dev</code> and give the device name. Let&rsquo;s view the result.</p>
+
+<pre><code class="language-none"># zpool status
+  pool: tank
+ state: ONLINE
+  scan: none requested
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	tank        ONLINE       0     0     0
+	  mirror-0  ONLINE       0     0     0
+	    sdb     ONLINE       0     0     0
+	    sdc     ONLINE       0     0     0
+
+errors: No known data errors
+</code></pre>
+
+<p>Our vdev is &lsquo;mirror-0&rsquo; and our pool is tank.</p>
+
+<h5 id="create-a-raid-z-pool"><strong>Create a RAID-Z pool</strong></h5>
+
+<pre><code class="language-none"># zpool create tank raidz sdb sdc sdd
+</code></pre>
+
+<p>And the result indicating that my vdev is RAIDZ1.</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zpool status
+  pool: tank
+ state: ONLINE
+  scan: none requested
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	tank        ONLINE       0     0     0
+	  raidz1-0  ONLINE       0     0     0
+	    sdb     ONLINE       0     0     0
+	    sdc     ONLINE       0     0     0
+	    sdd     ONLINE       0     0     0
+
+errors: No known data errors
+</code></pre>
+
+<p>You can use the same command to create RAIDZ2,3 pools.</p>
+
+<pre><code class="language-none"># zpool create [pool name] raidz[1,2,3] [devices]
+</code></pre>
+
+<h5 id="specifying-a-default-mount-point-for-the-pool"><strong>Specifying a default mount point for the pool</strong></h5>
+
+<p>You can also specify the default mount point for the pool by using the <code>-m</code> flag as you create it.</p>
+
+<pre><code class="language-none"># zpool create tank -m /mnt/tank mirror sdb sdc
+</code></pre>
+
+<p>We can see that our new pool was created and mounted at <code>/mnt/tank</code></p>
+
+<pre><code class="language-none"># zfs list
+NAME   USED  AVAIL     REFER  MOUNTPOINT
+tank    99K  4.36G       24K  /mnt/tank
+</code></pre>
+
+<p>💡 <em><strong>TIP:</strong> Also read up on the <code>zpool add</code> command.</em></p>
+
+<h4 id="1-2-getting-pool-status">1.2.Getting Pool Status</h4>
+
+<p>After we create a new pool it&rsquo;s automatically imported into our system. As we have seen before, we can view details of the pool with the <code>zpool status</code> command.</p>
+
+<pre><code class="language-none"># zpool status tank
+  pool: tank
+ state: ONLINE
+  scan: none requested
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	tank        ONLINE       0     0     0
+	  mirror-0  ONLINE       0     0     0
+	    sdb     ONLINE       0     0     0
+	    sdc     ONLINE       0     0     0
+
+errors: No known data errors
+</code></pre>
+
+<p>Some of the fields we did not look before are:</p>
+
+<ul>
+<li><code>state:</code> Indicates if pool is online or not</li>
+<li><code>status:</code> Additional information about the pool</li>
+<li><code>action:</code> Indicates if there are any pending actions for the pool</li>
+<li><code>scan:</code> If a scrub is in progress or the last scrub run status</li>
+<li><code>errors:</code> Indicates if there are any problems with the pool</li>
+</ul>
+
+<p>For example:</p>
+
+<pre><code class="language-none"># zpool status tank
+  pool: tank
+ state: ONLINE
+status: Some supported features are not enabled on the pool. The pool can
+        still be used, but some features are unavailable.
+action: Enable all features using 'zpool upgrade'. Once this is done,
+        the pool may no longer be accessible by software that does not support
+        the features. See zpool-features(7) for details.
+  scan: scrub repaired 0 in 0 days 03:37:12 with 0 errors on Wed Oct 28 03:37:13 2020
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	tank        ONLINE       0     0     0
+	  mirror-0  ONLINE       0     0     0
+	    sdb     ONLINE       0     0     0
+	    sdc     ONLINE       0     0     0
+
+errors: No known data errors
+</code></pre>
+
+<p>Another example:</p>
+
+<pre><code class="language-none"># zpool status -v tank
+  pool: tank
+ state: ONLINE
+status: One or more devices has experienced an error resulting in data
+    corruption.  Applications may be affected.
+action: Restore the file in question if possible.  Otherwise restore the
+    entire pool from backup.
+   see: http://illumos.org/msg/ZFS-8000-8A
+  scan: scrub repaired 0 in 0 days 04:21:43 with 0 errors on Sun Feb 23 04:21:45 2020
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	tank        ONLINE       0     0     0
+	  mirror-0  ONLINE       0     0     0
+	    sdb     ONLINE       0     0     0
+	    sdc     ONLINE       0     0     0
+
+errors: Permanent errors have been detected in the following files:
+
+        tank:&lt;0xdcca&gt;
+</code></pre>
+
+<h4 id="1-3-listing-pools">1.3.Listing Pools</h4>
+
+<p>As we have seen before, we can view some details of the pool with the <code>zpool status</code> command. But there are other commands, like <code>zpool list</code> that can give us information about the pool.</p>
+
+<pre><code class="language-none"># zpool list {pool name}
+</code></pre>
+
+<p>On the example below, we look at the details for our mirrored tank pool:</p>
+
+<pre><code class="language-none"># zpool list
+NAME   SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+tank  4.50G   117K  4.50G        -         -     0%     0%  1.00x    ONLINE  -
+</code></pre>
+
+<h4 id="1-4-show-pool-history">1.4.Show Pool History</h4>
+
+<p>This is another useful command that displays the history of commands that were executed against a pool from it&rsquo;s creation (of course only commands that make changes to the pool&rsquo;s configuration).</p>
+
+<pre><code class="language-none"># zpool history tank
+History for 'tank':
+2020-11-02.15:02:53 zpool create tank -m /mnt/tank mirror sdb sdc
+2020-11-02.15:50:43 zpool scrub tank
+2020-11-02.15:53:30 zfs set compression=lz4 tank
+2020-11-02.15:54:03 zpool scrub tank
+</code></pre>
+
+<h4 id="1-5-importing-pools">1.5.Importing Pools</h4>
+
+<p>Usually after creating a pool it&rsquo;s set to import and mount automatically, but you may encounter scenarios where you need to manually import a pool (like when troubleshooting or after re-imaging a system).</p>
+
+<p>Note that the import command will also mount the pool.</p>
+
+<h5 id="lists-pools-available-to-import"><strong>Lists pools available to import</strong></h5>
+
+<p>Running the <code>zpool import</code> command without a pool name will show you a list of pools that can be imported.</p>
+
+<p>Example of when no pools are available to be imported.</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zpool import
+no pools available to import
+</code></pre>
+
+<p>Here we have a pool that can be imported.</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zpool import
+   pool: tank
+     id: 2008489828128587072
+  state: ONLINE
+ action: The pool can be imported using its name or numeric identifier.
+ config:
+
+	tank        ONLINE
+	  mirror-0  ONLINE
+	    sdb     ONLINE
+	    sdc     ONLINE
+</code></pre>
+
+<h5 id="importing-the-pool"><strong>Importing the pool</strong></h5>
+
+<p>Give the command a pool name and it will be imported.</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zpool import tank
+
+root@ubuntu-vm:~# zpool list
+NAME   SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+tank  4.50G   147K  4.50G        -         -     0%     0%  1.00x    ONLINE  -
+</code></pre>
+
+<p>You can also import all available pools by using the <code>-a</code> option.</p>
+
+<pre><code class="language-none"># zpool import -a
+</code></pre>
+
+<h5 id="importing-a-pool-with-an-alternate-root-location"><strong>Importing a Pool with an Alternate Root Location</strong></h5>
+
+<p>Use the <code>-R</code> flag to mount the pool to an alternate root location. Note that this is not the mount path for the pool, but an alternate root folder.</p>
+
+<p><em><code>tank</code> is by default configured to be mounted at <code>/mnt/tank</code></em></p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zpool import -R /mnt/tank2 tank
+
+root@ubuntu-vm:~# zfs list
+NAME   USED  AVAIL     REFER  MOUNTPOINT
+tank   117K  4.36G       24K  /mnt/tank2/mnt/tank
+</code></pre>
+
+<h4 id="1-6-exporting-the-pool">1.6.Exporting the Pool</h4>
+
+<p>As expected, this is the opposite of the import command. The export command attempts to unmount any mounted file systems within the pool before continuing.</p>
+
+<pre><code class="language-none"># zpool export [pool name]
+</code></pre>
+
+<p>For example:</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zpool export tank
+
+root@ubuntu-vm:~# zpool list
+no pools available
+</code></pre>
+
+<p>If any of the file systems fail to unmount you can forcefully unmount them by using the <code>-f</code> option. However, if ZFS volumes exist and are in use, even with <code>-f</code> it will fail to export.</p>
+
+<h4 id="1-7-destroying-deleting-pools">1.7.Destroying/Deleting Pools</h4>
+
+<p>We can use the <code>zfs destroy</code> command to delete pools and all it&rsquo;s child datasets and/or volumes.</p>
+
+<p>⚠️ <strong>WARNING:</strong> <em>This will delete all your data, including any snapshots your may have.</em></p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zpool destroy tank
+
+root@ubuntu-vm:~# zpool list
+no pools available
+
+root@ubuntu-vm:~# zpool import
+no pools available to import
+</code></pre>
+
+<h4 id="1-8-scrubbing-pools">1.8.Scrubbing Pools</h4>
+
+<p>ZFS scrub checks every block in a pool against its known checksum to make sure that the data is valid. If you have vdevs with parity, ZFS scrub will also repair the data using healthy data from other disks. Scrubs should run on a schedule to make sure your systems stays healthy.</p>
+
+<h5 id="initiating-a-scrub"><strong>Initiating a scrub</strong></h5>
+
+<p>Initiating a scrub of a pool is as simple as running:</p>
+
+<pre><code class="language-none"># zpool scrub [pool]
+</code></pre>
+
+<h5 id="checking-the-status-of-a-scrub"><strong>Checking the status of a scrub</strong></h5>
+
+<p>You can check the status of a scrub with <code>zpool status</code> and looking for messages in the &lsquo;scan&rsquo; section.</p>
+
+<pre><code class="language-none">root@ubuntu-vm:/mnt/tank# zpool status tank
+  pool: tank
+ state: ONLINE
+  scan: scrub repaired 0B in 0 days 00:00:03 with 0 errors on Tue Nov  3 16:26:23 2020
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	tank        ONLINE       0     0     0
+	  mirror-0  ONLINE       0     0     0
+	    sdb     ONLINE       0     0     0
+	    sdc     ONLINE       0     0     0
+
+errors: No known data errors
+</code></pre>
+
+<h5 id="stopping-a-scrub"><strong>Stopping a scrub</strong></h5>
+
+<p>Use the <code>-s</code> flag.</p>
+
+<pre><code class="language-none"># zpool scrub -s [pool]
+</code></pre>
+
+<h3 id="2-zfs-filesystem-commands">2.ZFS Filesystem Commands</h3>
+
+<p>Now we will look at the commands that will help us work with filesystems (datasets) and volumes. We will concentrate more on the filesystem side of things and will not cover volumes.</p>
+
+<p>The commands we will review are:</p>
+
+<ul>
+<li><code>zfs create</code> - Creates a new volume or filesystem</li>
+<li><code>zfs mount/umount</code> - Mounts the filesystem</li>
+<li><code>zfs list</code> - Lists datasets and snapshots</li>
+<li><code>zfs get/set</code> - Gets configuration and sets configuration for the dataset</li>
+<li><code>zfs snapshot</code> - Handles snapshots</li>
+<li><code>zfs diff</code> - Used to compare data between snapshot</li>
+<li><code>zfs rollback</code> - Rolls back a snapshot</li>
+<li><code>zfs send/recv</code> - Sends a snapshot as a stream of data</li>
+<li><code>zfs destroy</code> - Deletes datasets and snapshots</li>
+</ul>
+
+<h4 id="2-1-creating-datasets">2.1. Creating Datasets</h4>
+
+<p>We can create datasets with the <code>zfs create</code> command. Here we create &lsquo;dataset1&rsquo; as child of the &lsquo;tank&rsquo; dataset (that was created automatically with the <code>zpool create</code> command).</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zfs create tank/dataset1
+
+root@ubuntu-vm:~# zfs list
+NAME            USED  AVAIL     REFER  MOUNTPOINT
+tank            145K  9.36G     30.6K  /tank
+tank/dataset1  30.6K  9.36G     30.6K  /tank/dataset1
+</code></pre>
+
+<h5 id="creating-missing-parent-datasets"><strong>Creating missing parent datasets</strong></h5>
+
+<p>We can also create missing parent datasets with the <code>-p</code> flag (similar to <code>mkdir -p</code>).</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zfs create tank/dataset1/childset1/childset2
+cannot create 'tank/dataset1/childset1/childset2': parent does not exist
+
+root@ubuntu-vm:~# zfs create -p tank/dataset1/childset1/childset2
+
+root@ubuntu-vm:~# zfs list
+NAME                                USED  AVAIL     REFER  MOUNTPOINT
+tank                                249K  9.36G     30.6K  /tank
+tank/dataset1                      30.6K  9.36G     30.6K  /tank/dataset1
+tank/dataset1/childset1            61.3K  9.36G     30.6K  /tank/dataset1/childset1
+tank/dataset1/childset1/childset2  30.6K  9.36G     30.6K  /tank/dataset1/childset1/childset2
+</code></pre>
+
+<h4 id="2-2-mounting-filesystems-datasets">2.2. Mounting Filesystems (Datasets)</h4>
+
+<p>We can use the <code>zfs mount/unmount</code> commands to view the current mount points as well as mounting/unmounting filesystems.</p>
+
+<h5 id="viewing-current-mounted-filesystems"><strong>Viewing current mounted filesystems</strong></h5>
+
+<p>Without any arguments, <code>zfs mount</code> will display all mounted zfs filesystems and their respective mount points (without the child datasets).</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zfs mount
+tank                            /tank
+</code></pre>
+
+<h5 id="mounting-filesystems"><strong>Mounting filesystems</strong></h5>
+
+<p>Use <code>zfs mount [pool|dataset]</code> to mount filesystems. On the example below we use <code>zfs mount</code> to establish that no datasets are mounted, and then we mount the &lsquo;tank&rsquo; dataset and confirm that is mounted with <code>zfs mount</code>.</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zfs mount
+
+root@ubuntu-vm:~# zfs mount tank
+
+root@ubuntu-vm:~# zfs mount
+tank                            /tank
+</code></pre>
+
+<p>Use the <code>-a</code> option to mount all filesystems.</p>
+
+<h5 id="mount-a-child-dataset"><strong>Mount a child dataset</strong></h5>
+
+<p>You can also mount a child dataset without the parent datasets. For example, here we confirm that &lsquo;tank&rsquo; is not mounted, then we look at the available datasets, and we execute the command to mount the <code>tank/dataset2/childset2</code> dataset only.</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zfs mount
+
+root@ubuntu-vm:~# zfs list
+NAME                                USED  AVAIL     REFER  MOUNTPOINT
+tank                                249K  9.36G     30.6K  /tank
+tank/dataset1                      30.6K  9.36G     30.6K  /tank/dataset1
+tank/dataset2                      91.9K  9.36G     30.6K  /tank/dataset2
+tank/dataset2/childset2            61.3K  9.36G     30.6K  /tank/dataset2/childset2
+tank/dataset2/childset2/childset2  30.6K  9.36G     30.6K  /tank/dataset2/childset2/childset2
+
+root@ubuntu-vm:~# zfs mount tank/dataset2/childset2
+
+root@ubuntu-vm:~# zfs mount
+tank/dataset2/childset2         /tank/dataset2/childset2
+</code></pre>
+
+<p>Note that this will create the required path in the OS filesystem to mount the child dataset. If you decide to mount the parent dataset later you may run into a <code>directory is not empty</code> error because of the created directories.</p>
+
+<h5 id="unmounting-filesystems"><strong>Unmounting filesystems</strong></h5>
+
+<p>Run<code>zfs unmount</code> and specify the dataset name.</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zfs mount
+tank                            /tank
+
+root@ubuntu-vm:~# zfs unmount tank
+
+root@ubuntu-vm:~# zfs mount
+
+</code></pre>
+
+<h4 id="2-3-listing-filesystems-datasets">2.3. Listing Filesystems (Datasets)</h4>
+
+<p>You can list the dataset by running <code>zfs list [dataset name]</code>.</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zfs list tank
+NAME   USED  AVAIL     REFER  MOUNTPOINT
+tank   253K  9.36G     30.6K  /tank
+</code></pre>
+
+<p>And you can also specify the mount point as an argument.</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zfs list /tank
+NAME   USED  AVAIL     REFER  MOUNTPOINT
+tank   253K  9.36G     30.6K  /tank
+</code></pre>
+
+<p>If run without a dataset name, <code>zfs list</code> will show all datasets in the system recursively.</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zfs list
+NAME                                USED  AVAIL     REFER  MOUNTPOINT
+tank                                253K  9.36G     30.6K  /tank
+tank/dataset1                      30.6K  9.36G     30.6K  /tank/dataset1
+tank/dataset2                      91.9K  9.36G     30.6K  /tank/dataset2
+tank/dataset2/childset2            61.3K  9.36G     30.6K  /tank/dataset2/childset2
+tank/dataset2/childset2/childset2  30.6K  9.36G     30.6K  /tank/dataset2/childset2/childset2
+</code></pre>
+
+<p>💡 <em><strong>TIP:</strong> when specifying a dataset name you can also use the <code>-r</code> flag to display the dataset recursively.</em></p>
+
+<h4 id="2-4-getting-and-setting-dataset-properties">2.4. Getting and Setting Dataset Properties</h4>
+
+<p>Properties control the behavior of filesystems, volumes, snapshots, and clones. ZFS properties can look similar to mount options.</p>
+
+<h5 id="getting-a-list-of-all-the-properties-for-a-dataset"><strong>Getting a list of all the properties for a dataset</strong></h5>
+
+<pre><code class="language-none"># zfs get all [dataset]
+</code></pre>
+
+<h5 id="getting-the-current-value-for-a-specific-property"><strong>Getting the current value for a specific property</strong></h5>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zfs get compression tank
+NAME  PROPERTY     VALUE     SOURCE
+tank  compression  off       default
+</code></pre>
+
+<h5 id="setting-a-property-value"><strong>Setting a property value</strong></h5>
+
+<p>Use the <code>zfs set</code> command.</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zfs set compression=lz4 tank
+
+root@ubuntu-vm:~# zfs get compression tank
+NAME  PROPERTY     VALUE     SOURCE
+tank  compression  lz4       local
+</code></pre>
+
+<h4 id="2-5-creating-snapshots">2.5. Creating Snapshots</h4>
+
+<p>Snapshots allow you to save the state of a filesystem to a current point in time, without duplicating storage (files are not copied). It flags existing data as &ldquo;read-only&rdquo; while allowing new data to be added to the filesystem without affecting the existing data blocks that are protected by the snapshot (the whole process is a bit more complicated than this).</p>
+
+<p>Let&rsquo;s take a look at the image below as an example. You have a filesystem with existing data (Data A) and you take a snapshot (snapshot 1). Then you make some changes, add new files (Data B) and take another snapshot (snapthot 2). After that you make even more changes (Data C).</p>
+
+<p><img src="https://blog.victormendonca.com/img/zfs-cheat-sheet-for-dummies/snapshot.1.png" alt="" /></p>
+
+<p>Snapshot 1 protects the original data (Data A), while snapshot 2 protects Data Changes (B) as well as the original data (Data A). So you can delete snapshot 1 and data (A) will still be protected.</p>
+
+<p><img src="https://blog.victormendonca.com/img/zfs-cheat-sheet-for-dummies/snapshot.2.png" alt="" /></p>
+
+<p><em><strong>Note:</strong> The amount of data used for the snapshots is very small because we are not copying the files, but instead the filesystem top-level metadata block indicating the they belong to a snapshot.</em></p>
+
+<p>And here are a few scenarios of what happens when you delete files and snapshots:</p>
+
+<p><img src="https://blog.victormendonca.com/img/zfs-cheat-sheet-for-dummies/snapshot.3.png" alt="" /></p>
+
+<p>Snapshots are great for testing software development, or creating a failsafe before an upgrade. But by no means they should be considered (by itself) as a backup or DR solution.</p>
+
+<h5 id="creating-a-snapshot"><strong>Creating a snapshot</strong></h5>
+
+<pre><code class="language-none">zfs snapshot create [pool/dataset@snapshot_name]
+</code></pre>
+
+<p>For example:</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zfs snapshot tank/dataset1@snapshot1
+
+root@ubuntu-vm:~# zfs list -t snapshot
+NAME                   USED  AVAIL     REFER  MOUNTPOINT
+tank/dataset1@snapshot1  17.3K      -     3.00G  -
+</code></pre>
+
+<h5 id="creating-recursive-snapshots"><strong>Creating recursive snapshots</strong></h5>
+
+<p>If you have multiple child datasets, you can either create one snapshot of the top-level dataset (usually the pool name), or use the <code>-r</code> flag to create snapshots recursively.</p>
+
+<p>Snapshot of the main dataset:</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zfs snapshot tank@snapshot-master
+
+root@ubuntu-vm:~# zfs list -t snapshot
+NAME                   USED  AVAIL     REFER  MOUNTPOINT
+tank@snapshot-master     0B      -     30.6K  -
+</code></pre>
+
+<p>Recursive snapshot:</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zfs snapshot -r tank@recursive
+
+root@ubuntu-vm:~# zfs list -t snapshot
+NAME                      USED  AVAIL     REFER  MOUNTPOINT
+tank@recursive              0B      -     30.6K  -
+tank/dataset1@recursive     0B      -     3.00G  -
+</code></pre>
+
+<h5 id="listing-snapshots"><strong>Listing snapshots</strong></h5>
+
+<p>Use <code>zfs list -t snapshot</code>.</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zfs list -t snapshot
+NAME                      USED  AVAIL     REFER  MOUNTPOINT
+tank@recursive              0B      -     30.6K  -
+tank/dataset1@recursive     0B      -     3.00G  -
+</code></pre>
+
+<h4 id="2-6-comparing-snapshots">2.6. Comparing Snapshots</h4>
+
+<p>You can use <code>zfs diff</code> to compare snapshots.</p>
+
+<pre><code class="language-none"># zfs diff [older snapshot] [newer snapshot]
+</code></pre>
+
+<p>For example:</p>
+
+<pre><code class="language-none">root@ubuntu-vm:# zfs diff tank@initial tank@second
++	/mnt/tank/file-1.txt
++	/mnt/tank/file-2.txt
++	/mnt/tank/file-3.txt
+M	/mnt/tank/
+</code></pre>
+
+<h4 id="2-7-restoring-a-snapshot">2.7. Restoring a Snapshot</h4>
+
+<p>Restore a snapshots with <code>zfs rollback</code>. Note that restoring a snapshot will delete all files that were created after the snapshot (as we saw in our example). It will also delete any newer snapshots (you will be asked to use the <code>-r</code> option to rollback and delete newer snapshots).</p>
+
+<pre><code class="language-none">zfs rollback [pool/dataset@snapshot_name]
+</code></pre>
+
+<h4 id="2-9-sending-and-receiving-snapshots">2.9. Sending and Receiving Snapshots</h4>
+
+<p>One of the best features of ZFS is &lsquo;ZFS send&rsquo;. It allows you send snapshots as a stream of data. This is a great way replicate a snapshot and it&rsquo;s dataset to a file, another pool or even to another system via SSH. Amazing no!</p>
+
+<p>Let&rsquo;s look at the example below. We have 2 pools in our system named &lsquo;tank&rsquo; and &lsquo;backup&rsquo;.</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zpool list
+NAME     SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+tank       9G  1.50G  7.50G        -         -     0%    16%  1.00x    ONLINE  -
+backup  4.50G   104K  4.50G        -         -     0%     0%  1.00x    ONLINE  -
+</code></pre>
+
+<p>In our tank pool we have a dataset for our Movies.</p>
+
+<pre><code class="language-none">root@ubuntu-vm:/tank/Movies# zfs list -r tank
+NAME          USED  AVAIL     REFER  MOUNTPOINT
+tank         1.50G  7.22G       24K  /tank
+tank/Movies  1.50G  7.22G     1.50G  /tank/Movies
+</code></pre>
+
+<p>Before we can send this data we need create a snapshot:</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zfs snapshot tank/Movies@$(date '+%Y-%m-%d_%H-%M')
+
+root@ubuntu-vm:~# zfs list -t snapshot
+NAME                           USED  AVAIL     REFER  MOUNTPOINT
+tank/Movies@2020-11-03_15-29     0B      -     1.50G  -
+</code></pre>
+
+<p>And now we can send our snapshot to our backup pool with <code>zfs send/recv</code>.</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zfs send tank/Movies@2020-11-03_15-29 | zfs recv backup/Movies
+</code></pre>
+
+<p>And let&rsquo;s confirm that it worked.</p>
+
+<pre><code class="language-none">root@ubuntu-vm:~# zfs list
+NAME            USED  AVAIL     REFER  MOUNTPOINT
+backup         1.50G  2.86G       24K  /backup
+backup/Movies  1.50G  2.86G     1.50G  /backup/Movies
+tank           1.50G  7.22G       24K  /tank
+tank/Movies    1.50G  7.22G     1.50G  /tank/Movies
+
+root@ubuntu-vm:~# zfs list -t snapshot
+NAME                             USED  AVAIL     REFER  MOUNTPOINT
+backup/Movies@2020-11-03_15-29     0B      -     1.50G  -
+tank/Movies@2020-11-03_15-29       0B      -     1.50G  -
+</code></pre>
+
+<p>💡 <em><strong>TIP:</strong> It&rsquo;s worth to look into all the options and use cases for ZFS send. Combined with RAIDZs and snapshots, it can help you make your filesystem almost indestructible.</em></p>
+
+<h4 id="2-10-destroying-filesystems-datasets-and-snapshots">2.10. Destroying Filesystems (Datasets) and Snapshots</h4>
+
+<h5 id="destroying-datasets"><strong>Destroying datasets</strong></h5>
+
+<p>To destroy a dataset, use <code>zfs destroy</code> (the <code>-r</code> flag also works here).</p>
+
+<pre><code class="language-none">zfs destroy [pool/dataset]
+</code></pre>
+
+<h5 id="destroying-snapshots"><strong>Destroying snapshots</strong></h5>
+
+<p>To destroy a snapshot, also use the <code>zfs destroy</code> command (and the <code>-r</code> flag also works here).</p>
+
+<pre><code class="language-none">zfs destroy [pool/dataset@snapshot_name]
+</code></pre>
+
+<hr />
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>While we covered a lot of different topics and commands on ZFS, in reality, we really only scratched the surface on what ZFS can do. If you want to learn more about ZFS I&rsquo;ve added a few links below with some great reading.</p>
+
+<hr />
+
+<p><strong>References and additional reading:</strong></p>
+
+<ul>
+<li>FreeBSD Mastery: ZFS - <a href="https://www.goodreads.com/book/show/25595471-freebsd-mastery">https://www.goodreads.com/book/show/25595471-freebsd-mastery</a></li>
+<li>Ubuntu Wiki - <a href="https://wiki.ubuntu.com/ZFS">https://wiki.ubuntu.com/ZFS</a></li>
+<li>Zpool Administration - <a href="https://pthree.org/2012/04/17/install-zfs-on-debian-gnulinux/">https://pthree.org/2012/04/17/install-zfs-on-debian-gnulinux/</a></li>
+<li>ZFS Build - <a href="http://www.zfsbuild.com/">http://www.zfsbuild.com/</a></li>
+<li>ZFS Features and Terminology - <a href="https://www.freebsd.org/doc/handbook/zfs-term.html">https://www.freebsd.org/doc/handbook/zfs-term.html</a></li>
+<li>Klennet Storage Software - <a href="https://www.klennet.com/zfs-recovery/zfs-basics.aspx">https://www.klennet.com/zfs-recovery/zfs-basics.aspx</a></li>
+</ul>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f11%2f03%2fzfs-for-dummies%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=ZFS%20for%20Dummies&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f11%2f03%2fzfs-for-dummies%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f11%2f03%2fzfs-for-dummies%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f11%2f03%2fzfs-for-dummies%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f11%2f03%2fzfs-for-dummies%2f&amp;title=ZFS%20for%20Dummies" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=ZFS%20for%20Dummies&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f11%2f03%2fzfs-for-dummies%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2020/10/30/my-grafana-setup/" title="Overview of My Grafana Setup">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2020/11/14/rhcsa8-boot-targets-system-targets-and-root-password-reset/" title="RHCSA v8: Boot Targets, Systemd Targets and root Password Reset">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2020/10/30/my-grafana-setup/">Overview of My Grafana Setup</a>
 </h2>
 
@@ -1057,484 +1909,6 @@ run_rc_command &quot;$1&quot;
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2020/10/22/how-to-configure-a-ups-between-linux-and-freenas/">How to Configure a UPS Between Linux and FreeNAS</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2020-10-22">22 Oct, 2020</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/shell" class="label label-primary">Shell</a>
-  
-  <a href="https://blog.victormendonca.com/tags/hardware" class="label label-primary">Hardware</a>
-  
-  <a href="https://blog.victormendonca.com/tags/freenas" class="label label-primary">FreeNAS</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<p>After having bad memory modules due to power outages at home (on both my FreeNAS and my desktop) I knew I had to invest on a UPS. I will cover the details of the configuration, and as usual, I will try to go straight to the point.</p>
-
-<p>Keep in mind that I&rsquo;m running <strong>Arch</strong> on my desktop and <strong>FreeNAS-11.3-U1</strong>, and that the <strong>UPS is connected to my desktop</strong> (master) via USB.</p>
-
-<h2 id="instructions">Instructions</h2>
-
-<h3 id="hardware">Hardware</h3>
-
-<p>a. Connect the USB cable to your computer</p>
-
-<p>b. Make sure that you can see it with <code>lsusb</code></p>
-
-<pre><code class="language-none">➤ lsusb | grep -i ups
-Bus 002 Device 008: ID 0764:0501 Cyber Power System, Inc. CP1500 AVR UPS
-</code></pre>
-
-<h3 id="desktop">Desktop</h3>
-
-<h4 id="configuring-the-ups">Configuring the UPS</h4>
-
-<p>a. Start by installing <code>nut</code> and <code>nut-monitor</code> (if you want a nice GUI to view UPS status)</p>
-
-<pre><code class="language-none">local/nut 2.7.4-2
-    A collection of programs which provide a common interface for monitoring and administering UPS, PDU and SCD
-    hardware
-
-local/nut-monitor 2.7.4-3
-    GUI to manage devices connected a NUT server
-</code></pre>
-
-<p>b. Next run <code>nut-scanner</code> to see if identifies your UPS. This will give a start configuration that we can use for the UPS</p>
-
-<pre><code class="language-none">➤ sudo nut-scanner -U
-Scanning USB bus.
-[nutdev1]
-	driver = &quot;usbhid-ups&quot;
-	port = &quot;auto&quot;
-	vendorid = &quot;0764&quot;
-	productid = &quot;0501&quot;
-	product = &quot;SL Series&quot;
-	vendor = &quot;CPS&quot;
-	bus = &quot;002
-</code></pre>
-
-<p>c. Edit <code>/etc/nut/ups.conf</code> and add the output from the previous step. You can change the device name (between <code>[]</code>) to anything you like</p>
-
-<p><em><strong>Tip:</strong> If you only have one UPS keep the name simple so it&rsquo;s easy for your to remember and type it in the terminal.</em></p>
-
-<pre><code>[CyberPowerSL700U]
-	driver = &quot;usbhid-ups&quot;
-	port = &quot;auto&quot;
-	vendorid = &quot;0764&quot;
-	productid = &quot;0501&quot;
-	product = &quot;SL Series&quot;
-	vendor = &quot;CPS&quot;
-	bus = &quot;002&quot;
-</code></pre>
-
-<p>d. Start the USB driver</p>
-
-<pre><code class="language-none">➤ sudo upsdrvctl start
-</code></pre>
-
-<p><em>d.1.</em> If you get an error here you might need to setup a udev rule for your UPS. This can be done by creating the file <code>/etc/udev/rules.d/50-ups.rules</code> with the content below</p>
-
-<blockquote>
-<p><code>SUBSYSTEM==&quot;usb&quot;, ATTR{idVendor}==&quot;XXXX&quot;, ATTR{idProduct}==&quot;YYYY&quot;, SYMLINK+=&quot;ups0&quot;, GROUP=&quot;nut&quot;</code></p>
-</blockquote>
-
-<p>Make sure to add the vendor ID and product ID for the UPS (both <code>lsusb</code> and <code>nut-scanner -U</code> can provide that info). This what mine looks like:</p>
-
-<pre><code class="language-none">➤ cat /etc/udev/rules.d/50-ups.rules
-SUBSYSTEM==&quot;usb&quot;, ATTR{idVendor}==&quot;0764&quot;, ATTR{idProduct}==&quot;0501&quot;, SYMLINK+=&quot;ups0&quot;, GROUP=&quot;nut&quot;
-</code></pre>
-
-<p><em>d.2.</em> After that reload udev rules and try to start the UPS USB driver again</p>
-
-<pre><code class="language-none">➤ sudo udevadm control --reload-rules &amp;&amp; sudo udevadm trigger
-➤ sudo upsdrvctl start
-</code></pre>
-
-<p>e. Make sure that you can view the UPS status with <code>upsc</code></p>
-
-<pre><code class="language-none">➤ upsc CyberPowerSL700U
-battery.charge: 100
-battery.charge.low: 10
-battery.charge.warning: 20
-battery.mfr.date: CPS
-battery.runtime: 599
-battery.runtime.low: 300
-battery.type: PbAcid
-battery.voltage: 14.2
-battery.voltage.nominal: 12
-device.mfr: CPS
-device.model: SL Series
-device.type: ups
-driver.name: usbhid-ups
-driver.parameter.bus: 002
-driver.parameter.pollfreq: 30
-driver.parameter.pollinterval: 2
-driver.parameter.port: auto
-driver.parameter.product: SL Series
-driver.parameter.productid: 0501
-driver.parameter.synchronous: no
-driver.parameter.vendor: CPS
-driver.parameter.vendorid: 0764
-driver.version: 2.7.4
-driver.version.data: CyberPower HID 0.4
-driver.version.internal: 0.41
-input.transfer.high: 140
-input.transfer.low: 96
-input.voltage: 115.0
-input.voltage.nominal: 0
-output.voltage: 115.0
-ups.beeper.status: enabled
-ups.delay.shutdown: 20
-ups.delay.start: 30
-ups.load: 44
-ups.mfr: CPS
-ups.model: SL Series
-ups.productid: 0501
-ups.realpower.nominal: 375
-ups.status: OL
-ups.timer.shutdown: -60
-ups.timer.start: -60
-ups.vendorid: 0764
-</code></pre>
-
-<h4 id="configuring-the-nut-server">Configuring the NUT Server</h4>
-
-<p>We are going to configure it as the master (meaning that it will send the shutdown command to the listening clients when the battery is low).</p>
-
-<p><strong><em>Info:</em></strong> <em>If you want to know what the shutdown process looks like, take a look at the <a href="https://networkupstools.org/docs/user-manual.chunked/ar01s06.html#UPS_shutdown">Official NUT Document: Shutdown design</a></em></p>
-
-<p>a. Edit <code>/etc/nut/nut.conf</code> and set the <code>MODE</code> to <code>netserver</code></p>
-
-<pre><code class="language-none">MODE=netserver
-</code></pre>
-
-<p>b. Now let&rsquo;s configure the listening IP and port. Edit <code>/etc/nut/upsd.conf</code>, edit the<code>LISTEN</code> directive as below:</p>
-
-<pre><code class="language-none">LISTEN 0.0.0.0 3493
-</code></pre>
-
-<p>c. Configure the users in <code>/etc/nut/upsd.users</code></p>
-
-<p><em>Add passwords under <code>my_master_password</code> and <code>my_slave_password</code></em></p>
-
-<pre><code class="language-none">[upsmaster]
-  # Administrative user
-  password = my_master_password
-
-  # Allow changing values of certain variables in the UPS
-  actions = SET
-
-  # Allow setting the &quot;Forced Shutdown&quot; flag in the UPS
-  actions = fsd
-
-  # Allow all instant commands
-  upsmon master
-
-[upsremote]
-  password = my_slave_password
-  upsmon slave
-</code></pre>
-
-<p>d. Now let&rsquo;s tell <code>upsmon</code> to monitor the UPS. Edit <code>/etc/nut/upsmon.conf</code> with the lines below</p>
-
-<p><em>Make sure to change the UPS name (<code>ups_name</code>) and master password (<code>my_master_password</code>)</em></p>
-
-<pre><code class="language-none">MONITOR ups_name@localhost 1 [master user] [master password] master
-</code></pre>
-
-<p>e. Check the status of the NUT server with <code>systemctl status nut-server</code></p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-configure-a-ups-between-linux-and-freenas/status.png" alt="" /></p>
-
-<p>f. Enable the NUT server and monitor</p>
-
-<pre><code class="language-none">➤ sudo systemctl enable --now nut-server.service
-➤ sudo systemctl enable --now nut-monitor.service
-</code></pre>
-
-<h4 id="timing">Timing</h4>
-
-<p>It&rsquo;s important that we understand how the shutdown process works, and how much time each of the slaves take to power down. At the end of the process the master node will send a shutdown command to the UPS, and the last thing we want is to cutoff power to one of our slaves.</p>
-
-<p>I have 3 devices connected to my UPS. I have timed their shutdown so I now how much time I need:</p>
-
-<ul>
-<li>Desktop - 30s</li>
-<li>FreeNAS - 60s (without drives)</li>
-<li>CentOS - 30s</li>
-</ul>
-
-<p>On top of that, I also need to take in consideration the UPS low battery run time (what the low battery threshold is and how long it can run), and what the shutdown delay should be.</p>
-
-<p><em>Oversimplified chronogram</em></p>
-
-<pre><code class="language-none">UPS       |####################### Low Battery Run Time ######################|
-          |                             ########### Shutdown Delay ###########|
-          |
-Master    |######### Shutdown ##########|
-(Desktop) |
-          |
-Slave1    |####################### Shutdown #########################|
-(FreeNAS) |
-          |
-Slave2    |########## Shutdown ##########|
-(Centos)  |
-          -------------------------------|---------------------------|--------|
-   Time                                 30s                         60s      90s  
-</code></pre>
-
-<h5 id="let-s-get-started"><strong>Let&rsquo;s get started</strong></h5>
-
-<p>a. Start by timing your device with a normal shutdown</p>
-
-<p>b. Now we can change our configuration, and that will vary with your device</p>
-
-<h5 id="option-1-use-upsrw">Option 1: Use <code>upsrw</code></h5>
-
-<p>You can use <code>upsrw</code> to set the variable, but that sometimes will not work as it only sets the value for the OS and doesn&rsquo;t write back to the UPS (which is the same for all 3 cases). The variables we are looking for are:</p>
-
-<ul>
-<li><code>battery.charge.low</code> - Threshold in battery percentage that the UPS should change it&rsquo;s status to LB (low battery)</li>
-<li><code>battery.runtime.low</code> - Threshold in battery run time (seconds) that the UPS should change it&rsquo;s status to LB (low battery)</li>
-<li><code>ups.delay.shutdown</code> - Additional delay after the Master has shutdown and the UPS will wait to cutoff power (the important one we just covered)</li>
-<li><code>ups.delay.start</code> - This is how long the UPS should wait to restore power. For home use I usually set this to high</li>
-</ul>
-
-<p>You can set them with <code>upsrw -s [variable=value] -u [UPS admin user] [ups name]</code>. For example:</p>
-
-<pre><code class="language-none">upsrw -s ups.delay.shutdown=60 -u upsmaster CyberPowerSL700U
-</code></pre>
-
-<blockquote>
-<p><strong>⚠️ WARNING:</strong> The main problem with this process is that it does not survive restarts.</p>
-</blockquote>
-
-<h5 id="option-2-use-the-override-directive">Option 2: Use the <code>override</code> directive</h5>
-
-<p>You can use the <code>override</code> directive in <code>/etc/nut/ups.conf</code> to override levels reported back from the UPS. Similar to the option above, this will only update the outside world (the master device and not the UPS itself). See <a href="https://networkupstools.org/docs/man/ups.conf.html">UPS.CONF(5)</a> for more info.</p>
-
-<h5 id="option-3-use-offdelay">Option 3: Use <code>offdelay</code></h5>
-
-<p>This is the method that worked the best for my battery model. I have configured the following 3 variables in <code>/etc/nut/ups.conf</code>.</p>
-
-<ul>
-<li><code>offdelay</code> - How long to wait to cut power - overrides <code>ups.delay.shutdown</code></li>
-<li><code>ondelay</code> - How long to wait before turning on devices again - <code>overrides ups.delay.start</code></li>
-<li><code>lowbatt</code> - Overrides <code>battery.charge.low</code></li>
-</ul>
-
-<p><em>Here&rsquo;s my updated <code>/etc/nut/ups.conf</code></em></p>
-
-<pre><code>[CyberPowerSL700U]
-	driver = &quot;usbhid-ups&quot;
-	port = &quot;auto&quot;
-	vendorid = &quot;0764&quot;
-	productid = &quot;0501&quot;
-	product = &quot;SL Series&quot;
-	vendor = &quot;CPS&quot;
-	bus = &quot;002&quot;
-  offdelay = &quot;90&quot; # How long to wait to cut power - overrides ups.delay.shutdown
-  ondelay = &quot;50&quot; # How long to wait before turning on devices again - overrides ups.delay.start
-  lowbatt = &quot;30&quot; # Overrides battery.charge.low
-
-</code></pre>
-
-<p>c. Restart <code>nut-server.service</code></p>
-
-<pre><code class="language-none">➤ sudo systemctl restart nut-server.Services
-</code></pre>
-
-<h3 id="configuring-freenas-as-the-client-slave">Configuring FreeNAS as the client/slave</h3>
-
-<p>a. Login to your FreeNAS and go to Services. Enable the UPS service, set it to start automatically and then click on the edit button</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-configure-a-ups-between-linux-and-freenas/freenas.1.png" alt="" /></p>
-
-<p>b. Make the following configuration</p>
-
-<ul>
-<li><strong>UPS Mode</strong> - Slave</li>
-<li><strong>Identifier</strong> - Name for the UPS</li>
-<li><strong>Remote Host</strong> - IP of the master</li>
-<li><strong>Remote Port</strong> - Port</li>
-<li><strong>Driver</strong> - Look for your UPS model. I could not find my model, so I typed in the driver that I&rsquo;m using on the master host (usbhid-ups) *</li>
-<li><strong>Port or Hostname</strong> - Hostname of the master host</li>
-</ul>
-
-<p><strong>⚠️ WARNING:</strong> <em>While this allowed me to save my configuration and the shutdown works, when I access the config page the driver field is blank. This is different than on older versions of FreeNAS where the driver option was only available in Master mode. Beware that it may create problems if you also decide to go this route.</em></p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-configure-a-ups-between-linux-and-freenas/freenas.config.1.png" alt="" /></p>
-
-<ul>
-<li><strong>Shutdown Mode</strong> - I chose &lsquo;UPS reaches low battery&rsquo;</li>
-<li><strong>Shutdown Timer</strong> - 30 (default)</li>
-<li><strong>Shutdown Command</strong> - I&rsquo;m using <code>/sbin/shutdown -p now</code></li>
-<li><strong>No Communication Warning Time</strong> - 60 (default)</li>
-<li><strong>Monitor User</strong> - The slave user you configured in <code>ups.conf</code> on the master</li>
-<li><strong>Monitor Password</strong> - The slave password you configured in <code>ups.conf</code> on the master</li>
-</ul>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-configure-a-ups-between-linux-and-freenas/freenas.config.2.png" alt="" /></p>
-
-<p>Check the &lsquo;Send Email Status Updates&rsquo; if you&rsquo;d like to received emails (also add your email address). Click on save.</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-configure-a-ups-between-linux-and-freenas/freenas.config.3.png" alt="" /></p>
-
-<p>c. Check the connection to the UPS with the command below</p>
-
-<blockquote>
-<p><code>upsc ups_name@ip:port</code></p>
-</blockquote>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-configure-a-ups-between-linux-and-freenas/freenas.3.png" alt="" /></p>
-
-<p>d. Check that FreeNAS is actually monitoring the UPS (<code>/var/log/nut/ups.log</code>)</p>
-
-<blockquote>
-<p>OL - On line (no power failure)</p>
-
-<p>OB - On battery</p>
-
-<p>LB - Low battery</p>
-</blockquote>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-configure-a-ups-between-linux-and-freenas/freenas.4.png" alt="" /></p>
-
-<p>e. Log back to your master machine and confirm that you can see FreeNAS as a connected client (<code>upsc -c</code>)</p>
-
-<p><em>Assuming that my FreeNAS IP is <code>192.168.10.20</code></em></p>
-
-<pre><code class="language-none">$ upsc -c ups_name@localhost
-192.168.10.20
-</code></pre>
-
-<p><em><strong>Tip:</strong> You can also check the status of <code>nut-server.service</code> and it will show you the connected clients</em></p>
-
-<h2 id="bonus-setup-centos-as-client-slave">Bonus: Setup CentOS as client/slave</h2>
-
-<p>As I mentioned before, I also have a CentOS server that connects to this UPS. So here&rsquo;s how to configure it.</p>
-
-<p>a. Install <code>nut-client</code></p>
-
-<pre><code class="language-none"># yum install -y nut-client
-</code></pre>
-
-<p>b. Add the monitor line to <code>/etc/ups/upsmon.conf</code></p>
-
-<pre><code class="language-none">MONITOR CyberPowerSL700U@10.13.15.200 1 [slave user] [slave pass] slave
-</code></pre>
-
-<p>c. Enable and start the service</p>
-
-<pre><code class="language-none"># systemctl enable --now nut-monitor.service
-</code></pre>
-
-<p>d. Check that you can see the new client in the master (<code>upsc -c [ups name]</code>)</p>
-
-<pre><code class="language-none"># upsc -c CyberPowerSL700U
-127.0.0.1
-192.168.10.20  # FreeNAS
-192.168.10.21  # CentOS
-</code></pre>
-
-<h2 id="testing">Testing</h2>
-
-<p>Now let&rsquo;s test see if all works. Instead of pulling the cord we can instead run <code>upsmon -c fsd</code> on the master (this will save wear and tear on your battery). Hopefully we have configured our delay time properly and we should see all our devices powering off, and eventually the UPS as well.</p>
-
-<p><em><strong>Tip:</strong> Because I have quick removable drive bays on my FreeNAS server, I have removed all drives before testing (to be extra careful and to avoid any issues).</em></p>
-
-<pre><code class="language-none">➤ sudo upsmon -c fsd
-</code></pre>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f22%2fhow-to-configure-a-ups-between-linux-and-freenas%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Configure%20a%20UPS%20Between%20Linux%20and%20FreeNAS&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f22%2fhow-to-configure-a-ups-between-linux-and-freenas%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f22%2fhow-to-configure-a-ups-between-linux-and-freenas%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f22%2fhow-to-configure-a-ups-between-linux-and-freenas%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f22%2fhow-to-configure-a-ups-between-linux-and-freenas%2f&amp;title=How%20to%20Configure%20a%20UPS%20Between%20Linux%20and%20FreeNAS" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=How%20to%20Configure%20a%20UPS%20Between%20Linux%20and%20FreeNAS&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f22%2fhow-to-configure-a-ups-between-linux-and-freenas%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2020/10/21/how-to-create-an-encrypted-usb-drive-on-kde-plasma/" title="How to Quickly Create an Encrypted USB Drive on KDE Plasma">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2020/10/28/how-to-install-telegraf-on-freenas/" title="How to Install Telegraf on FreeNAS">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1702,6 +2076,10 @@ Slave2    |########## Shutdown ##########|
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/">Playing a Sound on Headless Server Boot</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/">RHCE v8 Practice Exam</a>
           </li>
         
@@ -1723,10 +2101,6 @@ Slave2    |########## Shutdown ##########|
         
           <li>
           <a href="https://blog.victormendonca.com/2021/02/28/getting-started-with-ansible-molecule/">Getting Started with Ansible Molecule</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2021/01/23/how-to-convert-standard-partition-to-lvm/">How to Convert Standard Partition to Logical Volume</a>
           </li>
         
         </ul>
