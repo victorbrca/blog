@@ -229,7 +229,7 @@
 <pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt install beep
 </code></pre>
 
-<p>Now create the <code>beep</code> system group. Any user member of this group will be able to run beep.</p>
+<p>Now create the <code>beep</code> system group. Any user member of this group will be able to run beep:</p>
 
 <pre><code class="language-bash">sudo addgroup --system beep
 </code></pre>
@@ -243,13 +243,13 @@
 
 <p><code>/usr/lib/udev/rules.d/90-pcspkr-beep.rules</code></p>
 
-<pre><code># Add write access to the PC speaker for the &quot;beep&quot; group
+<pre><code class="language-none"># Add write access to the PC speaker for the &quot;beep&quot; group
 ACTION==&quot;add&quot;, SUBSYSTEM==&quot;input&quot;, ATTRS{name}==&quot;PC Speaker&quot;, ENV{DEVNAME}!=&quot;&quot;, GROUP=&quot;beep&quot;, MODE=&quot;0620&quot;
 </code></pre>
 
 <p>Comment out the existing blacklist for &lsquo;pcspkr&rsquo; in <code>/etc/modprobe.d/blacklist.conf</code>:</p>
 
-<pre><code># ugly and loud noise, getting on everyone's nerves; this should be done by a
+<pre><code class="language-none"># ugly and loud noise, getting on everyone's nerves; this should be done by a
 # nice pulseaudio bing (Ubuntu: #77010)
 # blacklist pcspkr
 </code></pre>
@@ -266,9 +266,11 @@ ACTION==&quot;add&quot;, SUBSYSTEM==&quot;input&quot;, ATTRS{name}==&quot;PC Spe
 
 <p><img src="https://blog.victormendonca.com/img/playing-a-sound-on-headless-server-boot/beep.jpg" alt="" /></p>
 
-<p>If that works then we have confirmed that we configured everything correctly. Just a reminder, your computer needs to have a speaker, otherwise beep wont work.</p>
+<p>If that works then we have confirmed that we configured everything correctly. Just a reminder, your computer needs to have a speaker otherwise beep wont work.</p>
 
-<p>Now let&rsquo;s create a sample script and the Systemd unit file for the service that will play beep after boot. Create the following script and give it execute permission:</p>
+<p>Now let&rsquo;s create a sample script and the Systemd unit file for the service that will play beep after boot.</p>
+
+<p>Create the following script and give it execute permission:</p>
 
 <p><code>/usr/local/bin/star-trek.sh</code></p>
 
@@ -350,6 +352,12 @@ WantedBy=default.target
     
 
     
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2024/02/14/getting-started-with-ansible-console/" title="Getting Started with Ansible Console">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
     </ul> </nav>
   
 
@@ -408,7 +416,7 @@ WantedBy=default.target
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/aws">aws</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/aws">aws</a></li>
           </ul>
         </div>
       </div>
@@ -424,6 +432,10 @@ WantedBy=default.target
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2024/02/14/getting-started-with-ansible-console/">Getting Started with Ansible Console</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/">Playing a Sound on Headless Server Boot</a>
@@ -447,10 +459,6 @@ WantedBy=default.target
         
           <li>
           <a href="https://blog.victormendonca.com/2022/11/18/linux-find-command/">Linux find Command</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2021/02/28/getting-started-with-ansible-molecule/">Getting Started with Ansible Molecule</a>
           </li>
         
         </ul>

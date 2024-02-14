@@ -139,6 +139,193 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2020/10/28/how-to-install-telegraf-on-freenas/">How to Install Telegraf on FreeNAS</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2020-10-28">28 Oct, 2020</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/monitoring" class="label label-primary">Monitoring</a>
+  
+  <a href="https://blog.victormendonca.com/tags/freenas" class="label label-primary">FreeNAS</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  <p>Quick and simple instructions on how to install Telegraf collector agent on FreeNAS.</p>
+
+<p>a. Start by creating a folder for Telegraf on one of your pools. I have mine under <code>/mnt/Volume1/home/system/telegraf</code></p>
+
+<p>b. Download the Telegraf tar for FreeBSD (<a href="https://github.com/influxdata/telegraf/releases">here</a>), extract it and copy the binary and the <code>.conf</code> files to the folder we created in the previous step</p>
+
+<ul>
+<li><code>./telegraf-[version]/usr/bin/telegraf</code></li>
+<li><code>./telegraf-[version]/etc/telegraf/telegraf.conf</code></li>
+</ul>
+
+<p>c. Create <code>telegraf.init</code> in the same folder (make sure to modify the 2 lines with your path)</p>
+
+<pre><code class="language-none">26 : ${telegraf_conf:=&quot;/mnt/Volume1/home/system/telegraf/${name}.conf&quot;}
+
+32 command_args=&quot;-crP ${pidfile} /mnt/Volume1/home/system/telegraf/${name} ${telegraf_flags} -config=${telegraf_conf} &gt;&gt; /var/log/telegraf.log 2&gt;&amp;1&quot;
+</code></pre>
+
+<pre><code>#!/bin/sh
+# $FreeBSD$
+
+# PROVIDE: telegraf
+# REQUIRE: DAEMON NETWORKING
+# BEFORE: LOGIN
+# KEYWORD: shutdown
+
+# Add the following lines to /etc/rc.conf to enable telegrafb:
+# telegraf_enable=&quot;YES&quot;
+#
+# telegraf_enable (bool): Set to YES to enable telegraf
+# Default: NO
+# telegraf_conf (str): telegraf configuration file
+# Default: ${PREFIX}/etc/telegraf.conf
+# telegraf_flags (str): Extra flags passed to telegraf
+
+. /etc/rc.subr
+
+name=&quot;telegraf&quot;
+rcvar=telegraf_enable
+load_rc_config $name
+
+: ${telegraf_enable:=&quot;YES&quot;}
+: ${telegraf_flags:=&quot;-quiet&quot;}
+: ${telegraf_conf:=&quot;/mnt/Volume1/home/system/telegraf/${name}.conf&quot;}
+
+# daemon
+start_precmd=telegraf_prestart
+pidfile=&quot;/var/run/${name}.pid&quot;
+command=/usr/sbin/daemon
+command_args=&quot;-crP ${pidfile} /mnt/Volume1/home/system/telegraf/${name} ${telegraf_flags} -config=${telegraf_conf} &gt;&gt; /var/log/telegraf.log 2&gt;&amp;1&quot;
+
+telegraf_prestart() {
+# Have to empty rc_flags so they don't get passed to daemon(8)
+ rc_flags=&quot;&quot;
+}
+
+run_rc_command &quot;$1&quot;
+</code></pre>
+
+<p>d. Edit the configuration file (<code>telegraf.conf</code>) according to your needs</p>
+
+<p>e. Create a link in <code>/usr/local/etc/rc.d</code> for telegraf</p>
+
+<pre><code class="language-none">ln -s /mnt/Volume1/home/system/telegraf/telegraf.init /usr/local/etc/rc.d/telegraf
+</code></pre>
+
+<p>f. Start the service</p>
+
+<pre><code class="language-none">service telegraf start
+</code></pre>
+
+<p>g. Check the output of the logs to make sure it&rsquo;s working</p>
+
+<pre><code class="language-none"># tail /var/log/telegraf.log
+2020-10-25T17:34:33Z I! Starting Telegraf 1.16.0
+</code></pre>
+
+<p>h. Create an &ldquo;Init/Shutdown Script&rdquo; (change to reflect your path)</p>
+
+<pre><code class="language-none">ln -s /mnt/Volume1/home/system/telegraf/telegraf.init /usr/local/etc/rc.d/telegraf ; service telegraf start
+</code></pre>
+
+<p><img src="https://blog.victormendonca.com/img/how-to-install-telegraf-on-freenas/init.png" alt="" /></p>
+
+<hr />
+
+<p><strong>Credits:</strong></p>
+
+<ul>
+<li><a href="https://www.reddit.com/user/nDQ9UeOr/">u/nDQ9UeOr</a> - <a href="https://www.reddit.com/r/freenas/comments/81t2bw/can_i_install_telegraf_on_my_freenas_host/">Redit post</a></li>
+</ul>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Install%20Telegraf%20on%20FreeNAS&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f&amp;title=How%20to%20Install%20Telegraf%20on%20FreeNAS" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20Install%20Telegraf%20on%20FreeNAS&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f28%2fhow-to-install-telegraf-on-freenas%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2020/10/22/how-to-configure-a-ups-between-linux-and-freenas/" title="How to Configure a UPS Between Linux and FreeNAS">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2020/10/28/how-to-setup-ups-on-pfsense/" title="How to Setup a USB UPS on pfSense">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2020/10/22/how-to-configure-a-ups-between-linux-and-freenas/">How to Configure a UPS Between Linux and FreeNAS</a>
 </h2>
 
@@ -1197,210 +1384,6 @@ Written by Paul Rubin, David MacKenzie, and Stuart Kemp.
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2020/09/11/quick-guide-to-suig-sgid-and-sticky-bit/">Quick Guide to SUID, SGID and Sticky Bit</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2020-09-11">11 Sep, 2020</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<p>This is a quick guide on how to configure and use SGID, SUID and the sticky bit on Linux. I will not get into a lot of details, but I will add comments and notes that might help you understand or overcome a few common issues.</p>
-
-<h3 id="suid-set-user-identification">SUID - Set-user Identification</h3>
-
-<p>When a command or script with SUID bit set is run, its effective UID becomes that of the owner of the file, rather than of the user who is running it.</p>
-
-<pre><code class="language-none">-rws-----
-</code></pre>
-
-<p><strong>Note</strong>: <em>SUID does not work on scripts that start with a shebang (<code>#!</code>)</em></p>
-
-<pre><code class="language-none"># chmod u+s [file]
--rwsr--r--. 1 root root 0 Mar 16 21:48 test
-
-# chmod 4744 [file]
--rwsr--r--. 1 root root 0 Mar 16 21:48 test
-</code></pre>
-
-<p><strong>Note</strong>: <em>A capital &rsquo;S&rsquo; (-rw<strong>S</strong>r&ndash;r&ndash;) indicates that the execute bit is not set</em></p>
-
-<h3 id="sgid-set-group-identification">SGID - Set-group identification</h3>
-
-<p>SGID permission is similar to the SUID permission. The main difference is that when a script or command with SGID set is run, it runs as if it were a member of the same group in which the file is a member.</p>
-
-<pre><code class="language-none">-rwxr-sr--
-</code></pre>
-
-<p><strong>Setting SGID</strong></p>
-
-<pre><code class="language-none"># chmod g+s [file]
--rwxr-sr--. 1 root root 0 Mar 16 21:48 test
-
-# chmod 2754 [file]
--rwxr-sr--. 1 root root 0 Mar 16 21:48 test
-</code></pre>
-
-<p><strong>Note</strong>: <em>A capital &rsquo;S&rsquo; (-rwxr-<strong>S</strong>r&ndash;) indicates that the execute bit is not set</em></p>
-
-<h3 id="sticky-bit">Sticky bit</h3>
-
-<p>Anyone can write, but only the owner can delete the files (just like <code>/tmp</code>).</p>
-
-<pre><code class="language-none">drwxrwxrwt
-</code></pre>
-
-<p>Sticky bit is usually set on directories. Setting the sticky bit on a folder does nothing (on Linux).</p>
-
-<p><strong>Setting sticky bit</strong></p>
-
-<pre><code class="language-none"># chmod o+t [dir]
--rwxr-r-t. 1 root root 0 Mar 16 21:48 test
-
-# chmod 1755 [dir]
--rwxr-xr-t. 1 root root 0 Mar 16 21:48 test
-</code></pre>
-
-<p><strong>Notes</strong>:</p>
-
-<ul>
-<li><em>A capital &rsquo;T&rsquo; indicates that the execute bit is not set</em></li>
-<li><em>You should give write permission to make sure that the target users can write to the folder</em></li>
-</ul>
-
-<h3 id="additional-special-permissions">Additional Special Permissions</h3>
-
-<p>A <code>.</code> can represent special permissions (SELinux related).</p>
-
-<pre><code class="language-none">-rw-rw-rw-.  
-</code></pre>
-
-<p>A <code>+</code> indicates ACLs are applied.</p>
-
-<pre><code class="language-none">-rw-rw-rw-+
-</code></pre>
-
-<h3 id="cheat-table">Cheat Table</h3>
-
-<table>
-<thead>
-<tr>
-<th align="left">Mode</th>
-<th align="left">Octal</th>
-<th align="left">Symbolic</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td align="left">SUID</td>
-<td align="left">4755</td>
-<td align="left">u+s</td>
-</tr>
-
-<tr>
-<td align="left">SGID</td>
-<td align="left">2775</td>
-<td align="left">g+s</td>
-</tr>
-
-<tr>
-<td align="left">Sticky Bit</td>
-<td align="left">1777</td>
-<td align="left">o+t</td>
-</tr>
-</tbody>
-</table>
-
-<p><strong>Note</strong>: <em>Octal mode is not an absolute translation to symbolic mode as symbolic changes only the specified permission set (user, group <strong>OR</strong> others), while octal overwrites all permission sets (user, group <strong>AND</strong> others)</em></p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f09%2f11%2fquick-guide-to-suig-sgid-and-sticky-bit%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Quick%20Guide%20to%20SUID%2c%20SGID%20and%20Sticky%20Bit&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f09%2f11%2fquick-guide-to-suig-sgid-and-sticky-bit%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f09%2f11%2fquick-guide-to-suig-sgid-and-sticky-bit%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f09%2f11%2fquick-guide-to-suig-sgid-and-sticky-bit%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f09%2f11%2fquick-guide-to-suig-sgid-and-sticky-bit%2f&amp;title=Quick%20Guide%20to%20SUID%2c%20SGID%20and%20Sticky%20Bit" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Quick%20Guide%20to%20SUID%2c%20SGID%20and%20Sticky%20Bit&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f09%2f11%2fquick-guide-to-suig-sgid-and-sticky-bit%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2020/06/17/lenovo-p1-gen-tlp-on-arch/" title="TLP and CPUFreq on ThinkPad P1 Gen 2 (KDE Arch)">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2020/10/09/how-to-show-progress-for-dd/" title="How to Show Progress for dd">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1550,7 +1533,7 @@ Written by Paul Rubin, David MacKenzie, and Stuart Kemp.
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/aws">aws</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/aws">aws</a></li>
           </ul>
         </div>
       </div>
@@ -1566,6 +1549,10 @@ Written by Paul Rubin, David MacKenzie, and Stuart Kemp.
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2024/02/14/getting-started-with-ansible-console/">Getting Started with Ansible Console</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/">Playing a Sound on Headless Server Boot</a>
@@ -1589,10 +1576,6 @@ Written by Paul Rubin, David MacKenzie, and Stuart Kemp.
         
           <li>
           <a href="https://blog.victormendonca.com/2022/11/18/linux-find-command/">Linux find Command</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2021/02/28/getting-started-with-ansible-molecule/">Getting Started with Ansible Molecule</a>
           </li>
         
         </ul>

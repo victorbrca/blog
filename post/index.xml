@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Thu, 21 Dec 2023 16:30:48 -0500</lastBuildDate>
+    <lastBuildDate>Wed, 14 Feb 2024 11:29:52 -0300</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Getting Started with Ansible Console</title>
+      <link>https://blog.victormendonca.com/2024/02/14/getting-started-with-ansible-console/</link>
+      <pubDate>Wed, 14 Feb 2024 11:29:52 -0300</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2024/02/14/getting-started-with-ansible-console/</guid>
+      <description>Are you ready to level up your Linux game and wield the power of automation like a true DevOps ninja? Enter Ansible Console, the interactive command-line interface that puts the force of Ansible at your fingertips!
+In this introduction post, I&amp;rsquo;ll take you on tour of Ansible Console, teaching you how to run ad-hoc tasks against your inventory with ease.
+What is Ansible Console Ansible Console is an interactive console for executing ad-hoc tasks against hosts defined in your Ansible inventory.</description>
+    </item>
     
     <item>
       <title>Playing a Sound on Headless Server Boot</title>

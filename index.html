@@ -139,6 +139,412 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2024/02/14/getting-started-with-ansible-console/">Getting Started with Ansible Console</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2024-02-14">14 Feb, 2024</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/ansible" class="label label-primary">Ansible</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>Are you ready to level up your Linux game and wield the power of automation like a true DevOps ninja? Enter Ansible Console, the interactive command-line interface that puts the force of Ansible at your fingertips!</p>
+
+<p>In this introduction post, I&rsquo;ll take you on tour of Ansible Console, teaching you how to run ad-hoc tasks against your inventory with ease.</p>
+
+<h3 id="what-is-ansible-console">What is Ansible Console</h3>
+
+<p>Ansible Console is an interactive console for executing ad-hoc tasks against hosts defined in your Ansible inventory. It offers built-in command completion and a user-friendly interface, making it a versatile tool for system administrators and automation engineers.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>To begin using Ansible Console, launch it by invoking <code>ansible-console</code> with the default inventory, or by specifying a custom inventory file.</p>
+
+<p>Using the default inventory:</p>
+
+<pre><code class="language-none">$ ansible-console
+</code></pre>
+
+<p>Specifying an inventory file:</p>
+
+<pre><code class="language-none">$ ansible-console -i [inventory]
+</code></pre>
+
+<p>Once launched, the console prompt will display essential information about the current context, including group names, the number of hosts, and forks.</p>
+
+<pre><code class="language-none">ansible@all (6)[f:10]$
+		  |  |    |- forks
+		  |  |- number of hosts
+		  |- group
+</code></pre>
+
+<p>Keep an eye on the prompt color – if it turns red, it&rsquo;s a subtle reminder that the <code>become</code> flag is set to true. Safety first, folks!</p>
+
+<h2 id="inventory-management">Inventory Management</h2>
+
+<p>Managing your inventory has never been easier. With Ansible Console, you can list hosts, groups, and even test connections with a flick of your wrist (or a tap of your keyboard).</p>
+
+<p>Need to list all your hosts? No problem, just use the <code>list</code> sub-command:</p>
+
+<pre><code class="language-none">ansible@all (6)[f:10]$ list
+nut-pi
+ubuntu-pi4
+ubuntu-backup
+ubuntu-lenovomini
+freenas
+pfsense
+</code></pre>
+
+<p>Want to flex your group management skills? Try this:</p>
+
+<pre><code class="language-none">ansible@all (6)[f:10]$ list groups
+all
+centos
+freebsd
+linux
+pfsense
+raspberrypi
+raspbian
+rhel
+truenas
+ubuntu
+ungrouped
+</code></pre>
+
+<p>And if you&rsquo;re feeling a bit adventurous, why not test the connection to your hosts using the trusty <code>ping</code> or the <code>ls</code> command?</p>
+
+<p><code>ls</code></p>
+
+<pre><code class="language-bash">ansible@all (6)[f:10]$ ls
+freenas | CHANGED | rc=0 &gt;&gt;
+
+pfsense | FAILED! =&gt; {
+		&quot;changed&quot;: false,
+		&quot;module_stderr&quot;: &quot;Shared connection to 192.168.1.1 closed.\r\n&quot;,
+		&quot;module_stdout&quot;: &quot;/bin/sh: /usr/local/bin/python: not found\r\n&quot;,
+		&quot;msg&quot;: &quot;The module failed to execute correctly, you probably need to set the interpreter.\nSee stdout/stderr for the exact error&quot;,
+		&quot;rc&quot;: 127
+}
+ubuntu-lenovomini | CHANGED | rc=0 &gt;&gt;
+
+ubuntu-backup | CHANGED | rc=0 &gt;&gt;
+
+ubuntu-pi4 | CHANGED | rc=0 &gt;&gt;
+
+nut-pi | CHANGED | rc=0 &gt;&gt;
+</code></pre>
+
+<p><code>ping</code></p>
+
+<pre><code class="language-bash">ansible@all (6)[f:10]$ ping
+freenas | SUCCESS =&gt; {
+		&quot;changed&quot;: false,
+		&quot;ping&quot;: &quot;pong&quot;
+}
+pfsense | FAILED! =&gt; {
+		&quot;changed&quot;: false,
+		&quot;module_stderr&quot;: &quot;Shared connection to 192.168.1.1 closed.\r\n&quot;,
+		&quot;module_stdout&quot;: &quot;/bin/sh: /usr/local/bin/python: not found\r\n&quot;,
+		&quot;msg&quot;: &quot;The module failed to execute correctly, you probably need to set the interpreter.\nSee stdout/stderr for the exact error&quot;,
+		&quot;rc&quot;: 127
+}
+ubuntu-lenovomini | SUCCESS =&gt; {
+		&quot;changed&quot;: false,
+		&quot;ping&quot;: &quot;pong&quot;
+}
+ubuntu-backup | SUCCESS =&gt; {
+		&quot;changed&quot;: false,
+		&quot;ping&quot;: &quot;pong&quot;
+}
+ubuntu-pi4 | SUCCESS =&gt; {
+		&quot;changed&quot;: false,
+		&quot;ping&quot;: &quot;pong&quot;
+}
+nut-pi | SUCCESS =&gt; {
+		&quot;changed&quot;: false,
+		&quot;ping&quot;: &quot;pong&quot;
+}
+</code></pre>
+
+<h3 id="selecting-host-or-group">Selecting Host or Group</h3>
+
+<p>You can select a host or a group with the &lsquo;cd&rsquo; command (note how the prompt changes).</p>
+
+<p><em>Host</em></p>
+
+<pre><code class="language-none">ansible@all (6)[f:10]$ cd pfsense
+ansible@pfsense (1)[f:10]$
+</code></pre>
+
+<p><em>Group</em></p>
+
+<pre><code class="language-none">ansible@all (6)[f:10]$ cd ubuntu
+ansible@ubuntu (3)[f:10]$
+</code></pre>
+
+<p><em>You can also use host patterns eg.: <code>app*.dc*:!app01*</code></em></p>
+
+<h3 id="configuration-customization">Configuration Customization</h3>
+
+<p>Ansible Console puts the power in your hands with customizable configuration options. Whether you need to specify the remote user, adjust the number of forks, toggle the <code>become</code> flag (and many more), Ansible Console has got you covered.</p>
+
+<pre><code class="language-none">ansible@all (0)[f:5]$ remote_user [username]
+ansible@all (0)[f:5]$ forks 7
+ansible@all (0)[f:5]$ become [true|false]
+ansible@all (0)[f:5]$ check [true|false]
+ansible@all (0)[f:5]$ diff [true|false]
+</code></pre>
+
+<h3 id="modules">Modules</h3>
+
+<p>Ah, modules – the bread and butter of Ansible automation. With Ansible Console, you can unleash the full potential of Ansible modules right from your command line.</p>
+
+<p>Use the <code>help</code> sub-command to get a list of available modules:</p>
+
+<pre><code class="language-none">ansible@ubuntu (3)[f:10]$ help
+	
+Documented commands (type help &lt;topic&gt;):
+========================================
+
+[... truncated ...]
+
+wti.remote.cpm_syslog_server_info
+wti.remote.cpm_temp_info
+wti.remote.cpm_time_config
+wti.remote.cpm_time_info
+wti.remote.cpm_user
+
+Undocumented commands:
+======================
+ping
+</code></pre>
+
+<p>Explore the vast array of available modules or dive deep into specific modules for detailed information and usage examples. Simply provide the module name as an argument to <code>help</code>. And don&rsquo;t forget that Ansible Console has built-in tab completion, so make sure to use and abuse it:</p>
+
+<pre><code class="language-none">ansible@ubuntu (3)[f:10]$ help copy
+
+Copy files to remote locations
+Parameters:
+	src Local path to a file to copy to the remote server.
+	content When used instead of O(src), sets the contents of a file directly to the specified value.
+	dest Remote absolute path where the file should be copied to.
+	backup Create a backup file including the timestamp information so you can get the original file back if you somehow clobbered it incorrectly.
+	force Influence whether the remote file must always be replaced.
+	mode The permissions of the destination file or directory.
+	directory_mode Set the access permissions of newly created directories to the given mode. Permissions on existing directories do not change.
+	remote_src Influence whether O(src) needs to be transferred or already is present remotely.
+	follow This flag indicates that filesystem links in the destination, if they exist, should be followed.
+	local_follow This flag indicates that filesystem links in the source tree, if they exist, should be followed.
+	checksum SHA1 checksum of the file being transferred.
+	decrypt This option controls the autodecryption of source files using vault.
+	owner Name of the user that should own the filesystem object, as would be fed to I(chown).
+	group Name of the group that should own the filesystem object, as would be fed to I(chown).
+	seuser The user part of the SELinux filesystem object context.
+	serole The role part of the SELinux filesystem object context.
+	setype The type part of the SELinux filesystem object context.
+	selevel The level part of the SELinux filesystem object context.
+	unsafe_writes Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object.
+	attributes The attributes the resulting filesystem object should have.
+	validate The validation command to run before copying the updated file into the final destination.
+</code></pre>
+
+<h4 id="module-usage-examples">Module Usage Examples</h4>
+
+<h5 id="installing-a-package">Installing a Package</h5>
+
+<pre><code class="language-none">ansible@ubuntu (3)[f:10]$ ansible.builtin.package name=git
+</code></pre>
+
+<h5 id="installing-a-pip-package">Installing a PIP Package</h5>
+
+<pre><code class="language-none"> ansible@ubuntu (3)[f:10]$ ansible.builtin.pip name=youtube-dl
+</code></pre>
+
+<h4 id="modules-vs-commands">Modules vs Commands</h4>
+
+<p>Anything that you type and it&rsquo;s not a module will be run as a command. For example:</p>
+
+<pre><code class="language-bash">ansible@ubuntu (3)[f:10]$ cat /etc/hostname
+ubuntu-lenovomini | CHANGED | rc=0 &gt;&gt;
+ubuntu-lenovomini
+ubuntu-pi4 | CHANGED | rc=0 &gt;&gt;
+ubuntu-pi4
+ubuntu-backup | CHANGED | rc=0 &gt;&gt;
+ubuntu-backup
+</code></pre>
+
+<p>However, if a module exists, <code>ansible-console</code> will invoke that module, or give you an error.</p>
+
+<p>Example with <code>hostname</code>, which is a built-in module:</p>
+
+<pre><code class="language-bash">ansible@ubuntu (3)[f:10]$ help hostname
+Manage hostname
+Parameters:
+	name Name of the host.
+	use Which strategy to use to update the hostname.
+</code></pre>
+
+<p>The module expects a parameter, so it fails:</p>
+
+<pre><code class="language-bash">ansible@ubuntu (3)[f:10]$ hostname
+ubuntu-lenovomini | FAILED! =&gt; {
+		&quot;changed&quot;: false,
+		&quot;msg&quot;: &quot;missing required arguments: name&quot;
+}
+ubuntu-pi4 | FAILED! =&gt; {
+		&quot;changed&quot;: false,
+		&quot;msg&quot;: &quot;missing required arguments: name&quot;
+}
+ubuntu-backup | FAILED! =&gt; {
+		&quot;changed&quot;: false,
+		&quot;msg&quot;: &quot;missing required arguments: name&quot;
+}
+</code></pre>
+
+<p>Another example, but now with <code>yum</code>:</p>
+
+<pre><code class="language-none">ansible@ubuntu (3)[f:10]$ yum check-update -q
+ [ERROR]: Unable to build command: this task 'yum' has extra params, which is only allowed in the following modules: ansible.legacy.group_by, shell, ansible.legacy.set_fact, ansible.builtin.include_tasks, command, ansible.legacy.script, ansible.legacy.include,
+ansible.builtin.group_by, ansible.legacy.shell, set_fact, ansible.builtin.shell, win_command, ansible.legacy.command, ansible.legacy.win_shell, ansible.builtin.set_fact, ansible.builtin.add_host, ansible.legacy.import_role, include_role, ansible.builtin.win_shell, include,
+ansible.legacy.win_command, ansible.legacy.include_tasks, include_tasks, ansible.legacy.add_host, ansible.builtin.include_role, group_by, ansible.builtin.meta, ansible.builtin.raw, import_role, ansible.legacy.raw, ansible.builtin.command, ansible.legacy.include_vars, script,
+win_shell, ansible.builtin.script, ansible.legacy.import_tasks, add_host, meta, ansible.builtin.import_tasks, ansible.windows.win_shell, ansible.builtin.include, ansible.windows.win_command, ansible.builtin.include_vars, raw, ansible.builtin.import_role, include_vars, import_tasks,
+ansible.builtin.win_command, ansible.legacy.meta, ansible.legacy.include_role
+</code></pre>
+
+<p>But sometimes you may need to run a command that exists as a module instead of the module itself. This can easily be done with the <code>!</code>:</p>
+
+<pre><code class="language-none">ansible@ubuntu-pi4 (1)[f:10]$ !apt list --upgradable
+ubuntu-pi4 | CHANGED | rc=0 &gt;&gt;
+Listing...
+base-files/focal-updates 11ubuntu5.8 arm64 [upgradable from: 11ubuntu5.7]
+gnome-shell-common/focal-updates 3.36.9-0ubuntu0.20.04.3 all [upgradable from: 3.36.9-0ubuntu0.20.04.2]
+gnome-shell/focal-updates 3.36.9-0ubuntu0.20.04.3 arm64 [upgradable from: 3.36.9-0ubuntu0.20.04.2]
+libnss-systemd/focal-updates 245.4-4ubuntu3.23 arm64 [upgradable from: 245.4-4ubuntu3.22]
+libpam-systemd/focal-updates 245.4-4ubuntu3.23 arm64 [upgradable from: 245.4-4ubuntu3.22]
+libsystemd0/focal-updates 245.4-4ubuntu3.23 arm64 [upgradable from: 245.4-4ubuntu3.22]
+libudev1/focal-updates 245.4-4ubuntu3.23 arm64 [upgradable from: 245.4-4ubuntu3.22]
+motd-news-config/focal-updates 11ubuntu5.8 all [upgradable from: 11ubuntu5.7]
+systemd-sysv/focal-updates 245.4-4ubuntu3.23 arm64 [upgradable from: 245.4-4ubuntu3.22]
+systemd-timesyncd/focal-updates 245.4-4ubuntu3.23 arm64 [upgradable from: 245.4-4ubuntu3.22]
+systemd/focal-updates 245.4-4ubuntu3.23 arm64 [upgradable from: 245.4-4ubuntu3.22]
+tailscale/unknown 1.58.2 arm64 [upgradable from: 1.56.1]
+tzdata/focal-updates 2023d-0ubuntu0.20.04 all [upgradable from: 2023c-0ubuntu0.20.04.2]
+udev/focal-updates 245.4-4ubuntu3.23 arm64 [upgradable from: 245.4-4ubuntu3.22]
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+</code></pre>
+
+<h3 id="variables">Variables</h3>
+
+<p>Collection variables are not available by default because <code>ansible-console</code>, unlike <code>ansible-playbook</code>, doesn&rsquo;t gather facts before running:</p>
+
+<pre><code class="language-bash">ansible@ubuntu-pi4 (1)[f:10]$ debug msg=&quot;{{ ansible_facts.architecture }}&quot;
+ubuntu-pi4 | FAILED! =&gt; {
+		&quot;msg&quot;: &quot;The task includes an option with an undefined variable. The error was: 'dict object' has no attribute 'architecture'. 'dict object' has no attribute 'architecture'. 'dict object' has no attribute 'architecture'. 'dict object' has no attribute 'architecture'&quot;
+}
+</code></pre>
+
+<p>But fear not, you can manually invoke the <code>setup</code> module and either filter the values, or print them with the <code>debug</code> module:</p>
+
+<pre><code class="language-bash">ansible@ubuntu-pi4 (1)[f:10]$ setup filter=&quot;*architecture&quot;
+ubuntu-pi4 | SUCCESS =&gt; {
+		&quot;ansible_facts&quot;: {
+				&quot;ansible_architecture&quot;: &quot;aarch64&quot;
+		},
+		&quot;changed&quot;: false
+}
+
+ansible@ubuntu-pi4 (1)[f:10]$ debug msg=&quot;{{ ansible_facts.architecture }}&quot;
+ubuntu-pi4 | SUCCESS =&gt; {
+		&quot;msg&quot;: &quot;aarch64&quot;
+}
+</code></pre>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>With its intuitive interface and powerful functionality, Ansible Console offers a convenient way to execute ad-hoc tasks and manage your Ansible inventory interactively. By mastering Ansible Console, you can streamline your automation workflows and improve operational efficiency in your environment.</p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2024%2f02%2f14%2fgetting-started-with-ansible-console%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Getting%20Started%20with%20Ansible%20Console&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2024%2f02%2f14%2fgetting-started-with-ansible-console%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2024%2f02%2f14%2fgetting-started-with-ansible-console%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2024%2f02%2f14%2fgetting-started-with-ansible-console%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2024%2f02%2f14%2fgetting-started-with-ansible-console%2f&amp;title=Getting%20Started%20with%20Ansible%20Console" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Getting%20Started%20with%20Ansible%20Console&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2024%2f02%2f14%2fgetting-started-with-ansible-console%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/" title="Playing a Sound on Headless Server Boot">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/">Playing a Sound on Headless Server Boot</a>
 </h2>
 
@@ -176,7 +582,7 @@
 <pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt install beep
 </code></pre>
 
-<p>Now create the <code>beep</code> system group. Any user member of this group will be able to run beep.</p>
+<p>Now create the <code>beep</code> system group. Any user member of this group will be able to run beep:</p>
 
 <pre><code class="language-bash">sudo addgroup --system beep
 </code></pre>
@@ -190,13 +596,13 @@
 
 <p><code>/usr/lib/udev/rules.d/90-pcspkr-beep.rules</code></p>
 
-<pre><code># Add write access to the PC speaker for the &quot;beep&quot; group
+<pre><code class="language-none"># Add write access to the PC speaker for the &quot;beep&quot; group
 ACTION==&quot;add&quot;, SUBSYSTEM==&quot;input&quot;, ATTRS{name}==&quot;PC Speaker&quot;, ENV{DEVNAME}!=&quot;&quot;, GROUP=&quot;beep&quot;, MODE=&quot;0620&quot;
 </code></pre>
 
 <p>Comment out the existing blacklist for &lsquo;pcspkr&rsquo; in <code>/etc/modprobe.d/blacklist.conf</code>:</p>
 
-<pre><code># ugly and loud noise, getting on everyone's nerves; this should be done by a
+<pre><code class="language-none"># ugly and loud noise, getting on everyone's nerves; this should be done by a
 # nice pulseaudio bing (Ubuntu: #77010)
 # blacklist pcspkr
 </code></pre>
@@ -213,9 +619,11 @@ ACTION==&quot;add&quot;, SUBSYSTEM==&quot;input&quot;, ATTRS{name}==&quot;PC Spe
 
 <p><img src="https://blog.victormendonca.com/img/playing-a-sound-on-headless-server-boot/beep.jpg" alt="" /></p>
 
-<p>If that works then we have confirmed that we configured everything correctly. Just a reminder, your computer needs to have a speaker, otherwise beep wont work.</p>
+<p>If that works then we have confirmed that we configured everything correctly. Just a reminder, your computer needs to have a speaker otherwise beep wont work.</p>
 
-<p>Now let&rsquo;s create a sample script and the Systemd unit file for the service that will play beep after boot. Create the following script and give it execute permission:</p>
+<p>Now let&rsquo;s create a sample script and the Systemd unit file for the service that will play beep after boot.</p>
+
+<p>Create the following script and give it execute permission:</p>
 
 <p><code>/usr/local/bin/star-trek.sh</code></p>
 
@@ -296,6 +704,12 @@ WantedBy=default.target
         </li>
     
 
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2024/02/14/getting-started-with-ansible-console/" title="Getting Started with Ansible Console">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
     
     </ul> </nav>
   
@@ -1556,239 +1970,6 @@ sudo chown -R user:primary_group /home/user
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2023/06/30/undestanting-yum-clean-all-and-stale-repos/">Understanding &#34;yum clean all&#34; and Stale Repos</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2023-06-30">30 Jun, 2023</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/redhat" class="label label-primary">RedHat</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<p>When it comes to managing packages on a Linux system, the YUM (<a href="https://linux.die.net/man/8/yum">Yellowdog Updater Modified</a>) package manager is widely used for its ease of use and robust features. One of the handy commands in YUM is <code>yum clean all</code>, which helps you keep your system clean and optimized. In this blog post, we will delve into the functionalities of <code>yum clean all</code> and explore how it can help you clear accumulated cache and improve system performance.</p>
-
-<h3 id="cleaning-options">Cleaning Options</h3>
-
-<p>The <code>yum clean</code> command can be used with specific options to clean individual components. Here are some of the available options:</p>
-
-<ul>
-<li><strong>packages:</strong> Cleans package-related cache files</li>
-<li><strong>metadata:</strong> Removes metadata and other files related to enabled repositories</li>
-<li><strong>expire-cache:</strong> Cleans the cache for metadata that has expired</li>
-<li><strong>rpmdb:</strong> Cleans the YUM database cache</li>
-<li><strong>plugins:</strong> Clears any cache maintained by YUM plugins</li>
-<li><strong>all:</strong> Performs a comprehensive cleaning, covering all the above options</li>
-</ul>
-
-<h3 id="clean-everything">Clean Everything</h3>
-
-<p>The <code>yum clean all</code> command serves as a one-stop solution to clean various elements that accumulate in the YUM cache directory over time. It offers several cleaning options, allowing you to target specific items or perform a comprehensive clean.</p>
-
-<p>It&rsquo;s essential to note that <code>yum clean all</code> does not clean untracked &ldquo;stale&rdquo; repositories. This means that if a repository is no longer in use or has been disabled, its cache will not be cleared by this command. We&rsquo;ll explore an alternative method to handle untracked repositories shortly.</p>
-
-<h4 id="analyzing-cache-usage">Analyzing Cache Usage</h4>
-
-<p>Before diving into the cleaning process, it&rsquo;s helpful to analyze the cache usage on your system. You can use the following command to check the cache usage:</p>
-
-<pre><code class="language-bash">$ df -hT /var/cache/yum/
-
-Filesystem               Type  Size  Used Avail Use% Mounted on
-/dev/mapper/rootvg-varlv xfs   8.0G  4.6G  3.5G  57% /var
-</code></pre>
-
-<h4 id="cleaning-with-yum-clean-all">Cleaning with &lsquo;yum clean all&rsquo;</h4>
-
-<p>When you execute <code>yum clean all</code>, the command will remove various cached files and improve system performance. However, you may sometimes notice a warning regarding other repository data:</p>
-
-<pre><code>Other repos take up 1.1 G of disk space (use --verbose for details)
-</code></pre>
-
-<p>If you run it with the <code>--verbose</code> flag, you should see a list of stale/untracked repos</p>
-
-<pre><code class="language-bash">$ sudo yum clean all --verbose
-
-Not loading &quot;rhnplugin&quot; plugin, as it is disabled
-Loading &quot;langpacks&quot; plugin
-Loading &quot;product-id&quot; plugin
-Loading &quot;search-disabled-repos&quot; plugin
-Not loading &quot;subscription-manager&quot; plugin, as it is disabled
-Adding en_US.UTF-8 to language list
-Config time: 0.110
-Yum version: 3.4.3
-Cleaning repos: epel rhel-7-server-ansible-2-rhui-rpms rhel-7-server-rhui-extras-rpms rhel-7-server-rhui-optional-rpms rhel-7-server-rhui-rh-common-rpms rhel-7-server-rhui-rpms
-              : rhel-7-server-rhui-supplementary-rpms rhel-server-rhui-rhscl-7-rpms rhui-microsoft-azure-rhel7
-Operating on /var/cache/yum/x86_64/7Server (see CLEAN OPTIONS in yum(8) for details)
-Disk usage under /var/cache/yum/*/* after cleanup:
-0      enabled repos
-0      disabled repos
-1.1 G  untracked repos:
-  1.0 G  /var/cache/yum/x86_64/7Server/rhui-rhel-7-server-rhui-rpms
-  90 M   /var/cache/yum/x86_64/7Server/rhui-rhel-server-rhui-rhscl-7-rpms
-  9.8 M  /var/cache/yum/x86_64/7Server/rhui-rhel-7-server-rhui-extras-rpms
-  6.4 M  /var/cache/yum/x86_64/7Server/rhui-rhel-7-server-rhui-supplementary-rpms
-  5.3 M  /var/cache/yum/x86_64/7Server/rhui-rhel-7-server-dotnet-rhui-rpms
-  1.6 M  /var/cache/yum/x86_64/7Server/rhui-rhel-7-server-rhui-rh-common-rpms
-4.0 k  other data:
-  4.0 k  /var/cache/yum/x86_64/7Serve
-</code></pre>
-
-<h4 id="manually-removing-untracked-repository-files">Manually Removing Untracked Repository Files</h4>
-
-<p>To handle untracked repository files, you can manually remove them from the cache directory with <code>rm</code>:</p>
-
-<pre><code class="language-bash">$ sudo rm -rf /var/cache/yum/*
-</code></pre>
-
-<h4 id="refreshing-the-cache">Refreshing the Cache</h4>
-
-<p>Next time you run commands like <code>yum check-update</code> or any other operation that refreshes the cache, YUM will rebuild the package list and recreate the cache directory for the enabled repositories.</p>
-
-<h4 id="check-the-cache-usage-after-cleanup">Check the Cache Usage After Cleanup</h4>
-
-<p>After performing the cleanup, you can verify the reduced cache usage. Use the <code>df</code> command again to check the cache size:</p>
-
-<pre><code class="language-bash">$ df -hT /var/cache/yum/
-</code></pre>
-
-<h3 id="doing-it-all-with-ansible">Doing it all with Ansible</h3>
-
-<p>And if you want to, you can use the Ansible playbook below to automate the YUM cache purge and re-creation:</p>
-
-<pre><code class="language-yaml">---
-- name: Delete yum cache and run yum check-update
-  # Add your hosts accordingly below
-  hosts: webserver
-  become: yes
-  tasks:
-
-    - name: Check /var usage with df command
-      shell: |
-        df -hT /var | awk '{print $6}' | tail -1 | tr -d '%'
-      register: var_usage_output
-
-    - name: Display /var usage information
-      debug:
-        var: var_usage_output.stdout
-
-    ##-- Block starts --------------------------------------------------------------
-    - when: var_usage_output.stdout|int &gt; 55
-      block:
-
-      - name: Delete yum cache directory
-        file:
-          path: /var/cache/yum
-          state: absent
-
-      - name: Update YUM cache
-        yum:
-          name: ''
-          update_cache: yes
-
-      - name: Check /var usage with df command
-        shell: |
-          df -hT /var | awk '{print $6}' | tail -1
-        register: var_usage_after_cleanup_output
-
-      - name: Display /var usage information
-        debug:
-          var: var_usage_after_cleanup_output.stdout
-    ##-- block ends ----------------------------------------------------------------
-</code></pre>
-
-<h3 id="conclusion">Conclusion</h3>
-
-<p>Regularly cleaning the YUM cache with the <code>yum clean all</code> command can help optimize your system&rsquo;s performance by clearing accumulated files. By understanding the available cleaning options and handling untracked repositories, you can ensure that your YUM cache remains streamlined and efficient. Keep your system running smoothly and enjoy the benefits of a clean YUM cache!</p>
-
-<p>Remember, maintaining a clean and optimized system contributes to a seamless Linux experience.</p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2023%2f06%2f30%2fundestanting-yum-clean-all-and-stale-repos%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Understanding%20%22yum%20clean%20all%22%20and%20Stale%20Repos&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f06%2f30%2fundestanting-yum-clean-all-and-stale-repos%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f06%2f30%2fundestanting-yum-clean-all-and-stale-repos%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f06%2f30%2fundestanting-yum-clean-all-and-stale-repos%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f06%2f30%2fundestanting-yum-clean-all-and-stale-repos%2f&amp;title=Understanding%20%22yum%20clean%20all%22%20and%20Stale%20Repos" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Understanding%20%22yum%20clean%20all%22%20and%20Stale%20Repos&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2023%2f06%2f30%2fundestanting-yum-clean-all-and-stale-repos%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2022/11/18/linux-find-command/" title="Linux find Command">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/" title="How to Migrate Local Users and Grops">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1938,7 +2119,7 @@ Disk usage under /var/cache/yum/*/* after cleanup:
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/aws">aws</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/aws">aws</a></li>
           </ul>
         </div>
       </div>
@@ -1954,6 +2135,10 @@ Disk usage under /var/cache/yum/*/* after cleanup:
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2024/02/14/getting-started-with-ansible-console/">Getting Started with Ansible Console</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/">Playing a Sound on Headless Server Boot</a>
@@ -1977,10 +2162,6 @@ Disk usage under /var/cache/yum/*/* after cleanup:
         
           <li>
           <a href="https://blog.victormendonca.com/2022/11/18/linux-find-command/">Linux find Command</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2021/02/28/getting-started-with-ansible-molecule/">Getting Started with Ansible Molecule</a>
           </li>
         
         </ul>

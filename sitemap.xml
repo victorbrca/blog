@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.victormendonca.com/2024/02/14/getting-started-with-ansible-console/</loc>
+    <lastmod>2024-02-14T11:29:52-03:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/</loc>
     <lastmod>2023-12-21T16:30:48-05:00</lastmod>
   </url>
@@ -354,7 +359,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/ansible/</loc>
-    <lastmod>2021-02-28T07:00:00-05:00</lastmod>
+    <lastmod>2024-02-14T11:29:52-03:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -432,7 +437,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/linux/</loc>
-    <lastmod>2023-12-21T16:30:48-05:00</lastmod>
+    <lastmod>2024-02-14T11:29:52-03:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -486,7 +491,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/post/</loc>
-    <lastmod>2023-12-21T16:30:48-05:00</lastmod>
+    <lastmod>2024-02-14T11:29:52-03:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -546,7 +551,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/</loc>
-    <lastmod>2021-02-28T07:00:00-05:00</lastmod>
+    <lastmod>2024-02-14T11:29:52-03:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -569,7 +574,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/</loc>
-    <lastmod>2023-12-21T16:30:48-05:00</lastmod>
+    <lastmod>2024-02-14T11:29:52-03:00</lastmod>
     <priority>0</priority>
   </url>
   
