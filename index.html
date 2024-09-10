@@ -139,6 +139,356 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2024/09/09/logrotate-simplifying-log-management/">Logrotate: Simplifying Log Management</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2024-09-09">9 Sep, 2024</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/administration" class="label label-primary">Administration</a>
+  
+  <a href="https://blog.victormendonca.com/tags/ansible" class="label label-primary">Ansible</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p><code>logrotate</code> is a system utility designed to manage log files, ensuring that logs don&rsquo;t consume excessive disk space by rotating, compressing, and removing old logs according to user-defined rules. This post will help you get familiar with <code>logrotate</code> configuration and usage.</p>
+
+<p>By configuring and running <code>logrotate</code> effectively, you can automate log management, saving space, and ensuring your logs stay manageable over time.</p>
+
+<h2 id="main-config">Main Config</h2>
+
+<p>The primary configuration file for <code>logrotate</code> is located at <code>/etc/logrotate.conf</code>. It sets default values and contains the directory for additional configuration files (typically <code>/etc/logrotate.d</code>):</p>
+
+<pre><code class="language-bash"># see &quot;man logrotate&quot; for details
+# rotate log files weekly
+weekly
+
+# keep 4 weeks worth of backlogs
+rotate 4
+
+# create new (empty) log files after rotating old ones
+create
+
+# use date as a suffix of the rotated file
+dateext
+
+# uncomment this if you want your log files compressed
+#compress
+
+# RPM packages drop log rotation information into this directory
+include /etc/logrotate.d
+
+# no packages own wtmp and btmp -- we'll rotate them here
+/var/log/wtmp {
+    monthly
+    create 0664 root utmp
+    minsize 1M
+    rotate 1
+}
+
+/var/log/btmp {
+    missingok
+    monthly
+    create 0600 root utmp
+    rotate 1
+}
+</code></pre>
+
+<h2 id="configuration-files">Configuration Files</h2>
+
+<p>The configuration file for each application or log location usually resides under <code>/etc/logrotate.d/</code> and can contain various options to control how logs are handled.</p>
+
+<h3 id="common-options">Common Options</h3>
+
+<ul>
+<li><code>hourly</code> – Rotate logs every hour (<em>requires cron to run logrotate hourly</em>).</li>
+<li><code>daily</code> – Rotate logs daily.</li>
+<li><code>weekly [weekday]</code> – Rotate logs once per week.</li>
+<li><code>monthly</code> – Rotate logs the first time <code>logrotate</code> is run in a month.</li>
+<li><code>yearly</code> – Rotate logs once a year.</li>
+<li><code>rotate [count]</code> – Defines how many rotated logs to keep. If set to 0, logs are deleted instead of being rotated.</li>
+<li><code>minsize [size]</code> – Rotate logs when they exceed a specific size, while also respecting the time interval (daily, weekly, etc.).</li>
+<li><code>size [size]</code> – Rotate only when log size exceeds the defined limit.</li>
+<li><code>maxage [days]</code> – Remove rotated logs after a specified number of days.</li>
+<li><code>missingok</code> – Continue without error if the log file is missing.</li>
+<li><code>notifempty</code> – Skip rotation if the log file is empty.</li>
+<li><code>create [mode] [owner] [group]</code> – Create a new log file with specified permissions, owner, and group.</li>
+<li><code>compress</code> – Compress rotated logs.</li>
+<li><code>delaycompress</code> – Delay compression until the next rotation cycle.</li>
+<li><code>copytruncate</code> – Truncate the log after copying it to the rotated file.</li>
+<li><code>sharedscripts</code> – Ensures that post-rotation scripts are executed only once.</li>
+<li><code>postrotate/endscript</code> – Define commands to be executed after log rotation:</li>
+</ul>
+
+<pre><code class="language-bash">postrotate
+  /opt/life/tools/stop-approve.sh &amp;&amp; /opt/life/tools/start-approve.sh
+endscript
+</code></pre>
+
+<h3 id="examples">Examples</h3>
+
+<h4 id="example-1-deleting-old-nmon-files">Example 1: Deleting Old NMON Files</h4>
+
+<p>This example deletes NMON output files that are older than 3 months or larger than 5 MB:</p>
+
+<pre><code class="language-bash"># Logrotate config for nmon
+/var/log/nmon/*.nmon {
+  rotate 0
+  maxage 90
+  size 5M
+}
+</code></pre>
+
+<h4 id="example-2-compressing-lms-logs">Example 2: Compressing LMS Logs</h4>
+
+<p>In this case, <code>logrotate</code> keeps 10 compressed versions of logs, rotating them when logs are older than 12 months or larger than 5 MB:</p>
+
+<pre><code class="language-bash"># Logrotate config for LMS
+/home/my_admin/cmd/log/*.log {
+  rotate 10
+  maxage 360
+  size 5M
+  compress
+}
+</code></pre>
+
+<h3 id="creating-a-new-configuration-file">Creating a New Configuration File</h3>
+
+<p>To create a new log rotation rule, drop a configuration file into the <code>/etc/logrotate.d/</code> directory. Ensure the scheduler for <code>logrotate</code> (either cron or systemd) is set up correctly.</p>
+
+<blockquote>
+<p><strong>Tip:</strong> Double-check your scheduler settings to ensure smooth log rotation.</p>
+</blockquote>
+
+<h2 id="testing-and-running-logrotate">Testing and Running Logrotate</h2>
+
+<h3 id="testing">Testing</h3>
+
+<h4 id="dry-run">Dry-Run</h4>
+
+<p>Before applying your configuration, you can test it with a dry-run using the <code>-d</code> option:</p>
+
+<pre><code class="language-bash">logrotate -d [my_config_file].conf
+</code></pre>
+
+<h4 id="verbosity">Verbosity</h4>
+
+<p>To view detailed steps, run <code>logrotate</code> with the <code>-v</code> option (useful with <code>-d</code> for dry-run testing):</p>
+
+<pre><code class="language-bash">logrotate -vd [my_config_file].conf
+</code></pre>
+
+<h3 id="scheduling-logrotate">Scheduling Logrotate</h3>
+
+<p><code>logrotate</code> can be scheduled using either cron or systemd. Here&rsquo;s a quick overview of both methods:</p>
+
+<h4 id="cron">Cron</h4>
+
+<p>When using cron, the <code>logrotate</code> job is typically defined in <code>/etc/cron.daily/logrotate</code>:</p>
+
+<pre><code class="language-bash">#!/bin/sh
+
+/usr/sbin/logrotate -s /var/lib/logrotate/logrotate.status /etc/logrotate.conf
+EXITVALUE=$?
+if [ $EXITVALUE != 0 ]; then
+    /usr/bin/logger -t logrotate &quot;ALERT exited abnormally with [$EXITVALUE]&quot;
+fi
+exit 0
+</code></pre>
+
+<h4 id="systemd">Systemd</h4>
+
+<p>Systemd can also manage logrotate via <code>logrotate.timer</code> and <code>logrotate.service</code>.</p>
+
+<p><em>logrotate.timer</em>:</p>
+
+<pre><code class="language-systemd">[Unit]
+Description=Daily rotation of log files
+
+[Timer]
+OnCalendar=daily
+RandomizedDelaySec=1h
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+</code></pre>
+
+<p><em>logrotate.service</em>:</p>
+
+<pre><code class="language-systemd">[Unit]
+Description=Rotate log files
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/logrotate /etc/logrotate.conf
+</code></pre>
+
+<h4 id="personal-cron-job">Personal Cron Job</h4>
+
+<p>You can also schedule <code>logrotate</code> manually through a personal cron job:</p>
+
+<pre><code class="language-bash"># Runs logrotate daily
+@daily /sbin/logrotate -s /home/my_admin/cmd/log/logrotate.status /home/my_admin/cmd/logrotate.conf &gt;&gt; /home/my_admin/cmd/log/cron.log 2&gt;&amp;1
+</code></pre>
+
+<h2 id="creating-logrotate-with-ansible">Creating Logrotate With Ansible</h2>
+
+<p>Managing log rotation through Ansible is a powerful way to automate log maintenance across multiple servers. Below is an example of how you can create a <code>logrotate</code> configuration using Ansible.</p>
+
+<h3 id="ansible-playbook-example">Ansible Playbook Example</h3>
+
+<p>This playbook installs <code>logrotate</code> (if it&rsquo;s not already installed) and creates a new configuration file under <code>/etc/logrotate.d/</code> for an application:</p>
+
+<pre><code class="language-yaml">---
+
+- hosts: all
+  gather_facts: true
+  become: true
+
+  vars:
+    logrotate_conf: |
+      # Logrotate for application
+      /var/log/application/* {
+        # Keep 4 versions of file
+        rotate 4
+
+        # compress rotated files
+        compress
+
+        # Rotates the log files every week
+        weekly
+
+        # Ignores the error if the log file is missing
+        missingok
+
+        # Does not rotate the log if it is empty
+        notifempty
+
+        # Creates a new log file with specified permissions
+        create 0755 apache splunk       
+      }
+
+  tasks:
+
+    - name: Installs logrotate
+      package:
+        name: logrotate
+
+    - name: Creates logrotate configuration
+      copy:
+        content: &quot;{{ logrotate_conf }}&quot;
+        dest: /etc/logrotate.d/application
+        owner: root
+        group: root
+        mode: '0644'
+
+</code></pre>
+
+<h3 id="explanation">Explanation</h3>
+
+<ul>
+<li><p><strong><code>logrotate_conf</code> variable</strong>: Defines the configuration file for <code>logrotate</code>. It includes options such as file rotation frequency, compression, and file permissions.</p>
+
+<ul>
+<li><code>rotate 4</code> – Keeps 4 old versions of the log.</li>
+<li><code>compress</code> – Compresses the rotated logs.</li>
+<li><code>weekly</code> – Rotates the logs every week.</li>
+<li><code>missingok</code> – Ignores errors if the log file is missing.</li>
+<li><code>notifempty</code> – Skips log rotation if the log is empty.</li>
+<li><code>create 0755 apache splunk</code> – Creates a new log file with specific permissions, owned by <code>apache</code> and <code>splunk</code> groups.</li>
+</ul></li>
+
+<li><p><strong>Installs logrotate</strong>: The task ensures that <code>logrotate</code> is installed on the target servers.</p></li>
+
+<li><p><strong>Creates logrotate configuration</strong>: The <code>copy</code> task creates the custom <code>logrotate</code> configuration file under <code>/etc/logrotate.d/</code>, with appropriate permissions.</p></li>
+</ul>
+
+<hr />
+
+<p>By using Ansible, you can streamline the management of log rotation across your environment, ensuring consistency in how logs are maintained across all your systems.</p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2024%2f09%2f09%2flogrotate-simplifying-log-management%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Logrotate%3a%20Simplifying%20Log%20Management&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2024%2f09%2f09%2flogrotate-simplifying-log-management%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2024%2f09%2f09%2flogrotate-simplifying-log-management%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2024%2f09%2f09%2flogrotate-simplifying-log-management%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2024%2f09%2f09%2flogrotate-simplifying-log-management%2f&amp;title=Logrotate%3a%20Simplifying%20Log%20Management" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Logrotate%3a%20Simplifying%20Log%20Management&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2024%2f09%2f09%2flogrotate-simplifying-log-management%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2024/02/14/getting-started-with-ansible-console/" title="Getting Started with Ansible Console">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+    
+    
+    if (window.location.hostname == "localhost")
+      return;
+
+    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
+    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2024/02/14/getting-started-with-ansible-console/">Getting Started with Ansible Console</a>
 </h2>
 
@@ -514,6 +864,12 @@ ubuntu-pi4 | SUCCESS =&gt; {
         </li>
     
 
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2024/09/09/logrotate-simplifying-log-management/" title="Logrotate: Simplifying Log Management">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
     
     </ul> </nav>
   
@@ -1712,264 +2068,6 @@ ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/">How to Migrate Local Users and Grops</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2023-07-20">20 Jul, 2023</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<h3 id="introduction">Introduction</h3>
-
-<p>Migrating users from one Linux system to another can be a complex task, but with the right steps and careful planning, it can be accomplished smoothly. In this guide, we will walk you through the process of migrating users, their passwords, groups, and home folders from one Linux system to another. We&rsquo;ll be using bash scripts to automate the backup and restore process, ensuring a seamless transition.</p>
-
-<p>The following items will not be covered by our instructions:</p>
-
-<ul>
-<li>User limits</li>
-<li>Mail</li>
-<li>Group password</li>
-</ul>
-
-<h3 id="step-1-backup-user-information-on-the-source-server">Step 1: Backup User Information on the Source Server</h3>
-
-<p>First, log in to the source Linux system and open a terminal. Use the following command to get a list of all users:</p>
-
-<pre><code class="language-bash">lslogins -o &quot;USER,UID,GECOS,HOMEDIR,SHELL,GROUP,GID,SUPP-GROUPS,SUPP-GIDS&quot;
-</code></pre>
-
-<p>Next, identify the users you want to migrate and add their names to the <code>users_to_backup</code> variable in the provided script:</p>
-
-<pre><code class="language-bash">backup_password_file=&quot;etc-passwd-bak&quot;
-backup_group_file=&quot;etc-group-bak&quot;
-backup_shadow_file=&quot;etc-shadow-bak&quot;
-# Add more users separated by spaces if needed
-users_to_backup=&quot;linus lennart&quot;
-
-for user in $users_to_backup ; do
-  curuser=$user
-  echo -e &quot;\n=&gt; User is $curuser&quot;
-  curid=$(id -u &quot;$curuser&quot;)
-  curgid=$(id -g &quot;$curuser&quot;)
-  cursupgit=$(id -G &quot;$curuser&quot;)
-  echo &quot;User id is $curid&quot;
-  echo &quot;User group id is $curgid&quot;
-  echo &quot;User supplementary groups are $cursupgit&quot;
-  echo &quot;Backing up /etc/passwd for $curuser&quot;
-  grep -E &quot;^${curuser}:.:${curid}&quot; /etc/passwd &gt;&gt; &quot;$backup_password_file&quot;
-
-  echo &quot;Backing up primary group for $curuser&quot;
-  if [ -f &quot;$backup_group_file&quot; ] ; then
-    if grep -q &quot;:${curid}:&quot; &quot;$backup_group_file&quot; ; then
-      echo &quot;Group already backed up&quot;
-    else
-      grep &quot;:${curid}:&quot; /etc/group &gt;&gt; &quot;$backup_group_file&quot;
-    fi
-  else
-    grep &quot;:${curid}:&quot; /etc/group &gt;&gt; &quot;$backup_group_file&quot;
-  fi
-
-  echo &quot;Backing up secondary groups for $curuser&quot;
-  for groupid in $cursupgit ; do
-    if grep -q &quot;:${groupid}:&quot; &quot;$backup_group_file&quot; ; then
-      echo &quot;Group already backed up&quot;
-    else
-      grep &quot;:${groupid}:&quot; /etc/group &gt;&gt; &quot;$backup_group_file&quot;
-    fi
-  done
-
-  echo &quot;Backing up /etc/shadow for $curuser&quot;
-  sudo grep -E &quot;^$curuser&quot; /etc/shadow &gt;&gt; &quot;$backup_shadow_file&quot;
-done
-</code></pre>
-
-<p>Save the script to a file, e.g., <code>user_backup_script.sh</code>, and make it executable:</p>
-
-<pre><code class="language-bash">chmod +x user_backup_script.sh
-</code></pre>
-
-<p>Execute the script as root:</p>
-
-<pre><code class="language-bash">sudo ./user_backup_script.sh
-</code></pre>
-
-<p>The script will back up user information, including passwords and group data, to the specified backup files.</p>
-
-<h3 id="step-2-copy-backup-files-to-the-destination-server">Step 2: Copy Backup Files to the Destination Server</h3>
-
-<p>Next, copy the three backup files (<em>etc-passwd-bak</em>, <em>etc-group-bak</em>, and <em>etc-shadow-bak</em>) from the source server to the destination server using the scp command or any preferred method.</p>
-
-<pre><code class="language-bash"># Example using scp
-scp etc-*-bak user@destination_server:/path/to/backup_files/
-</code></pre>
-
-<h3 id="step-3-restore-users-on-the-destination-server">Step 3: Restore Users on the Destination Server</h3>
-
-<p>Log in to the destination Linux system and open a terminal. Navigate to the directory where the backup files are located and run the provided restore script as root:</p>
-
-<pre><code class="language-bash">backup_password_file=&quot;etc-passwd-bak&quot;
-backup_group_file=&quot;etc-group-bak&quot;
-backup_shadow_file=&quot;etc-shadow-bak&quot;
-
-echo -e &quot;\n=&gt; Backing up the system files&quot;
-for file in /etc/{passwd,group,shadow} ; do
-  cp -v &quot;$file&quot; &quot;${file}_$(date -I)&quot;
-done
-
-echo -e &quot;\n=&gt; Restoring users&quot;
-cat &quot;$backup_password_file&quot; | while read -r line ; do
-  userid=&quot;$(echo &quot;$line&quot; | awk -F&quot;:&quot; '{print $3}')&quot;
-  username=&quot;$(echo &quot;$line&quot; | awk -F&quot;:&quot; '{print $1}')&quot;
-  echo &quot;-&gt; Restoring user $username&quot;
-  if grep -Eq &quot;^${username}:.:${userid}&quot; /etc/passwd ; then
-    echo &quot;  ERROR: User ID already exists. Manual intervention is needed&quot;
-  else
-    echo &quot;$line&quot; &gt;&gt; /etc/passwd
-    if grep -qE &quot;^${username}:&quot; /etc/shadow ; then
-      echo &quot;  ERROR: User password already exists. Manual intervention is needed&quot;
-    else
-      grep -E &quot;^${username}:&quot; &quot;$backup_shadow_file&quot; &gt;&gt; /etc/shadow
-    fi
-  fi
-done
-
-echo -e &quot;\n=&gt; Restoring groups&quot;
-cat &quot;$backup_group_file&quot; | while read -r line ; do
-  groupid=&quot;$(echo &quot;$line&quot; | awk -F&quot;:&quot; '{print $3}')&quot;
-  groupname=&quot;$(echo &quot;$line&quot; | awk -F&quot;:&quot; '{print $1}')&quot;
-  echo &quot;-&gt; Restoring group $groupname&quot;
-  if grep -qE &quot;^${groupname}:.:${groupid}&quot; /etc/group ; then
-    echo &quot;  ERROR: Group already exists. Manual intervention may be needed&quot;
-  else
-    echo &quot;$line&quot; &gt;&gt; /etc/group
-  fi
-done
-</code></pre>
-
-<p>Run the restore script:</p>
-
-<pre><code class="language-bash">sudo ./user_restore_script.sh
-</code></pre>
-
-<p>The script will restore the users and their passwords, taking care to avoid conflicts with existing user IDs. Pay close attention to error messages and take action if needed. If there are any error messages related to system group creation, it might be acceptable as the groups may already exist on the new system.</p>
-
-<h3 id="step-4-copy-home-folders-and-set-permissions">Step 4: Copy Home Folders and Set Permissions</h3>
-
-<p>Finally, to complete the migration, copy the home folders for the desired users from the source server to the destination server using rsync:</p>
-
-<pre><code class="language-bash"># Replace 'user1,user2,user3' with appropriate values
-# Replace 'destination_server' with appropriate values
-rsync -avzh -e ssh /home/{user1,user2,user3} user@destination_server:/home/
-</code></pre>
-
-<p>Ensure that the permissions and ownership are set correctly for the home folder of each user on the destination server:</p>
-
-<pre><code class="language-bash"># Replace user and primary_group with appropriate values
-sudo chown -R user:primary_group /home/user
-</code></pre>
-
-<p><strong>Note:</strong> <em>For SFTP users that use CHROOT, the user&rsquo;s home folder needs to be owned by &lsquo;root&rsquo;</em></p>
-
-<h3 id="conclusion">Conclusion:</h3>
-
-<p>Migrating users from one Linux system to another involves a series of crucial steps, including backup, restoration, and copying of home folders. By using the provided scripts and following this step-by-step guide, you can ensure a smooth and successful user migration process. Always exercise caution during the migration and verify the results to ensure everything is functioning as expected on the destination system.</p>
-
-<p><strong>Additional reading:</strong></p>
-
-<ul>
-<li><a href="https://access.redhat.com/solutions/179753">https://access.redhat.com/solutions/179753</a></li>
-</ul>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Migrate%20Local%20Users%20and%20Grops&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f&amp;title=How%20to%20Migrate%20Local%20Users%20and%20Grops" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=How%20to%20Migrate%20Local%20Users%20and%20Grops&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2023%2f07%2f20%2fhow-to-migrate-local-users-and-grops%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2023/06/30/undestanting-yum-clean-all-and-stale-repos/" title="Understanding &#34;yum clean all&#34; and Stale Repos">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/" title="Testing New Hard Drives">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  (function() {
-    
-    
-    if (window.location.hostname == "localhost")
-      return;
-
-    var dsq = document.createElement('script'); dsq.async = true; dsq.type = 'text/javascript';
-    dsq.src = '//victorbrca-github-io.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -2072,6 +2170,12 @@ sudo chown -R user:primary_group /home/user
     </a>
 </li>
 
+<li >
+  <a href="https://blog.victormendonca.com//page/15/">
+    15
+    </a>
+</li>
+
 
 <li >
   <a aria-label="Next" href="https://blog.victormendonca.com//page/2/">
@@ -2079,7 +2183,7 @@ sudo chown -R user:primary_group /home/user
     </a>
 </li>
 <li >
-  <a aria-label="Last" href="https://blog.victormendonca.com//page/14/">
+  <a aria-label="Last" href="https://blog.victormendonca.com//page/15/">
     <span aria-hidden="true">&raquo;&raquo;</span>
   </a>
 </li>
@@ -2119,7 +2223,7 @@ sudo chown -R user:primary_group /home/user
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/aws">aws</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/administration">administration</a></li>
           </ul>
         </div>
       </div>
@@ -2135,6 +2239,10 @@ sudo chown -R user:primary_group /home/user
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2024/09/09/logrotate-simplifying-log-management/">Logrotate: Simplifying Log Management</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2024/02/14/getting-started-with-ansible-console/">Getting Started with Ansible Console</a>
@@ -2158,10 +2266,6 @@ sudo chown -R user:primary_group /home/user
         
           <li>
           <a href="https://blog.victormendonca.com/2023/06/30/undestanting-yum-clean-all-and-stale-repos/">Understanding &#34;yum clean all&#34; and Stale Repos</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2022/11/18/linux-find-command/">Linux find Command</a>
           </li>
         
         </ul>

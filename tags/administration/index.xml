@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Administration on Victor&#39;s Blog</title>
+    <link>https://blog.victormendonca.com/tags/administration/</link>
+    <description>Recent content in Administration on Victor&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
+    <lastBuildDate>Mon, 09 Sep 2024 18:00:00 -0400</lastBuildDate>
+    
+	<atom:link href="https://blog.victormendonca.com/tags/administration/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Logrotate: Simplifying Log Management</title>
+      <link>https://blog.victormendonca.com/2024/09/09/logrotate-simplifying-log-management/</link>
+      <pubDate>Mon, 09 Sep 2024 18:00:00 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2024/09/09/logrotate-simplifying-log-management/</guid>
+      <description>logrotate is a system utility designed to manage log files, ensuring that logs don&amp;rsquo;t consume excessive disk space by rotating, compressing, and removing old logs according to user-defined rules. This post will help you get familiar with logrotate configuration and usage.
+By configuring and running logrotate effectively, you can automate log management, saving space, and ensuring your logs stay manageable over time.
+Main Config The primary configuration file for logrotate is located at /etc/logrotate.</description>
+    </item>
+    
+  </channel>
+</rss>
