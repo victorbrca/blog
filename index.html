@@ -139,6 +139,179 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2025/08/22/top-skills-that-will-make-you-stand-out-as-a-linux-admin-part-1/">Top Skills That Will Make You Stand Out as a Linux Admin: Part 1</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2025-08-22">22 Aug, 2025</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>Working as a Linux administrator often means being pulled in many directions and juggling a variety of technologies. That doesn’t leave much time to revisit the basics. Over time, work becomes repetitive, and we end up doing things the same way we learned years ago—without stopping to refine or discover smarter approaches.</p>
+
+<p>With this series of posts, I hope to share tips and shortcuts that will help you work faster and smarter—and maybe even stand out among your coworkers by pulling off a few neat tricks.</p>
+
+<p>Try these out at least once—and if you’re still stuck going to the office, print them out and stick them on your cubicle wall.</p>
+
+<p>Today, we’re going to focus on Bash navigation and history.</p>
+
+<p><img src="https://blog.victormendonca.com/img/top-skills-that-will-make-you-stand-out-as-a-linux-admin/TuxandBashGuideinFocus.png" alt="picture 0" /></p>
+
+<h3 id="tab-completion">Tab Completion</h3>
+
+<p>We all know that <code>[TAB]</code> can be used for both path and command completion, but I’m always surprised by how many admins who aren’t fully comfortable with the shell forget to use it. You’re not going to break anything or use up some imaginary “tab credits.” So use the hell out of tab completion—keep hitting that key until you land on what you need.</p>
+
+<p>And here’s a bonus: don’t forget that <code>[SHIFT]+[TAB]</code> takes you back. So if you scroll past the option or path you were aiming for, just reverse it. Simple, fast, and much smoother than retyping.</p>
+
+<h3 id="command-navigation">Command Navigation</h3>
+
+<p>The commands below will help you navigate more efficiently and productively in a shell:</p>
+
+<ul>
+<li><code>Ctrl+a</code> - Move to the beginning of the line (same as <code>[HOME]</code>)</li>
+<li><code>Ctrl+e</code> - Move to the end of the line (same as <code>[END]</code>)</li>
+<li><code>Ctrl+left/right</code> - Move backward/forward one word</li>
+<li><code>Ctrl+w</code> - Delete the previous word</li>
+<li><code>Alt+t</code> - Swap the current word with the previous one</li>
+<li><code>Esc+v</code> - Edit the current line in an external editor (this is the <code>edit-and-execute-command</code> function). It uses the default editor set in <code>$VISUAL</code> or <code>$EDITOR</code>, which you can change if needed</li>
+</ul>
+
+<p><img src="https://blog.victormendonca.com/img/top-skills-that-will-make-you-stand-out-as-a-linux-admin/command-navigation.gif" alt="picture 0" /></p>
+
+<p><em>Note: I remapped my <code>edit-and-execute-command</code> shortcut to <code>Esc+i</code>, which feels more comfortable for me.</em></p>
+
+<h2 id="path-navigation">Path Navigation</h2>
+
+<p>Navigating between directories is something sysadmins do constantly. Being able to move around quickly—and knowing a few tricks—can speed up your work exponentially. It can even impress your coworkers when they see how fast you glide through the shell.</p>
+
+<ul>
+<li><strong>Tab completion</strong> — We already covered this, but it’s worth repeating: use it and abuse it!</li>
+<li><code>cd</code> — Jumps straight back to your home folder. It sounds obvious, but many people forget this one.</li>
+<li><code>cd -</code> — Switches to the previous directory you were in. Great for bouncing back and forth.</li>
+<li><code>cd ~</code> — Navigates to your home folder. The tilde (<code>~</code>) is very handy for quickly moving to subdirectories inside your home directory, e.g.: <code>cd ~/Downloads</code></li>
+</ul>
+
+<p><img src="https://blog.victormendonca.com/img/top-skills-that-will-make-you-stand-out-as-a-linux-admin/Penguin-and-Staples-on-Office-Desk.png" alt="picture 0" /></p>
+
+<h3 id="history">History</h3>
+
+<p>As you probably already know, <code>history</code> lets you go back to previous commands and re-execute them. Mastering how to quickly search and re-use previous commands saves you from tediously retyping the same things over and over.</p>
+
+<ul>
+<li><code>Ctrl+r</code> — Search your history for a specific string
+
+<ul>
+<li>Use <code>[Shift]</code> to go back if you skip past the command you wanted</li>
+<li>Start typing the string before pressing <code>Ctrl+r</code> to act as a filter and only see matches for that string</li>
+</ul></li>
+<li><code>!!</code> — Re-execute the last command. Super handy when you forget sudo. Just type <code>sudo !!</code></li>
+
+<li><p><code>!$</code> — The last argument of your previous command. Useful if you mistyped a command and want to reuse its argument, e.g.:</p>
+
+<pre><code class="language-bash">userdle testuser   # typo
+userdel !$         # fixes it using the last argument
+</code></pre>
+
+<ul>
+<li>It’s also great for running the last command with sudo, similar to <code>!!</code></li>
+</ul></li>
+
+<li><p><code>Alt+.</code> — Inserts the last argument of your previous command directly into the current line (and shows it to you). It’s effectively the same as typing <code>!$</code>, but more interactive since it shows the result as you type. Keep pressing it to cycle through arguments from earlier commands.</p></li>
+</ul>
+
+<p><strong>💡 Tips:</strong></p>
+
+<ul>
+<li>Remember to use <code>Esc+v</code> to quickly open a previous command in your editor if it needs modification</li>
+
+<li><p>Bash history can be customized to be even more powerful:</p>
+
+<ul>
+<li><p><code>HISTTIMEFORMAT</code> — Add timestamps to your command history. E.g.:</p>
+
+<pre><code>$ history | tail -2
+1029  +2025/08/22 14:52:19 uptime
+1030  +2025/08/22 14:52:21 history | tail -2
+</code></pre></li>
+
+<li><p><code>HISTSIZE</code> and <code>HISTFILESIZE</code> — Increase how many commands are stored in memory and on disk</p></li>
+
+<li><p><code>shopt -s histappend</code> — Append to your history file instead of overwriting it. This way you don’t lose commands when multiple shells are open</p></li>
+</ul></li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>That wraps up our quick dive into Bash navigation, history, and some handy shortcuts to speed up your workflow. Try them out, and stay tuned—there’s plenty more cool stuff coming in the next posts!</p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2025%2f08%2f22%2ftop-skills-that-will-make-you-stand-out-as-a-linux-admin-part-1%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Top%20Skills%20That%20Will%20Make%20You%20Stand%20Out%20as%20a%20Linux%20Admin%3a%20Part%201&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f08%2f22%2ftop-skills-that-will-make-you-stand-out-as-a-linux-admin-part-1%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f08%2f22%2ftop-skills-that-will-make-you-stand-out-as-a-linux-admin-part-1%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f08%2f22%2ftop-skills-that-will-make-you-stand-out-as-a-linux-admin-part-1%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f08%2f22%2ftop-skills-that-will-make-you-stand-out-as-a-linux-admin-part-1%2f&amp;title=Top%20Skills%20That%20Will%20Make%20You%20Stand%20Out%20as%20a%20Linux%20Admin%3a%20Part%201" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Top%20Skills%20That%20Will%20Make%20You%20Stand%20Out%20as%20a%20Linux%20Admin%3a%20Part%201&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2025%2f08%2f22%2ftop-skills-that-will-make-you-stand-out-as-a-linux-admin-part-1%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2024/09/09/logrotate-simplifying-log-management/" title="Logrotate: Simplifying Log Management">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2024/09/09/logrotate-simplifying-log-management/">Logrotate: Simplifying Log Management</a>
 </h2>
 
@@ -458,6 +631,12 @@ ExecStart=/usr/sbin/logrotate /etc/logrotate.conf
         </li>
     
 
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2025/08/22/top-skills-that-will-make-you-stand-out-as-a-linux-admin-part-1/" title="Top Skills That Will Make You Stand Out as a Linux Admin: Part 1">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
     
     </ul> </nav>
   
@@ -1688,311 +1867,6 @@ aci_bd                                                        Manage Bridge Doma
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/">Testing New Hard Drives</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2023-11-21">21 Nov, 2023</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/hardware" class="label label-primary">Hardware</a>
-  
-  <a href="https://blog.victormendonca.com/tags/storage" class="label label-primary">Storage</a>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<p>So you got a spanking new hard drive for your NAS and you are ready to install it&hellip; but wait! What if the drive is bad?</p>
-
-<p><img src="https://i.imgur.com/XlwZRg7l.png" alt="" /></p>
-
-<p>This is not something that most people would think of, but that shiny new drive could already have come with defects (a.k.a extra features) from the factory. Or maybe it was part of a fun game of &ldquo;throw the client&rsquo;s package&rdquo; that some delivery man like to play (as my preferred social media likes to show me). So before we install this new piece of hardware that has the potential to render all my data, accumulated from years of hoarding, useless, let&rsquo;s do some testing.</p>
-
-<h2 id="s-m-a-r-t-testing">S.M.A.R.T Testing</h2>
-
-<p>Let&rsquo;s start with a S.M.A.R.T (Self-Monitoring, Analysis, and Reporting Technology) test.</p>
-
-<p><img src="https://i.imgur.com/4LQP5Iz.png" alt="smart" /></p>
-
-<blockquote>
-<p><a href="https://support-en.wd.com/app/answers/detailweb/a_id/39617/~/self-monitoring%2C-analysis-and-reporting-technology-%28s.m.a.r.t.%29">Wikipedia: Self-Monitoring, Analysis and Reporting Technology (S.M.A.R.T.)</a></p>
-
-<p>SMART is an interface between the platform&rsquo;s BIOS and the storage device. When SMART is enabled in the BIOS (mostly default), the BIOS can process information from the storage device and determine whether to send a warning message about potential failure of the storage device. The purpose of SMART is to warn a user of impending drive failure while there is still time to take action, such as backing up the data or copying the data to a replacement device.</p>
-</blockquote>
-
-<p>First we need to identify if the drive is capable of S.M.A.R.T test. Most modern drives should be.</p>
-
-<pre><code class="language-none">sudo smartctl -i /dev/sdX
-</code></pre>
-
-<p>You should get an output similar to the one below:</p>
-
-<pre><code class="language-none">=== START OF INFORMATION SECTION ===
-Device Model:     WDC WD60EFPX-68C5ZN0
-Serial Number:    WD-WX12D12312345
-LU WWN Device Id: 5 0014ee 26b395dd4
-Firmware Version: 81.00A81
-User Capacity:    6,001,175,126,016 bytes [6.00 TB]
-Sector Sizes:     512 bytes logical, 4096 bytes physical
-Rotation Rate:    5400 rpm
-Form Factor:      3.5 inches
-Device is:        Not in smartctl database 7.3/5528
-ATA Version is:   ACS-3 T13/2161-D revision 5
-SATA Version is:  SATA 3.1, 6.0 Gb/s (current: 6.0 Gb/s)
-Local Time is:    Thu Nov  9 08:21:36 2023 EST
-SMART support is: Available - device has SMART capability.
-SMART support is: Enabled
-</code></pre>
-
-<p>I got the following error because I&rsquo;m using a USB-C adapter:</p>
-
-<pre><code class="language-none">smartctl 7.4 2023-08-01 r5530 [x86_64-linux-6.5.8-arch1-1] (local build)
-Copyright (C) 2002-23, Bruce Allen, Christian Franke, www.smartmontools.org
-
-/dev/sda: Unknown USB bridge [0x14b0:0x0200 (0x100)]
-Please specify device type with the -d option.
-
-Use smartctl -h to get a usage summary
-</code></pre>
-
-<p>If that&rsquo;s the same for you, you can try using it with <code>-d sat</code>, and if your adapter is supported it should work.</p>
-
-<pre><code class="language-none">sudo smartctl -d sat -i /dev/sdX
-</code></pre>
-
-<p>Once we confirmed that the drive supports S.M.A.R.T. testing we can start. We are interested in the following three  tests:</p>
-
-<ul>
-<li><strong>Short</strong> - The goal of the short test is the rapid identification of a defective hard drive. Therefore, a maximum run time for the short test is 2 min</li>
-<li><strong>Long</strong> - The long test was designed as the final test in production and is the same as the short test with two differences. The first: there is no time restriction and in the Read/Verify segment the entire disk is checked and not just a section</li>
-<li><strong>Conveyance Test</strong> - This test can be performed to determine damage during transport of the hard disk within just a few minutes</li>
-</ul>
-
-<p>We specify the test using the <code>-t</code> flag:</p>
-
-<pre><code class="language-none">smartctl -t [short|long|conveyance] [dev]
-</code></pre>
-
-<p>The test runs in the background and we can check it&rsquo;s status by greping <code>Self-test execution status</code>.</p>
-
-<p>On the example below we can see that the test is in progress and that is 80% complete:</p>
-
-<pre><code class="language-none">$ sudo smartctl -a /dev/sda | grep -A 1 'Self-test execution status:'
-Self-test execution status:      ( 242)	Self-test routine in progress...
-					20% of test remaining.
-</code></pre>
-
-<p>We can use the same command with to check the test result. Just change the <code>-A</code> to &lsquo;2&rsquo; in <code>grep</code>:</p>
-
-<pre><code class="language-none">$ sudo smartctl -a /dev/sda | grep -A 2 'Self-test execution status:'
-Self-test execution status:      (   0)	The previous self-test routine completed
-					without error or no self-test has ever
-					been run.
-</code></pre>
-
-<p>Another option is to use the <code>-l selftest</code> flag:</p>
-
-<pre><code class="language-none">$ sudo smartctl -l selftest /dev/sda
-smartctl 7.4 2023-08-01 r5530 [x86_64-linux-6.5.8-arch1-1] (local build)
-Copyright (C) 2002-23, Bruce Allen, Christian Franke, www.smartmontools.org
-
-=== START OF READ SMART DATA SECTION ===
-SMART Self-test log structure revision number 1
-Num  Test_Description    Status                  Remaining  LifeTime(hours)  LBA_of_first_error
-# 1  Short offline       Completed without error       00%        20         -
-</code></pre>
-
-<p>Also check the following string after each test:</p>
-
-<pre><code class="language-none">$ sudo smartctl -a /dev/sda | grep 'test result'
-SMART overall-health self-assessment test result: PASSED
-</code></pre>
-
-<p>Now go ahead and run the short and conveyance tests (or all 3 if you have the time). Here&rsquo;s how long it took for me to run on a 6TB WD Red Plus (WD60EFPX) over USB-C (Nov 2023):</p>
-
-<ul>
-<li><em>conveyance</em> -1m13s</li>
-<li><em>short</em> - 2m</li>
-<li><em>long</em> - 11h20m</li>
-</ul>
-
-<p>If you have more than one hard drive to test, and you can plug them in at the same time, you can run the tests in parallel.</p>
-
-<p>Once completed and you have confirmed they have passed, also check the thresholds at the end of the output. It will look similar to this:</p>
-
-<pre><code class="language-none">Vendor Specific SMART Attributes with Thresholds:
-ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE
-  1 Raw_Read_Error_Rate     0x002f   200   200   051    Pre-fail  Always       -       0
-  3 Spin_Up_Time            0x0027   100   253   021    Pre-fail  Always       -       0
-  4 Start_Stop_Count        0x0032   100   100   000    Old_age   Always       -       2
-  5 Reallocated_Sector_Ct   0x0033   200   200   140    Pre-fail  Always       -       0
-  7 Seek_Error_Rate         0x002e   200   200   000    Old_age   Always       -       0
-  9 Power_On_Hours          0x0032   100   100   000    Old_age   Always       -       46
- 10 Spin_Retry_Count        0x0032   100   253   000    Old_age   Always       -       0
- 11 Calibration_Retry_Count 0x0032   100   253   000    Old_age   Always       -       0
- 12 Power_Cycle_Count       0x0032   100   100   000    Old_age   Always       -       1
-192 Power-Off_Retract_Count 0x0032   200   200   000    Old_age   Always       -       0
-193 Load_Cycle_Count        0x0032   200   200   000    Old_age   Always       -       3
-194 Temperature_Celsius     0x0022   107   104   000    Old_age   Always       -       43
-196 Reallocated_Event_Count 0x0032   200   200   000    Old_age   Always       -       0
-197 Current_Pending_Sector  0x0032   200   200   000    Old_age   Always       -       0
-198 Offline_Uncorrectable   0x0030   100   253   000    Old_age   Offline      -       0
-199 UDMA_CRC_Error_Count    0x0032   200   200   000    Old_age   Always       -       0
-200 Multi_Zone_Error_Rate   0x0008   100   253   000    Old_age   Offline      -       0
-</code></pre>
-
-<p>You want to pay attention to:</p>
-
-<ul>
-<li><code>Offline_Uncorrectable</code> - Damaged sectors that don&rsquo;t respond to any read/write requests (bad sectors). These sectors are remapped to spare sectors.</li>
-<li><code>Reallocated_Sector_Ct</code> - Count of damaged sectors that were remapped to spare sectors.</li>
-<li><code>Current_Pending_Sector</code> - Indicates the number of damaged sectors that are yet to be remapped or reallocated. This number could indicate that spare sectors are not available, and data from bad sectors can no longer be remapped.</li>
-</ul>
-
-<h2 id="badblocks">Badblocks</h2>
-
-<p><img src="https://i.imgur.com/yPrwUU8m.png" alt="Imgur" /></p>
-
-<p>Before we continue, let&rsquo;s just make sure that you are indeed testing a new set of spinning rust (a.k.a. hard drive), and <strong>not an SSD or an NVMe</strong>. We don&rsquo;t want to run <code>badblocks</code> on the later 2.</p>
-
-<h3 id="overview">Overview</h3>
-
-<blockquote>
-<p><a href="https://wiki.archlinux.org/title/badblocks">Arch Wiki: badblocks</a></p>
-
-<p>S.M.A.R.T. (Self-Monitoring, Analysis, and Reporting Technology) is featured in almost every HDD still in use nowadays, and in some cases it can automatically retire defective HDD sectors. However, S.M.A.R.T. only passively waits for errors while badblocks can actively write simple patterns to every block of a device and then check them, searching for damaged areas (Just like memtest86* does with RAM).</p>
-</blockquote>
-
-<p>Now that we have an understanding of what <code>badblocks</code> does, let&rsquo;s take some time to digest it. We will be writing to all blocks on your new hard drive and then reading to confirm that the data was written correctly. As if that wouldn&rsquo;t already take long, <code>badblocks</code> will do it not only once, but four times (with four different patterns).</p>
-
-<blockquote>
-<p><a href="https://wiki.archlinux.org/title/badblocks#Testing_for_bad_sectors">Arch Wiki</a></p>
-
-<p>As the pattern is written to every accessible block, the device effectively gets wiped. The default is an extensive test with four passes using four different patterns: <code>0xaa</code> (10101010), <code>0x55</code> (01010101), <code>0xff</code> (11111111) and <code>0x00</code> (00000000). For some devices this will take a couple of days to complete.</p>
-</blockquote>
-
-<p>As with <code>smartctl</code>, you can run multiple instances of <code>badblocks</code> in parallel if you have multiple disks. You can also shorten the time of the test by increasing the number of blocks that are tested at time (<code>-c</code>), or by specifying a single pattern to be written with the <code>-t</code> option, e.g.: <code>-t '0xaa'</code>, which will force it to do only one pass. If you specify multiple patterns, e.g.: <code>-t '0xaa' -t '0x55'</code>, you will be essentially running multiple passes.</p>
-
-<p>Another option is to use the random pattern option with <code>-t random</code>. This will make <code>badblocks</code> use random patterns for the test, with only one pass (unless you specify <code>-p</code>).</p>
-
-<p>Just keep in mind that different patterns (used by the default write-mode) work better because you can validate against stuck bits. But based on the amount of drives, available drive buses, and time that you have, you might not actually be able to run the full test. But that&rsquo;s a decision that only you can make.</p>
-
-<p>I wanted to time my tests to help you making a decision, but as I ran them over a USB-C adapter my badblocks seem to have maxed out at around 41mb/s:</p>
-
-<blockquote>
-<pre><code>  Total DISK READ :       0.00 B/s | Total DISK WRITE :      41.74 M/s
-  Actual DISK READ:       0.00 B/s | Actual DISK WRITE:      41.74 M/s
-       TID  PRIO  USER     DISK READ  DISK WRITE  SWAPIN     IO&gt;    COMMAND                                                          
-  1516251 be/4 root        0.00 B/s   41.74 M/s  ?unavailable?  badblocks -wsvb 4096 -t 0x00 /dev/sda -o badblocks-output.log
-</code></pre>
-</blockquote>
-
-<p>With that in mind, here are the timings from my latest test on a 6TB WD Red Plus (WD60EFPX) over USB-C (Nov 2023):</p>
-
-<ul>
-<li><em>Write mode</em> - 83h</li>
-<li><em>Random write mode</em> - 81h</li>
-<li><em>Write mode one pattern</em> - 80h</li>
-</ul>
-
-<p>And spoiler alert&hellip; we will be running the long test in <code>smartctl</code> once <code>badblocks</code> finishes. So also take that into account.</p>
-
-<h3 id="running-the-test">Running the Test</h3>
-
-<p>First, let&rsquo;s take a look at what your drive&rsquo;s recommended blocksize is:</p>
-
-<pre><code class="language-none">sudo blockdev --getbsz /dev/sdX
-</code></pre>
-
-<p>Because this test will run for a while, start your preferred terminal multiplexer (e.g.: <code>screen</code>, <code>tmux</code>), change into root, and run <code>badblocks</code>:</p>
-
-<pre><code class="language-none">time badblocks -wsvb {blocksize} /dev/sdX -o [output_file]
-</code></pre>
-
-<ul>
-<li><code>time</code> a separate command to tell you the actual time <code>badblocks</code> ran for once complete.</li>
-<li><code>-w</code> uses write-mode test, which is a <strong>destructive action</strong>.</li>
-<li><code>-s</code> shows an estimate of the progress of the scan. This isn&rsquo;t 100% accurate, but it&rsquo;s better to see something than nothing at all.</li>
-<li><code>-b {blocksize}</code> specify the block size. Be sure to replace <code>{blocksize}</code> with the number you found with the previous command mentioned (<code>blockdev --getbsz /dev/sdX</code>).</li>
-<li><code>/dev/sdX</code> the drive you want to test. Replace with the actual drive. Be extra careful as you don&rsquo;t want to accidentally destroy data on the wrong disk.</li>
-<li><code>-v</code> option is verbose mode</li>
-<li><code>-o</code> option is output file. Without the <code>-o</code> <code>badblocks</code> will simply use the <code>STDOUT</code></li>
-</ul>
-
-<h2 id="s-m-a-r-t-again">S.M.A.R.T. Again</h2>
-
-<p>Once the <code>badblocks</code> test is complete, run another long <code>smartctl</code> test and check to make sure that everything is still good.</p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f21%2ftesting-new-hard-drives%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Testing%20New%20Hard%20Drives&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f21%2ftesting-new-hard-drives%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f21%2ftesting-new-hard-drives%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f21%2ftesting-new-hard-drives%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f21%2ftesting-new-hard-drives%2f&amp;title=Testing%20New%20Hard%20Drives" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Testing%20New%20Hard%20Drives&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2023%2f11%2f21%2ftesting-new-hard-drives%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/" title="How to Migrate Local Users and Grops">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/" title="RHCE v8 Practice Exam">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -2166,6 +2040,10 @@ ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_
         <ul>
         
           <li>
+          <a href="https://blog.victormendonca.com/2025/08/22/top-skills-that-will-make-you-stand-out-as-a-linux-admin-part-1/">Top Skills That Will Make You Stand Out as a Linux Admin: Part 1</a>
+          </li>
+        
+          <li>
           <a href="https://blog.victormendonca.com/2024/09/09/logrotate-simplifying-log-management/">Logrotate: Simplifying Log Management</a>
           </li>
         
@@ -2187,10 +2065,6 @@ ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_
         
           <li>
           <a href="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/">How to Migrate Local Users and Grops</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2023/06/30/undestanting-yum-clean-all-and-stale-repos/">Understanding &#34;yum clean all&#34; and Stale Repos</a>
           </li>
         
         </ul>

@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Mon, 09 Sep 2024 18:00:00 -0400</lastBuildDate>
+    <lastBuildDate>Fri, 22 Aug 2025 11:54:29 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Top Skills That Will Make You Stand Out as a Linux Admin: Part 1</title>
+      <link>https://blog.victormendonca.com/2025/08/22/top-skills-that-will-make-you-stand-out-as-a-linux-admin-part-1/</link>
+      <pubDate>Fri, 22 Aug 2025 11:54:29 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2025/08/22/top-skills-that-will-make-you-stand-out-as-a-linux-admin-part-1/</guid>
+      <description>Working as a Linux administrator often means being pulled in many directions and juggling a variety of technologies. That doesn’t leave much time to revisit the basics. Over time, work becomes repetitive, and we end up doing things the same way we learned years ago—without stopping to refine or discover smarter approaches.
+With this series of posts, I hope to share tips and shortcuts that will help you work faster and smarter—and maybe even stand out among your coworkers by pulling off a few neat tricks.</description>
+    </item>
     
     <item>
       <title>Logrotate: Simplifying Log Management</title>
