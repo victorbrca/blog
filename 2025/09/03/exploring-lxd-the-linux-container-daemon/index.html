@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Exploring LXD (The Linux Container Daemon)  &middot; Victor&#39;s Blog</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="Exploring LXD: A Powerful Tool for Home Labs" />
+
+<meta name="keywords" content="Linux, Containers, Docker, Virtualization, ">
+
+
+<meta property="og:title" content="Exploring LXD (The Linux Container Daemon)  &middot; Victor&#39;s Blog ">
+<meta property="og:site_name" content="Victor&#39;s Blog"/>
+<meta property="og:url" content="https://blog.victormendonca.com/2025/09/03/exploring-lxd-the-linux-container-daemon/" />
+<meta property="og:locale" content="en">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content="Exploring LXD: A Powerful Tool for Home Labs"/>
+<meta property="og:article:published_time" content="2025-09-03T09:06:30-04:00" />
+<meta property="og:article:modified_time" content="2025-09-03T09:06:30-04:00" />
+
+  
+    
+<meta property="og:article:tag" content="Linux">
+    
+<meta property="og:article:tag" content="Containers">
+    
+<meta property="og:article:tag" content="Docker">
+    
+<meta property="og:article:tag" content="Virtualization">
+    
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@18440926" />
+<meta name="twitter:creator" content="@18440926" />
+<meta name="twitter:title" content="Exploring LXD (The Linux Container Daemon)" />
+<meta name="twitter:description" content="Exploring LXD: A Powerful Tool for Home Labs" />
+<meta name="twitter:url" content="https://blog.victormendonca.com/2025/09/03/exploring-lxd-the-linux-container-daemon/" />
+<meta name="twitter:domain" content="https://blog.victormendonca.com/">
+  
+
+  
+
+
+
+<link rel="canonical" href="https://blog.victormendonca.com/2025/09/03/exploring-lxd-the-linux-container-daemon/" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
+<link rel="icon" href="https://blog.victormendonca.com/favicon.png">
+<meta name="generator" content="Hugo 0.48" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+
+
+    <link rel="stylesheet" href="https://blog.victormendonca.com/css/bootswatch/default/bootstrap.min.css">
+
+
+<link rel="stylesheet" href="https://blog.victormendonca.com/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://blog.victormendonca.com/css/style.css">
+
+
+<link rel="stylesheet" href="https://blog.victormendonca.com/css/style_custom.css">
+
+
+
+  <link rel="stylesheet" href="https://blog.victormendonca.com/css/highlight/github.css">
+
+
+
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1P1YY6BDG2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+
+      gtag('config', 'G-1P1YY6BDG2');
+    </script>
+  
+
+</head>
+<body class="map[name:default]" data-ng-app="myapp" data-ng-controller="MyController" data-ng-mouseleave="MouseLeave($event)">
+    <header id="main-header">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        
+        <a class="navbar-brand" href="https://blog.victormendonca.com/">
+          Victor&#39;s Blog
+          
+          
+          </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            
+            
+            <li class="">
+
+              <a href="https://blog.victormendonca.com/" >
+                
+                Home
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://blog.victormendonca.com/about/" >
+                
+                About
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://geekit.ca/" >
+                
+                Professional
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://manhattan.victormendonca.com/" >
+                
+                Manhattan Blog
+              </a>
+            </li>
+            
+            
+            
+          </ul>
+        </div>
+        
+      </div>
+    </nav>
+  </header>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <div class="text-center">
+
+    <h1>Exploring LXD (The Linux Container Daemon)
+</h1>
+
+    <div class="metas">
+<small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2025-09-03">3 Sep, 2025</time>
+</small>
+
+
+  <small>
+    &middot; by Victor Mendonça
+  
+  &middot; Read in about 7 min
+  &middot; (1380 words)
+  &middot; 
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f03%2fexploring-lxd-the-linux-container-daemon%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Exploring%20LXD%20%28The%20Linux%20Container%20Daemon%29&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f03%2fexploring-lxd-the-linux-container-daemon%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f03%2fexploring-lxd-the-linux-container-daemon%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f03%2fexploring-lxd-the-linux-container-daemon%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f03%2fexploring-lxd-the-linux-container-daemon%2f&amp;title=Exploring%20LXD%20%28The%20Linux%20Container%20Daemon%29" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Exploring%20LXD%20%28The%20Linux%20Container%20Daemon%29&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f03%2fexploring-lxd-the-linux-container-daemon%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  </small>
+
+<div class="margin-10">
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/containers" class="label label-primary">Containers</a>
+  
+  <a href="https://blog.victormendonca.com/tags/docker" class="label label-primary">Docker</a>
+  
+  <a href="https://blog.victormendonca.com/tags/virtualization" class="label label-primary">Virtualization</a>
+  
+
+
+</div>
+
+<br>
+</div>
+
+  </div>
+</div>
+
+      <div class="content">
+  
+
+<p>Last week, I attended a virtual talk hosted by Canonical on building a homelab with microservices. During the session, I discovered a new (to me) and very cool utility that&rsquo;s perfect for managing virtual machines and containers from a centralized interface: LXD, or the Linux Container Daemon.</p>
+
+<p><img src="https://blog.victormendonca.com/img/exploring-lxd-the-linux-container-daemon/header.png" alt="picture 0" /></p>
+
+<p>While LXD isn&rsquo;t new—it’s actually been around since 2016—it’s still flying under the radar for a lot of homelab enthusiasts. After seeing it in action, I realized it&rsquo;s a hidden gem worth exploring.</p>
+
+<h4 id="why-lxd-stands-out">Why LXD Stands Out</h4>
+
+<p>LXD offers a unified way to manage both containers and VMs—whether through the command line (lxc), a web-based UI, or via REST APIs (though I won’t dive into the API side here).</p>
+
+<p>This makes LXD an excellent choice for home labs because it lets you manage everything from one central &ldquo;application&rdquo; instead of juggling multiple tools for VMs and containers separately.</p>
+
+<h4 id="features-that-caught-my-attention">Features That Caught My Attention</h4>
+
+<p>Here are some of the standout features that make LXD so powerful:</p>
+
+<ul>
+<li>Run System Containers
+
+<ul>
+<li>LXD can run full Linux distributions inside containers (unlike Docker, which is app-focused).</li>
+<li>Containers behave like lightweight virtual machines.</li>
+<li>You can run Ubuntu, Alpine, Debian, CentOS, etc., inside LXD containers.</li>
+</ul></li>
+<li>Run Virtual Machines
+
+<ul>
+<li>LXD supports running full virtual machines (VMs) using QEMU/KVM.</li>
+<li>This allows mixing containers and VMs on the same host with a single tool.</li>
+</ul></li>
+<li>Manage Container &amp; VM Lifecycle
+
+<ul>
+<li>Create, start, stop, pause, delete containers/VMs.</li>
+<li>Snapshots and restore functionality.</li>
+<li>Clone containers or VMs.</li>
+</ul></li>
+<li>Image Management
+
+<ul>
+<li>Download and use images from remote repositories.</li>
+<li>Build and publish your own custom container/VM images.</li>
+</ul></li>
+<li>Networking
+
+<ul>
+<li>LXD provides built-in bridged, macvlan, and fan networking modes.</li>
+<li>Supports IPv4 and IPv6, NAT, and DNS.</li>
+</ul></li>
+<li>Resource Limits
+
+<ul>
+<li>Apply resource limits like CPU, RAM, disk I/O, network bandwidth.</li>
+<li>Useful for multi-tenant or production environments.</li>
+</ul></li>
+<li>Cluster Mode
+
+<ul>
+<li>LXD supports clustering — multiple nodes sharing the same configuration.</li>
+</ul></li>
+</ul>
+
+<p><em>There’s a lot more that LXD can do, but these are the features that really stood out for my personal homelab use case.</em></p>
+
+<h3 id="getting-started">Getting Started</h3>
+
+<p>LXD currently ships via Snap packages. You can easily install it by running the command below, and that will also install all the requirements:</p>
+
+<pre><code class="language-bash">sudo snap install lxd
+</code></pre>
+
+<p>Once installed, you’ll need to initialize it. Running <code>lxd init</code> will prompt a series of configuration questions (e.g., storage, network type, clustering, etc.). If you’re just setting things up for testing, feel free to use the same answers I did below — but it’s always a good idea to consult the official <a href="https://documentation.ubuntu.com/server/how-to/containers/lxd-containers/">LXD Documentation</a> for a deeper understanding:</p>
+
+<pre><code class="language-none">$ sudo lxd init
+
+Would you like to use LXD clustering? (yes/no) [default=no]:
+Do you want to configure a new storage pool? (yes/no) [default=yes]:
+Name of the new storage pool [default=default]:
+Name of the storage backend to use (btrfs, ceph, dir, lvm, powerflex) [default=btrfs]: dir
+Would you like to connect to a MAAS server? (yes/no) [default=no]:
+Would you like to create a new local network bridge? (yes/no) [default=yes]:
+What should the new bridge be called? [default=lxdbr0]:
+What IPv4 address should be used? (CIDR subnet notation, “auto” or “none”) [default=auto]:
+What IPv6 address should be used? (CIDR subnet notation, “auto” or “none”) [default=auto]: none
+Would you like the LXD server to be available over the network? (yes/no) [default=no]: yes
+Address to bind LXD to (not including port) [default=all]:
+Port to bind LXD to [default=8443]:
+Would you like stale cached images to be updated automatically? (yes/no) [default=yes]:
+Would you like a YAML &quot;lxd init&quot; preseed to be printed? (yes/no) [default=no]:
+</code></pre>
+
+<p>The lxc command is a command-line client used to interact with the LXD daemon. To use the <code>lxc</code> command as a non-root user, you&rsquo;ll need to add your user to the &lsquo;lxd&rsquo; group:</p>
+
+<pre><code class="language-bash">sudo usermod -a -G lxd [my_user]
+</code></pre>
+
+<p><strong>⚠️ Important Notes:</strong></p>
+
+<ul>
+<li>This change only takes effect after you log out and back in.</li>
+<li>Adding a non-root user to the &lsquo;lxd&rsquo; group essentialy gives root access to that user.</li>
+</ul>
+
+<h4 id="configuring-access-to-the-web-ui">Configuring Access to the WEB UI</h4>
+
+<p>At this point, LXD should be running. You can now access the Web UI at &lsquo;<a href="https://127.0.0.1:8443/'">https://127.0.0.1:8443/'</a>.</p>
+
+<p>Since it uses a self-signed certificate, your browser will warn you. Just click “Accept the Risk and Continue” (or equivalent in your browser):</p>
+
+<p><img src="https://blog.victormendonca.com/img/exploring-lxd-the-linux-container-daemon/webui1.png" alt="webui1" /></p>
+
+<p>LXD uses certificate authentication, so you’ll need to generate and trust one.</p>
+
+<p>a. Click &ldquo;Create a new certificate&rdquo;:</p>
+
+<p><img src="https://blog.victormendonca.com/img/exploring-lxd-the-linux-container-daemon/webui2.png" alt="webui2" /></p>
+
+<p>b. Then click “Generate”:</p>
+
+<p><img src="https://blog.victormendonca.com/img/exploring-lxd-the-linux-container-daemon/webui3.png" alt="webui3" /></p>
+
+<p>c. Enter a password for the certificate and click on &ldquo;Generate certificate&rdquo;:</p>
+
+<p><img src="https://blog.victormendonca.com/img/exploring-lxd-the-linux-container-daemon/webui4.png" alt="webui4" /></p>
+
+<p>d. Download the certificate and trust it from the terminal:</p>
+
+<p><img src="https://blog.victormendonca.com/img/exploring-lxd-the-linux-container-daemon/webui5.png" alt="webui5" /></p>
+
+<pre><code>$ lxc config trust add Downloads/lxd-ui-127.0.0.1.crt
+
+To start your first container, try: lxc launch ubuntu:24.04
+Or for a virtual machine: lxc launch ubuntu:24.04 --vm
+</code></pre>
+
+<p>f. To access the Web UI you&rsquo;ll also need to import the .pfx file into your browser’s certificate store. Follow your browser&rsquo;s instructions for importing client certificates:</p>
+
+<p><img src="https://blog.victormendonca.com/img/exploring-lxd-the-linux-container-daemon/webui6.png" alt="webui6" /></p>
+
+<p>g. Once imported, restart your browser and visit &lsquo;<a href="https://127.0.0.1:8443/'">https://127.0.0.1:8443/'</a> again — you should be logged in automatically:</p>
+
+<p><img src="https://blog.victormendonca.com/img/exploring-lxd-the-linux-container-daemon/webui7.png" alt="webui7" /></p>
+
+<h4 id="additional-configuration">Additional Configuration</h4>
+
+<p>By default the storage, when &lsquo;dir&rsquo; was set as type, will be inside the storage for the LXD snap (<code>/var/snap/lxd/common/lxd/storage-pools/default</code>). You will probably want to change that. Unfortunatelly you can&rsquo;t change the default location, so we&rsquo;ll just add a new one and set it to default.</p>
+
+<p><img src="https://blog.victormendonca.com/img/exploring-lxd-the-linux-container-daemon/storage-1.png" alt="" /></p>
+
+<p>Let&rsquo;s make this change via command line.</p>
+
+<p>a. First create a new volume pool (I created mine in <code>/mnt/storage2/VMs/lxd</code>):</p>
+
+<pre><code class="language-none">$ lxc storage create main dir source=/mnt/storage2/VMs/lxd
+
+Storage pool main created
+</code></pre>
+
+<p>b. You can check that it was created with:</p>
+
+<pre><code class="language-none">$ lxc storage list
+
++---------+--------+------------------------------------------------+-------------+---------+---------+
+|  NAME   | DRIVER |                     SOURCE                     | DESCRIPTION | USED BY |  STATE  |
++---------+--------+------------------------------------------------+-------------+---------+---------+
+| default | dir    | /var/snap/lxd/common/lxd/storage-pools/default |             | 1       | CREATED |
++---------+--------+------------------------------------------------+-------------+---------+---------+
+| main    | dir    | /mnt/storage2/VMs/lxd                          |             | 0       | CREATED |
++---------+--------+------------------------------------------------+-------------+---------+---------+
+</code></pre>
+
+<p>c. Now let&rsquo;s set it as the default pool:</p>
+
+<pre><code class="language-none">lxc profile device set default root pool=[pool name]
+</code></pre>
+
+<p><em>When you create an instance, LXD automatically creates the required storage volumes for it, so I will not cover it here.</em></p>
+
+<h3 id="creating-instances">Creating Instances</h3>
+
+<p>Creating both container and VM instances via the UI is extremelly easy.</p>
+
+<h4 id="containers">Containers</h4>
+
+<p>We are going to create a container based on the AmazonLinux 2023 image.</p>
+
+<p>a. Back on the UI, browse to &ldquo;Instances&rdquo; and click on &ldquo;Create instance&rdquo;:</p>
+
+<p><img src="https://blog.victormendonca.com/img/exploring-lxd-the-linux-container-daemon/create-instance-1.png" alt="" /></p>
+
+<p>b. Click on &ldquo;Browse images&rdquo;:</p>
+
+<p><img src="https://blog.victormendonca.com/img/exploring-lxd-the-linux-container-daemon/create-instance-2.png" alt="" /></p>
+
+<p>c. Filter the distribution by &ldquo;Amazon Linux&rdquo;, the type as &ldquo;Container&rdquo;, and click on &ldquo;Select&rdquo;:</p>
+
+<p><img src="https://blog.victormendonca.com/img/exploring-lxd-the-linux-container-daemon/create-instance-3.png" alt="" /></p>
+
+<p>d. Give it a name and description and click on &ldquo;Create and start&rdquo;:</p>
+
+<p><img src="https://blog.victormendonca.com/img/exploring-lxd-the-linux-container-daemon/create-instance-4.png" alt="" /></p>
+
+<p><em><strong>Tip:</strong> Don&rsquo;t forget to poke around the options on the left next time you create an instance.</em></p>
+
+<p>It should only take a few seconds for your container to be created and start running. You can access the container from the &ldquo;Terminal&rdquo; tab:</p>
+
+<p><img src="https://blog.victormendonca.com/img/exploring-lxd-the-linux-container-daemon/create-instance-5.png" alt="" /></p>
+
+<p>You can also access it via the terminal with <code>lxc console</code>, however that will require a password:</p>
+
+<p><img src="https://blog.victormendonca.com/img/exploring-lxd-the-linux-container-daemon/create-instance-8.png" alt="" /></p>
+
+<h4 id="vms">VMs</h4>
+
+<p>We are going to create an Ubuntu VM with graphical interface.</p>
+
+<p>a. Repeat the same steps as before, but now select Ubuntu as the distribution, VM as the type, and a LTS version:</p>
+
+<p><img src="https://blog.victormendonca.com/img/exploring-lxd-the-linux-container-daemon/create-instance-6.png" alt="" /></p>
+
+<p>b. Give it a name/description, and under &ldquo;Resource limits&rdquo; set the memory limit to &lsquo;2 GiB&rsquo;. Then click on &ldquo;Create and start&rdquo;:</p>
+
+<p><img src="https://blog.victormendonca.com/img/exploring-lxd-the-linux-container-daemon/create-instance-7.png" alt="" /></p>
+
+<p>c. Once the VM is running, access the terminal tab the same way we did before and install <code>ubuntu-desktop</code>:</p>
+
+<pre><code class="language-bash">apt update &amp;&amp; apt install ubuntu-desktop
+</code></pre>
+
+<p>Now is a great time to go grab a coffee&hellip; this will take a little while&hellip;</p>
+
+<p>d. When the install is complete change the password for the &lsquo;ubuntu&rsquo; user and reboot:</p>
+
+<pre><code class="language-none"># passwd ubuntu
+
+New password:
+BAD PASSWORD: The password is shorter than 8 characters
+Retype new password:
+passwd: password updated successfully
+
+# reboot
+</code></pre>
+
+<p>d. Go to the &ldquo;Console&rdquo; tab. You should see boot output and evetually be presented with the login window. You can login and use the VM from your browser:</p>
+
+<p><img src="https://blog.victormendonca.com/img/exploring-lxd-the-linux-container-daemon/vm-instance-1.png" alt="" /></p>
+
+<p>And you can also access the VM graphical interface via the <code>lxc connect</code> command with the <code>--type=vga</code> flag:</p>
+
+<pre><code class="language-bash">lxc console ubuntu-2404 --type=vga
+</code></pre>
+
+<p><img src="https://blog.victormendonca.com/img/exploring-lxd-the-linux-container-daemon/vm-instance-2.png" alt="" /></p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>LXD might not be as flashy or widely known as Docker, but it fills a unique and valuable niche. It gives you the simplicity of containers and the power of full VMs — all under one roof. For homelabbers, that means less tool sprawl, cleaner management, and more flexibility to experiment.</p>
+
+<p>Whether you’re just getting started with containers or looking to consolidate your virtualization setup, LXD is absolutely worth a try. With its web UI, clustering support, and straightforward setup, it can quickly become the backbone of a modern homelab.</p>
+
+</div>
+
+
+      <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f03%2fexploring-lxd-the-linux-container-daemon%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Exploring%20LXD%20%28The%20Linux%20Container%20Daemon%29&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f03%2fexploring-lxd-the-linux-container-daemon%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f03%2fexploring-lxd-the-linux-container-daemon%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f03%2fexploring-lxd-the-linux-container-daemon%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f03%2fexploring-lxd-the-linux-container-daemon%2f&amp;title=Exploring%20LXD%20%28The%20Linux%20Container%20Daemon%29" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Exploring%20LXD%20%28The%20Linux%20Container%20Daemon%29&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f03%2fexploring-lxd-the-linux-container-daemon%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2025/08/22/top-skills-that-will-make-you-stand-out-as-a-linux-admin-part-1/" title="Top Skills That Will Make You Stand Out as a Linux Admin: Part 1">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+
+</div>
+
+</footer>
+
+    </div>
+    
+      <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+        <div>
+  
+
+   
+    <div class="section">
+      <header><div class="title"></div></header>
+      <div class="content">
+        <img style="float: center; padding-right: 5px;" src="https://blog.victormendonca.com/img/avatar.jpg" hspace="20" width="240"></img>
+        <br/>
+        <div class="social-icons" style="display:inline-block; text-align: center; width:100%;">
+        <a href="https://github.com/victorbrca" target="_blank"><i class="fa fa-github fa-2x" style="padding-right: 5px; padding-left: 5px" aria-hidden="true"></i></a>
+        <a href="https://twitter.com/victorbrca" target="_blank"><i class="fa fa-twitter fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <a href="http://www.linkedin.com/in/victormendonca" target="_blank"><i class="fa fa-linkedin-square fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <a href="https://www.facebook.com/victormendonca" target="_blank"><i class="fa fa-facebook-official fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <div>
+        <br/>
+      </div>
+    </div>
+
+    
+      
+      
+      <div class="section taxonomies">
+        <header><div class="title"><b>tags</b></div></header>
+
+        <div class="content1">
+          <ul>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/administration">administration</a></li>
+          </ul>
+        </div>
+      </div>
+      
+    
+      
+      
+    
+
+    <br />
+
+    <div class="section">
+      <header><div class="title"><b>Latest Posts</b></div></header>
+      <div class="content">
+        <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2025/09/03/exploring-lxd-the-linux-container-daemon/">Exploring LXD (The Linux Container Daemon)</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2025/08/22/top-skills-that-will-make-you-stand-out-as-a-linux-admin-part-1/">Top Skills That Will Make You Stand Out as a Linux Admin: Part 1</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2024/09/09/logrotate-simplifying-log-management/">Logrotate: Simplifying Log Management</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2024/02/14/getting-started-with-ansible-console/">Getting Started with Ansible Console</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/">Playing a Sound on Headless Server Boot</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/">RHCE v8 Practice Exam</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/">Testing New Hard Drives</a>
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+
+    <br />
+
+    
+    <div class="section">
+    
+      
+      <div class="content" align="center" >
+        <a class="twitter-timeline" data-width="240" data-height="450" href="https://twitter.com/victorbrca">Tweets by victorbrca</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+    </div>
+
+</div>
+
+      </div>
+    
+  </div>
+</div>
+    
+<footer class="footer hidden-print">
+  <div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+           <div class="pull-left">
+  <a class="toplink" href="javascript:" id="return-to-top">back to top</a>
+</div>
+<div class="pull-right">
+
+</div>
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+              
+    
+<div class="container footline">
+    <small>
+  code with <i class='fa fa-linux'></i>
+
+</small>
+</div>
+
+
+    
+<div class="container copyright">
+    <small>
+  &copy; 2018 Copyright Victor Mendonça
+
+  </small>
+</div>
+
+
+
+        </div>
+    </div>
+  </div>
+</footer>
+
+    
+
+<script src="https://blog.victormendonca.com/js/jquery.min.js"></script>
+<script src="https://blog.victormendonca.com/js/bootstrap.min.js"></script>
+
+
+<script src="https://blog.victormendonca.com/js/highlight.pack.js"></script>
+<script src="https://blog.victormendonca.com/js/site.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+var ENABLE_POPOVER =  false , 
+EXPIRE_COOKIE =  5 , 
+SHOW_MODAL_TIMEOUT =  10000 , 
+MOUSE_LEAVE =  true , 
+MODAL_SIZE = "", 
+POST_URL = "https://zapier.com/hooks/catch/1227563/", 
+SIGNUP_HEADER = "Join Our Newsletter",
+HEADER_IMAGE = "//placehold.it/1000x600",
+IMG_DESCRIPTION = "Placeholder image for this popover modal optin form",
+SIGNUP_TEXT = "Signup today for free and be the first to get notified on new updates.",
+INPUT_PLACEHOLDER = "Enter your email",
+SUBMIT_BUTTON = "Subscribe",
+SUCCESS_MESSAGE = "Thanks for your subscription!",
+ERROR_MESSAGE = "Submitting form failed!",
+OPTIN =  true ,
+COOKIE_NAME = "mycookie1",
+CONTENTLANGUAGE = ""; 
+</script>
+
+
+
+
+
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/config/TeX-AMS-MML_HTMLorMML.js"></script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    for(var all in MathJax.Hub.getAllJax()) {
+        all.SourceElement().parentNode.className += ' has-jax';
+
+    }
+});
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+

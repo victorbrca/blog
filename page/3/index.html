@@ -139,6 +139,455 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2021/02/28/getting-started-with-ansible-molecule/">Getting Started with Ansible Molecule</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2021-02-28">28 Feb, 2021</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/ansible" class="label label-primary">Ansible</a>
+  
+  <a href="https://blog.victormendonca.com/tags/docker" class="label label-primary">Docker</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<h2 id="overview">Overview</h2>
+
+<p>If you haven&rsquo;t heard about Ansible Molecule you came to the right place. I will cover what it is, it&rsquo;s basic usage, and how to install it and get started.</p>
+
+<h4 id="what-it-is">What it is</h4>
+
+<p><a href="https://molecule.readthedocs.io/en/latest/">Ansible Molecule</a> is a project (tool) that can greatly improve your Ansible workflow. It allows you to automate your tasks (which is great for CI) by providing means of running different and idempotent tests against your roles.</p>
+
+<p>And Molecule is based on Ansible, so you are essentially using Ansible to test Ansible. How cool is that!?</p>
+
+<h4 id="what-it-does">What it does</h4>
+
+<p>To put it in simple words, Molecule tests your code. With Molecule you can easily run multiple tests against your code and make sure it works before deploying to an environment.</p>
+
+<p>Some of the tests you can run are:</p>
+
+<ul>
+<li>Yaml lint</li>
+<li>Ansible lint</li>
+<li>Ansible syntax</li>
+<li>Run the Ansible role against a virtual machine</li>
+<li>Test idempotence (run the same Ansible role against the same virtual machine for the second time)</li>
+</ul>
+
+<h4 id="folder-structure">Folder Structure</h4>
+
+<p>When invoked Molecule creates a single role folder with the usual Ansible structure. Inside this role folder an additional <code>molecule</code> folder is created. This is where the main Molecule configuration lives.</p>
+
+<pre><code class="language-none">$ tree -d
+.
+├── defaults
+├── files
+├── handlers
+├── molecule
+│   └── default
+│       ├── converge.yml
+│       ├── molecule.yml
+│       └── verify.yml
+├── tasks
+├── templates
+├── tests
+└── vars
+</code></pre>
+
+<h4 id="test-types-and-scenarios">Test Types and Scenarios</h4>
+
+<p>Test scenarios can be configured inside the molecule folder and each scenario should have it&rsquo;s own folder.</p>
+
+<p>A &lsquo;default&rsquo; scenario is created automatically with the following tests enabled (you can change them according to your needs):</p>
+
+<ul>
+<li>lint</li>
+<li>destroy</li>
+<li>dependency</li>
+<li>syntax</li>
+<li>create</li>
+<li>prepare</li>
+<li>converge</li>
+<li>idempotence</li>
+<li>side_effect</li>
+<li>verify</li>
+<li>destroy</li>
+</ul>
+
+<h4 id="drivers">Drivers</h4>
+
+<p>Three different drivers (Vagrant, Docker, and OpenStack) can be used to create virtual machines. These virtual machines are used to test our roles.</p>
+
+<p><em>On this tutorial we will be using Docker as our driver.</em></p>
+
+<h2 id="installing-molecule">Installing Molecule</h2>
+
+<p>Molecule can be installed via pip or with distro packages (depending on your distro). You can mix and match and install Molecule via pip and specific components (like <code>ansible</code> or <code>ansible-lint</code>) via your distro&rsquo;s package manager.</p>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li><em>On Windows Molecule can only be installed via WSL</em></li>
+<li><em>I&rsquo;m assuming you already have Ansible installed and will not cover it here</em></li>
+</ul>
+
+<h3 id="windows-install-ubuntu-wsl">Windows Install (Ubuntu WSL)</h3>
+
+<p>On Ubuntu Molecule needs to be installed via pip. If perhaps you are running another distro in WSL, you can check if the packages are available with your package manager (if you choose to install that way).</p>
+
+<p>Install <code>python-pip</code>.</p>
+
+<pre><code class="language-none">$ sudo apt install -y python-pip
+</code></pre>
+
+<p>Create a python virtual environment for Molecule. The software we are going to install will reside in the virtual environment (we can use the environment many times).</p>
+
+<pre><code class="language-none">$ python3 -m venv molecule
+</code></pre>
+
+<p>Activate the environment (see that the prompt changes).</p>
+
+<pre><code class="language-none">$ source molecule/bin/activate
+(molecule-venv) $
+</code></pre>
+
+<p>Install the wheel package.</p>
+
+<pre><code class="language-none">(molecule-venv) $ python3 -m pip install wheel
+</code></pre>
+
+<p>Install ansible and ansible-lint. You can do this via Python/Molecule, or via the OS.</p>
+
+<p><em>OS</em></p>
+
+<pre><code class="language-none">$ apt install ansible ansible-lint
+</code></pre>
+
+<p><em>Via molecule</em></p>
+
+<pre><code class="language-none">(molecule-venv) $ python3 -m pip install &quot;molecule[ansible]&quot;  # or molecule[ansible-base]
+</code></pre>
+
+<p>Install molecule and docker.</p>
+
+<pre><code class="language-none">(molecule-venv) $ python3 -m pip install &quot;molecule[docker,lint]&quot;
+</code></pre>
+
+<h3 id="linux-install-arch">Linux Install (Arch)</h3>
+
+<p>If you are running Arch (I use Arch BTW) you can install everything with <code>pacman</code> (or with pip like we did for Windows WSL).</p>
+
+<pre><code class="language-none">$ sudo /usr/bin/pacman -S yamllint ansible-lint molecule molecule-docker
+</code></pre>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<h3 id="creating-a-molecule-role">Creating a Molecule Role</h3>
+
+<p>We will now create and configure a role with Molecule using Docker as the driver.</p>
+
+<p>Run <code>molecule init role [role name] -d docker</code>:</p>
+
+<p><img src="https://blog.victormendonca.com/img/getting-started-with-ansible-molecule/getting-started-with-ansible-molecule-28a74.png" alt="" /></p>
+
+<p>This should have created a new role folder with the required molecule files inside.</p>
+
+<h4 id="molecule-yml">molecule.yml</h4>
+
+<p>Holds the default configuration for molecule.</p>
+
+<p><em><code>./myrole/molecule/default/molecule.yml</code></em></p>
+
+<pre><code class="language-yml">---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: instance
+    image: docker.io/pycontribs/centos:8
+    pre_build_image: true
+provisioner:
+  name: ansible
+verifier:
+  name: ansible
+</code></pre>
+
+<h4 id="converge-yml">converge.yml</h4>
+
+<p>This is the playbook file that molecule will run.</p>
+
+<p><em><code>./myrole/molecule/default/converge.yml</code></em></p>
+
+<pre><code class="language-yml">---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: &quot;Include myrole&quot;
+      include_role:
+        name: &quot;myrole&quot;
+</code></pre>
+
+<h2 id="running-a-simple-test">Running a Simple Test</h2>
+
+<p>Let&rsquo;s use the existing configuration in <code>molecule.yml</code> and <code>converge.yml</code> to run a simple test.</p>
+
+<p>Edit the tasks file (<code>myrole/tasks/main.yml</code>) and add a simple task (you can use the example below with the debug module):</p>
+
+<pre><code class="language-yml">---
+# tasks file for myrole
+
+- debug:
+    msg: &quot;System {{ inventory_hostname }} has uuid {{ ansible_product_uuid }}&quot;
+</code></pre>
+
+<p>Run <code>molecule converge</code> (from the role folder) to build the image and run the playbook.</p>
+
+<script id="asciicast-G8PAulZtu6nNtMobEbLypgLwK" src="https://asciinema.org/a/G8PAulZtu6nNtMobEbLypgLwK.js" async></script>
+
+<p>Now that we got the very basic stuff done, let&rsquo;s move into a bit more advanced steps so we can better understand Molecule and use it with our code.</p>
+
+<h2 id="additional-steps-and-configuration">Additional Steps and Configuration</h2>
+
+<h3 id="adding-lint">Adding Lint</h3>
+
+<p>Lint is not enabled by default, but that can be easily changed by editing <code>molecule.yml</code> and adding the <code>lint</code> key to it:</p>
+
+<pre><code class="language-yaml">dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: instance
+    image: docker.io/pycontribs/centos:8
+    pre_build_image: true
+provisioner:
+  name: ansible
+verifier:
+  name: ansible
+lint: |
+  set -e
+  yamllint .
+  ansible-lint .
+</code></pre>
+
+<p>Now run <code>molecule lint</code>. You should get a lot of warnings due to to information missing in the meta folder:</p>
+
+<p><img src="https://blog.victormendonca.com/img/getting-started-with-ansible-molecule/getting-started-with-ansible-molecule-d02b3.png" alt="" /></p>
+
+<p>As instructed by the output of the command, you can quiet or disable the messages by adding a <code>warn_list</code> or <code>skip_list</code> to <code>.ansible_lint</code></p>
+
+<p><em><strong>Tip:</strong> You can also fine tune yaml linting by editing <code>.yamllint</code></em></p>
+
+<h3 id="running-a-full-test">Running a Full Test</h3>
+
+<p>So far we have only run two tests:</p>
+
+<ul>
+<li>Converge (dependency, create, prepare converge)</li>
+<li>Lint (yaml lint and Ansible lint)</li>
+</ul>
+
+<p>Let&rsquo;s run a full test (default scenario) on our role. Remember, the full test will run dependency, lint, syntax, create, prepare, converge, idempotence, side_effect, verify, cleanup and destroy.</p>
+
+<p>Run <code>molecule test</code>.</p>
+
+<script id="asciicast-NYNnPRJaYkEHqUwG0mqxiaUli" src="https://asciinema.org/a/NYNnPRJaYkEHqUwG0mqxiaUli.js" async></script>
+
+<h2 id="running-roles-from-another-folder">Running Roles from Another Folder</h2>
+
+<p>You can also use Molecule to test roles from another folder (which makes molecule very flexible for testing).</p>
+
+<p>Let&rsquo;s say I have the following folder structure:</p>
+
+<pre><code class="language-none">.
+└── Ansible
+    ├── Molecule
+    └── web-project
+</code></pre>
+
+<p>Inside my <code>web-project</code> folder I have a role called &lsquo;apache&rsquo; that installs (guess what?) httpd.</p>
+
+<p><em><code>./Ansible/web-project/roles/apache/tasks/main.yml</code></em></p>
+
+<pre><code class="language-yml">---
+# tasks file for apache
+
+- name: Installs Apache
+  yum:
+     name: httpd
+     state: present
+</code></pre>
+
+<p>I can easily modify my existing <code>converge.yml</code> to include that role:</p>
+
+<p><em><code>./Ansible/Molecule/myrole/molecule/default/converge.yml</code></em></p>
+
+<pre><code class="language-yml">---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: &quot;Include myrole&quot;
+      include_role:
+        name: &quot;../../web-project/roles/apache&quot;
+</code></pre>
+
+<p>Also edit <code>molecule.yml</code> so we are linting that external folder:</p>
+
+<p><em><code>./Ansible/Molecule/myrole/molecule/default/molecule.yml</code></em></p>
+
+<pre><code class="language-yml">lint: |
+  set -e
+  yamllint ../../web-project
+  ansible-lint ../../web-project
+</code></pre>
+
+<p>And then run <code>molecule converge</code> (from the Molecule role folder) to test. Because <code>molecule converge</code> does not include the <code>destroy</code> command, I can login to the container ( with <code>molecule login</code>) and check if httpd was installed:</p>
+
+<p><img src="https://blog.victormendonca.com/img/getting-started-with-ansible-molecule/getting-started-with-ansible-molecule-d229e.png" alt="" /></p>
+
+<p><em><strong>Tip:</strong></em></p>
+
+<ul>
+<li><em>When testing against multiple containers you can use <code>molecule login --host [container name]</code></em></li>
+<li><em>You can also use docker cli to connect to the container - <code>docker exec -ti [container name] /bin/bash</code></em></li>
+</ul>
+
+<p><em><strong>Note:</strong> On this example nothing other than the role is imported (e.g. variables and config from <code>ansible.cfg</code> are not imported)</em></p>
+
+<h3 id="additional-container-configuration">Additional Container Configuration</h3>
+
+<p>We can configure different options for our container in <code>molecule.yml</code> under the platforms key section. Configuration here is similar to a docker compose file.</p>
+
+<ul>
+<li><strong>name</strong> - Name of the container</li>
+<li><strong>image</strong> - Image for the container. Can be local or from a remote registry</li>
+<li><strong>pre_build_image</strong> - Instructs to use pre-build image (pull or local) instead of building from <code>molecule/default/Dockerfile.j2</code></li>
+<li><strong>privileged</strong> - Give extended privileges (a &ldquo;privileged&rdquo; container is given access to all devices)</li>
+<li><strong>capabilities</strong> - Same as <code>--cap-add=SYS_ADMIN</code>. Grants a smaller subset of capabilities to the container compared to the privileged option</li>
+<li><strong>command</strong> - Same as Dockerfile <code>RUN</code></li>
+<li><strong>groups</strong> - Assigns the container to one or more Ansible groups</li>
+</ul>
+
+<p>Example:</p>
+
+<pre><code class="language-yml">---
+dependency:
+  name: galaxy
+driver:
+  name: podman
+platforms:
+  - name: rhel8
+    image: registry.access.redhat.com/ubi8/ubi-init
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    capabilities:
+      - SYS_ADMIN
+    command: &quot;/usr/sbin/init&quot;
+    pre_build_image: true
+  - name: ubuntu
+    image: geerlingguy/docker-ubuntu2004-ansible
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    capabilities:
+      - SYS_ADMIN
+    command: &quot;/lib/systemd/systemd&quot;
+    pre_build_image: true
+provisioner:
+  name: ansible
+verifier:
+  name: ansible
+lint: |
+  set -e
+  yamllint .
+  ansible-lint .
+</code></pre>
+
+<hr />
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>I&rsquo;m hoping I was able to provide you with enough information on how to get started with Molecule. If you have any comments, suggestions or corrections, please leave them in the comment box below.</p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2021%2f02%2f28%2fgetting-started-with-ansible-molecule%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Getting%20Started%20with%20Ansible%20Molecule&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2021%2f02%2f28%2fgetting-started-with-ansible-molecule%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2021%2f02%2f28%2fgetting-started-with-ansible-molecule%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2021%2f02%2f28%2fgetting-started-with-ansible-molecule%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2021%2f02%2f28%2fgetting-started-with-ansible-molecule%2f&amp;title=Getting%20Started%20with%20Ansible%20Molecule" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Getting%20Started%20with%20Ansible%20Molecule&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2021%2f02%2f28%2fgetting-started-with-ansible-molecule%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2021/01/23/how-to-convert-standard-partition-to-lvm/" title="How to Convert Standard Partition to Logical Volume">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2022/11/18/linux-find-command/" title="Linux find Command">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2021/01/23/how-to-convert-standard-partition-to-lvm/">How to Convert Standard Partition to Logical Volume</a>
 </h2>
 
@@ -2314,363 +2763,6 @@ tank/Movies@2020-11-03_15-29       0B      -     1.50G  -
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2020/10/30/my-grafana-setup/">Overview of My Grafana Setup</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2020-10-30">30 Oct, 2020</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/monitoring" class="label label-primary">Monitoring</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<p>For the past few weeks I have been working extensively on the devices in my LAN. My FreeNAS had crashed due to a power outage resulting on a burnt memory module and a data issue with my main pool that caused a kernel panic on boot. My remote backup solution had not been working for over a year, so I knew that it would also need a complete re-design.</p>
-
-<p>I rebuilt my FreeNAS pools and setup a new remote backup solution using ZFS send (FreeNAS =&gt; Ubuntu 20.04), and got a couple of UPSs to protect from future power failures. I also created a better backup structure and jobs for my main devices (will post about that later), and configured additional alerts for device availability and job status. And to tie all down together, I thought what better than to revamp my Grafana dashboard to show all this new info.</p>
-
-<p>Here&rsquo;s the final result! I&rsquo;m quite happy with it.</p>
-
-<p><img src="https://blog.victormendonca.com/img/my-grafana-setup/main.png" alt="" /></p>
-
-<h2 id="how-everything-is-placed-together">How Everything is Placed Together</h2>
-
-<p>When I first started with Grafana, I was mainly using it with the Zabbix plugin and an imported <a href="https://grafana.com/grafana/dashboards/12023">pfSense dashboard</a>. I had one influx database that was used with pfSense, and a MariaDB for the imported Zabbix data. The dashboard gave me a basic overview of my network data usage (pfSense) as well as status for my LAN devices (Zabbix).</p>
-
-<p><em><strong>Old dashboard</strong></em>
-<img src="https://blog.victormendonca.com/img/my-grafana-setup/old-grafana.jpeg" alt="" /></p>
-
-<p>With the new configuration things got a bit more complex (as expected). I&rsquo;m now displaying data from 5 different servers, with 2 different OS types (FreeBSD and Linux) and 5 different distributions (pfSense, FreeNAS, Arch, CentOS and Ubuntu). My collector of choice is Telegraf (due to it&rsquo;s low resource and simplicity), and I have made an effort to stick to it throughout the different OSs in my design.</p>
-
-<h4 id="the-grafana-server">The Grafana Server</h4>
-
-<ul>
-<li><strong>OS:</strong> CentOS 7</li>
-<li><strong>Databases</strong>:
-
-<ul>
-<li>InfluxDB
-
-<ul>
-<li>DB1 - pfsense</li>
-<li>DB2 - Linux/FreeNAS</li>
-</ul></li>
-<li>MariaDB
-
-<ul>
-<li>zabbix</li>
-</ul></li>
-</ul></li>
-<li><strong>Plugins</strong>:
-
-<ul>
-<li>Zabbix - <a href="https://grafana.com/grafana/plugins/alexanderzobnin-zabbix-app">Zabbix plugin for Grafana | Grafana Labs</a></li>
-<li>worldPing - <a href="https://grafana.com/grafana/plugins/raintank-worldping-app">worldPing plugin for Grafana | Grafana Labs</a></li>
-<li>Pie Chart - <a href="https://grafana.com/grafana/plugins/grafana-piechart-panel">Pie Chart plugin for Grafana | Grafana Labs</a></li>
-<li>Status Panel - <a href="https://grafana.com/grafana/plugins/vonage-status-panel">Status Panel plugin for Grafana | Grafana Labs</a></li>
-</ul></li>
-<li><strong>Imported Dashboards</strong>:
-
-<ul>
-<li><a href="https://grafana.com/grafana/dashboards/12023">pfSense System Dashboard dashboard for Grafana | Grafana Labs</a></li>
-<li><a href="https://grafana.com/grafana/dashboards/928">Telegraf: system dashboard dashboard for Grafana | Grafana Labs</a></li>
-</ul></li>
-</ul>
-
-<h4 id="collectors">Collectors</h4>
-
-<ul>
-<li><strong>CentOS</strong> (also the Grafana server)
-
-<ul>
-<li>Zabbix =&gt; MariaDB
-
-<ul>
-<li>Collects LAN statistics</li>
-</ul></li>
-<li>telegraf =&gt; InfluxDB (DB2)
-
-<ul>
-<li>Collects server resources</li>
-</ul></li>
-</ul></li>
-<li><strong>pfSense</strong>
-
-<ul>
-<li>telegraf =&gt; InfluxDB (DB1)
-
-<ul>
-<li>Collects server resources, network usage and UPS status</li>
-</ul></li>
-</ul></li>
-<li><strong>Desktop (Arch)</strong>
-
-<ul>
-<li>telegraf =&gt; InfluxDB (DB2)
-
-<ul>
-<li>Collects server resources and UPS status</li>
-</ul></li>
-</ul></li>
-<li><strong>FreeNAS</strong>
-
-<ul>
-<li>telegraf =&gt; InfluxDB (DB2)
-
-<ul>
-<li>Collects server resources and ZPOOL status/usage</li>
-</ul></li>
-</ul></li>
-<li><strong>Ubuntu</strong>
-
-<ul>
-<li>telegraf =&gt; InfluxDB (DB2)
-
-<ul>
-<li>Collects server resources, VPN status, IP address and ZPOOL status/usage</li>
-</ul></li>
-</ul></li>
-</ul>
-
-<h4 id="how-it-all-looks-together">How it all looks together</h4>
-
-<p>As the proverb that says that &ldquo;A pictures is worth a thousand words&rdquo;, if you are visual person like me the diagram below will help you have a better understanding of the setup I listed above.</p>
-
-<p><img src="https://blog.victormendonca.com/img/my-grafana-setup/Grafana-Diagram.png" alt="" /></p>
-
-<h2 id="breaking-it-down">Breaking it Down</h2>
-
-<p>Now let&rsquo;s dive a bit more into the current dashboard looking at what data is being displayed and from what data source.</p>
-
-<p>I have divided the dashboard into 8 sections and labeled it with numbers (they may be small, but they are there).</p>
-
-<p><img src="https://blog.victormendonca.com/img/my-grafana-setup/labelled.png" alt="" /></p>
-
-<h4 id="section-1-wan-ping">Section 1: WAN Ping</h4>
-
-<ul>
-<li><strong>Description:</strong> Displays ping status to 4 specific hosts</li>
-<li><strong>Information displayed:</strong>
-
-<ul>
-<li>Ping status to Google</li>
-<li>Ping status to Google DNS</li>
-<li>Ping status to Cludflare DNS</li>
-<li>Ping status to my ISP&rsquo;s gateway (Bell)</li>
-</ul></li>
-<li><strong>Data source:</strong> MariaDB (Zabbix)</li>
-</ul>
-
-<h4 id="section-2-pfsense-network-data">Section 2: pfSense Network Data</h4>
-
-<ul>
-<li><strong>Description:</strong> Diplays network related data from pfSense</li>
-<li><strong>Information displayed:</strong>
-
-<ul>
-<li>Monthly WAN data usage</li>
-<li>Daily WAN data usage</li>
-<li>Wan throughput</li>
-<li>LAN thorughput</li>
-</ul></li>
-<li><strong>Data source:</strong> InfluxDB (DB1)</li>
-</ul>
-
-<h4 id="section-3-pfsense-os-data">Section 3: pfSense OS Data</h4>
-
-<ul>
-<li><strong>Description:</strong> Displays system resource for pfSense</li>
-<li><strong>Information displayed:</strong>
-
-<ul>
-<li>Status (up/down)</li>
-<li>Uptime</li>
-<li>Active users</li>
-<li>CPU, memory, storage (ZFS) usage</li>
-<li>UPS information</li>
-</ul></li>
-<li><strong>Data source:</strong>
-
-<ul>
-<li>InfluxDB (DB1)</li>
-<li>Zabbix plugin</li>
-</ul></li>
-</ul>
-
-<h4 id="section-4-freenas">Section 4: FreeNAS</h4>
-
-<ul>
-<li><strong>Description:</strong> Displays system resource for FreeNAS</li>
-<li><strong>Information displayed:</strong>
-
-<ul>
-<li>Status (up/down)</li>
-<li>Plugin status (up/down)</li>
-<li>Uptime</li>
-<li>Active users</li>
-<li>CPU, memory, storage (ZFS) usage</li>
-</ul></li>
-<li><strong>Data source:</strong>
-
-<ul>
-<li>InfluxDB (DB2)</li>
-<li>Zabbix plugin</li>
-</ul></li>
-</ul>
-
-<h4 id="section-5-ubuntu">Section 5: Ubuntu</h4>
-
-<ul>
-<li><strong>Description:</strong> Displays system resource for Ubuntu</li>
-<li><strong>Information displayed:</strong>
-
-<ul>
-<li>Status (up/down)</li>
-<li>VPN status (up/down)</li>
-<li>IP address</li>
-<li>Uptime</li>
-<li>Active users</li>
-<li>CPU, memory, storage (ZFS) usage</li>
-</ul></li>
-<li><strong>Data source:</strong>
-
-<ul>
-<li>InfluxDB (DB2)</li>
-<li>Zabbix plugin</li>
-</ul></li>
-</ul>
-
-<h4 id="section-6-centos">Section 6: CentOS</h4>
-
-<ul>
-<li><strong>Description:</strong> Displays system resource for CentOS</li>
-<li><strong>Information displayed:</strong>
-
-<ul>
-<li>Status (up/down)</li>
-<li>Uptime</li>
-<li>Active users</li>
-<li>CPU, memory, storage usage</li>
-</ul></li>
-<li><strong>Data source:</strong>
-
-<ul>
-<li>InfluxDB (DB2)</li>
-<li>Zabbix plugin</li>
-</ul></li>
-</ul>
-
-<h4 id="section-7-arch">Section 7: Arch</h4>
-
-<ul>
-<li><strong>Description:</strong> Displays system resource for Arch</li>
-<li><strong>Information displayed:</strong>
-
-<ul>
-<li>Status (up/down)</li>
-<li>Uptime</li>
-<li>Active users</li>
-<li>CPU, memory, storage usage</li>
-<li>UPS information</li>
-</ul></li>
-<li><strong>Data source:</strong>
-
-<ul>
-<li>InfluxDB (DB2)</li>
-<li>Zabbix plugin</li>
-</ul></li>
-</ul>
-
-<h4 id="section-8-lan">Section 8: LAN</h4>
-
-<ul>
-<li><strong>Description:</strong> Diplays LAN related data</li>
-<li><strong>Information displayed:</strong>
-
-<ul>
-<li>ICMP ping history for LAN devices</li>
-<li>Current status of LAN device (up/down)</li>
-</ul></li>
-<li><strong>Data source:</strong></li>
-</ul>
-
-<h2 id="conclusion">Conclusion</h2>
-
-<p>While I&rsquo;m happy with this setup there is still some room for improvement (as there always is). At some point I would like to consolidate the two Influx databases, integrate Unifi Controller and SmartThings data, and possibly add a Plex dashboard as well.</p>
-
-<p>Got any comments or questions? Feel free to leave them in the comment section below.</p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f30%2fmy-grafana-setup%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Overview%20of%20My%20Grafana%20Setup&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f30%2fmy-grafana-setup%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f30%2fmy-grafana-setup%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f30%2fmy-grafana-setup%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f30%2fmy-grafana-setup%2f&amp;title=Overview%20of%20My%20Grafana%20Setup" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Overview%20of%20My%20Grafana%20Setup&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f30%2fmy-grafana-setup%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2020/10/29/how-to-collect-ups-data-on-pfsense-with-telegraf/" title="How to Collect UPS Data on pfSense with Telegraf">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2020/11/03/zfs-for-dummies/" title="ZFS for Dummies">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -2826,7 +2918,7 @@ tank/Movies@2020-11-03_15-29       0B      -     1.50G  -
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/administration">administration</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/administration">administration</a></li>
           </ul>
         </div>
       </div>
@@ -2842,6 +2934,10 @@ tank/Movies@2020-11-03_15-29       0B      -     1.50G  -
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2025/09/03/exploring-lxd-the-linux-container-daemon/">Exploring LXD (The Linux Container Daemon)</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2025/08/22/top-skills-that-will-make-you-stand-out-as-a-linux-admin-part-1/">Top Skills That Will Make You Stand Out as a Linux Admin: Part 1</a>
@@ -2865,10 +2961,6 @@ tank/Movies@2020-11-03_15-29       0B      -     1.50G  -
         
           <li>
           <a href="https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/">Testing New Hard Drives</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2023/07/20/how-to-migrate-local-users-and-grops/">How to Migrate Local Users and Grops</a>
           </li>
         
         </ul>

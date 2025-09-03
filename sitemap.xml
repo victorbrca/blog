@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.victormendonca.com/2025/09/03/exploring-lxd-the-linux-container-daemon/</loc>
+    <lastmod>2025-09-03T09:06:30-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.victormendonca.com/2025/08/22/top-skills-that-will-make-you-stand-out-as-a-linux-admin-part-1/</loc>
     <lastmod>2025-08-22T11:54:29-04:00</lastmod>
   </url>
@@ -398,8 +403,14 @@
   </url>
   
   <url>
+    <loc>https://blog.victormendonca.com/tags/containers/</loc>
+    <lastmod>2025-09-03T09:06:30-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.victormendonca.com/tags/docker/</loc>
-    <lastmod>2021-02-28T07:00:00-05:00</lastmod>
+    <lastmod>2025-09-03T09:06:30-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -453,7 +464,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/tags/linux/</loc>
-    <lastmod>2025-08-22T11:54:29-04:00</lastmod>
+    <lastmod>2025-09-03T09:06:30-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -507,7 +518,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/post/</loc>
-    <lastmod>2025-08-22T11:54:29-04:00</lastmod>
+    <lastmod>2025-09-03T09:06:30-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -590,7 +601,7 @@
   
   <url>
     <loc>https://blog.victormendonca.com/</loc>
-    <lastmod>2025-08-22T11:54:29-04:00</lastmod>
+    <lastmod>2025-09-03T09:06:30-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -603,6 +614,12 @@
   <url>
     <loc>https://blog.victormendonca.com/tags/virtualbox/</loc>
     <lastmod>2020-04-27T13:45:00-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.victormendonca.com/tags/virtualization/</loc>
+    <lastmod>2025-09-03T09:06:30-04:00</lastmod>
     <priority>0</priority>
   </url>
   
