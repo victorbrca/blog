@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>How to install Windows on LXD  &middot; Victor&#39;s Blog</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="Because sometimes even Linux folks need Windows" />
+
+<meta name="keywords" content="Linux, Windows, Virtualization, ">
+
+
+<meta property="og:title" content="How to install Windows on LXD  &middot; Victor&#39;s Blog ">
+<meta property="og:site_name" content="Victor&#39;s Blog"/>
+<meta property="og:url" content="https://blog.victormendonca.com/2025/09/17/how-to-install-windows-on-lxd/" />
+<meta property="og:locale" content="en">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:description" content="Because sometimes even Linux folks need Windows"/>
+<meta property="og:article:published_time" content="2025-09-17T16:05:11-04:00" />
+<meta property="og:article:modified_time" content="2025-09-17T16:05:11-04:00" />
+
+  
+    
+<meta property="og:article:tag" content="Linux">
+    
+<meta property="og:article:tag" content="Windows">
+    
+<meta property="og:article:tag" content="Virtualization">
+    
+  
+
+  
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@18440926" />
+<meta name="twitter:creator" content="@18440926" />
+<meta name="twitter:title" content="How to install Windows on LXD" />
+<meta name="twitter:description" content="Because sometimes even Linux folks need Windows" />
+<meta name="twitter:url" content="https://blog.victormendonca.com/2025/09/17/how-to-install-windows-on-lxd/" />
+<meta name="twitter:domain" content="https://blog.victormendonca.com/">
+  
+
+  
+
+
+
+<link rel="canonical" href="https://blog.victormendonca.com/2025/09/17/how-to-install-windows-on-lxd/" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
+<link rel="icon" href="https://blog.victormendonca.com/favicon.png">
+<meta name="generator" content="Hugo 0.48" />
+
+  <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+
+
+    <link rel="stylesheet" href="https://blog.victormendonca.com/css/bootswatch/default/bootstrap.min.css">
+
+
+<link rel="stylesheet" href="https://blog.victormendonca.com/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://blog.victormendonca.com/css/style.css">
+
+
+<link rel="stylesheet" href="https://blog.victormendonca.com/css/style_custom.css">
+
+
+
+  <link rel="stylesheet" href="https://blog.victormendonca.com/css/highlight/github.css">
+
+
+
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1P1YY6BDG2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+
+      gtag('config', 'G-1P1YY6BDG2');
+    </script>
+  
+
+</head>
+<body class="map[name:default]" data-ng-app="myapp" data-ng-controller="MyController" data-ng-mouseleave="MouseLeave($event)">
+    <header id="main-header">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        
+        <a class="navbar-brand" href="https://blog.victormendonca.com/">
+          Victor&#39;s Blog
+          
+          
+          </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            
+            
+            <li class="">
+
+              <a href="https://blog.victormendonca.com/" >
+                
+                Home
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://blog.victormendonca.com/about/" >
+                
+                About
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://geekit.ca/" >
+                
+                Professional
+              </a>
+            </li>
+            
+            <li class="">
+
+              <a href="https://manhattan.victormendonca.com/" >
+                
+                Manhattan Blog
+              </a>
+            </li>
+            
+            
+            
+          </ul>
+        </div>
+        
+      </div>
+    </nav>
+  </header>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <div class="text-center">
+
+    <h1>How to install Windows on LXD
+</h1>
+
+    <div class="metas">
+<small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2025-09-17">17 Sep, 2025</time>
+</small>
+
+
+  <small>
+    &middot; by Victor Mendonça
+  
+  &middot; Read in about 2 min
+  &middot; (288 words)
+  &middot; 
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f17%2fhow-to-install-windows-on-lxd%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20install%20Windows%20on%20LXD&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f17%2fhow-to-install-windows-on-lxd%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f17%2fhow-to-install-windows-on-lxd%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f17%2fhow-to-install-windows-on-lxd%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f17%2fhow-to-install-windows-on-lxd%2f&amp;title=How%20to%20install%20Windows%20on%20LXD" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20install%20Windows%20on%20LXD&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f17%2fhow-to-install-windows-on-lxd%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  </small>
+
+<div class="margin-10">
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/windows" class="label label-primary">Windows</a>
+  
+  <a href="https://blog.victormendonca.com/tags/virtualization" class="label label-primary">Virtualization</a>
+  
+
+
+</div>
+
+<br>
+</div>
+
+  </div>
+</div>
+
+      <div class="content">
+  
+
+<p><img src="https://blog.victormendonca.com/img/how-to-install-windows-on-lxd/0-windows-on-linux.png" alt="" /></p>
+
+<p>Yes, you can run Windows 10 or 11 inside LXD. It’s actually not that hard—just a few prep steps and some command-line magic. These instructions are written for Arch, but the process is nearly the same on other distros (package names may change a bit).</p>
+
+<p>Let’s go.</p>
+
+<h3 id="step-1-preparing-the-image">Step 1: Preparing the Image</h3>
+
+<p>a. Grab the ISO:</p>
+
+<p>Download Windows from Microsoft like a law-abiding citizen: 👉 <a href="https://www.microsoft.com/en-ca/software-download">https://www.microsoft.com/en-ca/software-download</a></p>
+
+<p>b. Install the required packages</p>
+
+<pre><code class="language-none">pacman -S distrobuilder libguestfs wimlib cdrkit
+</code></pre>
+
+<p>c. Repack the ISO for LXD. Note that I&rsquo;m creating a Windows 10 VM</p>
+
+<pre><code class="language-none">sudo distrobuilder repack-windows --windows-arch=amd64 Win10_22H2_English_x64v1.iso Win10_22H2_English_x64v1-lxd.iso
+</code></pre>
+
+<h3 id="step-2-prepping-the-vm">Step 2: Prepping the VM</h3>
+
+<p>a. Create an empty VM:</p>
+
+<pre><code class="language-none">$ lxc init windows10 --empty --vm
+Creating windows10
+</code></pre>
+
+<p>b. Give it a bigger disk</p>
+
+<pre><code class="language-none">$ lxc config device override windows10 root size=55GiB
+Device root overridden for windows10
+</code></pre>
+
+<p>c. Add CPU and memory</p>
+
+<pre><code class="language-none">lxc config set windows10 limits.cpu=4 limits.memory=6GiB
+</code></pre>
+
+<p>d. Add a trusted platform module device</p>
+
+<pre><code class="language-none">$ lxc config device add windows10 vtpm tpm path=/dev/tpm0
+Device vtpm added to windows10
+</code></pre>
+
+<p>e. Add audio device</p>
+
+<pre><code class="language-none">lxc config set windows10 raw.qemu -- &quot;-device intel-hda -device hda-duplex -audio spice&quot;
+</code></pre>
+
+<p>f. Add the install disk. Note that it needs the absolute path</p>
+
+<pre><code class="language-none">$ lxc config device add windows10 install disk source=/home/victor/Downloads/OS/Win10_22H2_English_x64v1-lxd.iso boot.priority=10
+Device install added to windows10
+</code></pre>
+
+<h3 id="step-3-install-windows">Step 3: Install Windows</h3>
+
+<p>a. Start the VM and connect:</p>
+
+<pre><code class="language-none">lxc start windows10 --console=vga
+</code></pre>
+
+<p>b. &ldquo;Press any key&rdquo; to boot from CD and install Windows</p>
+
+<p>c. Go through the usual Windows install:</p>
+
+<p><img src="https://blog.victormendonca.com/img/how-to-install-windows-on-lxd/1-windows-install.png" alt="" /></p>
+
+<p>You can also use the LXD WebUI console to monitor reboots:</p>
+
+<p><img src="https://blog.victormendonca.com/img/how-to-install-windows-on-lxd/2-windows-finishing-install.png" alt="" /></p>
+
+<h3 id="step-3-clean-up">Step 3: Clean Up</h3>
+
+<p>Remove the install ISO when you’re done:</p>
+
+<pre><code class="language-none">$ lxc config device remove windows10 install
+Device install removed from windows10
+</code></pre>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>And that’s it—you now have Windows running on LXD. Pretty painless, right?</p>
+
+<p><img src="https://blog.victormendonca.com/img/how-to-install-windows-on-lxd/4-windows-installed.png" alt="" /></p>
+
+</div>
+
+
+      <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f17%2fhow-to-install-windows-on-lxd%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20install%20Windows%20on%20LXD&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f17%2fhow-to-install-windows-on-lxd%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f17%2fhow-to-install-windows-on-lxd%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f17%2fhow-to-install-windows-on-lxd%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f17%2fhow-to-install-windows-on-lxd%2f&amp;title=How%20to%20install%20Windows%20on%20LXD" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20install%20Windows%20on%20LXD&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f17%2fhow-to-install-windows-on-lxd%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2025/09/03/exploring-lxd-the-linux-container-daemon/" title="Exploring LXD (The Linux Container Daemon)">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+
+</div>
+
+</footer>
+
+    </div>
+    
+      <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+        <div>
+  
+
+   
+    <div class="section">
+      <header><div class="title"></div></header>
+      <div class="content">
+        <img style="float: center; padding-right: 5px;" src="https://blog.victormendonca.com/img/avatar.jpg" hspace="20" width="240"></img>
+        <br/>
+        <div class="social-icons" style="display:inline-block; text-align: center; width:100%;">
+        <a href="https://github.com/victorbrca" target="_blank"><i class="fa fa-github fa-2x" style="padding-right: 5px; padding-left: 5px" aria-hidden="true"></i></a>
+        <a href="https://twitter.com/victorbrca" target="_blank"><i class="fa fa-twitter fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <a href="http://www.linkedin.com/in/victormendonca" target="_blank"><i class="fa fa-linkedin-square fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <a href="https://www.facebook.com/victormendonca" target="_blank"><i class="fa fa-facebook-official fa-2x" style="padding-right: 5px; padding-left: 1px" aria-hidden="true"></i></a>
+        <div>
+        <br/>
+      </div>
+    </div>
+
+    
+      
+      
+      <div class="section taxonomies">
+        <header><div class="title"><b>tags</b></div></header>
+
+        <div class="content1">
+          <ul>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/virtualization">virtualization</a></li>
+          </ul>
+        </div>
+      </div>
+      
+    
+      
+      
+    
+
+    <br />
+
+    <div class="section">
+      <header><div class="title"><b>Latest Posts</b></div></header>
+      <div class="content">
+        <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2025/09/17/how-to-install-windows-on-lxd/">How to install Windows on LXD</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2025/09/03/exploring-lxd-the-linux-container-daemon/">Exploring LXD (The Linux Container Daemon)</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2025/08/22/top-skills-that-will-make-you-stand-out-as-a-linux-admin-part-1/">Top Skills That Will Make You Stand Out as a Linux Admin: Part 1</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2024/09/09/logrotate-simplifying-log-management/">Logrotate: Simplifying Log Management</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2024/02/14/getting-started-with-ansible-console/">Getting Started with Ansible Console</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/">Playing a Sound on Headless Server Boot</a>
+          </li>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/">RHCE v8 Practice Exam</a>
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+
+    <br />
+
+    
+    <div class="section">
+    
+      
+      <div class="content" align="center" >
+        <a class="twitter-timeline" data-width="240" data-height="450" href="https://twitter.com/victorbrca">Tweets by victorbrca</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+    </div>
+
+</div>
+
+      </div>
+    
+  </div>
+</div>
+    
+<footer class="footer hidden-print">
+  <div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+           <div class="pull-left">
+  <a class="toplink" href="javascript:" id="return-to-top">back to top</a>
+</div>
+<div class="pull-right">
+
+</div>
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+              
+    
+<div class="container footline">
+    <small>
+  code with <i class='fa fa-linux'></i>
+
+</small>
+</div>
+
+
+    
+<div class="container copyright">
+    <small>
+  &copy; 2018 Copyright Victor Mendonça
+
+  </small>
+</div>
+
+
+
+        </div>
+    </div>
+  </div>
+</footer>
+
+    
+
+<script src="https://blog.victormendonca.com/js/jquery.min.js"></script>
+<script src="https://blog.victormendonca.com/js/bootstrap.min.js"></script>
+
+
+<script src="https://blog.victormendonca.com/js/highlight.pack.js"></script>
+<script src="https://blog.victormendonca.com/js/site.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+var ENABLE_POPOVER =  false , 
+EXPIRE_COOKIE =  5 , 
+SHOW_MODAL_TIMEOUT =  10000 , 
+MOUSE_LEAVE =  true , 
+MODAL_SIZE = "", 
+POST_URL = "https://zapier.com/hooks/catch/1227563/", 
+SIGNUP_HEADER = "Join Our Newsletter",
+HEADER_IMAGE = "//placehold.it/1000x600",
+IMG_DESCRIPTION = "Placeholder image for this popover modal optin form",
+SIGNUP_TEXT = "Signup today for free and be the first to get notified on new updates.",
+INPUT_PLACEHOLDER = "Enter your email",
+SUBMIT_BUTTON = "Subscribe",
+SUCCESS_MESSAGE = "Thanks for your subscription!",
+ERROR_MESSAGE = "Submitting form failed!",
+OPTIN =  true ,
+COOKIE_NAME = "mycookie1",
+CONTENTLANGUAGE = ""; 
+</script>
+
+
+
+
+
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/config/TeX-AMS-MML_HTMLorMML.js"></script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    for(var all in MathJax.Hub.getAllJax()) {
+        all.SourceElement().parentNode.className += ' has-jax';
+
+    }
+});
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+

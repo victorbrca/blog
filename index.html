@@ -139,6 +139,173 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2025/09/17/how-to-install-windows-on-lxd/">How to install Windows on LXD</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2025-09-17">17 Sep, 2025</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/windows" class="label label-primary">Windows</a>
+  
+  <a href="https://blog.victormendonca.com/tags/virtualization" class="label label-primary">Virtualization</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p><img src="https://blog.victormendonca.com/img/how-to-install-windows-on-lxd/0-windows-on-linux.png" alt="" /></p>
+
+<p>Yes, you can run Windows 10 or 11 inside LXD. It’s actually not that hard—just a few prep steps and some command-line magic. These instructions are written for Arch, but the process is nearly the same on other distros (package names may change a bit).</p>
+
+<p>Let’s go.</p>
+
+<h3 id="step-1-preparing-the-image">Step 1: Preparing the Image</h3>
+
+<p>a. Grab the ISO:</p>
+
+<p>Download Windows from Microsoft like a law-abiding citizen: 👉 <a href="https://www.microsoft.com/en-ca/software-download">https://www.microsoft.com/en-ca/software-download</a></p>
+
+<p>b. Install the required packages</p>
+
+<pre><code class="language-none">pacman -S distrobuilder libguestfs wimlib cdrkit
+</code></pre>
+
+<p>c. Repack the ISO for LXD. Note that I&rsquo;m creating a Windows 10 VM</p>
+
+<pre><code class="language-none">sudo distrobuilder repack-windows --windows-arch=amd64 Win10_22H2_English_x64v1.iso Win10_22H2_English_x64v1-lxd.iso
+</code></pre>
+
+<h3 id="step-2-prepping-the-vm">Step 2: Prepping the VM</h3>
+
+<p>a. Create an empty VM:</p>
+
+<pre><code class="language-none">$ lxc init windows10 --empty --vm
+Creating windows10
+</code></pre>
+
+<p>b. Give it a bigger disk</p>
+
+<pre><code class="language-none">$ lxc config device override windows10 root size=55GiB
+Device root overridden for windows10
+</code></pre>
+
+<p>c. Add CPU and memory</p>
+
+<pre><code class="language-none">lxc config set windows10 limits.cpu=4 limits.memory=6GiB
+</code></pre>
+
+<p>d. Add a trusted platform module device</p>
+
+<pre><code class="language-none">$ lxc config device add windows10 vtpm tpm path=/dev/tpm0
+Device vtpm added to windows10
+</code></pre>
+
+<p>e. Add audio device</p>
+
+<pre><code class="language-none">lxc config set windows10 raw.qemu -- &quot;-device intel-hda -device hda-duplex -audio spice&quot;
+</code></pre>
+
+<p>f. Add the install disk. Note that it needs the absolute path</p>
+
+<pre><code class="language-none">$ lxc config device add windows10 install disk source=/home/victor/Downloads/OS/Win10_22H2_English_x64v1-lxd.iso boot.priority=10
+Device install added to windows10
+</code></pre>
+
+<h3 id="step-3-install-windows">Step 3: Install Windows</h3>
+
+<p>a. Start the VM and connect:</p>
+
+<pre><code class="language-none">lxc start windows10 --console=vga
+</code></pre>
+
+<p>b. &ldquo;Press any key&rdquo; to boot from CD and install Windows</p>
+
+<p>c. Go through the usual Windows install:</p>
+
+<p><img src="https://blog.victormendonca.com/img/how-to-install-windows-on-lxd/1-windows-install.png" alt="" /></p>
+
+<p>You can also use the LXD WebUI console to monitor reboots:</p>
+
+<p><img src="https://blog.victormendonca.com/img/how-to-install-windows-on-lxd/2-windows-finishing-install.png" alt="" /></p>
+
+<h3 id="step-3-clean-up">Step 3: Clean Up</h3>
+
+<p>Remove the install ISO when you’re done:</p>
+
+<pre><code class="language-none">$ lxc config device remove windows10 install
+Device install removed from windows10
+</code></pre>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>And that’s it—you now have Windows running on LXD. Pretty painless, right?</p>
+
+<p><img src="https://blog.victormendonca.com/img/how-to-install-windows-on-lxd/4-windows-installed.png" alt="" /></p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f17%2fhow-to-install-windows-on-lxd%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20install%20Windows%20on%20LXD&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f17%2fhow-to-install-windows-on-lxd%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f17%2fhow-to-install-windows-on-lxd%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f17%2fhow-to-install-windows-on-lxd%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f17%2fhow-to-install-windows-on-lxd%2f&amp;title=How%20to%20install%20Windows%20on%20LXD" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20install%20Windows%20on%20LXD&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f17%2fhow-to-install-windows-on-lxd%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2025/09/03/exploring-lxd-the-linux-container-daemon/" title="Exploring LXD (The Linux Container Daemon)">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2025/09/03/exploring-lxd-the-linux-container-daemon/">Exploring LXD (The Linux Container Daemon)</a>
 </h2>
 
@@ -463,6 +630,12 @@ passwd: password updated successfully
         </li>
     
 
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2025/09/17/how-to-install-windows-on-lxd/" title="How to install Windows on LXD">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
     
     </ul> </nav>
   
@@ -1395,187 +1568,6 @@ ubuntu-pi4 | SUCCESS =&gt; {
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/">Playing a Sound on Headless Server Boot</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2023-12-21">21 Dec, 2023</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/ubuntu" class="label label-primary">Ubuntu</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<p>Beep is a versatile utility that transforms your computer speaker into a musical instrument reminiscent of early Nintendo-style sounds. You provide a frequency and length and beep will play the respective sound.</p>
-
-<p>I started using beep in the early 2000s with <a href="https://en.wikipedia.org/wiki/Smoothwall">Smoothwall</a> (think of a Linux predecessor to pfSense) to notify me when it had rebooted. That is still my main use for the utility (less the Smoothwall part), but it can be used for many other things.</p>
-
-<p>We&rsquo;ll go through a quick setup on Ubuntu using group permission, but you can refer to the main GitHub repo (<a href="https://github.com/spkr-beep/beep/blob/master/PERMISSIONS.md">Permission setup for beep</a>) for alternative setup instructions if you need something different.</p>
-
-<h3 id="configuration">Configuration</h3>
-
-<p>Let&rsquo;s start by installing beep:</p>
-
-<pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt install beep
-</code></pre>
-
-<p>Now create the <code>beep</code> system group. Any user member of this group will be able to run beep:</p>
-
-<pre><code class="language-bash">sudo addgroup --system beep
-</code></pre>
-
-<p>Add it as a secondary group for your user:</p>
-
-<pre><code class="language-bash">sudo usermod [user] -a -G beep
-</code></pre>
-
-<p>Create the udev rule to allow the group permission to the speaker:</p>
-
-<p><code>/usr/lib/udev/rules.d/90-pcspkr-beep.rules</code></p>
-
-<pre><code class="language-none"># Add write access to the PC speaker for the &quot;beep&quot; group
-ACTION==&quot;add&quot;, SUBSYSTEM==&quot;input&quot;, ATTRS{name}==&quot;PC Speaker&quot;, ENV{DEVNAME}!=&quot;&quot;, GROUP=&quot;beep&quot;, MODE=&quot;0620&quot;
-</code></pre>
-
-<p>Comment out the existing blacklist for &lsquo;pcspkr&rsquo; in <code>/etc/modprobe.d/blacklist.conf</code>:</p>
-
-<pre><code class="language-none"># ugly and loud noise, getting on everyone's nerves; this should be done by a
-# nice pulseaudio bing (Ubuntu: #77010)
-# blacklist pcspkr
-</code></pre>
-
-<p>Load the module:</p>
-
-<pre><code class="language-bash">sudo modprobe pcspkr
-</code></pre>
-
-<p>Now let&rsquo;s test to make sure that it works. You will need to logout and log back in, or simply ssh to your localhost (this is so the secondary group is loaded). And then run beep with the options below:</p>
-
-<pre><code class="language-bash">beep -f 587 -l 714
-</code></pre>
-
-<p><img src="https://blog.victormendonca.com/img/playing-a-sound-on-headless-server-boot/beep.jpg" alt="" /></p>
-
-<p>If that works then we have confirmed that we configured everything correctly. Just a reminder, your computer needs to have a speaker otherwise beep wont work.</p>
-
-<p>Now let&rsquo;s create a sample script and the Systemd unit file for the service that will play beep after boot.</p>
-
-<p>Create the following script and give it execute permission:</p>
-
-<p><code>/usr/local/bin/star-trek.sh</code></p>
-
-<pre><code class="language-bash">#!/bin/bash
-beep -f 587 -l 714
-beep -f 784 -l 238
-beep -f 1046 -l 1428
-beep -f 987 -l 476
-beep -f 784 -l 357
-beep -f 659 -l 357
-beep -f 880 -l 357
-beep -f 1174 -l 952
-</code></pre>
-
-<pre><code class="language-bash">sudo chmod +x /usr/local/bin/star-trek.sh
-</code></pre>
-
-<p>Create  <code>/lib/systemd/system/beep-startup.service</code> with the following content. Note that you will need to change the <code>User=</code> property to be the username for your user:</p>
-
-<pre><code class="language-systemd"># /lib/systemd/system/beep-startup.service
-[Unit]
-Description=Plays startup audio
-After=network-online.target
-
-[Service]
-Type=simple
-ExecStart=/usr/local/bin/star-trek.sh
-User=[user]
-
-[Install]
-WantedBy=default.target
-</code></pre>
-
-<p>Let&rsquo;s enable and start the service, and it should play the Star Trek intro sound:</p>
-
-<pre><code class="language-bash">systemctl enable --now beep-startup.service
-</code></pre>
-
-<p><img src="https://blog.victormendonca.com/img/playing-a-sound-on-headless-server-boot/star-trek.jpg" alt="" /></p>
-
-<h3 id="conclusion">Conclusion</h3>
-
-<p>With these configurations, your machine will serenade you with the iconic Star Trek intro sound after establishing a network connection during boot. Dive into the world of beep, and if you&rsquo;re looking for more scripts, explore <a href="https://github.com/victorbrca/beep-scripts">GitHub - victorbrca/beep-scripts</a> for an extensive collection. Happy beeping!</p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Playing%20a%20Sound%20on%20Headless%20Server%20Boot&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f&amp;title=Playing%20a%20Sound%20on%20Headless%20Server%20Boot" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Playing%20a%20Sound%20on%20Headless%20Server%20Boot&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/" title="RHCE v8 Practice Exam">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2024/02/14/getting-started-with-ansible-console/" title="Getting Started with Ansible Console">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1731,7 +1723,7 @@ WantedBy=default.target
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/administration">administration</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/virtualization">virtualization</a></li>
           </ul>
         </div>
       </div>
@@ -1747,6 +1739,10 @@ WantedBy=default.target
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2025/09/17/how-to-install-windows-on-lxd/">How to install Windows on LXD</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2025/09/03/exploring-lxd-the-linux-container-daemon/">Exploring LXD (The Linux Container Daemon)</a>
@@ -1770,10 +1766,6 @@ WantedBy=default.target
         
           <li>
           <a href="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/">RHCE v8 Practice Exam</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/">Testing New Hard Drives</a>
           </li>
         
         </ul>

@@ -139,6 +139,187 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/">Playing a Sound on Headless Server Boot</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2023-12-21">21 Dec, 2023</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/ubuntu" class="label label-primary">Ubuntu</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>Beep is a versatile utility that transforms your computer speaker into a musical instrument reminiscent of early Nintendo-style sounds. You provide a frequency and length and beep will play the respective sound.</p>
+
+<p>I started using beep in the early 2000s with <a href="https://en.wikipedia.org/wiki/Smoothwall">Smoothwall</a> (think of a Linux predecessor to pfSense) to notify me when it had rebooted. That is still my main use for the utility (less the Smoothwall part), but it can be used for many other things.</p>
+
+<p>We&rsquo;ll go through a quick setup on Ubuntu using group permission, but you can refer to the main GitHub repo (<a href="https://github.com/spkr-beep/beep/blob/master/PERMISSIONS.md">Permission setup for beep</a>) for alternative setup instructions if you need something different.</p>
+
+<h3 id="configuration">Configuration</h3>
+
+<p>Let&rsquo;s start by installing beep:</p>
+
+<pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt install beep
+</code></pre>
+
+<p>Now create the <code>beep</code> system group. Any user member of this group will be able to run beep:</p>
+
+<pre><code class="language-bash">sudo addgroup --system beep
+</code></pre>
+
+<p>Add it as a secondary group for your user:</p>
+
+<pre><code class="language-bash">sudo usermod [user] -a -G beep
+</code></pre>
+
+<p>Create the udev rule to allow the group permission to the speaker:</p>
+
+<p><code>/usr/lib/udev/rules.d/90-pcspkr-beep.rules</code></p>
+
+<pre><code class="language-none"># Add write access to the PC speaker for the &quot;beep&quot; group
+ACTION==&quot;add&quot;, SUBSYSTEM==&quot;input&quot;, ATTRS{name}==&quot;PC Speaker&quot;, ENV{DEVNAME}!=&quot;&quot;, GROUP=&quot;beep&quot;, MODE=&quot;0620&quot;
+</code></pre>
+
+<p>Comment out the existing blacklist for &lsquo;pcspkr&rsquo; in <code>/etc/modprobe.d/blacklist.conf</code>:</p>
+
+<pre><code class="language-none"># ugly and loud noise, getting on everyone's nerves; this should be done by a
+# nice pulseaudio bing (Ubuntu: #77010)
+# blacklist pcspkr
+</code></pre>
+
+<p>Load the module:</p>
+
+<pre><code class="language-bash">sudo modprobe pcspkr
+</code></pre>
+
+<p>Now let&rsquo;s test to make sure that it works. You will need to logout and log back in, or simply ssh to your localhost (this is so the secondary group is loaded). And then run beep with the options below:</p>
+
+<pre><code class="language-bash">beep -f 587 -l 714
+</code></pre>
+
+<p><img src="https://blog.victormendonca.com/img/playing-a-sound-on-headless-server-boot/beep.jpg" alt="" /></p>
+
+<p>If that works then we have confirmed that we configured everything correctly. Just a reminder, your computer needs to have a speaker otherwise beep wont work.</p>
+
+<p>Now let&rsquo;s create a sample script and the Systemd unit file for the service that will play beep after boot.</p>
+
+<p>Create the following script and give it execute permission:</p>
+
+<p><code>/usr/local/bin/star-trek.sh</code></p>
+
+<pre><code class="language-bash">#!/bin/bash
+beep -f 587 -l 714
+beep -f 784 -l 238
+beep -f 1046 -l 1428
+beep -f 987 -l 476
+beep -f 784 -l 357
+beep -f 659 -l 357
+beep -f 880 -l 357
+beep -f 1174 -l 952
+</code></pre>
+
+<pre><code class="language-bash">sudo chmod +x /usr/local/bin/star-trek.sh
+</code></pre>
+
+<p>Create  <code>/lib/systemd/system/beep-startup.service</code> with the following content. Note that you will need to change the <code>User=</code> property to be the username for your user:</p>
+
+<pre><code class="language-systemd"># /lib/systemd/system/beep-startup.service
+[Unit]
+Description=Plays startup audio
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/star-trek.sh
+User=[user]
+
+[Install]
+WantedBy=default.target
+</code></pre>
+
+<p>Let&rsquo;s enable and start the service, and it should play the Star Trek intro sound:</p>
+
+<pre><code class="language-bash">systemctl enable --now beep-startup.service
+</code></pre>
+
+<p><img src="https://blog.victormendonca.com/img/playing-a-sound-on-headless-server-boot/star-trek.jpg" alt="" /></p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>With these configurations, your machine will serenade you with the iconic Star Trek intro sound after establishing a network connection during boot. Dive into the world of beep, and if you&rsquo;re looking for more scripts, explore <a href="https://github.com/victorbrca/beep-scripts">GitHub - victorbrca/beep-scripts</a> for an extensive collection. Happy beeping!</p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Playing%20a%20Sound%20on%20Headless%20Server%20Boot&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f&amp;title=Playing%20a%20Sound%20on%20Headless%20Server%20Boot" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Playing%20a%20Sound%20on%20Headless%20Server%20Boot&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2023%2f12%2f21%2fplaying-a-sound-on-headless-server-boot%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/" title="RHCE v8 Practice Exam">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2024/02/14/getting-started-with-ansible-console/" title="Getting Started with Ansible Console">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/">RHCE v8 Practice Exam</a>
 </h2>
 
@@ -1541,327 +1722,6 @@ Disk usage under /var/cache/yum/*/* after cleanup:
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2022/11/18/linux-find-command/">Linux find Command</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2022-11-18">18 Nov, 2022</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">bash</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<p>The Linux <code>find</code> command is a very versatile tool in the pocket of any Linux administrator. It allows you to quickly search for files and take action based on the results.</p>
-
-<p>The basic construct of the command is:</p>
-
-<pre><code>find [options] [path] [expression]
-</code></pre>
-
-<p>The <code>options</code> part of the command controls some basic functionality for <code>find</code> and I&rsquo;m not going to cover it here. I will instead quickly look at the components for the expression part of the command, and provide some useful examples.</p>
-
-<p>Expressions are composed of tests, actions, global options, positional options and operators:</p>
-
-<ul>
-<li><strong>Test</strong> - returns true or false (e.g.: <code>-mtime</code>, <code>-name</code>, <code>-size</code>)</li>
-<li><strong>Actions</strong> - Acts on something (e.g.: <code>-exec</code>, <code>-delete</code>)</li>
-<li><strong>Global options</strong> - Affect the operations of tests and actions (e.g.:<code>-depth</code>, <code>-maxdepth</code>,)</li>
-<li><strong>Positional options</strong> - Modifies tests and actions (e.g.: <code>-follow</code>, <code>-regextype</code>)</li>
-<li><strong>Operators</strong> - Include, join and modify items (e.g.: <code>-a</code>, <code>-o</code>)</li>
-</ul>
-
-<h2 id="operators">Operators</h2>
-
-<p>Operators are the logical <code>OR</code> and <code>AND</code> of find, as well as negation and expression grouping.</p>
-
-<table>
-<thead>
-<tr>
-<th>Operator</th>
-<th>Description</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td><code>\( expr \)</code></td>
-<td>Force precedence</td>
-</tr>
-
-<tr>
-<td><code>!</code> or <code>-not</code></td>
-<td>Negate</td>
-</tr>
-
-<tr>
-<td><code>-a</code> or <code>-and</code></td>
-<td>Logical <code>AND</code>. If two expressions are given without <code>-a</code> find will take it as implied. expr2 is not evaluated if expr1 is false</td>
-</tr>
-
-<tr>
-<td><code>-o</code> of <code>-or</code></td>
-<td>Logical <code>OR</code>. expr2 is not evaluated if expr1 is true</td>
-</tr>
-
-<tr>
-<td><code>,</code></td>
-<td>Both  expr1  and expr2 are always evaluated.  The value of expr1 is discarded</td>
-</tr>
-</tbody>
-</table>
-
-<p>You can use the operators for repeated search options with different values.</p>
-
-<p><em><strong>Example 1:</strong> Find files with multiple file extensions</em></p>
-
-<pre><code class="language-bash">find ${jboss_dplymnt_dir} -type f -size -2k \( \
-  -name '*.deployed' -o -name '*.dodeploy' \
-  -o -name '*.skipdeploy' -o -name '*.isdeploying' \
-  -o -name '*.failed' -o -name '*.isundeploying' \
-  -o -name '*.pending' -o -name '*.undeployed' \
-\)
-</code></pre>
-
-<p><em><strong>Example 2:</strong> find MOV or MP4 files that do not have &lsquo;h265&rsquo; in the file name</em></p>
-
-<pre><code class="language-bash">find . \( \
-  ! -name '*h265*' -a \( \
-    -name '*.mp4' -o -name '*.MP4' \
-    -o -name '*.mov' -o -name '*.MOV' \
-  \) \
-\)
-</code></pre>
-
-<p>Or to negate search options.</p>
-
-<p><em><strong>Example 3:</strong> find files that don&rsquo;t finish with the &lsquo;.log&rsquo; extension</em></p>
-
-<pre><code class="language-bash">find . -type f -not -name '*.log'
-</code></pre>
-
-<p><em><strong>Example 4:</strong> Excludes everything in the folder named &lsquo;directory&rsquo;</em></p>
-
-<pre><code class="language-bash">find -name &quot;*.js&quot; -not -path &quot;./directory/*&quot;
-</code></pre>
-
-<h2 id="global-options">Global Options</h2>
-
-<p>Two very useful global options are <code>-maxdepth</code> and <code>-mindepth</code>.</p>
-
-<ul>
-<li><strong>maxdepth levels</strong>: Descend at most levels (a non-negative integer) levels of directories below the starting-points. <code>-maxdepth 0</code> means only apply the tests and actions to the starting-points themselves.</li>
-<li><strong>mindepth levels</strong>: Do not apply any tests or actions at levels less than levels (a non-negative integer). <code>-mindepth 1</code> means process all files except the starting-points.</li>
-</ul>
-
-<p><em><strong>Example 5:</strong> find all files with &lsquo;.txt&rsquo; extension on the current dir and <strong>do not descend into subdirectories</strong></em></p>
-
-<pre><code class="language-bash">find . -maxdepth 1 -name '*.txt'
-</code></pre>
-
-<h2 id="tests">Tests</h2>
-
-<p>This is where you can target specific properties about the files that you are searching for. Some of my preferred tests are:</p>
-
-<ul>
-<li><code>-iname</code> - Like <code>-name</code>, but the match is case insensitive</li>
-<li><code>-size</code> - Matches based on size (e.g.: <code>-size -2k</code>, <code>-size +1G</code>)</li>
-<li><code>-user</code> - File Belongs to username</li>
-<li><code>-newer</code> - File is newer than file. It can be a powerful option</li>
-</ul>
-
-<p><em><strong>Example 6:</strong> Find files for user</em></p>
-
-<pre><code class="language-bash">find . -type f -user linustorvalds
-</code></pre>
-
-<p><em><strong>Example 7:</strong> Find files larger than 1GB</em></p>
-
-<pre><code class="language-bash">find . -type f -size +1G
-</code></pre>
-
-<p><em><strong>Example 8:</strong> Here&rsquo;s a hidden gem! Let&rsquo;s say you need to find what files a program is creating. All you need to do is create a file, run the program, and then use <code>-newer</code> to find what files were created</em></p>
-
-<pre><code class="language-bash"># Create a file
-touch file_marker
-
-# Here I run the script or program
-./my_script.sh
-
-# Now I can use the file I created to find newer files that were created by the script
-find . -type f -newer 'file_marker'
-</code></pre>
-
-<h2 id="actions">Actions</h2>
-
-<p>Actions will execute the specified action against the matched filenames. Some useful actions are:</p>
-
-<ul>
-<li><code>-ls</code> - Lists matched files with <code>ls -dils</code></li>
-<li><code>-delete</code> - Deletes the matched files</li>
-<li><code>-exec</code> - Execute the specified command against the files</li>
-<li><code>-ok</code> - Prompts user for before executing command</li>
-<li><code>-print0</code> - Prints the full name of the matched files followed by a null character</li>
-</ul>
-
-<h2 id="real-life-scenarios">Real-life Scenarios</h2>
-
-<h4 id="get-a-confirmation-prompt">Get a confirmation prompt</h4>
-
-<p>Use <code>-ok</code> to get a confirmation prompt before executing the action on the matched files.</p>
-
-<pre><code class="language-bash">find . -type f -name '*.txt' -ok rm -rf {} \;
-&lt; rm ... ./file_10.txt &gt; ? y
-&lt; rm ... ./file_9.txt &gt; ? y
-&lt; rm ... ./file_8.txt &gt; ?
-</code></pre>
-
-<h4 id="deleting-files">Deleting files</h4>
-
-<p>Whenever possible, use <code>-delete</code> instead of <code>-exec rm -rf {} \;</code>.</p>
-
-<pre><code class="language-bash">find . -type f -name &quot;*.bak&quot; -exec rm -f {} \;
-</code></pre>
-
-<p>Instead use:</p>
-
-<pre><code class="language-bash">find . -type f -name &quot;*.bak&quot; -delete
-</code></pre>
-
-<h4 id="using-xargs-and">Using <code>xargs</code> and <code>{} +</code></h4>
-
-<p>The command bellow will run into a problem if files or directories with embedded spaces in their names are encountered. <code>xargs</code> will treat each part of that name as a separate argument:</p>
-
-<pre><code class="language-bash">find /usr/include -name &quot;*.h&quot; -type f | xargs grep &quot;#define UINT&quot;
-</code></pre>
-
-<p>There are two ways to avoid that. You could tell both <code>find</code> and <code>xargs</code> to use a <code>NUL</code> character as a separator:</p>
-
-<pre><code class="language-bash">find /usr/include -name &quot;*.h&quot; -type f -print0 | xargs -0 grep &quot;#define UINT&quot;
-</code></pre>
-
-<p>Or, you could avoid use of <code>xargs</code> altogether and let <code>find</code> invoke <code>grep</code> directly:</p>
-
-<pre><code class="language-bash">find /usr/include -name &quot;*.h&quot; -type f -exec grep &quot;#define UINT&quot; {} +
-</code></pre>
-
-<p>That final <code>+</code> tells <code>find</code> that <code>grep</code> will accept multiple file name arguments. Like <code>xargs</code>, <code>find</code> will put as many names as possible into each invocation of <code>grep</code>.</p>
-
-<h4 id="find-and-move">Find and Move</h4>
-
-<p>Find files and move them to a different location.</p>
-
-<ul>
-<li><code>-v</code> - For verbose</li>
-<li><code>-t</code> - Move all <code>SOURCE</code> arguments into <code>DIRECTORY</code></li>
-<li><code>-exec command {} +</code> - As we saw before, this variant of the <code>-exec</code> action runs the specified command on the selected files, but the command line is built by appending each selected file name at the end; the total number of invocations of the command will be much less than the number of matched files</li>
-</ul>
-
-<p>No need for <code>\;</code> at the end.</p>
-
-<pre><code class="language-bash">find . -maxdepth 1 -name 'sa-*' -exec mv -v -t rsa-todelete/ {} +
-</code></pre>
-
-<h4 id="search-pdf-content">Search PDF content</h4>
-
-<p>Here we search the contents of PDF files for specif text. Two options are shown below, each require the install of an additional package (<code>pdfgrep</code> and <code>ripgrep-all</code>).</p>
-
-<p>With <code>pdfgrep</code>:</p>
-
-<pre><code class="language-bash">find . -iname '*.pdf' -exec pdfgrep [pattern] {} +
-</code></pre>
-
-<p>With <code>ripgrep-all</code>:</p>
-
-<pre><code class="language-bash">find . -iname '*.pdf' | xargs rga -H PURGE_TRAN_LOG.sh
-</code></pre>
-
-<h4 id="check-if-files-exists">Check if files exists</h4>
-
-<p>One of the problems with <code>find</code> is that it doesn&rsquo;t return <code>true</code> or <code>false</code> based on search results. But we can still use it on our <code>if</code> condition by greping the result.</p>
-
-<pre><code class="language-bash">if find /var/log -name '*.log' | grep -q log ; then
-  echo &quot;File exists&quot;
-fi
-</code></pre>
-
-<h3 id="conclusion">Conclusion</h3>
-
-<p>You should now have a better understanding of the <code>find</code> command, as well as some nifty use cases to impress you co-workers.</p>
-
-<p>If you found something useful or want to share an interesting use for <code>find</code>, please leave a comment below.</p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2022%2f11%2f18%2flinux-find-command%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Linux%20find%20Command&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2022%2f11%2f18%2flinux-find-command%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2022%2f11%2f18%2flinux-find-command%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2022%2f11%2f18%2flinux-find-command%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2022%2f11%2f18%2flinux-find-command%2f&amp;title=Linux%20find%20Command" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Linux%20find%20Command&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2022%2f11%2f18%2flinux-find-command%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2021/02/28/getting-started-with-ansible-molecule/" title="Getting Started with Ansible Molecule">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2023/06/30/undestanting-yum-clean-all-and-stale-repos/" title="Understanding &#34;yum clean all&#34; and Stale Repos">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -2017,7 +1877,7 @@ fi
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/administration">administration</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/virtualization">virtualization</a></li>
           </ul>
         </div>
       </div>
@@ -2033,6 +1893,10 @@ fi
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2025/09/17/how-to-install-windows-on-lxd/">How to install Windows on LXD</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2025/09/03/exploring-lxd-the-linux-container-daemon/">Exploring LXD (The Linux Container Daemon)</a>
@@ -2056,10 +1920,6 @@ fi
         
           <li>
           <a href="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/">RHCE v8 Practice Exam</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2023/11/21/testing-new-hard-drives/">Testing New Hard Drives</a>
           </li>
         
         </ul>
