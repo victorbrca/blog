@@ -139,6 +139,300 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2025/09/25/lxd-creating-reusable-rhel-9-vm-images/">LXD: Creating Reusable RHEL 9 VM Images</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2025-09-25">25 Sep, 2025</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/containers" class="label label-primary">Containers</a>
+  
+  <a href="https://blog.victormendonca.com/tags/virtualization" class="label label-primary">Virtualization</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>Following the LXD theme of my previous posts, today I’m going to walk you through creating a RHEL 9 VM on LXD, and then show you how to turn that VM into an image. This way, you can spin up new RHEL 9 VMs whenever you want—without having to sit through the whole install/setup process again.</p>
+
+<p>To follow along, you’ll need an active Red Hat subscription. If you’re doing this for personal use (like self-development, home lab tinkering, or just because you enjoy virtual machines as much as Netflix), you can <a href="https://developers.redhat.com/products/rhel/download">download RHEL for free</a> when you sign up for the <strong>Red Hat Developer Subscription for Individuals.</strong></p>
+
+<blockquote>
+<p><a href="https://developers.redhat.com/articles/faqs-no-cost-red-hat-enterprise-linux">No-cost Red Hat Enterprise Linux Individual Developer Subscription: FAQs</a></p>
+
+<p><strong>1. What is the Red Hat Developer program&rsquo;s Red Hat Developer Subscription for Individuals?</strong></p>
+
+<p>The Red Hat Developer Subscription for Individuals is a no-cost offering of the Red Hat Developer program and includes access to Red Hat Enterprise Linux among other Red Hat products. It is a program and an offering designed for individual developers, available through the Red Hat Developer program.</p>
+
+<p><strong>2. What Red Hat Enterprise Linux developer subscription is made available at no cost?</strong></p>
+
+<p>The no-cost Red Hat Developer Subscription for Individuals is available and includes Red Hat Enterprise Linux along with numerous other Red Hat technologies. Users can access this no-cost subscription by joining the Red Hat Developer program at developers.redhat.com/register. Joining the program is free.</p>
+</blockquote>
+
+<h3 id="creating-the-vm">Creating the VM</h3>
+
+<p>I’ll be using RHEL 9 here, but the same steps apply to other versions.</p>
+
+<p>a. Create an empty VM:</p>
+
+<pre><code class="language-none">lxc init rhel9 --vm --empty
+</code></pre>
+
+<p>b. Give the VM a 20GB root disk:</p>
+
+<pre><code class="language-none">lxc config device override rhel9 root size=20GiB
+</code></pre>
+
+<p><em>Optional: increase CPU and RAM limits if needed (depending on your profile).</em></p>
+
+<p>c. Add the install disk:</p>
+
+<pre><code class="language-none">lxc config device add rhel9 install disk source=/home/victor/Downloads/OS/rhel-9.6-x86_64-dvd.iso boot.priority=10
+</code></pre>
+
+<p>d. Start the VM and go through the RHEL install (not covered here):</p>
+
+<pre><code class="language-none">lxc start rhel9
+</code></pre>
+
+<p>e. Remove the install disk when the install is complete:</p>
+
+<pre><code class="language-none">lxc device remove rhel9 install
+</code></pre>
+
+<h3 id="install-the-lxd-agent">Install the LXD agent</h3>
+
+<p>It’s a good idea to include the LXD agent in your image—otherwise, you’ll miss out on nice integration features.</p>
+
+<p>a. Mount the config device:</p>
+
+<pre><code class="language-none">mkdir /mnt/iso
+
+mount -t virtiofs config /mnt/iso
+
+cd /mnt/iso
+</code></pre>
+
+<p>b. Install and reboot:</p>
+
+<p><img src="https://blog.victormendonca.com/img/lxd-creating-reusable-rhel-9-vm-images/image-1.png" alt="picture 0" /></p>
+
+<p>c. Check that the agent is running:</p>
+
+<pre><code class="language-none">$ lxc exec rhel9 -- systemctl is-active lxd-agent
+active
+</code></pre>
+
+<h3 id="prepare-the-os">Prepare the OS</h3>
+
+<h4 id="run-updates">Run Updates</h4>
+
+<p>This section is optional and you only need to follow in case you want to get your image updated with the current packages.</p>
+
+<p>a. Connect the VM to your Red Hat account:</p>
+
+<p><em>I&rsquo;m using Red Hat Enterprise Linux Individual Developer Subscription</em></p>
+
+<pre><code class="language-none"># rhc connect
+Connecting rhel9 to Red Hat.
+This might take a few seconds.
+
+Username: jdoe
+Password: *********
+
+● Connected to Red Hat Subscription Management
+● Connected to Red Hat Insights
+● Activated the Remote Host Configuration daemon
+
+Successfully connected to Red Hat!
+
+Manage your connected systems: https://red.ht/connector
+</code></pre>
+
+<p>b. Install updates and reboot:</p>
+
+<pre><code class="language-none"># yum update -y
+
+# dnf needs-restarting -r || reboot
+</code></pre>
+
+<p>c. Install any packages or make tweaks you’d like baked into the image.</p>
+
+<h4 id="clean-up-the-os">Clean up the OS</h4>
+
+<p>Before creating the image, let’s tidy things up.</p>
+
+<p>a. Disconnect the VM from Red Hat&rsquo;s network:</p>
+
+<pre><code class="language-none"># rhc disconnect
+Disconnecting rhel9 from Red Hat.
+This might take a few seconds.
+
+● Deactivated the Remote Host Configuration daemon
+● Disconnected from Red Hat Insights
+● Disconnected from Red Hat Subscription Management
+
+Manage your connected systems: https://red.ht/connector
+</code></pre>
+
+<p>b. Connect to the terminal as root (either via the Terminal tab on LXD&rsquo;s UI, or with <code>lxc exec rhel9 -- /bin/bash</code>).</p>
+
+<p>c. Clean DNF cache:</p>
+
+<pre><code class="language-none">dnf clean all
+</code></pre>
+
+<p>d. Clean subscription-manager data:</p>
+
+<pre><code class="language-none">subscription-manager clean
+</code></pre>
+
+<p>e. Remove SSH keys:</p>
+
+<pre><code class="language-none">rm -f /etc/ssh/ssh_host_*
+</code></pre>
+
+<p>f. Clean up logs:</p>
+
+<pre><code class="language-none">journalctl --vacuum-time=1d
+
+rm -rf /var/log/* /tmp/*
+</code></pre>
+
+<p>g. Change hostname to a default one:</p>
+
+<pre><code class="language-none">hostnamectl set-hostname localhost.localdomain
+</code></pre>
+
+<p>h. Delete the machine ID:</p>
+
+<pre><code class="language-none">rm -f /etc/machine-id
+
+rm -f /var/lib/dbus/machine-id
+
+touch /etc/machine-id
+</code></pre>
+
+<p>i. Delete the user if you created one (optional):</p>
+
+<pre><code class="language-none">userdel -rf redhat
+</code></pre>
+
+<p>j. Delete root&rsquo;s history (optional):</p>
+
+<pre><code class="language-none">rm -f /root/.bash_history
+</code></pre>
+
+<p>k. Shutdown the machine:</p>
+
+<pre><code class="language-none">poweroff
+</code></pre>
+
+<h4 id="edit-the-vm-metadata">Edit the VM Metadata</h4>
+
+<p>Before publishing, edit metadata so your image looks nice and tidy:</p>
+
+<pre><code class="language-none">lxc config metadata edit rhel9
+</code></pre>
+
+<p>Example:</p>
+
+<pre><code class="language-yaml">architecture: x86_64
+creation_date: 1758825660
+expiry_date: 0
+properties:
+  architecture: x86_64
+  description: Red Hat Enterprise Linux 9.6 (Plow)
+  os: rhel
+  release: Plow
+  version: &quot;9.6&quot;
+templates: {}
+</code></pre>
+
+<p><em>Tip: to get the current date in Unix time, use <code>date +%s</code></em></p>
+
+<h3 id="create-the-image">Create the Image</h3>
+
+<p>We are now ready to create the image with <code>lxc publish</code>:</p>
+
+<pre><code class="language-none">$ lxc publish rhel9 --alias rhel96.x86_64
+Instance published with fingerprint: e4ff15c38889676cb3fe1ae0268122294856414b40275ef61cfe0baf23330ae3
+</code></pre>
+
+<h3 id="launch-a-new-vm-from-the-image">Launch a New VM from the Image</h3>
+
+<p>And finally, create a fresh VM without all the hassle:</p>
+
+<pre><code class="language-none">$ lxc launch rhel96.x86_64 rhel9-test
+Launching rhel9-test
+</code></pre>
+
+<p>That’s it—you’ve got a reusable RHEL 9 image. Future VM creation is now basically a one-liner. Way better than babysitting an ISO every time.</p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f25%2flxd-creating-reusable-rhel-9-vm-images%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=LXD%3a%20Creating%20Reusable%20RHEL%209%20VM%20Images&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f25%2flxd-creating-reusable-rhel-9-vm-images%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f25%2flxd-creating-reusable-rhel-9-vm-images%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f25%2flxd-creating-reusable-rhel-9-vm-images%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f25%2flxd-creating-reusable-rhel-9-vm-images%2f&amp;title=LXD%3a%20Creating%20Reusable%20RHEL%209%20VM%20Images" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=LXD%3a%20Creating%20Reusable%20RHEL%209%20VM%20Images&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f25%2flxd-creating-reusable-rhel-9-vm-images%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2025/09/17/how-to-install-windows-on-lxd/" title="How to install Windows on LXD">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2025/09/17/how-to-install-windows-on-lxd/">How to install Windows on LXD</a>
 </h2>
 
@@ -291,6 +585,12 @@ Device install removed from windows10
     
 
     
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2025/09/25/lxd-creating-reusable-rhel-9-vm-images/" title="LXD: Creating Reusable RHEL 9 VM Images">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
     </ul> </nav>
   
 
@@ -321,8 +621,6 @@ Device install removed from windows10
   <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
   
   <a href="https://blog.victormendonca.com/tags/containers" class="label label-primary">Containers</a>
-  
-  <a href="https://blog.victormendonca.com/tags/docker" class="label label-primary">Docker</a>
   
   <a href="https://blog.victormendonca.com/tags/virtualization" class="label label-primary">Virtualization</a>
   
@@ -1171,403 +1469,6 @@ ExecStart=/usr/sbin/logrotate /etc/logrotate.conf
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2024/02/14/getting-started-with-ansible-console/">Getting Started with Ansible Console</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2024-02-14">14 Feb, 2024</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/ansible" class="label label-primary">Ansible</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<p>Are you ready to level up your Linux game and wield the power of automation like a true DevOps ninja? Enter Ansible Console, the interactive command-line interface that puts the force of Ansible at your fingertips!</p>
-
-<p>In this introduction post, I&rsquo;ll take you on tour of Ansible Console, teaching you how to run ad-hoc tasks against your inventory with ease.</p>
-
-<h3 id="what-is-ansible-console">What is Ansible Console</h3>
-
-<p>Ansible Console is an interactive console for executing ad-hoc tasks against hosts defined in your Ansible inventory. It offers built-in command completion and a user-friendly interface, making it a versatile tool for system administrators and automation engineers.</p>
-
-<h2 id="getting-started">Getting Started</h2>
-
-<p>To begin using Ansible Console, launch it by invoking <code>ansible-console</code> with the default inventory, or by specifying a custom inventory file.</p>
-
-<p>Using the default inventory:</p>
-
-<pre><code class="language-none">$ ansible-console
-</code></pre>
-
-<p>Specifying an inventory file:</p>
-
-<pre><code class="language-none">$ ansible-console -i [inventory]
-</code></pre>
-
-<p>Once launched, the console prompt will display essential information about the current context, including group names, the number of hosts, and forks.</p>
-
-<pre><code class="language-none">ansible@all (6)[f:10]$
-		  |  |    |- forks
-		  |  |- number of hosts
-		  |- group
-</code></pre>
-
-<p>Keep an eye on the prompt color – if it turns red, it&rsquo;s a subtle reminder that the <code>become</code> flag is set to true. Safety first, folks!</p>
-
-<h2 id="inventory-management">Inventory Management</h2>
-
-<p>Managing your inventory has never been easier. With Ansible Console, you can list hosts, groups, and even test connections with a flick of your wrist (or a tap of your keyboard).</p>
-
-<p>Need to list all your hosts? No problem, just use the <code>list</code> sub-command:</p>
-
-<pre><code class="language-none">ansible@all (6)[f:10]$ list
-nut-pi
-ubuntu-pi4
-ubuntu-backup
-ubuntu-lenovomini
-freenas
-pfsense
-</code></pre>
-
-<p>Want to flex your group management skills? Try this:</p>
-
-<pre><code class="language-none">ansible@all (6)[f:10]$ list groups
-all
-centos
-freebsd
-linux
-pfsense
-raspberrypi
-raspbian
-rhel
-truenas
-ubuntu
-ungrouped
-</code></pre>
-
-<p>And if you&rsquo;re feeling a bit adventurous, why not test the connection to your hosts using the trusty <code>ping</code> or the <code>ls</code> command?</p>
-
-<p><code>ls</code></p>
-
-<pre><code class="language-bash">ansible@all (6)[f:10]$ ls
-freenas | CHANGED | rc=0 &gt;&gt;
-
-pfsense | FAILED! =&gt; {
-		&quot;changed&quot;: false,
-		&quot;module_stderr&quot;: &quot;Shared connection to 192.168.1.1 closed.\r\n&quot;,
-		&quot;module_stdout&quot;: &quot;/bin/sh: /usr/local/bin/python: not found\r\n&quot;,
-		&quot;msg&quot;: &quot;The module failed to execute correctly, you probably need to set the interpreter.\nSee stdout/stderr for the exact error&quot;,
-		&quot;rc&quot;: 127
-}
-ubuntu-lenovomini | CHANGED | rc=0 &gt;&gt;
-
-ubuntu-backup | CHANGED | rc=0 &gt;&gt;
-
-ubuntu-pi4 | CHANGED | rc=0 &gt;&gt;
-
-nut-pi | CHANGED | rc=0 &gt;&gt;
-</code></pre>
-
-<p><code>ping</code></p>
-
-<pre><code class="language-bash">ansible@all (6)[f:10]$ ping
-freenas | SUCCESS =&gt; {
-		&quot;changed&quot;: false,
-		&quot;ping&quot;: &quot;pong&quot;
-}
-pfsense | FAILED! =&gt; {
-		&quot;changed&quot;: false,
-		&quot;module_stderr&quot;: &quot;Shared connection to 192.168.1.1 closed.\r\n&quot;,
-		&quot;module_stdout&quot;: &quot;/bin/sh: /usr/local/bin/python: not found\r\n&quot;,
-		&quot;msg&quot;: &quot;The module failed to execute correctly, you probably need to set the interpreter.\nSee stdout/stderr for the exact error&quot;,
-		&quot;rc&quot;: 127
-}
-ubuntu-lenovomini | SUCCESS =&gt; {
-		&quot;changed&quot;: false,
-		&quot;ping&quot;: &quot;pong&quot;
-}
-ubuntu-backup | SUCCESS =&gt; {
-		&quot;changed&quot;: false,
-		&quot;ping&quot;: &quot;pong&quot;
-}
-ubuntu-pi4 | SUCCESS =&gt; {
-		&quot;changed&quot;: false,
-		&quot;ping&quot;: &quot;pong&quot;
-}
-nut-pi | SUCCESS =&gt; {
-		&quot;changed&quot;: false,
-		&quot;ping&quot;: &quot;pong&quot;
-}
-</code></pre>
-
-<h3 id="selecting-host-or-group">Selecting Host or Group</h3>
-
-<p>You can select a host or a group with the &lsquo;cd&rsquo; command (note how the prompt changes).</p>
-
-<p><em>Host</em></p>
-
-<pre><code class="language-none">ansible@all (6)[f:10]$ cd pfsense
-ansible@pfsense (1)[f:10]$
-</code></pre>
-
-<p><em>Group</em></p>
-
-<pre><code class="language-none">ansible@all (6)[f:10]$ cd ubuntu
-ansible@ubuntu (3)[f:10]$
-</code></pre>
-
-<p><em>You can also use host patterns eg.: <code>app*.dc*:!app01*</code></em></p>
-
-<h3 id="configuration-customization">Configuration Customization</h3>
-
-<p>Ansible Console puts the power in your hands with customizable configuration options. Whether you need to specify the remote user, adjust the number of forks, toggle the <code>become</code> flag (and many more), Ansible Console has got you covered.</p>
-
-<pre><code class="language-none">ansible@all (0)[f:5]$ remote_user [username]
-ansible@all (0)[f:5]$ forks 7
-ansible@all (0)[f:5]$ become [true|false]
-ansible@all (0)[f:5]$ check [true|false]
-ansible@all (0)[f:5]$ diff [true|false]
-</code></pre>
-
-<h3 id="modules">Modules</h3>
-
-<p>Ah, modules – the bread and butter of Ansible automation. With Ansible Console, you can unleash the full potential of Ansible modules right from your command line.</p>
-
-<p>Use the <code>help</code> sub-command to get a list of available modules:</p>
-
-<pre><code class="language-none">ansible@ubuntu (3)[f:10]$ help
-	
-Documented commands (type help &lt;topic&gt;):
-========================================
-
-[... truncated ...]
-
-wti.remote.cpm_syslog_server_info
-wti.remote.cpm_temp_info
-wti.remote.cpm_time_config
-wti.remote.cpm_time_info
-wti.remote.cpm_user
-
-Undocumented commands:
-======================
-ping
-</code></pre>
-
-<p>Explore the vast array of available modules or dive deep into specific modules for detailed information and usage examples. Simply provide the module name as an argument to <code>help</code>. And don&rsquo;t forget that Ansible Console has built-in tab completion, so make sure to use and abuse it:</p>
-
-<pre><code class="language-none">ansible@ubuntu (3)[f:10]$ help copy
-
-Copy files to remote locations
-Parameters:
-	src Local path to a file to copy to the remote server.
-	content When used instead of O(src), sets the contents of a file directly to the specified value.
-	dest Remote absolute path where the file should be copied to.
-	backup Create a backup file including the timestamp information so you can get the original file back if you somehow clobbered it incorrectly.
-	force Influence whether the remote file must always be replaced.
-	mode The permissions of the destination file or directory.
-	directory_mode Set the access permissions of newly created directories to the given mode. Permissions on existing directories do not change.
-	remote_src Influence whether O(src) needs to be transferred or already is present remotely.
-	follow This flag indicates that filesystem links in the destination, if they exist, should be followed.
-	local_follow This flag indicates that filesystem links in the source tree, if they exist, should be followed.
-	checksum SHA1 checksum of the file being transferred.
-	decrypt This option controls the autodecryption of source files using vault.
-	owner Name of the user that should own the filesystem object, as would be fed to I(chown).
-	group Name of the group that should own the filesystem object, as would be fed to I(chown).
-	seuser The user part of the SELinux filesystem object context.
-	serole The role part of the SELinux filesystem object context.
-	setype The type part of the SELinux filesystem object context.
-	selevel The level part of the SELinux filesystem object context.
-	unsafe_writes Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object.
-	attributes The attributes the resulting filesystem object should have.
-	validate The validation command to run before copying the updated file into the final destination.
-</code></pre>
-
-<h4 id="module-usage-examples">Module Usage Examples</h4>
-
-<h5 id="installing-a-package">Installing a Package</h5>
-
-<pre><code class="language-none">ansible@ubuntu (3)[f:10]$ ansible.builtin.package name=git
-</code></pre>
-
-<h5 id="installing-a-pip-package">Installing a PIP Package</h5>
-
-<pre><code class="language-none"> ansible@ubuntu (3)[f:10]$ ansible.builtin.pip name=youtube-dl
-</code></pre>
-
-<h4 id="modules-vs-commands">Modules vs Commands</h4>
-
-<p>Anything that you type and it&rsquo;s not a module will be run as a command. For example:</p>
-
-<pre><code class="language-bash">ansible@ubuntu (3)[f:10]$ cat /etc/hostname
-ubuntu-lenovomini | CHANGED | rc=0 &gt;&gt;
-ubuntu-lenovomini
-ubuntu-pi4 | CHANGED | rc=0 &gt;&gt;
-ubuntu-pi4
-ubuntu-backup | CHANGED | rc=0 &gt;&gt;
-ubuntu-backup
-</code></pre>
-
-<p>However, if a module exists, <code>ansible-console</code> will invoke that module, or give you an error.</p>
-
-<p>Example with <code>hostname</code>, which is a built-in module:</p>
-
-<pre><code class="language-bash">ansible@ubuntu (3)[f:10]$ help hostname
-Manage hostname
-Parameters:
-	name Name of the host.
-	use Which strategy to use to update the hostname.
-</code></pre>
-
-<p>The module expects a parameter, so it fails:</p>
-
-<pre><code class="language-bash">ansible@ubuntu (3)[f:10]$ hostname
-ubuntu-lenovomini | FAILED! =&gt; {
-		&quot;changed&quot;: false,
-		&quot;msg&quot;: &quot;missing required arguments: name&quot;
-}
-ubuntu-pi4 | FAILED! =&gt; {
-		&quot;changed&quot;: false,
-		&quot;msg&quot;: &quot;missing required arguments: name&quot;
-}
-ubuntu-backup | FAILED! =&gt; {
-		&quot;changed&quot;: false,
-		&quot;msg&quot;: &quot;missing required arguments: name&quot;
-}
-</code></pre>
-
-<p>Another example, but now with <code>yum</code>:</p>
-
-<pre><code class="language-none">ansible@ubuntu (3)[f:10]$ yum check-update -q
- [ERROR]: Unable to build command: this task 'yum' has extra params, which is only allowed in the following modules: ansible.legacy.group_by, shell, ansible.legacy.set_fact, ansible.builtin.include_tasks, command, ansible.legacy.script, ansible.legacy.include,
-ansible.builtin.group_by, ansible.legacy.shell, set_fact, ansible.builtin.shell, win_command, ansible.legacy.command, ansible.legacy.win_shell, ansible.builtin.set_fact, ansible.builtin.add_host, ansible.legacy.import_role, include_role, ansible.builtin.win_shell, include,
-ansible.legacy.win_command, ansible.legacy.include_tasks, include_tasks, ansible.legacy.add_host, ansible.builtin.include_role, group_by, ansible.builtin.meta, ansible.builtin.raw, import_role, ansible.legacy.raw, ansible.builtin.command, ansible.legacy.include_vars, script,
-win_shell, ansible.builtin.script, ansible.legacy.import_tasks, add_host, meta, ansible.builtin.import_tasks, ansible.windows.win_shell, ansible.builtin.include, ansible.windows.win_command, ansible.builtin.include_vars, raw, ansible.builtin.import_role, include_vars, import_tasks,
-ansible.builtin.win_command, ansible.legacy.meta, ansible.legacy.include_role
-</code></pre>
-
-<p>But sometimes you may need to run a command that exists as a module instead of the module itself. This can easily be done with the <code>!</code>:</p>
-
-<pre><code class="language-none">ansible@ubuntu-pi4 (1)[f:10]$ !apt list --upgradable
-ubuntu-pi4 | CHANGED | rc=0 &gt;&gt;
-Listing...
-base-files/focal-updates 11ubuntu5.8 arm64 [upgradable from: 11ubuntu5.7]
-gnome-shell-common/focal-updates 3.36.9-0ubuntu0.20.04.3 all [upgradable from: 3.36.9-0ubuntu0.20.04.2]
-gnome-shell/focal-updates 3.36.9-0ubuntu0.20.04.3 arm64 [upgradable from: 3.36.9-0ubuntu0.20.04.2]
-libnss-systemd/focal-updates 245.4-4ubuntu3.23 arm64 [upgradable from: 245.4-4ubuntu3.22]
-libpam-systemd/focal-updates 245.4-4ubuntu3.23 arm64 [upgradable from: 245.4-4ubuntu3.22]
-libsystemd0/focal-updates 245.4-4ubuntu3.23 arm64 [upgradable from: 245.4-4ubuntu3.22]
-libudev1/focal-updates 245.4-4ubuntu3.23 arm64 [upgradable from: 245.4-4ubuntu3.22]
-motd-news-config/focal-updates 11ubuntu5.8 all [upgradable from: 11ubuntu5.7]
-systemd-sysv/focal-updates 245.4-4ubuntu3.23 arm64 [upgradable from: 245.4-4ubuntu3.22]
-systemd-timesyncd/focal-updates 245.4-4ubuntu3.23 arm64 [upgradable from: 245.4-4ubuntu3.22]
-systemd/focal-updates 245.4-4ubuntu3.23 arm64 [upgradable from: 245.4-4ubuntu3.22]
-tailscale/unknown 1.58.2 arm64 [upgradable from: 1.56.1]
-tzdata/focal-updates 2023d-0ubuntu0.20.04 all [upgradable from: 2023c-0ubuntu0.20.04.2]
-udev/focal-updates 245.4-4ubuntu3.23 arm64 [upgradable from: 245.4-4ubuntu3.22]
-WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
-</code></pre>
-
-<h3 id="variables">Variables</h3>
-
-<p>Collection variables are not available by default because <code>ansible-console</code>, unlike <code>ansible-playbook</code>, doesn&rsquo;t gather facts before running:</p>
-
-<pre><code class="language-bash">ansible@ubuntu-pi4 (1)[f:10]$ debug msg=&quot;{{ ansible_facts.architecture }}&quot;
-ubuntu-pi4 | FAILED! =&gt; {
-		&quot;msg&quot;: &quot;The task includes an option with an undefined variable. The error was: 'dict object' has no attribute 'architecture'. 'dict object' has no attribute 'architecture'. 'dict object' has no attribute 'architecture'. 'dict object' has no attribute 'architecture'&quot;
-}
-</code></pre>
-
-<p>But fear not, you can manually invoke the <code>setup</code> module and either filter the values, or print them with the <code>debug</code> module:</p>
-
-<pre><code class="language-bash">ansible@ubuntu-pi4 (1)[f:10]$ setup filter=&quot;*architecture&quot;
-ubuntu-pi4 | SUCCESS =&gt; {
-		&quot;ansible_facts&quot;: {
-				&quot;ansible_architecture&quot;: &quot;aarch64&quot;
-		},
-		&quot;changed&quot;: false
-}
-
-ansible@ubuntu-pi4 (1)[f:10]$ debug msg=&quot;{{ ansible_facts.architecture }}&quot;
-ubuntu-pi4 | SUCCESS =&gt; {
-		&quot;msg&quot;: &quot;aarch64&quot;
-}
-</code></pre>
-
-<h3 id="conclusion">Conclusion</h3>
-
-<p>With its intuitive interface and powerful functionality, Ansible Console offers a convenient way to execute ad-hoc tasks and manage your Ansible inventory interactively. By mastering Ansible Console, you can streamline your automation workflows and improve operational efficiency in your environment.</p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2024%2f02%2f14%2fgetting-started-with-ansible-console%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Getting%20Started%20with%20Ansible%20Console&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2024%2f02%2f14%2fgetting-started-with-ansible-console%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2024%2f02%2f14%2fgetting-started-with-ansible-console%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2024%2f02%2f14%2fgetting-started-with-ansible-console%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2024%2f02%2f14%2fgetting-started-with-ansible-console%2f&amp;title=Getting%20Started%20with%20Ansible%20Console" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Getting%20Started%20with%20Ansible%20Console&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2024%2f02%2f14%2fgetting-started-with-ansible-console%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/" title="Playing a Sound on Headless Server Boot">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2024/09/09/logrotate-simplifying-log-management/" title="Logrotate: Simplifying Log Management">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1723,7 +1624,7 @@ ubuntu-pi4 | SUCCESS =&gt; {
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li><li><a href="https://blog.victormendonca.com/tags/virtualbox">virtualbox</a></li><li><a href="https://blog.victormendonca.com/tags/virtualization">virtualization</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/virtualization">virtualization</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/containers">containers</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li>
           </ul>
         </div>
       </div>
@@ -1739,6 +1640,10 @@ ubuntu-pi4 | SUCCESS =&gt; {
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2025/09/25/lxd-creating-reusable-rhel-9-vm-images/">LXD: Creating Reusable RHEL 9 VM Images</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2025/09/17/how-to-install-windows-on-lxd/">How to install Windows on LXD</a>
@@ -1762,10 +1667,6 @@ ubuntu-pi4 | SUCCESS =&gt; {
         
           <li>
           <a href="https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/">Playing a Sound on Headless Server Boot</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2023/11/27/rhce-v8-practiceexam/">RHCE v8 Practice Exam</a>
           </li>
         
         </ul>

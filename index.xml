@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Wed, 17 Sep 2025 16:05:11 -0400</lastBuildDate>
+    <lastBuildDate>Thu, 25 Sep 2025 05:00:47 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>LXD: Creating Reusable RHEL 9 VM Images</title>
+      <link>https://blog.victormendonca.com/2025/09/25/lxd-creating-reusable-rhel-9-vm-images/</link>
+      <pubDate>Thu, 25 Sep 2025 05:00:47 -0400</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2025/09/25/lxd-creating-reusable-rhel-9-vm-images/</guid>
+      <description>Following the LXD theme of my previous posts, today I’m going to walk you through creating a RHEL 9 VM on LXD, and then show you how to turn that VM into an image. This way, you can spin up new RHEL 9 VMs whenever you want—without having to sit through the whole install/setup process again.
+To follow along, you’ll need an active Red Hat subscription. If you’re doing this for personal use (like self-development, home lab tinkering, or just because you enjoy virtual machines as much as Netflix), you can download RHEL for free when you sign up for the Red Hat Developer Subscription for Individuals.</description>
+    </item>
     
     <item>
       <title>How to install Windows on LXD</title>

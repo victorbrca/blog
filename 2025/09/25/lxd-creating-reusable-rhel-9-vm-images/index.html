@@ -5,34 +5,36 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title>A Simple Powerline Prompt for Bash  &middot; Victor&#39;s Blog</title>
+  <title>LXD: Creating Reusable RHEL 9 VM Images  &middot; Victor&#39;s Blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="description" content="A Simple Powerline Prompt for Bash" />
+<meta name="description" content="Save time by creating a reusable RHEL 9 VM image with LXD." />
 
-<meta name="keywords" content="bash, Linux, ">
+<meta name="keywords" content="Linux, Containers, Virtualization, ">
 
 
-<meta property="og:title" content="A Simple Powerline Prompt for Bash  &middot; Victor&#39;s Blog ">
+<meta property="og:title" content="LXD: Creating Reusable RHEL 9 VM Images  &middot; Victor&#39;s Blog ">
 <meta property="og:site_name" content="Victor&#39;s Blog"/>
-<meta property="og:url" content="https://blog.victormendonca.com/2018/09/12/a-simple-powerline-prompt-for-bash/" />
+<meta property="og:url" content="https://blog.victormendonca.com/2025/09/25/lxd-creating-reusable-rhel-9-vm-images/" />
 <meta property="og:locale" content="en">
 
 
 <meta property="og:type" content="article" />
-<meta property="og:description" content="A Simple Powerline Prompt for Bash"/>
-<meta property="og:article:published_time" content="2018-09-12T04:10:58-04:00" />
-<meta property="og:article:modified_time" content="2018-09-12T04:10:58-04:00" />
+<meta property="og:description" content="Save time by creating a reusable RHEL 9 VM image with LXD."/>
+<meta property="og:article:published_time" content="2025-09-25T05:00:47-04:00" />
+<meta property="og:article:modified_time" content="2025-09-25T05:00:47-04:00" />
 
   
     
-<meta property="og:article:tag" content="bash">
-    
 <meta property="og:article:tag" content="Linux">
+    
+<meta property="og:article:tag" content="Containers">
+    
+<meta property="og:article:tag" content="Virtualization">
     
   
 
@@ -40,9 +42,9 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@18440926" />
 <meta name="twitter:creator" content="@18440926" />
-<meta name="twitter:title" content="A Simple Powerline Prompt for Bash" />
-<meta name="twitter:description" content="A Simple Powerline Prompt for Bash" />
-<meta name="twitter:url" content="https://blog.victormendonca.com/2018/09/12/a-simple-powerline-prompt-for-bash/" />
+<meta name="twitter:title" content="LXD: Creating Reusable RHEL 9 VM Images" />
+<meta name="twitter:description" content="Save time by creating a reusable RHEL 9 VM image with LXD." />
+<meta name="twitter:url" content="https://blog.victormendonca.com/2025/09/25/lxd-creating-reusable-rhel-9-vm-images/" />
 <meta name="twitter:domain" content="https://blog.victormendonca.com/">
   
 
@@ -50,7 +52,7 @@
 
 
 
-<link rel="canonical" href="https://blog.victormendonca.com/2018/09/12/a-simple-powerline-prompt-for-bash/" />
+<link rel="canonical" href="https://blog.victormendonca.com/2025/09/25/lxd-creating-reusable-rhel-9-vm-images/" />
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://blog.victormendonca.com/touch-icon-144-precomposed.png">
 <link rel="icon" href="https://blog.victormendonca.com/favicon.png">
 <meta name="generator" content="Hugo 0.48" />
@@ -159,39 +161,39 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
   <div class="text-center">
 
-    <h1>A Simple Powerline Prompt for Bash
+    <h1>LXD: Creating Reusable RHEL 9 VM Images
 </h1>
 
     <div class="metas">
 <small>
   <i class="fa fa-calendar"></i>
-  <time datetime="2018-09-12">12 Sep, 2018</time>
+  <time datetime="2025-09-25">25 Sep, 2025</time>
 </small>
 
 
   <small>
     &middot; by Victor Mendonça
   
-  &middot; Read in about 1 min
-  &middot; (45 words)
+  &middot; Read in about 4 min
+  &middot; (802 words)
   &middot; 
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f12%2fa-simple-powerline-prompt-for-bash%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f25%2flxd-creating-reusable-rhel-9-vm-images%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=A%20Simple%20Powerline%20Prompt%20for%20Bash&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f12%2fa-simple-powerline-prompt-for-bash%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=LXD%3a%20Creating%20Reusable%20RHEL%209%20VM%20Images&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f25%2flxd-creating-reusable-rhel-9-vm-images%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f12%2fa-simple-powerline-prompt-for-bash%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f25%2flxd-creating-reusable-rhel-9-vm-images%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f12%2fa-simple-powerline-prompt-for-bash%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f25%2flxd-creating-reusable-rhel-9-vm-images%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f12%2fa-simple-powerline-prompt-for-bash%2f&amp;title=A%20Simple%20Powerline%20Prompt%20for%20Bash" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f25%2flxd-creating-reusable-rhel-9-vm-images%2f&amp;title=LXD%3a%20Creating%20Reusable%20RHEL%209%20VM%20Images" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=A%20Simple%20Powerline%20Prompt%20for%20Bash&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f12%2fa-simple-powerline-prompt-for-bash%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=LXD%3a%20Creating%20Reusable%20RHEL%209%20VM%20Images&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f25%2flxd-creating-reusable-rhel-9-vm-images%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   </small>
@@ -199,9 +201,11 @@
 <div class="margin-10">
   <i class="fa fa-tags"></i>
   
-  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">bash</a>
-  
   <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/containers" class="label label-primary">Containers</a>
+  
+  <a href="https://blog.victormendonca.com/tags/virtualization" class="label label-primary">Virtualization</a>
   
 
 
@@ -214,25 +218,223 @@
 </div>
 
       <div class="content">
-  <p>Powerline-simple is a simple powerline prompt for Bash, written by yours truly.</p>
+  
 
-<p><img src="https://blog.victormendonca.com/img/powerline-simple.png" alt="" /></p>
+<p>Following the LXD theme of my previous posts, today I’m going to walk you through creating a RHEL 9 VM on LXD, and then show you how to turn that VM into an image. This way, you can spin up new RHEL 9 VMs whenever you want—without having to sit through the whole install/setup process again.</p>
 
-<p>The prompt displays the following information:</p>
+<p>To follow along, you’ll need an active Red Hat subscription. If you’re doing this for personal use (like self-development, home lab tinkering, or just because you enjoy virtual machines as much as Netflix), you can <a href="https://developers.redhat.com/products/rhel/download">download RHEL for free</a> when you sign up for the <strong>Red Hat Developer Subscription for Individuals.</strong></p>
 
-<ul>
-<li>Previous exit code</li>
-<li>Username</li>
-<li>Hostname (when connecting via SSH)</li>
-<li>Battery status</li>
-<li>sudo cached credentials</li>
-<li>Current path</li>
-<li>Git status</li>
-</ul>
+<blockquote>
+<p><a href="https://developers.redhat.com/articles/faqs-no-cost-red-hat-enterprise-linux">No-cost Red Hat Enterprise Linux Individual Developer Subscription: FAQs</a></p>
 
-<p><img src="https://blog.victormendonca.com/img/powerline-simple-git.gif" alt="" /></p>
+<p><strong>1. What is the Red Hat Developer program&rsquo;s Red Hat Developer Subscription for Individuals?</strong></p>
 
-<p>You can download it from the <a href="https://github.com/victorbrca/powerline-simple">GitHub</a> project page.</p>
+<p>The Red Hat Developer Subscription for Individuals is a no-cost offering of the Red Hat Developer program and includes access to Red Hat Enterprise Linux among other Red Hat products. It is a program and an offering designed for individual developers, available through the Red Hat Developer program.</p>
+
+<p><strong>2. What Red Hat Enterprise Linux developer subscription is made available at no cost?</strong></p>
+
+<p>The no-cost Red Hat Developer Subscription for Individuals is available and includes Red Hat Enterprise Linux along with numerous other Red Hat technologies. Users can access this no-cost subscription by joining the Red Hat Developer program at developers.redhat.com/register. Joining the program is free.</p>
+</blockquote>
+
+<h3 id="creating-the-vm">Creating the VM</h3>
+
+<p>I’ll be using RHEL 9 here, but the same steps apply to other versions.</p>
+
+<p>a. Create an empty VM:</p>
+
+<pre><code class="language-none">lxc init rhel9 --vm --empty
+</code></pre>
+
+<p>b. Give the VM a 20GB root disk:</p>
+
+<pre><code class="language-none">lxc config device override rhel9 root size=20GiB
+</code></pre>
+
+<p><em>Optional: increase CPU and RAM limits if needed (depending on your profile).</em></p>
+
+<p>c. Add the install disk:</p>
+
+<pre><code class="language-none">lxc config device add rhel9 install disk source=/home/victor/Downloads/OS/rhel-9.6-x86_64-dvd.iso boot.priority=10
+</code></pre>
+
+<p>d. Start the VM and go through the RHEL install (not covered here):</p>
+
+<pre><code class="language-none">lxc start rhel9
+</code></pre>
+
+<p>e. Remove the install disk when the install is complete:</p>
+
+<pre><code class="language-none">lxc device remove rhel9 install
+</code></pre>
+
+<h3 id="install-the-lxd-agent">Install the LXD agent</h3>
+
+<p>It’s a good idea to include the LXD agent in your image—otherwise, you’ll miss out on nice integration features.</p>
+
+<p>a. Mount the config device:</p>
+
+<pre><code class="language-none">mkdir /mnt/iso
+
+mount -t virtiofs config /mnt/iso
+
+cd /mnt/iso
+</code></pre>
+
+<p>b. Install and reboot:</p>
+
+<p><img src="https://blog.victormendonca.com/img/lxd-creating-reusable-rhel-9-vm-images/image-1.png" alt="picture 0" /></p>
+
+<p>c. Check that the agent is running:</p>
+
+<pre><code class="language-none">$ lxc exec rhel9 -- systemctl is-active lxd-agent
+active
+</code></pre>
+
+<h3 id="prepare-the-os">Prepare the OS</h3>
+
+<h4 id="run-updates">Run Updates</h4>
+
+<p>This section is optional and you only need to follow in case you want to get your image updated with the current packages.</p>
+
+<p>a. Connect the VM to your Red Hat account:</p>
+
+<p><em>I&rsquo;m using Red Hat Enterprise Linux Individual Developer Subscription</em></p>
+
+<pre><code class="language-none"># rhc connect
+Connecting rhel9 to Red Hat.
+This might take a few seconds.
+
+Username: jdoe
+Password: *********
+
+● Connected to Red Hat Subscription Management
+● Connected to Red Hat Insights
+● Activated the Remote Host Configuration daemon
+
+Successfully connected to Red Hat!
+
+Manage your connected systems: https://red.ht/connector
+</code></pre>
+
+<p>b. Install updates and reboot:</p>
+
+<pre><code class="language-none"># yum update -y
+
+# dnf needs-restarting -r || reboot
+</code></pre>
+
+<p>c. Install any packages or make tweaks you’d like baked into the image.</p>
+
+<h4 id="clean-up-the-os">Clean up the OS</h4>
+
+<p>Before creating the image, let’s tidy things up.</p>
+
+<p>a. Disconnect the VM from Red Hat&rsquo;s network:</p>
+
+<pre><code class="language-none"># rhc disconnect
+Disconnecting rhel9 from Red Hat.
+This might take a few seconds.
+
+● Deactivated the Remote Host Configuration daemon
+● Disconnected from Red Hat Insights
+● Disconnected from Red Hat Subscription Management
+
+Manage your connected systems: https://red.ht/connector
+</code></pre>
+
+<p>b. Connect to the terminal as root (either via the Terminal tab on LXD&rsquo;s UI, or with <code>lxc exec rhel9 -- /bin/bash</code>).</p>
+
+<p>c. Clean DNF cache:</p>
+
+<pre><code class="language-none">dnf clean all
+</code></pre>
+
+<p>d. Clean subscription-manager data:</p>
+
+<pre><code class="language-none">subscription-manager clean
+</code></pre>
+
+<p>e. Remove SSH keys:</p>
+
+<pre><code class="language-none">rm -f /etc/ssh/ssh_host_*
+</code></pre>
+
+<p>f. Clean up logs:</p>
+
+<pre><code class="language-none">journalctl --vacuum-time=1d
+
+rm -rf /var/log/* /tmp/*
+</code></pre>
+
+<p>g. Change hostname to a default one:</p>
+
+<pre><code class="language-none">hostnamectl set-hostname localhost.localdomain
+</code></pre>
+
+<p>h. Delete the machine ID:</p>
+
+<pre><code class="language-none">rm -f /etc/machine-id
+
+rm -f /var/lib/dbus/machine-id
+
+touch /etc/machine-id
+</code></pre>
+
+<p>i. Delete the user if you created one (optional):</p>
+
+<pre><code class="language-none">userdel -rf redhat
+</code></pre>
+
+<p>j. Delete root&rsquo;s history (optional):</p>
+
+<pre><code class="language-none">rm -f /root/.bash_history
+</code></pre>
+
+<p>k. Shutdown the machine:</p>
+
+<pre><code class="language-none">poweroff
+</code></pre>
+
+<h4 id="edit-the-vm-metadata">Edit the VM Metadata</h4>
+
+<p>Before publishing, edit metadata so your image looks nice and tidy:</p>
+
+<pre><code class="language-none">lxc config metadata edit rhel9
+</code></pre>
+
+<p>Example:</p>
+
+<pre><code class="language-yaml">architecture: x86_64
+creation_date: 1758825660
+expiry_date: 0
+properties:
+  architecture: x86_64
+  description: Red Hat Enterprise Linux 9.6 (Plow)
+  os: rhel
+  release: Plow
+  version: &quot;9.6&quot;
+templates: {}
+</code></pre>
+
+<p><em>Tip: to get the current date in Unix time, use <code>date +%s</code></em></p>
+
+<h3 id="create-the-image">Create the Image</h3>
+
+<p>We are now ready to create the image with <code>lxc publish</code>:</p>
+
+<pre><code class="language-none">$ lxc publish rhel9 --alias rhel96.x86_64
+Instance published with fingerprint: e4ff15c38889676cb3fe1ae0268122294856414b40275ef61cfe0baf23330ae3
+</code></pre>
+
+<h3 id="launch-a-new-vm-from-the-image">Launch a New VM from the Image</h3>
+
+<p>And finally, create a fresh VM without all the hassle:</p>
+
+<pre><code class="language-none">$ lxc launch rhel96.x86_64 rhel9-test
+Launching rhel9-test
+</code></pre>
+
+<p>That’s it—you’ve got a reusable RHEL 9 image. Future VM creation is now basically a one-liner. Way better than babysitting an ISO every time.</p>
 
 </div>
 
@@ -240,22 +442,22 @@
       <footer>
   
 <span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f12%2fa-simple-powerline-prompt-for-bash%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f25%2flxd-creating-reusable-rhel-9-vm-images%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
 
-    <a href="https://twitter.com/intent/tweet?text=A%20Simple%20Powerline%20Prompt%20for%20Bash&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f12%2fa-simple-powerline-prompt-for-bash%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://twitter.com/intent/tweet?text=LXD%3a%20Creating%20Reusable%20RHEL%209%20VM%20Images&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f25%2flxd-creating-reusable-rhel-9-vm-images%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
 
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f12%2fa-simple-powerline-prompt-for-bash%2f" onclick="window.open(this.href, 'mywin',
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f25%2flxd-creating-reusable-rhel-9-vm-images%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
 
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f12%2fa-simple-powerline-prompt-for-bash%2f" onclick="window.open(this.href, 'mywin',
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f25%2flxd-creating-reusable-rhel-9-vm-images%2f" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f12%2fa-simple-powerline-prompt-for-bash%2f&amp;title=A%20Simple%20Powerline%20Prompt%20for%20Bash" onclick="window.open(this.href, 'mywin',
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f25%2flxd-creating-reusable-rhel-9-vm-images%2f&amp;title=LXD%3a%20Creating%20Reusable%20RHEL%209%20VM%20Images" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
 
-    <a href="mailto:?subject=A%20Simple%20Powerline%20Prompt%20for%20Bash&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2018%2f09%2f12%2fa-simple-powerline-prompt-for-bash%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+    <a href="mailto:?subject=LXD%3a%20Creating%20Reusable%20RHEL%209%20VM%20Images&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2025%2f09%2f25%2flxd-creating-reusable-rhel-9-vm-images%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
   </span>
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -264,18 +466,12 @@
     <nav><ul class="pager">
     
         <li class="previous">
-          <a href="https://blog.victormendonca.com/2018/08/20/kde-win7-volume-mixer/" title="KDE Win7 Volume Mixer">
+          <a href="https://blog.victormendonca.com/2025/09/17/how-to-install-windows-on-lxd/" title="How to install Windows on LXD">
             <span aria-hidden="true">&larr;</span>Previous
           </a>
         </li>
     
 
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2018/09/17/how-to-create-an-init-like-script/" title="How to Create an Init Like Script">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
     
     </ul> </nav>
   
