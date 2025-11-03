@@ -139,6 +139,198 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2020/10/09/how-to-show-progress-for-dd/">How to Show Progress for dd</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2020-10-09">9 Oct, 2020</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/hardware" class="label label-primary">Hardware</a>
+  
+  <a href="https://blog.victormendonca.com/tags/storage" class="label label-primary">Storage</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p>If you have reached this page I expect that you already know what <code>dd</code> is. But you if you don&rsquo;t, <code>dd</code> is a command-line utility that is used to convert and copy files. It&rsquo;s commonly found on various (Linux) distro help pages that show new users how to setup USB (or Micro SD) drives to install or run (like Raspberry Pi) the OS.</p>
+
+<p>One of the main problems is that when running the <code>dd</code> utility, it does not provide any information on the current status of the copy process. This can make users anxious not knowing if it&rsquo;s done or not.</p>
+
+<h2 id="the-solutions">The Solutions</h2>
+
+<h4 id="1-running-dd-with-the-status-option">1. Running <code>dd</code> with the <code>status</code> option</h4>
+
+<p>This requires you to be running <code>dd</code> version 8.24 and above. If you are running a modern Linux distro you are most likely covered.</p>
+
+<p>You can check your version with <code>dd --version</code>:</p>
+
+<pre><code class="language-none">➤ dd --version
+dd (coreutils) 8.32
+Copyright (C) 2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later &lt;https://gnu.org/licenses/gpl.html&gt;.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Written by Paul Rubin, David MacKenzie, and Stuart Kemp.
+</code></pre>
+
+<p>We will also need to use <code>oflag=sync</code> to make sure that we are really syncing as data is being copied so we get a better sense of when it&rsquo;s done. Otherwise <code>dd</code> goes blank at the end as it&rsquo;s trying to sync.</p>
+
+<p><em><strong>Note:</strong> while using <code>oflag=sync</code> makes the copy slower, using a higher block size will help speed up the process (<code>bs=4M</code> instead of <code>bs=1M</code>)</em></p>
+
+<h5 id="the-command"><strong>The command:</strong></h5>
+
+<p><em><strong>Structure:</strong></em></p>
+
+<pre><code class="language-none">dd bs=4M if=/path/to/input of=/path/to/output status=progress oflag=sync
+</code></pre>
+
+<p><em><strong>Example:</strong> here are backing up the contents of <code>/dev/sdf</code> to a file (ubuntu-server-20.04.1-updated.iso)</em></p>
+
+<pre><code class="language-none">sudo dd bs=4M if=/dev/sdf of=ubuntu-server-20.04.1-updated.iso status=progress oflag=sync
+</code></pre>
+
+<p><em><strong>The output:</strong></em>
+<img src="https://blog.victormendonca.com/img/how-to-show-progress-for-dd/dd-2.png" alt="" /></p>
+
+<h4 id="1-running-dd-with-pv">1. Running <code>dd</code> with <code>pv</code></h4>
+
+<p>In reality this should be option 1 as it gives a nicer output with a progress bar, ETA and other data. <code>pv</code> is a terminal-based tool for monitoring the progress of data through a pipeline. It can potentially be used with any pipe.</p>
+
+<h5 id="the-command-1"><strong>The command:</strong></h5>
+
+<p><em><strong>Structure:</strong></em></p>
+
+<pre><code class="language-none">pv -tpreb /path/to/input | sudo dd of=/path/to/output bs=4M oflag=sync
+</code></pre>
+
+<p>Options used:</p>
+
+<ul>
+<li><code>-t</code> - “Turn the timer on”</li>
+<li><code>-p</code> - “Turn the progress bar on”</li>
+<li><code>-r</code> - “Turn the rate counter on”</li>
+<li><code>-e</code> - “Turn the ETA timer on”</li>
+<li><code>-b</code> - “Turn the total byte counter on”</li>
+</ul>
+
+<p><em><strong>Example:</strong> Here we are copying the image file to <code>/dev/sdf</code></em></p>
+
+<pre><code class="language-none">pv -tpreb ubuntu-20.04.1-preinstalled-server-arm64+raspi.img | sudo dd of=/dev/sdf bs=4M oflag=sync
+</code></pre>
+
+<p><em><strong>The output:</strong></em>
+<img src="https://blog.victormendonca.com/img/how-to-show-progress-for-dd/pv-with-sync.png" alt="" /></p>
+
+<hr />
+
+<h4 id="putting-all-in-a-bash-alias-for-re-use">Putting all in a Bash alias for re-use</h4>
+
+<p>Add the function below to your <code>~/.bash_aliases</code> and it will be available whenever you need. Call it with <code>dd_iso [image] [device]</code> and it will use <code>pv</code> if it&rsquo;s already installed in your syste.</p>
+
+<pre><code class="language-bash">dd_iso ()
+{
+    usage=&quot;usage: dd_iso [image] [device]&quot;;
+    if [[ $# -lt 2 ]]; then
+        echo &quot;$usage&quot;;
+        return 0;
+    else
+        if [[ $# -eq 2 ]]; then
+            iso=&quot;$1&quot;;
+            device=&quot;$2&quot;;
+        fi;
+    fi;
+    if [[ ${iso##*.} != iso &amp;&amp; ${iso##*.} != img ]]; then
+        echo &quot;The first parameter should be an iso&quot;;
+        return 1;
+    else
+        if [[ ! -b &quot;$device&quot; ]]; then
+            echo &quot;The second parameter needs to be a device&quot;;
+            return 1;
+        fi;
+    fi;
+    device_type=&quot;$(basename &quot;$(readlink -f &quot;/sys/class/block/${device##*/}/..&quot;)&quot;)&quot;;
+    if [[ &quot;$device_type&quot; != &quot;block&quot; ]]; then
+        echo &quot;Do not specify a parition as the device&quot;;
+        return 1;
+    fi;
+    sudo dd bs=4M if=&quot;$iso&quot; of=&quot;$device&quot; status=progress oflag=sync
+}
+</code></pre>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f09%2fhow-to-show-progress-for-dd%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=How%20to%20Show%20Progress%20for%20dd&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f09%2fhow-to-show-progress-for-dd%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f09%2fhow-to-show-progress-for-dd%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f09%2fhow-to-show-progress-for-dd%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f09%2fhow-to-show-progress-for-dd%2f&amp;title=How%20to%20Show%20Progress%20for%20dd" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=How%20to%20Show%20Progress%20for%20dd&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f10%2f09%2fhow-to-show-progress-for-dd%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2020/09/11/quick-guide-to-suig-sgid-and-sticky-bit/" title="Quick Guide to SUID, SGID and Sticky Bit">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2020/10/13/how-to-install-waveshare-3.5inch-lcd-on-ubuntu-20.04/" title="How to Install Waveshare 3.5&#34; LCD on Ubuntu 20.04">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2020/09/11/quick-guide-to-suig-sgid-and-sticky-bit/">Quick Guide to SUID, SGID and Sticky Bit</a>
 </h2>
 
@@ -941,104 +1133,6 @@ vim DefaultKeyBinding.Dict
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2020/04/23/how-to-share-wifi-via-terminal-generated-qr-code/">How to Share WiFi Credentials from Terminal</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2020-04-23">23 Apr, 2020</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/bash" class="label label-primary">Bash</a>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/networking" class="label label-primary">Networking</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  <p>Now here&rsquo;s a cool and quick way to share your WiFi SSID and password from a terminal window with a guest.</p>
-
-<p>You can use <code>qrencode</code> to generate a QR code with the parameters below:</p>
-
-<pre><code class="language-none">WIFI:S:[Your SSID here];T:WPA;P:[Your Password Here];;
-</code></pre>
-
-<p>For example, let&rsquo;s pretend my SSID is <code>MySweetSSID</code> and my password is <code>mysecretpassword</code>. We can run:</p>
-
-<pre><code>qrencode -o - -t utf8 'WIFI:S:MySweetSSID;T:WPA;P:mysecretpassword;;'
-</code></pre>
-
-<p>To get:</p>
-
-<p><img src="https://blog.victormendonca.com/img/how-to-share-wifi-via-terminal-generated-qr-code/2020-04-23_20-18.png" alt="" /></p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f23%2fhow-to-share-wifi-via-terminal-generated-qr-code%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=How%20to%20Share%20WiFi%20Credentials%20from%20Terminal&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f23%2fhow-to-share-wifi-via-terminal-generated-qr-code%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f23%2fhow-to-share-wifi-via-terminal-generated-qr-code%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f23%2fhow-to-share-wifi-via-terminal-generated-qr-code%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f23%2fhow-to-share-wifi-via-terminal-generated-qr-code%2f&amp;title=How%20to%20Share%20WiFi%20Credentials%20from%20Terminal" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=How%20to%20Share%20WiFi%20Credentials%20from%20Terminal&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2020%2f04%2f23%2fhow-to-share-wifi-via-terminal-generated-qr-code%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2020/04/17/how-to-install-macos-catalina-in-virtual-box/" title="How to Install macOS Catalina in Virtual Box">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2020/04/27/how-to-change-macos-key-bindings/" title="How to Change macOS Key Bindings">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1147,6 +1241,12 @@ vim DefaultKeyBinding.Dict
     </a>
 </li>
 
+<li >
+  <a href="https://blog.victormendonca.com//page/16/">
+    16
+    </a>
+</li>
+
 
 <li >
   <a aria-label="Next" href="https://blog.victormendonca.com//page/7/">
@@ -1154,7 +1254,7 @@ vim DefaultKeyBinding.Dict
     </a>
 </li>
 <li >
-  <a aria-label="Last" href="https://blog.victormendonca.com//page/15/">
+  <a aria-label="Last" href="https://blog.victormendonca.com//page/16/">
     <span aria-hidden="true">&raquo;&raquo;</span>
   </a>
 </li>
@@ -1194,7 +1294,7 @@ vim DefaultKeyBinding.Dict
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/virtualization">virtualization</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/containers">containers</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/virtualization">virtualization</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/containers">containers</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li>
           </ul>
         </div>
       </div>
@@ -1210,6 +1310,10 @@ vim DefaultKeyBinding.Dict
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2025/11/03/automating-os-updates-on-lxd-instances-with-ansible/">Automating OS Updates on LXD Instances with Ansible</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2025/09/25/lxd-creating-reusable-rhel-9-vm-images/">LXD: Creating Reusable RHEL 9 VM Images</a>
@@ -1233,10 +1337,6 @@ vim DefaultKeyBinding.Dict
         
           <li>
           <a href="https://blog.victormendonca.com/2024/02/14/getting-started-with-ansible-console/">Getting Started with Ansible Console</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/">Playing a Sound on Headless Server Boot</a>
           </li>
         
         </ul>

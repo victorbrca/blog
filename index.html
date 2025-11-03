@@ -139,6 +139,294 @@
         
         
           <div>
+  <h2><a href="https://blog.victormendonca.com/2025/11/03/automating-os-updates-on-lxd-instances-with-ansible/">Automating OS Updates on LXD Instances with Ansible</a>
+</h2>
+
+  <div class="margin-10">
+    <small>
+  <i class="fa fa-calendar"></i>
+  <time datetime="2025-11-03">3 Nov, 2025</time>
+</small>
+
+    
+  <i class="fa fa-tags"></i>
+  
+  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
+  
+  <a href="https://blog.victormendonca.com/tags/containers" class="label label-primary">Containers</a>
+  
+  <a href="https://blog.victormendonca.com/tags/virtualization" class="label label-primary">Virtualization</a>
+  
+
+
+  </div>
+</div>
+
+          <div class="content">
+  
+
+<p><img src="https://blog.victormendonca.com/img/automating-os-updates-on-lxd-instances-with-ansible/header.png" alt="image 0" /></p>
+
+<p>Keeping your LXD containers and VMs up to date can be a bit of a hassle — especially when you’re managing different distributions or even Windows instances. That’s why I built <strong><a href="https://github.com/victorbrca/lxd-os-update/">lxd-os-update</a></strong>, an Ansible project designed to automate the process of running OS updates across all your LXD environments.</p>
+
+<p>It’s a simple yet powerful playbook that takes care of the entire cycle for you:</p>
+
+<ul>
+<li>Starts stopped and frozen instances (configurable)</li>
+<li>Runs OS updates for both <strong>APT</strong> and <strong>YUM</strong>-based Linux distros</li>
+<li>Updates <strong>Windows</strong> servers via SSH and PowerShell</li>
+<li>Restores each instance to its previous stopped or frozen state afterward</li>
+</ul>
+
+<h3 id="why-i-built-it">Why I Built It</h3>
+
+<p>When managing multiple LXD projects, I often needed a way to keep everything patched without manually starting, updating, and stopping each instance.
+Ansible seemed perfect for the job — but I quickly ran into a limitation with the <strong>LXD inventory plugin</strong>.</p>
+
+<p>The plugin hardcodes <code>ansible_connection</code> to <strong>ssh</strong> whenever it detects an IP address. That means even if you explicitly set <code>ansible_connection: lxd</code>, Ansible will still try to connect via SSH, using the IP address as <code>ansible_host</code>.</p>
+
+<p>Here’s an example of what happens:</p>
+
+<pre><code class="language-bash">$ ansible-inventory --host ubuntu-2404
+{
+    &quot;ansible_connection&quot;: &quot;ssh&quot;,
+    &quot;ansible_host&quot;: &quot;10.48.212.128&quot;,
+    &quot;ansible_lxd_os&quot;: &quot;ubuntu&quot;,
+    &quot;ansible_lxd_type&quot;: &quot;virtual-machine&quot;
+}
+</code></pre>
+
+<p>And when you try to run a task with the LXD connection plugin:</p>
+
+<pre><code class="language-bash">$ ansible -m ping ubuntu-2404 -e 'ansible_connection=lxd' -vvvv
+</code></pre>
+
+<p>You’ll get the dreaded:</p>
+
+<pre><code>Error: Failed to fetch instance &quot;10&quot; in project &quot;default&quot;: Instance not found
+</code></pre>
+
+<p>That’s because Ansible is trying to connect to an instance literally named <strong>&ldquo;10&rdquo;</strong>, taken from the IP address.</p>
+
+<h3 id="the-workaround-a-custom-inventory">The Workaround: A Custom Inventory</h3>
+
+<p>To get around this, I created a <strong>custom static inventory file</strong>, included in the project. It defines instances manually and correctly sets <code>ansible_connection: lxd</code> (except for Windows, which still uses SSH).</p>
+
+<p>This approach bypasses the plugin’s IP discovery issue and ensures Ansible connects directly through LXD when possible.</p>
+
+<h2 id="requirements">Requirements</h2>
+
+<p>Before running the playbook, make sure your environment meets these conditions:</p>
+
+<ul>
+<li>Ansible
+
+<ul>
+<li>Ansible collections (see <code>requirements.yml</code>):
+
+<ul>
+<li>community.general</li>
+<li>ansible.windows</li>
+</ul></li>
+</ul></li>
+<li>Each instance must have the <code>image.os</code> config attribute set (see below)</li>
+<li><code>python3</code> should be installed inside the instance</li>
+<li>The <strong>LXD agent</strong> must be installed and running (for <code>ansible_connection: lxd</code>)</li>
+<li>For Windows instances, the <strong>OpenSSH server</strong> must be enabled and configured for an administrator user</li>
+</ul>
+
+<h4 id="setting-the-image-os-attribute">Setting the <code>image.os</code> Attribute</h4>
+
+<p>The playbook relies on the <code>image.os</code> attribute to detect the OS family. You can view and set it like this:</p>
+
+<pre><code class="language-bash">$ lxc list -cns,image.os:OS
++------------------+---------+--------+
+|       NAME       |  STATE  |   OS   |
++------------------+---------+--------+
+| jellyfin         | STOPPED | ubuntu |
+| rhel9            | STOPPED | rhel   |
+| windows11        | RUNNING |        |
++------------------+---------+--------+
+</code></pre>
+
+<p>You can manually set the value with:</p>
+
+<pre><code class="language-bash"># Example for a Windows 11 instance
+$ lxc config set windows11 image.os=windows
+
+# Example for a RHEL 9 instance
+$ lxc config set rhel9 image.os=rhel
+</code></pre>
+
+<h4 id="installing-the-lxd-agent">Installing the LXD Agent</h4>
+
+<p>The LXD agent enables direct Ansible communication through the LXD API. Refer to your distribution’s documentation on how to install and start it.</p>
+
+<h4 id="configuring-windows-for-ssh">Configuring Windows for SSH</h4>
+
+<p>For Windows instances, Ansible connects over SSH. You’ll need to:</p>
+
+<p>SSH needs to be configured, preferrably with an SSH key.</p>
+
+<p>a. Enable OpenSSH server and configure the firewall:</p>
+
+<pre><code class="language-PowerShell"># Start the sshd service
+Start-Service sshd
+
+# OPTIONAL but recommended:
+Set-Service -Name sshd -StartupType 'Automatic'
+
+# Install the OpenSSH Server
+Add-WindowsCapability -Online -Name (Get-WindowsCapability -Online | Where-Object Name -like 'OpenSSH.Server*').name
+
+# Confirm the Firewall rule is configured. It should be created automatically by setup. Run the following to verify
+if (!(Get-NetFirewallRule -Name &quot;OpenSSH-Server-In-TCP&quot; -ErrorAction SilentlyContinue)) {
+    Write-Output &quot;Firewall Rule 'OpenSSH-Server-In-TCP' does not exist, creating it...&quot;
+    New-NetFirewallRule -Name 'OpenSSH-Server-In-TCP' -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22
+} else {
+    Write-Output &quot;Firewall rule 'OpenSSH-Server-In-TCP' has been created and exists.&quot;
+}
+</code></pre>
+
+<p>b. Test the connection</p>
+
+<p>c. Create a new ssh key pair if desired</p>
+
+<p>d. Copy the contents of your public key (e.g.: <code>id_rsa.pub</code>) to <code>C:\ProgramData\ssh\administrators_authorized_keys</code></p>
+
+<p>e. Change de default shell - By default <code>Win32-OpenSSH</code> will uses <code>cmd.exe</code> as a shell. We want to configure a different shell in <code>HKEY_LOCAL_MACHINE\SOFTWARE\OpenSSH\DefaultShell</code>:</p>
+
+<pre><code class="language-PowerShell">New-ItemProperty -Path &quot;HKLM:\SOFTWARE\OpenSSH&quot; -Name DefaultShell -Value &quot;C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -PropertyType String -Force
+</code></pre>
+
+<p>f. Install the PSWindowsUpdate PowerShell Module for updates</p>
+
+<pre><code class="language-PowerShell"># Install module
+Install-Module -Name PSWindowsUpdate
+
+# Enable execution
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
+</code></pre>
+
+<p>g. Update your inventory variables (<code>group_vars/windows.yml</code>) with your SSH details:</p>
+
+<pre><code class="language-yaml">ansible_user: Administrator
+ansible_ssh_private_key_file: ~/.ssh/id_rsa
+</code></pre>
+
+<p>h. Then test your connection:</p>
+
+<pre><code class="language-bash">$ ansible windows11 -m raw -a 'get-date'
+windows11 | CHANGED | rc=0 &gt;&gt;
+Tuesday, October 28, 2025 7:48:35 PM
+</code></pre>
+
+<h3 id="role-variables">Role Variables</h3>
+
+<p>You can control behaviors using the following variables.</p>
+
+<p><strong>Defaults - <code>roles/os-update/defaults/main.yml</code></strong></p>
+
+<p>Enable the reboot of instances, if needed, after the update:</p>
+
+<pre><code class="language-yaml">reboot_if_needed: true
+</code></pre>
+
+<p>Enable/disable updates on non running instances:</p>
+
+<pre><code class="language-yaml">update_non_running: true
+</code></pre>
+
+<p><strong>Vars - <code>roles/os-update/vars/main.yml</code></strong></p>
+
+<p>Specifies what distros are interpreted as apt/yum. You can add distros as needed.</p>
+
+<pre><code class="language-yaml">apt_distros:
+  - debian
+  - ubuntu
+  - kali
+  - raspbian
+
+yum_distros:
+  - rhel
+  - oracle
+</code></pre>
+
+<h3 id="running-the-playbook">Running the Playbook</h3>
+
+<p>Once configured, just run:</p>
+
+<pre><code class="language-bash">ansible-playbook playbooks/os-update.yml
+</code></pre>
+
+<p>Ansible will:</p>
+
+<ol>
+<li>Start any stopped or frozen instances (if configured)</li>
+<li>Run system updates for each one</li>
+<li>Reboot if required</li>
+<li>Return the instances to their previous state</li>
+</ol>
+
+<h3 id="final-thoughts">Final Thoughts</h3>
+
+<p>This setup has saved me a lot of time keeping my LXD environments consistent and secure. Whether you’re managing a small lab or a larger test cluster, automating OS updates with Ansible can make your maintenance much smoother — and less error-prone.</p>
+
+<p>You can check out the full project on GitHub:
+👉 <a href="https://github.com/victorbrca/lxd-os-update/">https://github.com/victorbrca/lxd-os-update/</a></p>
+
+</div>
+
+
+          <footer>
+  
+<span class="share-box">Share this on:
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2025%2f11%2f03%2fautomating-os-updates-on-lxd-instances-with-ansible%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
+
+    <a href="https://twitter.com/intent/tweet?text=Automating%20OS%20Updates%20on%20LXD%20Instances%20with%20Ansible&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f11%2f03%2fautomating-os-updates-on-lxd-instances-with-ansible%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
+
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f11%2f03%2fautomating-os-updates-on-lxd-instances-with-ansible%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
+
+    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f11%2f03%2fautomating-os-updates-on-lxd-instances-with-ansible%2f" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2025%2f11%2f03%2fautomating-os-updates-on-lxd-instances-with-ansible%2f&amp;title=Automating%20OS%20Updates%20on%20LXD%20Instances%20with%20Ansible" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
+
+    <a href="mailto:?subject=Automating%20OS%20Updates%20on%20LXD%20Instances%20with%20Ansible&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2025%2f11%2f03%2fautomating-os-updates-on-lxd-instances-with-ansible%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
+  </span>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+  
+    <nav><ul class="pager">
+    
+        <li class="previous">
+          <a href="https://blog.victormendonca.com/2025/09/25/lxd-creating-reusable-rhel-9-vm-images/" title="LXD: Creating Reusable RHEL 9 VM Images">
+            <span aria-hidden="true">&larr;</span>Previous
+          </a>
+        </li>
+    
+
+    
+    </ul> </nav>
+  
+
+
+</div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  
+
+</div>
+
+</footer>
+
+        
+          <div>
   <h2><a href="https://blog.victormendonca.com/2025/09/25/lxd-creating-reusable-rhel-9-vm-images/">LXD: Creating Reusable RHEL 9 VM Images</a>
 </h2>
 
@@ -419,6 +707,12 @@ Launching rhel9-test
         </li>
     
 
+    
+      <li class="next">
+        <a href="https://blog.victormendonca.com/2025/11/03/automating-os-updates-on-lxd-instances-with-ansible/" title="Automating OS Updates on LXD Instances with Ansible">
+            Next <span aria-hidden="true">&rarr;</span>
+        </a>
+      </li>
     
     </ul> </nav>
   
@@ -1130,347 +1424,6 @@ userdel !$         # fixes it using the last argument
 </footer>
 
         
-          <div>
-  <h2><a href="https://blog.victormendonca.com/2024/09/09/logrotate-simplifying-log-management/">Logrotate: Simplifying Log Management</a>
-</h2>
-
-  <div class="margin-10">
-    <small>
-  <i class="fa fa-calendar"></i>
-  <time datetime="2024-09-09">9 Sep, 2024</time>
-</small>
-
-    
-  <i class="fa fa-tags"></i>
-  
-  <a href="https://blog.victormendonca.com/tags/linux" class="label label-primary">Linux</a>
-  
-  <a href="https://blog.victormendonca.com/tags/administration" class="label label-primary">Administration</a>
-  
-  <a href="https://blog.victormendonca.com/tags/ansible" class="label label-primary">Ansible</a>
-  
-
-
-  </div>
-</div>
-
-          <div class="content">
-  
-
-<p><code>logrotate</code> is a system utility designed to manage log files, ensuring that logs don&rsquo;t consume excessive disk space by rotating, compressing, and removing old logs according to user-defined rules. This post will help you get familiar with <code>logrotate</code> configuration and usage.</p>
-
-<p>By configuring and running <code>logrotate</code> effectively, you can automate log management, saving space, and ensuring your logs stay manageable over time.</p>
-
-<h2 id="main-config">Main Config</h2>
-
-<p>The primary configuration file for <code>logrotate</code> is located at <code>/etc/logrotate.conf</code>. It sets default values and contains the directory for additional configuration files (typically <code>/etc/logrotate.d</code>):</p>
-
-<pre><code class="language-bash"># see &quot;man logrotate&quot; for details
-# rotate log files weekly
-weekly
-
-# keep 4 weeks worth of backlogs
-rotate 4
-
-# create new (empty) log files after rotating old ones
-create
-
-# use date as a suffix of the rotated file
-dateext
-
-# uncomment this if you want your log files compressed
-#compress
-
-# RPM packages drop log rotation information into this directory
-include /etc/logrotate.d
-
-# no packages own wtmp and btmp -- we'll rotate them here
-/var/log/wtmp {
-    monthly
-    create 0664 root utmp
-    minsize 1M
-    rotate 1
-}
-
-/var/log/btmp {
-    missingok
-    monthly
-    create 0600 root utmp
-    rotate 1
-}
-</code></pre>
-
-<h2 id="configuration-files">Configuration Files</h2>
-
-<p>The configuration file for each application or log location usually resides under <code>/etc/logrotate.d/</code> and can contain various options to control how logs are handled.</p>
-
-<h3 id="common-options">Common Options</h3>
-
-<ul>
-<li><code>hourly</code> – Rotate logs every hour (<em>requires cron to run logrotate hourly</em>).</li>
-<li><code>daily</code> – Rotate logs daily.</li>
-<li><code>weekly [weekday]</code> – Rotate logs once per week.</li>
-<li><code>monthly</code> – Rotate logs the first time <code>logrotate</code> is run in a month.</li>
-<li><code>yearly</code> – Rotate logs once a year.</li>
-<li><code>rotate [count]</code> – Defines how many rotated logs to keep. If set to 0, logs are deleted instead of being rotated.</li>
-<li><code>minsize [size]</code> – Rotate logs when they exceed a specific size, while also respecting the time interval (daily, weekly, etc.).</li>
-<li><code>size [size]</code> – Rotate only when log size exceeds the defined limit.</li>
-<li><code>maxage [days]</code> – Remove rotated logs after a specified number of days.</li>
-<li><code>missingok</code> – Continue without error if the log file is missing.</li>
-<li><code>notifempty</code> – Skip rotation if the log file is empty.</li>
-<li><code>create [mode] [owner] [group]</code> – Create a new log file with specified permissions, owner, and group.</li>
-<li><code>compress</code> – Compress rotated logs.</li>
-<li><code>delaycompress</code> – Delay compression until the next rotation cycle.</li>
-<li><code>copytruncate</code> – Truncate the log after copying it to the rotated file.</li>
-<li><code>sharedscripts</code> – Ensures that post-rotation scripts are executed only once.</li>
-<li><code>postrotate/endscript</code> – Define commands to be executed after log rotation:</li>
-</ul>
-
-<pre><code class="language-bash">postrotate
-  /opt/life/tools/stop-approve.sh &amp;&amp; /opt/life/tools/start-approve.sh
-endscript
-</code></pre>
-
-<h3 id="examples">Examples</h3>
-
-<h4 id="example-1-deleting-old-nmon-files">Example 1: Deleting Old NMON Files</h4>
-
-<p>This example deletes NMON output files that are older than 3 months or larger than 5 MB:</p>
-
-<pre><code class="language-bash"># Logrotate config for nmon
-/var/log/nmon/*.nmon {
-  rotate 0
-  maxage 90
-  size 5M
-}
-</code></pre>
-
-<h4 id="example-2-compressing-lms-logs">Example 2: Compressing LMS Logs</h4>
-
-<p>In this case, <code>logrotate</code> keeps 10 compressed versions of logs, rotating them when logs are older than 12 months or larger than 5 MB:</p>
-
-<pre><code class="language-bash"># Logrotate config for LMS
-/home/my_admin/cmd/log/*.log {
-  rotate 10
-  maxage 360
-  size 5M
-  compress
-}
-</code></pre>
-
-<h3 id="creating-a-new-configuration-file">Creating a New Configuration File</h3>
-
-<p>To create a new log rotation rule, drop a configuration file into the <code>/etc/logrotate.d/</code> directory. Ensure the scheduler for <code>logrotate</code> (either cron or systemd) is set up correctly.</p>
-
-<blockquote>
-<p><strong>Tip:</strong> Double-check your scheduler settings to ensure smooth log rotation.</p>
-</blockquote>
-
-<h2 id="testing-and-running-logrotate">Testing and Running Logrotate</h2>
-
-<h3 id="testing">Testing</h3>
-
-<h4 id="dry-run">Dry-Run</h4>
-
-<p>Before applying your configuration, you can test it with a dry-run using the <code>-d</code> option:</p>
-
-<pre><code class="language-bash">logrotate -d [my_config_file].conf
-</code></pre>
-
-<h4 id="verbosity">Verbosity</h4>
-
-<p>To view detailed steps, run <code>logrotate</code> with the <code>-v</code> option (useful with <code>-d</code> for dry-run testing):</p>
-
-<pre><code class="language-bash">logrotate -vd [my_config_file].conf
-</code></pre>
-
-<h3 id="scheduling-logrotate">Scheduling Logrotate</h3>
-
-<p><code>logrotate</code> can be scheduled using either cron or systemd. Here&rsquo;s a quick overview of both methods:</p>
-
-<h4 id="cron">Cron</h4>
-
-<p>When using cron, the <code>logrotate</code> job is typically defined in <code>/etc/cron.daily/logrotate</code>:</p>
-
-<pre><code class="language-bash">#!/bin/sh
-
-/usr/sbin/logrotate -s /var/lib/logrotate/logrotate.status /etc/logrotate.conf
-EXITVALUE=$?
-if [ $EXITVALUE != 0 ]; then
-    /usr/bin/logger -t logrotate &quot;ALERT exited abnormally with [$EXITVALUE]&quot;
-fi
-exit 0
-</code></pre>
-
-<h4 id="systemd">Systemd</h4>
-
-<p>Systemd can also manage logrotate via <code>logrotate.timer</code> and <code>logrotate.service</code>.</p>
-
-<p><em>logrotate.timer</em>:</p>
-
-<pre><code class="language-systemd">[Unit]
-Description=Daily rotation of log files
-
-[Timer]
-OnCalendar=daily
-RandomizedDelaySec=1h
-Persistent=true
-
-[Install]
-WantedBy=timers.target
-</code></pre>
-
-<p><em>logrotate.service</em>:</p>
-
-<pre><code class="language-systemd">[Unit]
-Description=Rotate log files
-
-[Service]
-Type=oneshot
-ExecStart=/usr/sbin/logrotate /etc/logrotate.conf
-</code></pre>
-
-<h4 id="personal-cron-job">Personal Cron Job</h4>
-
-<p>You can also schedule <code>logrotate</code> manually through a personal cron job:</p>
-
-<pre><code class="language-bash"># Runs logrotate daily
-@daily /sbin/logrotate -s /home/my_admin/cmd/log/logrotate.status /home/my_admin/cmd/logrotate.conf &gt;&gt; /home/my_admin/cmd/log/cron.log 2&gt;&amp;1
-</code></pre>
-
-<h2 id="creating-logrotate-with-ansible">Creating Logrotate With Ansible</h2>
-
-<p>Managing log rotation through Ansible is a powerful way to automate log maintenance across multiple servers. Below is an example of how you can create a <code>logrotate</code> configuration using Ansible.</p>
-
-<h3 id="ansible-playbook-example">Ansible Playbook Example</h3>
-
-<p>This playbook installs <code>logrotate</code> (if it&rsquo;s not already installed) and creates a new configuration file under <code>/etc/logrotate.d/</code> for an application:</p>
-
-<pre><code class="language-yaml">---
-
-- hosts: all
-  gather_facts: true
-  become: true
-
-  vars:
-    logrotate_conf: |
-      # Logrotate for application
-      /var/log/application/* {
-        # Keep 4 versions of file
-        rotate 4
-
-        # compress rotated files
-        compress
-
-        # Rotates the log files every week
-        weekly
-
-        # Ignores the error if the log file is missing
-        missingok
-
-        # Does not rotate the log if it is empty
-        notifempty
-
-        # Creates a new log file with specified permissions
-        create 0755 apache splunk       
-      }
-
-  tasks:
-
-    - name: Installs logrotate
-      package:
-        name: logrotate
-
-    - name: Creates logrotate configuration
-      copy:
-        content: &quot;{{ logrotate_conf }}&quot;
-        dest: /etc/logrotate.d/application
-        owner: root
-        group: root
-        mode: '0644'
-
-</code></pre>
-
-<h3 id="explanation">Explanation</h3>
-
-<ul>
-<li><p><strong><code>logrotate_conf</code> variable</strong>: Defines the configuration file for <code>logrotate</code>. It includes options such as file rotation frequency, compression, and file permissions.</p>
-
-<ul>
-<li><code>rotate 4</code> – Keeps 4 old versions of the log.</li>
-<li><code>compress</code> – Compresses the rotated logs.</li>
-<li><code>weekly</code> – Rotates the logs every week.</li>
-<li><code>missingok</code> – Ignores errors if the log file is missing.</li>
-<li><code>notifempty</code> – Skips log rotation if the log is empty.</li>
-<li><code>create 0755 apache splunk</code> – Creates a new log file with specific permissions, owned by <code>apache</code> and <code>splunk</code> groups.</li>
-</ul></li>
-
-<li><p><strong>Installs logrotate</strong>: The task ensures that <code>logrotate</code> is installed on the target servers.</p></li>
-
-<li><p><strong>Creates logrotate configuration</strong>: The <code>copy</code> task creates the custom <code>logrotate</code> configuration file under <code>/etc/logrotate.d/</code>, with appropriate permissions.</p></li>
-</ul>
-
-<hr />
-
-<p>By using Ansible, you can streamline the management of log rotation across your environment, ensuring consistency in how logs are maintained across all your systems.</p>
-
-</div>
-
-
-          <footer>
-  
-<span class="share-box">Share this on:
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2024%2f09%2f09%2flogrotate-simplifying-log-management%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-facebook-official "></i></a>
-
-    <a href="https://twitter.com/intent/tweet?text=Logrotate%3a%20Simplifying%20Log%20Management&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2024%2f09%2f09%2flogrotate-simplifying-log-management%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter"></i></a>
-
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fblog.victormendonca.com%2f2024%2f09%2f09%2flogrotate-simplifying-log-management%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-google-plus"></i></a>
-
-    <a href="http://www.reddit.com/submit?url=https%3a%2f%2fblog.victormendonca.com%2f2024%2f09%2f09%2flogrotate-simplifying-log-management%2f" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-reddit"></i></a>
-
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fblog.victormendonca.com%2f2024%2f09%2f09%2flogrotate-simplifying-log-management%2f&amp;title=Logrotate%3a%20Simplifying%20Log%20Management" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-linkedin"></i></a>
-
-    <a href="mailto:?subject=Logrotate%3a%20Simplifying%20Log%20Management&amp;body=Check out this site https%3a%2f%2fblog.victormendonca.com%2f2024%2f09%2f09%2flogrotate-simplifying-log-management%2f" data-proofer-ignore=""><i class="fa fa-envelope"></i></a>
-  </span>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      
-  
-    <nav><ul class="pager">
-    
-        <li class="previous">
-          <a href="https://blog.victormendonca.com/2024/02/14/getting-started-with-ansible-console/" title="Getting Started with Ansible Console">
-            <span aria-hidden="true">&larr;</span>Previous
-          </a>
-        </li>
-    
-
-    
-      <li class="next">
-        <a href="https://blog.victormendonca.com/2025/08/22/top-skills-that-will-make-you-stand-out-as-a-linux-admin-part-1/" title="Top Skills That Will Make You Stand Out as a Linux Admin: Part 1">
-            Next <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    
-    </ul> </nav>
-  
-
-
-</div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  
-
-</div>
-
-</footer>
-
-        
         
 <nav>
   <ul class="pagination">
@@ -1579,6 +1532,12 @@ ExecStart=/usr/sbin/logrotate /etc/logrotate.conf
     </a>
 </li>
 
+<li >
+  <a href="https://blog.victormendonca.com//page/16/">
+    16
+    </a>
+</li>
+
 
 <li >
   <a aria-label="Next" href="https://blog.victormendonca.com//page/2/">
@@ -1586,7 +1545,7 @@ ExecStart=/usr/sbin/logrotate /etc/logrotate.conf
     </a>
 </li>
 <li >
-  <a aria-label="Last" href="https://blog.victormendonca.com//page/15/">
+  <a aria-label="Last" href="https://blog.victormendonca.com//page/16/">
     <span aria-hidden="true">&raquo;&raquo;</span>
   </a>
 </li>
@@ -1626,7 +1585,7 @@ ExecStart=/usr/sbin/logrotate /etc/logrotate.conf
 
         <div class="content1">
           <ul>
-            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/virtualization">virtualization</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/containers">containers</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li>
+            <li><a href="https://blog.victormendonca.com/tags/linux">linux</a></li><li><a href="https://blog.victormendonca.com/tags/bash">bash</a></li><li><a href="https://blog.victormendonca.com/tags/hardware">hardware</a></li><li><a href="https://blog.victormendonca.com/tags/redhat">redhat</a></li><li><a href="https://blog.victormendonca.com/tags/rhcsa">rhcsa</a></li><li><a href="https://blog.victormendonca.com/tags/networking">networking</a></li><li><a href="https://blog.victormendonca.com/tags/virtualization">virtualization</a></li><li><a href="https://blog.victormendonca.com/tags/ansible">ansible</a></li><li><a href="https://blog.victormendonca.com/tags/containers">containers</a></li><li><a href="https://blog.victormendonca.com/tags/freenas">freenas</a></li><li><a href="https://blog.victormendonca.com/tags/kde">kde</a></li><li><a href="https://blog.victormendonca.com/tags/monitoring">monitoring</a></li><li><a href="https://blog.victormendonca.com/tags/shell">shell</a></li><li><a href="https://blog.victormendonca.com/tags/storage">storage</a></li><li><a href="https://blog.victormendonca.com/tags/vim">vim</a></li><li><a href="https://blog.victormendonca.com/tags/arch">arch</a></li><li><a href="https://blog.victormendonca.com/tags/docker">docker</a></li><li><a href="https://blog.victormendonca.com/tags/macos">macos</a></li><li><a href="https://blog.victormendonca.com/tags/pfsense">pfsense</a></li><li><a href="https://blog.victormendonca.com/tags/systemd">systemd</a></li>
           </ul>
         </div>
       </div>
@@ -1642,6 +1601,10 @@ ExecStart=/usr/sbin/logrotate /etc/logrotate.conf
       <header><div class="title"><b>Latest Posts</b></div></header>
       <div class="content">
         <ul>
+        
+          <li>
+          <a href="https://blog.victormendonca.com/2025/11/03/automating-os-updates-on-lxd-instances-with-ansible/">Automating OS Updates on LXD Instances with Ansible</a>
+          </li>
         
           <li>
           <a href="https://blog.victormendonca.com/2025/09/25/lxd-creating-reusable-rhel-9-vm-images/">LXD: Creating Reusable RHEL 9 VM Images</a>
@@ -1665,10 +1628,6 @@ ExecStart=/usr/sbin/logrotate /etc/logrotate.conf
         
           <li>
           <a href="https://blog.victormendonca.com/2024/02/14/getting-started-with-ansible-console/">Getting Started with Ansible Console</a>
-          </li>
-        
-          <li>
-          <a href="https://blog.victormendonca.com/2023/12/21/playing-a-sound-on-headless-server-boot/">Playing a Sound on Headless Server Boot</a>
           </li>
         
         </ul>

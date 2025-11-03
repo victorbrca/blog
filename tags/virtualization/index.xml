@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>(c) 2018 Copyright Victor Mendonça</copyright>
-    <lastBuildDate>Thu, 25 Sep 2025 05:00:47 -0400</lastBuildDate>
+    <lastBuildDate>Mon, 03 Nov 2025 17:40:13 -0500</lastBuildDate>
     
 	<atom:link href="https://blog.victormendonca.com/tags/virtualization/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Automating OS Updates on LXD Instances with Ansible</title>
+      <link>https://blog.victormendonca.com/2025/11/03/automating-os-updates-on-lxd-instances-with-ansible/</link>
+      <pubDate>Mon, 03 Nov 2025 17:40:13 -0500</pubDate>
+      
+      <guid>https://blog.victormendonca.com/2025/11/03/automating-os-updates-on-lxd-instances-with-ansible/</guid>
+      <description>Keeping your LXD containers and VMs up to date can be a bit of a hassle — especially when you’re managing different distributions or even Windows instances. That’s why I built lxd-os-update, an Ansible project designed to automate the process of running OS updates across all your LXD environments.
+It’s a simple yet powerful playbook that takes care of the entire cycle for you:
+ Starts stopped and frozen instances (configurable) Runs OS updates for both APT and YUM-based Linux distros Updates Windows servers via SSH and PowerShell Restores each instance to its previous stopped or frozen state afterward  Why I Built It When managing multiple LXD projects, I often needed a way to keep everything patched without manually starting, updating, and stopping each instance.</description>
+    </item>
     
     <item>
       <title>LXD: Creating Reusable RHEL 9 VM Images</title>
