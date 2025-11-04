@@ -175,7 +175,7 @@
     &middot; by Victor Mendonça
   
   &middot; Read in about 5 min
-  &middot; (885 words)
+  &middot; (877 words)
   &middot; 
 <span class="share-box">Share this on:
     <a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.victormendonca.com%2f2025%2f11%2f03%2fautomating-os-updates-on-lxd-instances-with-ansible%2f" onclick="window.open(this.href, 'mywin',
@@ -224,7 +224,7 @@
 
 <p>Keeping your LXD containers and VMs up to date can be a bit of a hassle — especially when you’re managing different distributions or even Windows instances. That’s why I built <strong><a href="https://github.com/victorbrca/lxd-os-update/">lxd-os-update</a></strong>, an Ansible project designed to automate the process of running OS updates across all your LXD environments.</p>
 
-<p>It’s a simple yet powerful playbook that takes care of the entire cycle for you:</p>
+<p>It’s a simple yet powerful role that takes care of the entire cycle for you:</p>
 
 <ul>
 <li>Starts stopped and frozen instances (configurable)</li>
@@ -235,10 +235,10 @@
 
 <h3 id="why-i-built-it">Why I Built It</h3>
 
-<p>When managing multiple LXD projects, I often needed a way to keep everything patched without manually starting, updating, and stopping each instance.
-Ansible seemed perfect for the job — but I quickly ran into a limitation with the <strong>LXD inventory plugin</strong>.</p>
+<p>When managing LXD VMs and containers, I often needed a way to keep everything patched without manually starting, updating, and stopping each instance.
+Ansible seemed perfect for the job — but I quickly ran into a limitation with the Ansible LXD inventory plugin.</p>
 
-<p>The plugin hardcodes <code>ansible_connection</code> to <strong>ssh</strong> whenever it detects an IP address. That means even if you explicitly set <code>ansible_connection: lxd</code>, Ansible will still try to connect via SSH, using the IP address as <code>ansible_host</code>.</p>
+<p>The plugin hardcodes <code>ansible_connection</code> to ssh whenever it detects an IP address. That means even if you explicitly set <code>ansible_connection: lxd</code>, Ansible will still try to connect via SSH, using the IP address as <code>ansible_host</code>.</p>
 
 <p>Here’s an example of what happens:</p>
 
@@ -256,25 +256,25 @@ Ansible seemed perfect for the job — but I quickly ran into a limitation with 
 <pre><code class="language-bash">$ ansible -m ping ubuntu-2404 -e 'ansible_connection=lxd' -vvvv
 </code></pre>
 
-<p>You’ll get the dreaded:</p>
+<p>You’ll get the error:</p>
 
 <pre><code>Error: Failed to fetch instance &quot;10&quot; in project &quot;default&quot;: Instance not found
 </code></pre>
 
 <p>That’s because Ansible is trying to connect to an instance literally named <strong>&ldquo;10&rdquo;</strong>, taken from the IP address.</p>
 
-<h3 id="the-workaround-a-custom-inventory">The Workaround: A Custom Inventory</h3>
+<h3 id="the-workaround-a-custom-inventory-script">The Workaround: A Custom Inventory Script</h3>
 
-<p>To get around this, I created a <strong>custom static inventory file</strong>, included in the project. It defines instances manually and correctly sets <code>ansible_connection: lxd</code> (except for Windows, which still uses SSH).</p>
+<p>To get around this, I created a custom inventory script, included in the project. It defines instances manually and correctly sets <code>ansible_connection: lxd</code> (except for Windows, which still uses SSH).</p>
 
-<p>This approach bypasses the plugin’s IP discovery issue and ensures Ansible connects directly through LXD when possible.</p>
+<p>This approach bypasses the plugin’s issue and ensures Ansible connects directly through LXD when possible.</p>
 
 <h2 id="requirements">Requirements</h2>
 
 <p>Before running the playbook, make sure your environment meets these conditions:</p>
 
 <ul>
-<li>Ansible
+<li>Ansible on the host
 
 <ul>
 <li>Ansible collections (see <code>requirements.yml</code>):
@@ -285,14 +285,14 @@ Ansible seemed perfect for the job — but I quickly ran into a limitation with 
 </ul></li>
 </ul></li>
 <li>Each instance must have the <code>image.os</code> config attribute set (see below)</li>
-<li><code>python3</code> should be installed inside the instance</li>
-<li>The <strong>LXD agent</strong> must be installed and running (for <code>ansible_connection: lxd</code>)</li>
-<li>For Windows instances, the <strong>OpenSSH server</strong> must be enabled and configured for an administrator user</li>
+<li><code>python3</code> should be installed inside the instances</li>
+<li>The LXD agent must be installed and running inside the instances</li>
+<li>For Windows instances, OpenSSH server must be enabled and configured for an administrator user</li>
 </ul>
 
 <h4 id="setting-the-image-os-attribute">Setting the <code>image.os</code> Attribute</h4>
 
-<p>The playbook relies on the <code>image.os</code> attribute to detect the OS family. You can view and set it like this:</p>
+<p>The automation relies on the <code>image.os</code> attribute to detect the OS family. You can view and set it like this:</p>
 
 <pre><code class="language-bash">$ lxc list -cns,image.os:OS
 +------------------+---------+--------+
@@ -300,7 +300,7 @@ Ansible seemed perfect for the job — but I quickly ran into a limitation with 
 +------------------+---------+--------+
 | jellyfin         | STOPPED | ubuntu |
 | rhel9            | STOPPED | rhel   |
-| windows11        | RUNNING |        |
+| windows11        | RUNNING |        |   &lt;--- MISSING
 +------------------+---------+--------+
 </code></pre>
 
@@ -315,13 +315,11 @@ $ lxc config set rhel9 image.os=rhel
 
 <h4 id="installing-the-lxd-agent">Installing the LXD Agent</h4>
 
-<p>The LXD agent enables direct Ansible communication through the LXD API. Refer to your distribution’s documentation on how to install and start it.</p>
+<p>The LXD agent enables direct Ansible communication through the LXD plugin. Refer to your distribution’s documentation on how to install and start it.</p>
 
 <h4 id="configuring-windows-for-ssh">Configuring Windows for SSH</h4>
 
-<p>For Windows instances, Ansible connects over SSH. You’ll need to:</p>
-
-<p>SSH needs to be configured, preferrably with an SSH key.</p>
+<p>For Windows instances, Ansible connects over SSH. So you’ll need to configured it, preferrably with an SSH key.</p>
 
 <p>a. Enable OpenSSH server and configure the firewall:</p>
 
@@ -349,7 +347,7 @@ if (!(Get-NetFirewallRule -Name &quot;OpenSSH-Server-In-TCP&quot; -ErrorAction S
 
 <p>d. Copy the contents of your public key (e.g.: <code>id_rsa.pub</code>) to <code>C:\ProgramData\ssh\administrators_authorized_keys</code></p>
 
-<p>e. Change de default shell - By default <code>Win32-OpenSSH</code> will uses <code>cmd.exe</code> as a shell. We want to configure a different shell in <code>HKEY_LOCAL_MACHINE\SOFTWARE\OpenSSH\DefaultShell</code>:</p>
+<p>e. Change de default shell to PowerShell in the registry key <code>HKEY_LOCAL_MACHINE\SOFTWARE\OpenSSH\DefaultShell</code>:</p>
 
 <pre><code class="language-PowerShell">New-ItemProperty -Path &quot;HKLM:\SOFTWARE\OpenSSH&quot; -Name DefaultShell -Value &quot;C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -PropertyType String -Force
 </code></pre>
@@ -365,8 +363,8 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
 
 <p>g. Update your inventory variables (<code>group_vars/windows.yml</code>) with your SSH details:</p>
 
-<pre><code class="language-yaml">ansible_user: Administrator
-ansible_ssh_private_key_file: ~/.ssh/id_rsa
+<pre><code class="language-yaml">ansible_user:
+ansible_ssh_private_key_file:
 </code></pre>
 
 <p>h. Then test your connection:</p>
@@ -378,7 +376,7 @@ Tuesday, October 28, 2025 7:48:35 PM
 
 <h3 id="role-variables">Role Variables</h3>
 
-<p>You can control behaviors using the following variables.</p>
+<p>You can control different behaviors using the defaults and vars role variables.</p>
 
 <p><strong>Defaults - <code>roles/os-update/defaults/main.yml</code></strong></p>
 
@@ -425,7 +423,7 @@ yum_distros:
 
 <h3 id="final-thoughts">Final Thoughts</h3>
 
-<p>This setup has saved me a lot of time keeping my LXD environments consistent and secure. Whether you’re managing a small lab or a larger test cluster, automating OS updates with Ansible can make your maintenance much smoother — and less error-prone.</p>
+<p>This setup has saved me a lot of time keeping my LXD environment consistent and secure. Whether you’re managing a small lab or a larger test cluster, automating OS updates with Ansible can make your maintenance much smoother — and less error-prone.</p>
 
 <p>You can check out the full project on GitHub:
 👉 <a href="https://github.com/victorbrca/lxd-os-update/">https://github.com/victorbrca/lxd-os-update/</a></p>
